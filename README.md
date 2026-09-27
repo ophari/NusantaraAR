@@ -8,7 +8,7 @@ Aplikasi mobile AR untuk edukasi benda budaya Indonesia, sesuai **PRD v1.1** (`p
 - **Input:** Input System (EnhancedTouch)
 - **Model 3D:** Blender 5.2 → GLB, diimpor dengan glTFast 6.20 (`com.unity.cloud.gltfast`)
 
-> Dokumentasi kode lengkap (arsitektur, alur data, referensi tiap file, algoritma Scan Kartu, pipeline editor, pengujian): **[Docs/DOKUMENTASI_KODE.md](Docs/DOKUMENTASI_KODE.md)**
+> Dokumentasi kode lengkap (arsitektur, alur data, referensi tiap file, algoritma Scan QR, pipeline editor, pengujian): **[Docs/DOKUMENTASI_KODE.md](Docs/DOKUMENTASI_KODE.md)**
 
 ## Menjalankan
 
@@ -48,25 +48,27 @@ dan semua library native berselaras 16 KB (segmen LOAD `0x4000`).
 
 | Mode | Butuh | Cara kerja |
 | --- | --- | --- |
-| **Scan Kartu** (utama) | Kamera saja — jalan juga di HP tanpa ARCore (mis. Samsung Galaxy A05) | Kamera biasa (WebCamTexture) + detektor marker persegi 6x6 buatan sendiri (`Scripts/Runtime/Marker`). Keris muncul di atas kartu; "Kunci Posisi" menahan objek agar kartu boleh dijauhkan. |
+| **Scan QR** (utama) | Kamera saja — jalan juga di HP tanpa ARCore (mis. Samsung Galaxy A05) | Kamera biasa (WebCamTexture) + detektor & decoder QR buatan sendiri (`Scripts/Runtime/Marker`, tanpa library luar). Keris muncul di atas kode QR; "Kunci Posisi" menahan objek agar QR boleh dijauhkan. Kartu penanda 6x6 lama tetap dikenali sebagai cadangan. |
 | **Letakkan di Meja** | HP di daftar ARCore | AR Foundation: deteksi bidang + reticle + ARAnchor. Tombol disembunyikan di HP tanpa ARCore. |
 
-Kartu penanda (cetak A5 tanpa diperkecil, kotak hitam 8 cm) — satu kartu per artefak:
+Kartu kode QR (cetak A5 tanpa diperkecil, sisi QR 8 cm) — satu kartu per artefak:
 
-| Artefak | Kartu | Kode |
+| Artefak | Kartu QR | Isi QR |
 | --- | --- | --- |
-| Keris Bali (model Blender) | `Docs/KartuPenanda_KerisBali_A5.pdf` | `B532` |
-| Keris Sumatra (model Blender) | `Docs/KartuPenanda_KerisSumatra_A5.pdf` | `F0E4` |
+| Keris Bali (model Blender) | `Docs/KartuQR_KerisBali_A5.pdf` | `NUSANTARA:KERIS_BALI_01` |
+| Keris Sumatra (model Blender) | `Docs/KartuQR_KerisSumatra_A5.pdf` | `NUSANTARA:KERIS_SUMATRA_01` |
 
-Kartu lama `EEC1` (keris sementara) dan `DA26` (Keris Jawa) sudah ditarik dan tidak dikenali lagi. Kartu dibuat ulang
-dengan `python Tools/kartu_penanda.py`.
+Kartu QR dibuat ulang dengan `python Tools/kartu_qr.py` (butuh `pip install pillow qrcode`). Isi QR diturunkan dari
+`artifactId` (`ArtifactData.QrText`), jadi artefak baru otomatis punya QR. Atau tekan tombol **Tampilkan QR** di halaman
+detail untuk menampilkannya di layar HP/laptop lain.
 
-Atau tekan tombol
-**Tampilkan Kartu** di halaman detail untuk menampilkannya di layar HP/laptop lain. Kode kartu disimpan di
-`ArtifactData.markerCode`; pola dibuat dari `MarkerPattern` (pilih kode baru yang keempat rotasinya berbeda jauh).
+Kartu penanda 6x6 lama (`Docs/KartuPenanda_*_A5.pdf`, kode `B532` / `F0E4`, `python Tools/kartu_penanda.py`) kodenya
+tetap disimpan dan masih dikenali di mode Scan QR sebagai cadangan (`MarkerController.detectLegacyCards`), tetapi tidak
+lagi ditampilkan di UI. Kartu `EEC1` (keris sementara) dan `DA26` (Keris Jawa) sudah ditarik dan tidak dikenali lagi.
 
-Keterbatasan Scan Kartu: FOV kamera diperkirakan (64° sisi panjang), jadi objek tetap menempel di kartu tapi
-perspektifnya bisa sedikit berbeda; pelacakan hilang bila kartu tertutup sebagian, buram, atau terlalu jauh/gelap.
+Keterbatasan Scan QR: FOV kamera diperkirakan (64° sisi panjang), jadi objek tetap menempel di QR tapi
+perspektifnya bisa sedikit berbeda; pelacakan hilang bila QR tertutup sebagian, buram, atau terlalu jauh/gelap
+(modul QR minimal ±2,7 px di buffer deteksi, kira-kira QR 8 cm dari jarak ±50 cm).
 Opsi peningkatan: Vuforia Engine (image target, gratis paket Basic, butuh akun + license key).
 
 ## Struktur
@@ -88,7 +90,8 @@ Assets/NusantaraAR/
   Art/KerisBali/                  keris_bali.glb (ekspor Blender) + Materials/ + Textures/ (ASTC, dari builder)
   Art/KerisSumatra/               keris_sumatra.glb (ekspor Blender) + Materials/ + Textures/
 Tools/blender/keris_bali.py, keris_sumatra.py   skrip Blender pemodel keris (+ .blend, *_textures/ hasilnya)
-Tools/kartu_penanda.py            kartu penanda cetak A5
+Tools/kartu_qr.py                 kartu kode QR cetak A5
+Tools/kartu_penanda.py            kartu penanda 6x6 lama (cadangan)
 _Arsip_ModelLama/                 model & builder lama yang tidak dipakai lagi (boleh dihapus)
   Resources/ContentCatalog.asset
   Scenes/Main.unity, Scenes/AR.unity
@@ -128,7 +131,7 @@ Catatan builder (`GlbArtifact`):
 
 1. Modelkan di Blender dengan **objek terpisah per bagian** (origin di titik sambung, 1 unit = 1 m, muka depan -Y), ekspor GLB ke `Art/<Nama>/`.
 2. Tulis builder seperti `KerisSumatraBuilder`: `GlbArtifact.Load` → `UseCompressedTextures` → `SetStages` → `Front` (hotspot) → `Save`, lalu panggil dari `ProjectSetup.RunAll` dan tambahkan ID-nya ke `PruneCatalog`.
-3. Tambahkan kode kartu di `MarkerPattern` + baris di `Tools/kartu_penanda.py`, dan ID di `[TestFixture]` `ArtifactTests`.
+3. Tambahkan baris di `Tools/kartu_qr.py` (kartu QR cetak) dan ID di `[TestFixture]` `ArtifactTests`. Kode kartu 6x6 lama opsional (`MarkerPattern` + `Tools/kartu_penanda.py`).
 4. Setel `curatorValidated = true` hanya setelah sign-off kurator (gerbang rilis PRD §6.4).
 
 ## Status terhadap PRD v1.1

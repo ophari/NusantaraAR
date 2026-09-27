@@ -46,7 +46,7 @@ namespace NusantaraAR.Marker
                     if (!d.isFrontFacing) { device = d; break; }
                 texture = new WebCamTexture(device.name, requestedWidth, requestedHeight, 30);
                 texture.Play();
-                // Fokus ke tengah layar (tempat kartu biasanya diarahkan) bila perangkat mendukung.
+                // Fokus ke tengah layar (tempat kode QR biasanya diarahkan) bila perangkat mendukung.
                 if (device.isAutoFocusPointSupported) texture.autoFocusPoint = new Vector2(0.5f, 0.5f);
                 return true;
             }

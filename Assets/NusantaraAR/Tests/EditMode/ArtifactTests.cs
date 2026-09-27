@@ -53,6 +53,20 @@ namespace NusantaraAR.Tests
         }
 
         [Test]
+        public void Catalog_FindsArtifactByItsQrCode()
+        {
+            Assert.AreEqual("NUSANTARA:" + id, instance.Data.QrText);
+            Assert.AreEqual(id, catalog.FindByQr(instance.Data.QrText)?.artifactId);
+            Assert.AreEqual(id, catalog.FindByQr(" nusantara:" + id + "\n")?.artifactId, "awalan tidak peka huruf besar, spasi diabaikan");
+            Assert.AreEqual(id, catalog.FindByQr(id)?.artifactId, "artifactId saja juga diterima");
+            Assert.IsNull(catalog.FindByQr("https://example.com"));
+            var modules = Marker.QrCode.Encode(instance.Data.QrText);
+            Assert.IsNotNull(modules);
+            Assert.IsTrue(Marker.QrCode.TryDecode(modules, out var text));
+            Assert.AreEqual(id, catalog.FindByQr(text)?.artifactId);
+        }
+
+        [Test]
         public void Model_UsesImportedBlenderMeshes()
         {
             var meshes = go.GetComponentsInChildren<MeshFilter>(true).Select(f => f.sharedMesh).ToList();

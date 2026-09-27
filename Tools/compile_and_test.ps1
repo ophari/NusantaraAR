@@ -1,4 +1,4 @@
-# Compile + bangun ulang konten (Keris Bali & Keris Sumatra dari GLB Blender) + EditMode test + kartu penanda.
+# Compile + bangun ulang konten (Keris Bali & Keris Sumatra dari GLB Blender) + EditMode test + kartu QR & kartu penanda.
 # Bila model diubah, ekspor ulang GLB dulu:
 #   blender --background --factory-startup --python Tools\blender\keris_bali.py
 #   blender --background --factory-startup --python Tools\blender\keris_sumatra.py
@@ -27,7 +27,8 @@ if (Test-Path "$logs\tests.xml") {
     $x.SelectNodes("//test-case[@result='Failed']") | ForEach-Object { Write-Host "   GAGAL: $($_.fullname)"; Write-Host "     $($_.failure.message.InnerText)" }
 }
 
-Write-Host '3/3 Kartu penanda Keris Bali + Keris Sumatra...'
+Write-Host '3/3 Kartu QR + kartu penanda lama Keris Bali + Keris Sumatra...'
+python (Join-Path $PSScriptRoot 'kartu_qr.py')
 python (Join-Path $PSScriptRoot 'kartu_penanda.py')
 
 Write-Host 'Selesai. Log lengkap: Logs\setup.log, Logs\tests.log, Logs\tests.xml'

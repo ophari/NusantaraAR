@@ -23,7 +23,7 @@ namespace NusantaraAR.UI
             screen.catalog = catalog;
             screen.onSelect = onSelect;
             screen.Build(area, onSettings);
-            // Tombol mengambang: langsung buka kamera dan pindai kartu penanda (PRD Layar 1, "Masuk ke Mode AR").
+            // Tombol mengambang: langsung buka kamera dan pindai kode QR (PRD Layar 1, "Masuk ke Mode AR").
             var scan = UIKit.Button(area, "Scan", Locale.T("marker.scan"), ButtonStyle.Primary, () => onScan?.Invoke(), out var sl, 38f);
             LocalizedLabel.Attach(sl, "marker.scan");
             UIKit.Place((RectTransform)scan.transform, new Vector2(0.5f, 0f), new Vector2(0f, 48f), new Vector2(640f, 120f));

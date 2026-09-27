@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 namespace NusantaraAR.UI
 {
-    /// <summary>Menampilkan kartu penanda layar penuh (latar putih) agar bisa dipindai dari HP lain atau difoto untuk dicetak.</summary>
+    /// <summary>Menampilkan kode QR artefak layar penuh (latar putih) agar bisa dipindai dari HP lain atau difoto untuk dicetak.</summary>
     public class MarkerCardScreen : MonoBehaviour
     {
         RawImage image;
         TextMeshProUGUI title;
-        int shownCode;
+        string shownText;
 
         public static MarkerCardScreen Create(RectTransform fullRoot)
         {
@@ -44,12 +44,15 @@ namespace NusantaraAR.UI
 
         public void Show(ArtifactData data)
         {
-            if (data == null || data.markerCode == 0) return;
-            if (shownCode != data.markerCode)
+            if (data == null || string.IsNullOrEmpty(data.artifactId)) return;
+            var text = data.QrText;
+            if (shownText != text)
             {
+                var modules = QrCode.Encode(text);
+                if (modules == null) return;
                 if (image.texture != null) Destroy(image.texture);
-                image.texture = MarkerPattern.CreateTexture(data.markerCode, 64, 1);
-                shownCode = data.markerCode;
+                image.texture = QrCode.CreateTexture(modules, 16, 4);
+                shownText = text;
             }
             title.text = Locale.T("marker.cardTitle") + "\n<size=40><color=#6B5B2E>" + data.displayName.Get() + "</color></size>";
             gameObject.SetActive(true);

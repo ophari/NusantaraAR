@@ -413,7 +413,7 @@ namespace NusantaraAR.EditorTools
             EditorSceneManager.SaveScene(scene, ARScenePath);
         }
 
-        /// <summary>Scene "Scan Kartu": kamera biasa (WebCamTexture) di latar + deteksi marker, tanpa ARCore.</summary>
+        /// <summary>Scene "Scan QR": kamera biasa (WebCamTexture) di latar + deteksi kode QR (dan kartu penanda lama), tanpa ARCore.</summary>
         static void BuildMarkerScene()
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);

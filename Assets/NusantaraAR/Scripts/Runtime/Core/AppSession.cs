@@ -46,7 +46,7 @@ namespace NusantaraAR
             SceneManager.LoadScene(ARScene);
         }
 
-        /// <summary>Mode "Scan Kartu" (kamera biasa, tanpa ARCore). artifact boleh null: artefak ditentukan oleh kartu.</summary>
+        /// <summary>Mode "Scan QR" (kamera biasa, tanpa ARCore). artifact boleh null: artefak ditentukan oleh kode QR yang dipindai.</summary>
         public static void OpenMarker(ArtifactData artifact)
         {
             if (artifact != null) SelectedArtifactId = artifact.artifactId;

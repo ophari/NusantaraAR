@@ -9,15 +9,17 @@ using UnityEngine.UI;
 namespace NusantaraAR.Marker
 {
     /// <summary>
-    /// Mode AR "Scan Kartu": kamera biasa (tanpa ARCore) + deteksi kartu penanda; artefak yang terhubung ke kode
-    /// kartu muncul di atas kartu. Berjalan di HP yang tidak didukung ARCore (mis. Galaxy A05).
-    /// Gestur: geser 1 jari = putar di atas kartu, cubit = skala. "Kunci" menahan posisi agar kartu boleh dijauhkan.
+    /// Mode AR "Scan QR": kamera biasa (tanpa ARCore) + deteksi kode QR; artefak yang isinya cocok
+    /// (<see cref="ArtifactData.QrText"/>) muncul di atas kode QR. Kartu penanda lama (pola 6x6, dulu "Scan Kartu")
+    /// tetap dikenali sebagai cadangan dari analisis frame yang sama. Berjalan di HP tanpa ARCore (mis. Galaxy A05).
+    /// Gestur: geser 1 jari = putar di atas QR, cubit = skala. "Kunci" menahan posisi agar QR boleh dijauhkan.
     /// </summary>
     public class MarkerController : MonoBehaviour
     {
         enum State { NeedsPermission, PermissionDenied, NoCamera, Starting, Searching, Tracking, Locked }
 
         const float LostAfterSeconds = 0.6f;
+        const float KeepQrWithoutDecodeSeconds = 2f;
         const float DegreesPerDp = 0.4f;
 
         public Camera cam;
@@ -25,11 +27,17 @@ namespace NusantaraAR.Marker
         public RawImage background;
         public RectTransform backgroundCanvas;
         public TouchGestures gestures;
-        [Tooltip("Perkiraan sisi kotak hitam kartu (meter). Hanya memengaruhi jarak, bukan tampilan relatif.")]
+        [Tooltip("Perkiraan sisi kode QR tercetak, tanpa zona putih (meter). Hanya memengaruhi jarak, bukan tampilan relatif.")]
+        public float qrSizeMeters = 0.08f;
+        [Tooltip("Perkiraan sisi kotak hitam kartu penanda lama (meter).")]
         public float markerSizeMeters = 0.08f;
-        [Tooltip("Lebar artefak relatif terhadap sisi marker saat pertama muncul")]
+        [Tooltip("Tetap kenali kartu penanda lama (pola 6x6) bila tidak ada kode QR yang dikenali di frame")]
+        public bool detectLegacyCards = true;
+        [Tooltip("Lebar artefak relatif terhadap sisi QR/kartu saat pertama muncul")]
         public float fitToMarker = 2.2f;
 
+        readonly DarkRegions regions = new DarkRegions();
+        readonly QrDetector qrDetector = new QrDetector();
         readonly MarkerDetector detector = new MarkerDetector();
         readonly PoseSmoother smoother = new PoseSmoother();
         readonly List<int> codes = new List<int>();
@@ -41,6 +49,7 @@ namespace NusantaraAR.Marker
         float userYaw;
         float userScale = 1f;
         float lastSeen = -10f;
+        float lastQrRead = -10f;
         Pose markerPose;
         bool hasPose;
         bool controlsShown;
@@ -175,13 +184,12 @@ namespace NusantaraAR.Marker
 
         void ProcessFrame()
         {
-            if (state == State.Locked || codes.Count == 0) return;
-            var detections = detector.Detect(feed.Gray, feed.Width, feed.Height, codes);
-            if (detections.Count == 0) return;
-            var d = detections[0];
-            EnsureArtifact(d.code);
+            if (state == State.Locked) return;
+            regions.Analyze(feed.Gray, feed.Width, feed.Height); // sekali per frame, dipakai detektor QR & kartu
+            if (!FindTarget(out var data, out var cornersPx, out float size)) return;
+            EnsureArtifact(data, size);
             if (current == null) return;
-            if (!MarkerPose.TryEstimate(d.corners, markerSizeMeters, feed.FocalPixels, feed.Width * 0.5f, feed.Height * 0.5f, out var corners)) return;
+            if (!MarkerPose.TryEstimate(cornersPx, size, feed.FocalPixels, feed.Width * 0.5f, feed.Height * 0.5f, out var corners)) return;
             var target = MarkerPose.ArtifactPose(corners);
             if (Time.time - lastSeen > LostAfterSeconds) smoother.Reset();
             markerPose = smoother.Filter(target, Time.deltaTime);
@@ -190,11 +198,39 @@ namespace NusantaraAR.Marker
             lastSeen = Time.time;
         }
 
-        void EnsureArtifact(int code)
+        /// <summary>Kode QR lebih dulu; kartu penanda lama hanya bila tidak ada QR yang dikenali.</summary>
+        bool FindTarget(out ArtifactData data, out Vector2[] cornersPx, out float size)
         {
-            if (currentData != null && currentData.markerCode == code) return;
-            var data = AppSession.Catalog.FindByMarker(code);
-            if (data == null || data.prefab == null) return;
+            size = qrSizeMeters;
+            foreach (var d in qrDetector.Detect(regions))
+            {
+                data = d.Decoded ? AppSession.Catalog.FindByQr(d.text) : null;
+                if (data != null) lastQrRead = Time.time;
+                // Frame buram: pola QR terlihat tapi isinya tak terbaca -> tetap pakai artefak dari QR yang baru saja terbaca.
+                else if (!d.Decoded && currentData != null && Time.time - lastQrRead < KeepQrWithoutDecodeSeconds) data = currentData;
+                if (data == null || data.prefab == null) continue;
+                cornersPx = d.corners;
+                return true;
+            }
+            if (detectLegacyCards && codes.Count > 0)
+            {
+                foreach (var d in detector.Detect(regions, codes))
+                {
+                    data = AppSession.Catalog.FindByMarker(d.code);
+                    if (data == null || data.prefab == null) continue;
+                    cornersPx = d.corners;
+                    size = markerSizeMeters;
+                    return true;
+                }
+            }
+            data = null;
+            cornersPx = null;
+            return false;
+        }
+
+        void EnsureArtifact(ArtifactData data, float size)
+        {
+            if (currentData == data) return;
             if (current != null) Destroy(current.gameObject);
             currentData = data;
             AppSession.SelectedArtifactId = data.artifactId;
@@ -204,7 +240,7 @@ namespace NusantaraAR.Marker
             current.Init(data);
             var b = current.GetWorldBounds();
             float width = Mathf.Max(0.01f, Mathf.Max(b.size.x, b.size.z));
-            baseScale = markerSizeMeters * fitToMarker / width;
+            baseScale = size * fitToMarker / width;
             userYaw = 0f;
             userScale = 1f;
             hud.Bind(current, cam, ResetView, null);

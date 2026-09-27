@@ -82,7 +82,7 @@ namespace NusantaraAR
             detailTitle.textWrappingMode = TextWrappingModes.NoWrap;
             UIKit.Stretch(detailTitle.rectTransform, 250, 0, 0, 0);
 
-            // Utama: Scan Kartu (jalan di semua HP berkamera). Sekunder: Letakkan di Meja (hanya HP ber-ARCore) & Tampilkan Kartu.
+            // Utama: Scan QR (jalan di semua HP berkamera). Sekunder: Letakkan di Meja (hanya HP ber-ARCore) & Tampilkan QR.
             arButton = UIKit.Button(safe, "ScanCard", Locale.T("marker.scan"), ButtonStyle.Primary, OpenMarker, out arLabel, 38f);
             LocalizedLabel.Attach(arLabel, "marker.scan");
             UIKit.Place((RectTransform)arButton.transform, new Vector2(0.5f, 0f), new Vector2(0f, 272f), new Vector2(640f, 116f));
@@ -143,11 +143,12 @@ namespace NusantaraAR
         void RefreshDetailTexts()
         {
             if (current != null && current.Data != null) detailTitle.text = current.Data.displayName.Get();
-            // "Letakkan di Meja" butuh ARCore; di HP tanpa ARCore (mis. Galaxy A05) cukup Scan Kartu.
+            // "Letakkan di Meja" butuh ARCore; di HP tanpa ARCore (mis. Galaxy A05) cukup Scan QR.
             UIKit.SetVisible(tableButton, arSupported);
-            bool hasCard = current != null && current.Data != null && current.Data.markerCode != 0;
-            UIKit.SetVisible(cardButton, hasCard);
-            arButton.interactable = hasCard;
+            // Setiap artefak punya kode QR (diturunkan dari artifactId).
+            bool hasQr = current != null && current.Data != null && !string.IsNullOrEmpty(current.Data.artifactId);
+            UIKit.SetVisible(cardButton, hasQr);
+            arButton.interactable = hasQr;
         }
 
         void ResetView()

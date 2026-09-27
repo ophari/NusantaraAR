@@ -11,24 +11,16 @@ namespace NusantaraAR.Marker
     }
 
     /// <summary>
-    /// Detektor marker persegi pada citra grayscale (CPU, tanpa ARCore):
-    /// threshold adaptif -> komponen gelap (8-tetangga) -> convex hull -> segi empat -> baca grid 6x6
-    /// di keempat orientasi. Buffer: gray[y * width + x], baris 0 = atas.
+    /// Detektor kartu penanda persegi 6x6 pada citra grayscale (CPU, tanpa ARCore):
+    /// komponen gelap (<see cref="DarkRegions"/>) -> segi empat -> baca grid 6x6 di keempat orientasi.
+    /// Buffer: gray[y * width + x], baris 0 = atas.
     /// </summary>
     public class MarkerDetector
     {
-        public int adaptiveRadius = 12;
-        public int thresholdOffset = 8;
         public int minSidePixels = 24;
         public int maxBitErrors = 1;
 
-        int w, h;
-        int[] integral = new int[0];
-        int[] labels = new int[0];
-        int[] stack = new int[0];
-        readonly List<int> minX = new List<int>(), maxX = new List<int>(), minY = new List<int>(), maxY = new List<int>(), count = new List<int>();
-        readonly List<Vector2> boundary = new List<Vector2>();
-        readonly List<Vector2> hull = new List<Vector2>();
+        readonly DarkRegions own = new DarkRegions();
         readonly List<MarkerDetection> results = new List<MarkerDetection>();
         readonly float[] cellValues = new float[MarkerPattern.Grid * MarkerPattern.Grid];
 
@@ -36,169 +28,33 @@ namespace NusantaraAR.Marker
         {
             results.Clear();
             if (gray == null || width < 32 || height < 32 || codes == null || codes.Count == 0) return results;
-            Prepare(width, height);
-            BuildIntegral(gray);
-            int components = Label(gray);
-            for (int id = 1; id <= components; id++)
+            own.Analyze(gray, width, height);
+            return Detect(own, codes);
+        }
+
+        /// <summary>Deteksi pada frame yang sudah dianalisis (dipakai bersama detektor QR).</summary>
+        public List<MarkerDetection> Detect(DarkRegions regions, IList<int> codes)
+        {
+            results.Clear();
+            if (regions.Gray == null || regions.Width < 32 || regions.Height < 32 || codes == null || codes.Count == 0) return results;
+            foreach (var r in regions.Regions)
             {
-                int i = id - 1;
-                int bw = maxX[i] - minX[i] + 1, bh = maxY[i] - minY[i] + 1;
-                if (bw < minSidePixels || bh < minSidePixels || count[i] < minSidePixels * 3) continue;
-                if (minX[i] <= 1 || minY[i] <= 1 || maxX[i] >= w - 2 || maxY[i] >= h - 2) continue;
-                if (!QuadFromComponent(id, i, out var quad)) continue;
-                if (TryDecode(gray, quad, codes, out var det)) AddUnique(det);
+                if (r.Width < minSidePixels || r.Height < minSidePixels || r.pixels < minSidePixels * 3) continue;
+                if (!regions.TryQuad(r, minSidePixels * 0.6f, out var quad)) continue;
+                if (TryDecode(regions, quad, codes, out var det)) AddUnique(det);
             }
             return results;
         }
 
         void AddUnique(MarkerDetection d)
         {
-            var c = Center(d.corners);
+            var c = DarkRegions.Center(d.corners);
             foreach (var r in results)
-                if (r.code == d.code && (Center(r.corners) - c).sqrMagnitude < 100f) return;
+                if (r.code == d.code && (DarkRegions.Center(r.corners) - c).sqrMagnitude < 100f) return;
             results.Add(d);
         }
 
-        static Vector2 Center(Vector2[] q) => (q[0] + q[1] + q[2] + q[3]) * 0.25f;
-
-        void Prepare(int width, int height)
-        {
-            w = width;
-            h = height;
-            if (integral.Length != (w + 1) * (h + 1)) integral = new int[(w + 1) * (h + 1)];
-            if (labels.Length != w * h)
-            {
-                labels = new int[w * h];
-                stack = new int[w * h];
-            }
-            System.Array.Clear(labels, 0, labels.Length);
-            minX.Clear(); maxX.Clear(); minY.Clear(); maxY.Clear(); count.Clear();
-        }
-
-        void BuildIntegral(byte[] g)
-        {
-            int stride = w + 1;
-            for (int x = 0; x <= w; x++) integral[x] = 0;
-            for (int y = 0; y < h; y++)
-            {
-                int rowSum = 0;
-                integral[(y + 1) * stride] = 0;
-                for (int x = 0; x < w; x++)
-                {
-                    rowSum += g[y * w + x];
-                    integral[(y + 1) * stride + x + 1] = integral[y * stride + x + 1] + rowSum;
-                }
-            }
-        }
-
-        bool IsDark(byte[] g, int x, int y)
-        {
-            int r = adaptiveRadius, stride = w + 1;
-            int x0 = Mathf.Max(0, x - r), y0 = Mathf.Max(0, y - r);
-            int x1 = Mathf.Min(w, x + r + 1), y1 = Mathf.Min(h, y + r + 1);
-            int area = (x1 - x0) * (y1 - y0);
-            int sum = integral[y1 * stride + x1] - integral[y0 * stride + x1] - integral[y1 * stride + x0] + integral[y0 * stride + x0];
-            return g[y * w + x] * area < sum - thresholdOffset * area;
-        }
-
-        /// <summary>Pelabelan komponen gelap (8-tetangga). labels: 0 = belum/terang, -1 = terang, >0 = id.</summary>
-        int Label(byte[] g)
-        {
-            // Tandai piksel terang sebagai -1 sekali jalan agar IsDark tidak dihitung berulang.
-            for (int y = 0; y < h; y++)
-            for (int x = 0; x < w; x++)
-                if (!IsDark(g, x, y)) labels[y * w + x] = -1;
-
-            int next = 0;
-            for (int start = 0; start < w * h; start++)
-            {
-                if (labels[start] != 0) continue;
-                next++;
-                int sp = 0, n = 0;
-                int bx0 = int.MaxValue, bx1 = -1, by0 = int.MaxValue, by1 = -1;
-                stack[sp++] = start;
-                labels[start] = next;
-                while (sp > 0)
-                {
-                    int p = stack[--sp];
-                    int px = p % w, py = p / w;
-                    n++;
-                    if (px < bx0) bx0 = px;
-                    if (px > bx1) bx1 = px;
-                    if (py < by0) by0 = py;
-                    if (py > by1) by1 = py;
-                    for (int dy = -1; dy <= 1; dy++)
-                    {
-                        int ny = py + dy;
-                        if (ny < 0 || ny >= h) continue;
-                        for (int dx = -1; dx <= 1; dx++)
-                        {
-                            int nx = px + dx;
-                            if (nx < 0 || nx >= w) continue;
-                            int q = ny * w + nx;
-                            if (labels[q] != 0) continue;
-                            labels[q] = next;
-                            stack[sp++] = q;
-                        }
-                    }
-                }
-                minX.Add(bx0); maxX.Add(bx1); minY.Add(by0); maxY.Add(by1); count.Add(n);
-            }
-            return next;
-        }
-
-        bool QuadFromComponent(int id, int i, out Vector2[] quad)
-        {
-            quad = null;
-            boundary.Clear();
-            for (int y = minY[i]; y <= maxY[i]; y++)
-            for (int x = minX[i]; x <= maxX[i]; x++)
-            {
-                int p = y * w + x;
-                if (labels[p] != id) continue;
-                if (labels[p - 1] != id || labels[p + 1] != id || labels[p - w] != id || labels[p + w] != id)
-                    boundary.Add(new Vector2(x + 0.5f, y + 0.5f));
-            }
-            if (boundary.Count < 8) return false;
-            ConvexHull(boundary, hull);
-            if (hull.Count < 4) return false;
-
-            // Diagonal = pasangan titik terjauh; dua sudut lain = titik terjauh dari diagonal di tiap sisi.
-            int step = Mathf.Max(1, hull.Count / 200);
-            int a = 0, c = 0;
-            float best = -1f;
-            for (int p = 0; p < hull.Count; p += step)
-            for (int q = p + 1; q < hull.Count; q += step)
-            {
-                float d = (hull[p] - hull[q]).sqrMagnitude;
-                if (d > best) { best = d; a = p; c = q; }
-            }
-            Vector2 A = hull[a], C = hull[c];
-            int b = -1, dIdx = -1;
-            float maxPos = 0f, maxNeg = 0f;
-            for (int p = 0; p < hull.Count; p++)
-            {
-                float s = Cross(C - A, hull[p] - A);
-                if (s > maxPos) { maxPos = s; b = p; }
-                if (s < maxNeg) { maxNeg = s; dIdx = p; }
-            }
-            if (b < 0 || dIdx < 0) return false;
-            quad = new[] { A, hull[b], C, hull[dIdx] };
-            if (SignedArea(quad) < 0f) System.Array.Reverse(quad);
-
-            float quadArea = SignedArea(quad);
-            float hullArea = Mathf.Abs(SignedArea(hull));
-            if (quadArea <= 0f || hullArea <= 0f || quadArea / hullArea < 0.88f) return false;
-            for (int k = 0; k < 4; k++)
-                if ((quad[k] - quad[(k + 1) % 4]).magnitude < minSidePixels * 0.6f) return false;
-
-            // Titik hull = pusat piksel gelap terluar; geser 0,5 px ke tepi sebenarnya.
-            var center = Center(quad);
-            for (int k = 0; k < 4; k++) quad[k] += (quad[k] - center).normalized * 0.7f;
-            return true;
-        }
-
-        bool TryDecode(byte[] g, Vector2[] quad, IList<int> codes, out MarkerDetection det)
+        bool TryDecode(DarkRegions regions, Vector2[] quad, IList<int> codes, out MarkerDetection det)
         {
             det = default;
             var ordered = new Vector2[4];
@@ -206,7 +62,7 @@ namespace NusantaraAR.Marker
             {
                 for (int k = 0; k < 4; k++) ordered[k] = quad[(k + rot) % 4];
                 if (!Homography.FromUnitSquare(ordered, out var H)) return false;
-                if (!ReadCells(g, H, out int code, out int borderErrors) || borderErrors > maxBitErrors) continue;
+                if (!ReadCells(regions, H, out int code, out int borderErrors) || borderErrors > maxBitErrors) continue;
                 foreach (var target in codes)
                 {
                     if (MarkerPattern.HammingDistance(code, target) > maxBitErrors) continue;
@@ -217,7 +73,7 @@ namespace NusantaraAR.Marker
             return false;
         }
 
-        bool ReadCells(byte[] g, double[] H, out int code, out int borderErrors)
+        bool ReadCells(DarkRegions regions, double[] H, out int code, out int borderErrors)
         {
             const int n = MarkerPattern.Grid;
             code = 0;
@@ -226,16 +82,7 @@ namespace NusantaraAR.Marker
             for (int v = 0; v < n; v++)
             for (int u = 0; u < n; u++)
             {
-                float sum = 0f;
-                int samples = 0;
-                for (int sy = -1; sy <= 1; sy++)
-                for (int sx = -1; sx <= 1; sx++)
-                {
-                    var p = Homography.Apply(H, (u + 0.5f + sx * 0.2f) / n, (v + 0.5f + sy * 0.2f) / n);
-                    sum += Sample(g, p.x, p.y);
-                    samples++;
-                }
-                float val = sum / samples;
+                float val = regions.SampleCell(H, u, v, n);
                 cellValues[v * n + u] = val;
                 if (val < min) min = val;
                 if (val > max) max = val;
@@ -251,51 +98,6 @@ namespace NusantaraAR.Marker
                 if (black) code |= 1 << (15 - ((v - 1) * MarkerPattern.DataBits + (u - 1)));
             }
             return true;
-        }
-
-        float Sample(byte[] g, float x, float y)
-        {
-            x -= 0.5f;
-            y -= 0.5f;
-            int x0 = Mathf.Clamp((int)Mathf.Floor(x), 0, w - 1), y0 = Mathf.Clamp((int)Mathf.Floor(y), 0, h - 1);
-            int x1 = Mathf.Min(x0 + 1, w - 1), y1 = Mathf.Min(y0 + 1, h - 1);
-            float fx = Mathf.Clamp01(x - x0), fy = Mathf.Clamp01(y - y0);
-            float top = Mathf.Lerp(g[y0 * w + x0], g[y0 * w + x1], fx);
-            float bottom = Mathf.Lerp(g[y1 * w + x0], g[y1 * w + x1], fx);
-            return Mathf.Lerp(top, bottom, fy);
-        }
-
-        static float Cross(Vector2 a, Vector2 b) => a.x * b.y - a.y * b.x;
-
-        /// <summary>Luas bertanda (positif = searah jarum jam di layar, karena sumbu y ke bawah).</summary>
-        static float SignedArea(IList<Vector2> poly)
-        {
-            float s = 0f;
-            for (int i = 0; i < poly.Count; i++)
-            {
-                var p = poly[i];
-                var q = poly[(i + 1) % poly.Count];
-                s += p.x * q.y - q.x * p.y;
-            }
-            return s * 0.5f;
-        }
-
-        static void ConvexHull(List<Vector2> pts, List<Vector2> result)
-        {
-            pts.Sort((a, b) => a.x != b.x ? a.x.CompareTo(b.x) : a.y.CompareTo(b.y));
-            result.Clear();
-            for (int pass = 0; pass < 2; pass++)
-            {
-                int start = result.Count;
-                for (int i = 0; i < pts.Count; i++)
-                {
-                    var p = pass == 0 ? pts[i] : pts[pts.Count - 1 - i];
-                    while (result.Count >= start + 2 && Cross(result[result.Count - 1] - result[result.Count - 2], p - result[result.Count - 2]) <= 0f)
-                        result.RemoveAt(result.Count - 1);
-                    result.Add(p);
-                }
-                result.RemoveAt(result.Count - 1);
-            }
         }
     }
 
@@ -338,6 +140,94 @@ namespace NusantaraAR.Marker
             for (int i = 0; i < 8; i++) H[i] = A[i, 8] / A[i, i];
             H[8] = 1;
             return true;
+        }
+
+        /// <summary>
+        /// Homografi kuadrat terkecil dari >= 4 pasangan titik (src -> dst), dengan normalisasi Hartley agar stabil.
+        /// weights (opsional) memberi bobot per pasangan.
+        /// </summary>
+        public static bool FromPointsLeastSquares(IList<Vector2> src, IList<Vector2> dst, IList<float> weights, out double[] H)
+        {
+            H = null;
+            int n = src.Count;
+            if (n < 4 || dst.Count != n) return false;
+            Normalization(src, out double sx, out double smx, out double smy);
+            Normalization(dst, out double dx, out double dmx, out double dmy);
+            var ata = new double[8, 9]; // kolom 8 = A^T b
+            var row = new double[8];
+            for (int i = 0; i < n; i++)
+            {
+                double x = (src[i].x - smx) * sx, y = (src[i].y - smy) * sx;
+                double u = (dst[i].x - dmx) * dx, v = (dst[i].y - dmy) * dx;
+                double wgt = weights != null ? weights[i] : 1.0;
+                for (int pass = 0; pass < 2; pass++)
+                {
+                    System.Array.Clear(row, 0, 8);
+                    double rhs;
+                    if (pass == 0) { row[0] = x; row[1] = y; row[2] = 1; row[6] = -u * x; row[7] = -u * y; rhs = u; }
+                    else { row[3] = x; row[4] = y; row[5] = 1; row[6] = -v * x; row[7] = -v * y; rhs = v; }
+                    for (int a = 0; a < 8; a++)
+                    {
+                        if (row[a] == 0) continue;
+                        for (int b = 0; b < 8; b++) ata[a, b] += wgt * row[a] * row[b];
+                        ata[a, 8] += wgt * row[a] * rhs;
+                    }
+                }
+            }
+            if (!Solve8(ata, out var h)) return false;
+            // H = Td^-1 * Hn * Ts
+            double[] Hn = { h[0], h[1], h[2], h[3], h[4], h[5], h[6], h[7], 1 };
+            double[] Ts = { sx, 0, -sx * smx, 0, sx, -sx * smy, 0, 0, 1 };
+            double[] TdInv = { 1 / dx, 0, dmx, 0, 1 / dx, dmy, 0, 0, 1 };
+            var M = Multiply(TdInv, Multiply(Hn, Ts));
+            if (System.Math.Abs(M[8]) < 1e-12) return false;
+            H = new double[9];
+            for (int i = 0; i < 9; i++) H[i] = M[i] / M[8];
+            return true;
+        }
+
+        static void Normalization(IList<Vector2> pts, out double scale, out double mx, out double my)
+        {
+            mx = my = 0;
+            foreach (var p in pts) { mx += p.x; my += p.y; }
+            mx /= pts.Count;
+            my /= pts.Count;
+            double d = 0;
+            foreach (var p in pts) d += System.Math.Sqrt((p.x - mx) * (p.x - mx) + (p.y - my) * (p.y - my));
+            d /= pts.Count;
+            scale = d > 1e-9 ? System.Math.Sqrt(2) / d : 1;
+        }
+
+        static bool Solve8(double[,] A, out double[] x)
+        {
+            x = new double[8];
+            for (int col = 0; col < 8; col++)
+            {
+                int pivot = col;
+                for (int r = col + 1; r < 8; r++)
+                    if (System.Math.Abs(A[r, col]) > System.Math.Abs(A[pivot, col])) pivot = r;
+                if (System.Math.Abs(A[pivot, col]) < 1e-12) return false;
+                if (pivot != col)
+                    for (int k = 0; k < 9; k++) { var tmp = A[col, k]; A[col, k] = A[pivot, k]; A[pivot, k] = tmp; }
+                for (int r = 0; r < 8; r++)
+                {
+                    if (r == col) continue;
+                    double f = A[r, col] / A[col, col];
+                    if (f == 0) continue;
+                    for (int k = col; k < 9; k++) A[r, k] -= f * A[col, k];
+                }
+            }
+            for (int i = 0; i < 8; i++) x[i] = A[i, 8] / A[i, i];
+            return true;
+        }
+
+        static double[] Multiply(double[] a, double[] b)
+        {
+            var r = new double[9];
+            for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                r[i * 3 + j] = a[i * 3] * b[j] + a[i * 3 + 1] * b[3 + j] + a[i * 3 + 2] * b[6 + j];
+            return r;
         }
 
         public static Vector2 Apply(double[] H, double x, double y)

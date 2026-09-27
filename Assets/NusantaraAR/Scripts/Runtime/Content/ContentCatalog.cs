@@ -9,6 +9,9 @@ namespace NusantaraAR
     {
         public const string ResourcePath = "ContentCatalog";
 
+        /// <summary>Awalan isi kode QR Nusantara AR; isi lengkap = awalan + artifactId (lihat <see cref="ArtifactData.QrText"/>).</summary>
+        public const string QrPrefix = "NUSANTARA:";
+
         public List<ArtifactData> artifacts = new List<ArtifactData>();
 
         public static ContentCatalog Load() => Resources.Load<ContentCatalog>(ResourcePath);
@@ -25,6 +28,15 @@ namespace NusantaraAR
         {
             if (code == 0) return null;
             return artifacts.Find(a => a != null && a.markerCode == code);
+        }
+
+        /// <summary>Artefak dari isi kode QR hasil pindai ("NUSANTARA:&lt;artifactId&gt;", atau artifactId saja).</summary>
+        public ArtifactData FindByQr(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return null;
+            text = text.Trim();
+            if (text.StartsWith(QrPrefix, System.StringComparison.OrdinalIgnoreCase)) text = text.Substring(QrPrefix.Length);
+            return Find(text);
         }
 
         /// <summary>Kategori yang punya konten; kategori kosong tidak ditampilkan (PRD FR-11).</summary>

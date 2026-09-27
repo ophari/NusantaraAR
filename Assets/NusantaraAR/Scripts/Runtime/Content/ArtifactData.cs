@@ -65,9 +65,12 @@ namespace NusantaraAR
         public string license;
         public LocalizedString measurementNote;
 
-        [Header("Scan Kartu (marker AR tanpa ARCore)")]
+        [Header("Kartu penanda lama (cadangan Scan QR, tanpa ARCore)")]
         [Tooltip("Kode 16-bit pola kartu penanda (lihat MarkerPattern). 0 = tidak punya kartu.")]
         public int markerCode;
+
+        /// <summary>Isi kode QR artefak ini, mis. "NUSANTARA:KERIS_BALI_01". Diturunkan dari artifactId (tidak diisi manual).</summary>
+        public string QrText => ContentCatalog.QrPrefix + artifactId;
 
         [Header("Model sementara")]
         public bool isPlaceholder;
