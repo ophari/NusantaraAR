@@ -16,7 +16,7 @@ Dokumen ini menjelaskan cara kerja kode proyek: arsitektur, alur data, tanggung 
 | Target | Android, IL2CPP ARM64, minSdk 26, targetSdk 36 |
 | UI | uGUI + TextMeshPro, **dibuat seluruhnya dari kode** (`UIKit`), tanpa prefab UI dan tanpa layout di YAML scene |
 | Bahasa kode | C#; komentar dan teks dalam Bahasa Indonesia |
-| Jumlah kode | 43 file C#, ±7.450 baris (Runtime 33 file / 4.672 baris, Editor 7 / 2.361, Test 3 / 421) |
+| Jumlah kode | 47 file C#, ±8.840 baris (Runtime 36 file / 6.426 baris, Editor 7 / 1.490, Test 4 / 921) |
 
 ### Assembly dan namespace
 
@@ -317,10 +317,12 @@ Update:
 | Nusantara AR / Build Keris Bali | `KerisBaliBuilder.BuildMenu` | Mengimpor ulang `keris_bali.glb`, membangun prefab + konten + thumbnail |
 | Nusantara AR / Build Keris Sumatra | `KerisSumatraBuilder.BuildMenu` | Mengimpor ulang `keris_sumatra.glb`, membangun prefab + konten + thumbnail |
 | Nusantara AR / Render Stage Previews | `PreviewRenderer.Render` | Merender PNG tiap tahap exploded setiap artefak ke `Previews/{id}_stage_N.png` (untuk QA visual) |
-| Nusantara AR / Build / Android APK (uji perangkat) | `BuildScript.BuildAndroidApk` | `Builds/Android/NusantaraAR.apk` |
+| Nusantara AR / Render Thumbnails | `ProjectSetup.RenderThumbnails` | Merender ulang thumbnail katalog kedua keris tanpa menjalankan Setup Everything |
+| Nusantara AR / Build / Android APK (uji perangkat) | `BuildScript.BuildAndroidApk` | `Builds/Android/NusantaraAR.apk` (pindah ke platform Android dulu bila perlu) |
 | Nusantara AR / Build / Android App Bundle (.aab) | `BuildScript.BuildAndroidAab` | `Builds/Android/NusantaraAR.aab` |
+| *(batch saja)* | `BuildScript.BuildWindowsCapture` | Build QA Windows `Builds/QA/NusantaraAR.exe` dengan `DevCapture`; platform aktif dikembalikan setelahnya |
 
-Versi batch (tanpa GUI): `ProjectSetup.RunBatch`, `PreviewRenderer.RenderBatch`, dan `BuildScript.*`. Semuanya dipanggil lewat `-executeMethod`.
+Versi batch (tanpa GUI): `ProjectSetup.RunBatch`, `ProjectSetup.RenderThumbnailsBatch`, `PreviewRenderer.RenderBatch`, dan `BuildScript.*`. Semuanya dipanggil lewat `-executeMethod`. Render (thumbnail, preview, QA) butuh GPU, jadi **jangan** pakai `-nographics`.
 
 ### 7.2 Urutan `ProjectSetup.RunAll` (idempoten)
 1. `EnsureFolders`: membuat folder Art/Content/Resources/Prefabs/Scenes.
@@ -332,8 +334,12 @@ Versi batch (tanpa GUI): `ProjectSetup.RunBatch`, `PreviewRenderer.RenderBatch`,
 7. `PruneCatalog`: katalog hanya berisi artefak model Blender (Bali, Sumatra), berurutan.
 8. `BuildCommonAssets`: material reticle dan `ARPlane.prefab`.
 9. `BuildMainScene`, `BuildARScene`, `BuildMarkerScene`: kamera, cahaya, EventSystem (Input System UI module), controller, dan referensinya.
-10. `RenderThumbnail(dataPath, thumbPath)` untuk tiap artefak.
+10. `RenderThumbnail(dataPath, thumbPath)` untuk tiap artefak (600×740 px, `Content/<ID>/<ID>_thumb.png`).
     - Parameternya **path**, bukan instance, karena `ArtifactData` bisa sudah di-unload setelah pergantian scene.
+    - Artefak di-`Init` dan di-`SnapTo(0)` (utuh). Jarak kamera memakai FOV horizontal sebenarnya, dan near/far clip dihitung dari bounds.
+    - Kamera merender **dua kali**. Render pertama di scene baru URP bisa kosong karena shader/tekstur belum siap; dulu ini menghasilkan thumbnail abu-abu polos.
+    - Bila hasilnya satu warna (`IsUniform`), file lama **tidak ditimpa** dan muncul exception. Bounds kosong juga memicu exception.
+    - Importer diset `npotScale = None`. Tanpa itu Unity membulatkan 600×740 menjadi 512×512, sehingga gambar gepeng dan ada pita kosong di katalog.
 11. Mengisi Build Settings dengan urutan `Main`, `AR`, `Marker`, lalu `SaveAssets`.
 
 ### 7.3 Model Blender → GLB → prefab (`GlbArtifact`, `KerisBaliBuilder`, `KerisSumatraBuilder`)
@@ -352,6 +358,19 @@ Versi batch (tanpa GUI): `ProjectSetup.RunBatch`, `PreviewRenderer.RenderBatch`,
 
 ### 7.4 Konten draf
 `KerisBaliBuilder.Fill` dan `KerisSumatraBuilder.Fill` menulis judul, material, teknik, dan istilah daerah ke setiap hotspot; filosofi & sejarah berisi penanda untuk kurator. Semua hotspot ditandai `curatorValidated = false` sampai divalidasi kurator.
+
+### 7.5 Build dan pengaman platform (`BuildScript`, `BuildGuard`)
+**Masalah yang dicegah:** ARCore diinisialisasi sejak aplikasi dibuka (`InitManagerOnStart = true` di `ConfigureXR`), jadi **semua** kamera, termasuk 3D Viewer di scene Main, dirender lewat jalur XR URP. URP menghitung *shader prefiltering* (varian mana yang dibuang) dari **platform aktif** editor, bukan dari target build. Bila APK di-build saat platform aktif masih Standalone (mis. sisa build QA Windows), `Mobile_RPAsset.m_PrefilterXRKeywords` menjadi `1`. Varian XR dibuang, dan model 3D **tidak tampil di HP** padahal build "sukses". Satu-satunya jejak di log: pesan ARCore *"Cannot get path to the Gradle launcher unless the active build platform is Android"*.
+
+Pengaman berlapis:
+- `BuildScript.Build` (APK/AAB) memanggil `SwitchActiveBuildTarget(Android)` bila platform aktif bukan Android.
+- `BuildScript.BuildWindowsCapture` pindah ke Windows dulu, lalu mengembalikan platform semula di `finally`.
+- `BuildGuard` (`IPreprocessBuildWithReport`, `callbackOrder` 1000, setelah URP mengisi data prefiltering) berjalan di **setiap** build, termasuk menu, Build Profiles, dan batch. Build dihentikan (`BuildFailedException`) bila:
+  1. target build ≠ platform aktif, atau
+  2. platform target punya loader XR aktif (ARCore/ARKit) tetapi aset URP miliknya (level kualitas platform itu, lewat `QualitySettings.GetRenderPipelineAssetsForPlatform`) membuang varian XR.
+- `PC_RPAsset` memang membuang varian XR. Itu benar karena aset ini hanya dipakai level kualitas PC, jadi tidak ikut dicek untuk Android.
+
+Build batch dari command line tetap disarankan memakai `-buildTarget Android` agar Unity langsung terbuka di platform yang benar (tanpa impor ulang aset di tengah build).
 
 ---
 
@@ -413,4 +432,5 @@ Tidak perlu kode tambahan: isi QR diturunkan dari `artifactId`. Tambahkan baris 
 - **AR ARCore** tidak bisa diuji di Galaxy A05. Jalur tersebut hanya teruji di Editor, sebatas cabang "tidak didukung".
 - **Aset hasil generator** (scene, prefab, katalog, GLB di Art/KerisBali dan Art/KerisSumatra) jangan diedit manual; ubah skrip Blender / kode editor lalu jalankan ulang.
 - Tekstur GLB diimpor glTFast sebagai sub-aset; ukuran dan kompresinya mengikuti glTFast, bukan TextureImporter Unity (perhatikan ukuran APK dan memori di perangkat kelas bawah).
-- APK `Builds/Android/NusantaraAR.apk` (49,9 MB) sudah dibangun ulang dengan Keris Bali + Keris Sumatra (Blender/glTFast), tetapi belum diuji di perangkat.
+- APK `Builds/Android/NusantaraAR.apk` (50,0 MB) dibangun ulang 27-09-2026 (platform aktif Android, thumbnail katalog baru), tetapi belum diuji di perangkat.
+- **Jangan build Android dengan platform aktif selain Android**; lihat §7.5. `BuildGuard` akan menghentikan build semacam itu, jadi jangan dihapus.

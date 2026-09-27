@@ -31,6 +31,13 @@ namespace NusantaraAR.EditorTools
                 targetGroup = BuildTargetGroup.Standalone,
                 extraScriptingDefines = new[] { "NUSANTARA_CAPTURE" }
             };
+            // BuildGuard menolak build bila platform aktif != target; platform semula dikembalikan di akhir.
+            var previousTarget = EditorUserBuildSettings.activeBuildTarget;
+            var previousGroup = BuildPipeline.GetBuildTargetGroup(previousTarget);
+            if (previousTarget != BuildTarget.StandaloneWindows64 &&
+                !EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64))
+                throw new Exception("Gagal pindah platform aktif ke Windows.");
+
             // Pakai profil kualitas "Mobile" (sama dengan Android) selama build QA, lalu kembalikan.
             var qs = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/QualitySettings.asset")[0]);
             var levels = qs.FindProperty("m_QualitySettings");
@@ -57,6 +64,9 @@ namespace NusantaraAR.EditorTools
                 }
                 SetStandaloneDefaultQuality(1);
                 QualitySettings.SetQualityLevel(previousDefault, false);
+                // Kembalikan platform aktif (biasanya Android) agar build APK berikutnya tidak ikut setelan Standalone.
+                if (EditorUserBuildSettings.activeBuildTarget != previousTarget)
+                    EditorUserBuildSettings.SwitchActiveBuildTarget(previousGroup, previousTarget);
             }
             Debug.Log($"[NusantaraAR] QA build {report.summary.result}");
             if (Application.isBatchMode) EditorApplication.Exit(report.summary.result == BuildResult.Succeeded ? 0 : 1);
@@ -77,6 +87,11 @@ namespace NusantaraAR.EditorTools
 
         static void Build(bool appBundle, string path)
         {
+            // Wajib: URP menghitung stripping shader (termasuk varian XR/ARCore) dari platform AKTIF, bukan target build.
+            // Kalau masih Standalone (mis. sisa build QA), varian XR ikut dibuang dan model 3D tak tampil di HP.
+            if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android &&
+                !EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android))
+                throw new Exception("Gagal pindah platform aktif ke Android.");
             EditorUserBuildSettings.buildAppBundle = appBundle;
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             var options = new BuildPlayerOptions

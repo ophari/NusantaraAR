@@ -18,6 +18,11 @@ Aplikasi mobile AR untuk edukasi benda budaya Indonesia, sesuai **PRD v1.1** (`p
 3. Buka `Assets/NusantaraAR/Scenes/Main.unity` lalu Play. Mouse = sentuhan, scroll = pinch.
    Di Editor, scene AR akan menampilkan jalur "AR tidak tersedia" → "Buka di 3D Viewer" (normal, tanpa perangkat).
 4. Build: **Nusantara AR → Build → Android APK** (uji perangkat) atau **Android App Bundle** (Play Store, butuh keystore rilis).
+   Batch: `Unity -batchmode -projectPath . -buildTarget Android -executeMethod NusantaraAR.EditorTools.BuildScript.BuildAndroidApk`
+
+> **Penting:** APK harus di-build dengan **platform aktif Android**. Bila platform aktif masih Windows/Standalone
+> (mis. setelah build QA), URP membuang varian shader XR dan **model 3D tidak tampil di HP** walau build "sukses".
+> `BuildScript` otomatis pindah platform, dan `BuildGuard` menghentikan build yang salah platform. Detail: §7.5 dokumentasi kode.
 
 Pasang ke HP Android (USB debugging aktif):
 
@@ -28,10 +33,12 @@ adb install -r Builds/Android/NusantaraAR.apk
 Alat bantu lain:
 - **Nusantara AR → Render Stage Previews** → `Previews/<ID>_stage_N.png` (setiap tahap exploded view + titik hotspot, semua artefak).
 - **Nusantara AR → Build Keris Bali / Build Keris Sumatra** — impor ulang GLB Blender satu keris (prefab, konten, thumbnail).
+- **Nusantara AR → Render Thumbnails** — render ulang thumbnail katalog saja (batch: `ProjectSetup.RenderThumbnailsBatch`, tanpa `-nographics`).
 - Test: Window → General → Test Runner → EditMode (`NusantaraAR.Tests.EditMode`).
 - Build QA Windows dengan tangkapan layar otomatis alur utama (define `NUSANTARA_CAPTURE`, profil kualitas Mobile):
   `-executeMethod NusantaraAR.EditorTools.BuildScript.BuildWindowsCapture`, lalu jalankan
   `Builds/QA/NusantaraAR.exe -screen-width 540 -screen-height 1170 -screen-fullscreen 0` → hasil di `Builds/QA/Captures/`.
+  Build ini pindah ke platform Windows lalu mengembalikan platform semula, jadi build APK sesudahnya tetap aman.
 
 Build Android terakhir sudah diverifikasi: targetSdk 36, minSdk 26, hanya `arm64-v8a`, ARCore `optional`,
 dan semua library native berselaras 16 KB (segmen LOAD `0x4000`).
@@ -83,7 +90,7 @@ Assets/NusantaraAR/
     AR/          ARController (state machine §4.2), PlacementController (reticle + ARAnchor), CameraPermission, ReticleView
     UI/          UIKit (token desain §5.1), ArtifactHud, HotspotOverlay (label di AR), HotspotCard, Catalog/Settings/Onboarding
     Audio/       AudioManager (2 AudioSource: narasi + SFX, ducking)
-  Scripts/Editor/ ProjectSetup, PreviewRenderer, BuildScript,
+  Scripts/Editor/ ProjectSetup, PreviewRenderer, BuildScript, BuildGuard (pengaman platform build),
                   GlbArtifact (GLB -> prefab artefak), KerisBaliBuilder, KerisSumatraBuilder (bagian, tahap, hotspot, konten)
   Content/KERIS_BALI_01/          prefab, ArtifactData, thumbnail (dibangkitkan KerisBaliBuilder)
   Content/KERIS_SUMATRA_01/       prefab, ArtifactData, thumbnail (dibangkitkan KerisSumatraBuilder)
