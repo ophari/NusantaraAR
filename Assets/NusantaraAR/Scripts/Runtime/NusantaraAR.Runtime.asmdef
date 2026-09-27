@@ -1,0 +1,13 @@
+{
+    "name": "NusantaraAR.Runtime",
+    "rootNamespace": "NusantaraAR",
+    "references": [
+        "Unity.XR.ARFoundation",
+        "Unity.XR.ARSubsystems",
+        "Unity.XR.CoreUtils",
+        "Unity.InputSystem",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI"
+    ],
+    "autoReferenced": true
+}

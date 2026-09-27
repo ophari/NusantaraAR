@@ -1,0 +1,378 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaae056f5a3ccf4d8025ecf14452651, type: 3}
+  m_Name: KERIS_SUMATRA_01
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactData
+  artifactId: KERIS_SUMATRA_01
+  displayName:
+    id: Keris Sumatra
+    en: Sumatran Keris
+  localName: Keris
+  category: 0
+  region:
+    id: Sumatra
+    en: Sumatra
+  era:
+    id: Era belum ditentukan
+    en: Era not yet determined
+  summary:
+    id: Keris gaya Sumatra dengan bilah 7 luk berpamor wos wutah, hulu kayu burl
+      berukir yang melengkung seperti kepala burung, warangka sampir bulan sabit,
+      dan pendok kuningan berukir. Model dibuat di Blender dari cetak biru, bukan
+      dipindai dari spesimen.
+    en: A Sumatran-style keris with a 7-wave wos wutah patterned blade, a carved
+      burl-wood hilt curving like a bird's head, a crescent sampir sheath top and
+      engraved brass pendok. The model was made in Blender from a blueprint, not
+      scanned from a specimen.
+  thumbnail: {fileID: 2800000, guid: a49ba608f16da4940bc6f262c3280901, type: 3}
+  prefab: {fileID: 2629085558189227531, guid: 29953468d927d82479fa8e51248fab6d, type: 3}
+  specimenOwner: 
+  collectionNumber: 
+  license: Model Blender milik proyek (dibuat dari cetak biru)
+  measurementNote:
+    id: "Skala 1:1 mengikuti cetak biru: bilah 36 cm + pesi 7,2 cm, hulu \xB110 cm,
+      warangka sampir lebar 19 cm. Bukan hasil pengukuran spesimen."
+    en: '1:1 scale follows the blueprint: 36 cm blade + 7.2 cm tang (pesi), ~10 cm
+      hilt, 19 cm wide sampir. Not measured from a specimen.'
+  markerCode: 61668
+  isPlaceholder: 1
+  placeholderNote:
+    id: 'Model Blender dari cetak biru: ukiran, motif pamor, dan serat kayu adalah
+      penyederhanaan. Akan diganti aset dari spesimen asli yang divalidasi kurator.'
+    en: 'Blender model from a blueprint: the carving, pamor pattern and wood grain
+      are simplified. It will be replaced by an asset from a curator-validated specimen.'
+  hotspots:
+  - hotspotId: hulu
+    partName: Hulu
+    localPosition: {x: 0.0119999945, y: 0.06999999, z: -0.013464928}
+    visibleFrom: 0
+    title:
+      id: Hulu (Deder)
+      en: Hilt (Deder)
+    regionalTerm: 'Sumatra/Semenanjung: hulu, deder'
+    material:
+      id: 'Pada model: kayu burl (jati berpola) berpernis (sesuai cetak biru, perlu
+        dikonfirmasi)'
+      en: 'On the model: varnished burl (figured teak) wood (per the blueprint, to
+        be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Pegangan keris yang dipasang pada pesi. Bentuknya melengkung seperti pistol
+        dengan kepala bergaya paruh burung; bagian bawahnya diukir motif sulur dan
+        bunga.
+      en: The keris handle, fitted onto the pesi. It curves like a pistol grip with
+        a stylised bird-beak head; the lower part is carved with scroll and flower
+        motifs.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Pegangan keris yang dipasang pada pesi. Bentuknya melengkung seperti pistol
+        dengan kepala bergaya paruh burung; bagian bawahnya diukir motif sulur dan
+        bunga.
+      en: The keris handle, fitted onto the pesi. It curves like a pistol grip with
+        a stylised bird-beak head; the lower part is carved with scroll and flower
+        motifs.
+    sources:
+    - "Cetak biru Keris Sumatra (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: mendak
+    partName: Mendak
+    localPosition: {x: 0, y: 0.01699999, z: -0.014185667}
+    visibleFrom: 0
+    title:
+      id: Mendak
+      en: Mendak (ring)
+    regionalTerm: 
+    material:
+      id: 'Pada model: kuningan timbul (perlu dikonfirmasi)'
+      en: 'On the model: embossed brass (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Cincin logam bertingkat di antara hulu dan ganja, dihiasi deretan butiran
+        dan kelopak.
+      en: The stepped metal ring between the hilt and the ganja, decorated with a
+        row of beads and petals.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Cincin logam bertingkat di antara hulu dan ganja, dihiasi deretan butiran
+        dan kelopak.
+      en: The stepped metal ring between the hilt and the ganja, decorated with a
+        row of beads and petals.
+    sources:
+    - "Cetak biru Keris Sumatra (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: warangka
+    partName: Warangka
+    localPosition: {x: 0, y: -0.025000006, z: -0.016410828}
+    visibleFrom: 0
+    title:
+      id: Warangka Sampir
+      en: Warangka (crescent sheath top)
+    regionalTerm: 'Sumatra: sampir'
+    material:
+      id: 'Pada model: kayu burl berpernis (perlu dikonfirmasi)'
+      en: 'On the model: varnished burl wood (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Kepala sarung berbentuk bulan sabit; kedua ujungnya melengkung ke atas
+        dan satu sisi meruncing lebih panjang. Di tengahnya ada celah tempat bilah
+        masuk.
+      en: The crescent-shaped sheath top; both ends curve upward and one side tapers
+        longer. The slot for the blade is in the middle.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Kepala sarung berbentuk bulan sabit; kedua ujungnya melengkung ke atas
+        dan satu sisi meruncing lebih panjang. Di tengahnya ada celah tempat bilah
+        masuk.
+      en: The crescent-shaped sheath top; both ends curve upward and one side tapers
+        longer. The slot for the blade is in the middle.
+    sources:
+    - "Cetak biru Keris Sumatra (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: pendok
+    partName: Pendok
+    localPosition: {x: 0, y: -0.099999994, z: -0.013106704}
+    visibleFrom: 0
+    title:
+      id: Pendok
+      en: Pendok (sheath sleeves)
+    regionalTerm: 
+    material:
+      id: 'Pada model: kuningan/perunggu 85/15 berpatina (perlu dikonfirmasi)'
+      en: 'On the model: patinated 85/15 brass/bronze (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: "Selongsong logam repouss\xE9 berukir sulur yang membalut gandar; pada
+        model terbagi dua: di bawah sampir dan di ujung sarung."
+      en: "Repouss\xE9 metal sleeves with scroll decoration over the gandar; on the
+        model they come in two parts: below the sampir and at the sheath tip."
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: "Selongsong logam repouss\xE9 berukir sulur yang membalut gandar; pada
+        model terbagi dua: di bawah sampir dan di ujung sarung."
+      en: "Repouss\xE9 metal sleeves with scroll decoration over the gandar; on the
+        model they come in two parts: below the sampir and at the sheath tip."
+    sources:
+    - "Cetak biru Keris Sumatra (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: gandar
+    partName: Gandar
+    localPosition: {x: 0, y: -0.205, z: -0.011516809}
+    visibleFrom: 0
+    title:
+      id: Gandar
+      en: Gandar (sheath body)
+    regionalTerm: 
+    material:
+      id: 'Pada model: kayu nangka (perlu dikonfirmasi)'
+      en: 'On the model: jackwood (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Badan sarung yang membungkus bilah, meruncing ke bawah; bagian tengahnya
+        dibiarkan kayu.
+      en: The sheath body that covers the blade, tapering downward; its middle is
+        left as bare wood.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Badan sarung yang membungkus bilah, meruncing ke bawah; bagian tengahnya
+        dibiarkan kayu.
+      en: The sheath body that covers the blade, tapering downward; its middle is
+        left as bare wood.
+    sources:
+    - "Cetak biru Keris Sumatra (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: ganja
+    partName: Ganja
+    localPosition: {x: 0.019999996, y: 0.004999995, z: -0.007799864}
+    visibleFrom: 1
+    title:
+      id: Ganja (Gonjo)
+      en: Ganja (base plate)
+    regionalTerm: 
+    material:
+      id: Besi/baja tempa berpamor (perlu dikonfirmasi)
+      en: Forged, patterned iron/steel (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Bantalan melintang di pangkal bilah. Pada model dibuat terpisah dan dilepas
+        pada tahap 3.
+      en: The cross-piece at the base of the blade. On this model it is a separate
+        piece, removed in step 3.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Bantalan melintang di pangkal bilah. Pada model dibuat terpisah dan dilepas
+        pada tahap 3.
+      en: The cross-piece at the base of the blade. On this model it is a separate
+        piece, removed in step 3.
+    sources:
+    - "Cetak biru Keris Sumatra (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: gandik
+    partName: Wilah
+    localPosition: {x: -0.0119999945, y: -0.030000001, z: -0.0047215223}
+    visibleFrom: 1
+    title:
+      id: Gandik & Kembang Kacang
+      en: Gandik & Kembang Kacang
+    regionalTerm: 
+    material:
+      id: Besi/baja tempa (perlu dikonfirmasi)
+      en: Forged iron/steel (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Pangkal depan bilah yang tebal, dengan kembang kacang (lengkung seperti
+        belalai) dan pejetan. Sisi belakang bergerigi disebut greneng.
+      en: The thick front base of the blade, with the kembang kacang (trunk-like
+        curl) and pejetan. The serrated back edge is the greneng.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Pangkal depan bilah yang tebal, dengan kembang kacang (lengkung seperti
+        belalai) dan pejetan. Sisi belakang bergerigi disebut greneng.
+      en: The thick front base of the blade, with the kembang kacang (trunk-like
+        curl) and pejetan. The serrated back edge is the greneng.
+    sources:
+    - "Cetak biru Keris Sumatra (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: pamor
+    partName: Wilah
+    localPosition: {x: 0, y: -0.120000005, z: -0.005632162}
+    visibleFrom: 1
+    title:
+      id: Pamor Wos Wutah
+      en: Pamor (wos wutah)
+    regionalTerm: 
+    material:
+      id: Baja lipat dengan bahan pamor nikel (perlu dikonfirmasi)
+      en: Fold-forged steel with nickel pamor (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Urat perak di permukaan bilah hasil tempa lipat. Wos wutah berarti 'beras
+        tumpah' - motif butiran yang tersebar acak. Motif pada model dibuat prosedural.
+      en: The silvery veins on the blade surface from fold-forging. Wos wutah means
+        'spilled rice' - a randomly scattered pattern. The pattern on the model is
+        procedural.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Urat perak di permukaan bilah hasil tempa lipat. Wos wutah berarti 'beras
+        tumpah' - motif butiran yang tersebar acak. Motif pada model dibuat prosedural.
+      en: The silvery veins on the blade surface from fold-forging. Wos wutah means
+        'spilled rice' - a randomly scattered pattern. The pattern on the model is
+        procedural.
+    sources:
+    - "Cetak biru Keris Sumatra (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: luk
+    partName: Wilah
+    localPosition: {x: 0, y: -0.25, z: -0.005043268}
+    visibleFrom: 1
+    title:
+      id: Luk 7
+      en: Luk (7 waves)
+    regionalTerm: 7 luk (menurut cetak biru, perlu divalidasi)
+    material:
+      id: 
+      en: 
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Lekukan pada bilah. Jumlah luk selalu ganjil; model ini dibuat dengan 7
+        luk dan panjang bilah 36 cm sesuai cetak biru.
+      en: The waves of the blade. The number of luk is always odd; this model has
+        7, with a 36 cm blade, following the blueprint.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Lekukan pada bilah. Jumlah luk selalu ganjil; model ini dibuat dengan 7
+        luk dan panjang bilah 36 cm sesuai cetak biru.
+      en: The waves of the blade. The number of luk is always odd; this model has
+        7, with a 36 cm blade, following the blueprint.
+    sources:
+    - "Cetak biru Keris Sumatra (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).

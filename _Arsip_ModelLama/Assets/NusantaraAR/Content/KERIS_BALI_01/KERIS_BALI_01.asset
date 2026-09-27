@@ -1,0 +1,378 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaae056f5a3ccf4d8025ecf14452651, type: 3}
+  m_Name: KERIS_BALI_01
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactData
+  artifactId: KERIS_BALI_01
+  displayName:
+    id: Keris Bali (Model Prosedural)
+    en: Balinese Keris (Procedural Model)
+  localName: Keris
+  category: 0
+  region:
+    id: Bali
+    en: Bali
+  era:
+    id: Era belum ditentukan
+    en: Era not yet determined
+  summary:
+    id: Keris gaya Bali dengan bilah 11 luk berpamor, hulu figur, mendak berpermata,
+      dan warangka kayu berbentuk perahu di atas dudukan. Model ini disusun dari
+      lembar acuan, bukan dipindai dari spesimen.
+    en: A Balinese-style keris with an 11-wave patterned blade, a figural hilt, a
+      jewelled mendak and a boat-shaped wooden sheath on a stand. The model is built
+      from a reference sheet, not scanned from a specimen.
+  thumbnail: {fileID: 2800000, guid: 23f04752e8202c04a8f302e8fa020e23, type: 3}
+  prefab: {fileID: 3306034018865340850, guid: eb1a425502cc05145bcf91a0cb03e355, type: 3}
+  specimenOwner: 
+  collectionNumber: 
+  license: Model prosedural milik proyek (dibuat dari lembar acuan)
+  measurementNote:
+    id: Skala 1:1 memakai asumsi panjang bilah 42 cm (keris Bali umumnya lebih panjang
+      dari keris Jawa), bukan hasil pengukuran spesimen.
+    en: 1:1 scale assumes a 42 cm blade (Balinese keris tend to be longer than Javanese
+      ones); not measured from a specimen.
+  markerCode: 46386
+  isPlaceholder: 1
+  placeholderNote:
+    id: 'Model prosedural dari lembar acuan: bentuk, ukiran, dan motif pamor adalah
+      penyederhanaan. Akan diganti aset dari spesimen asli yang divalidasi kurator.'
+    en: 'Procedural model from a reference sheet: the shapes, carving and pamor pattern
+      are simplified. It will be replaced by an asset from a curator-validated specimen.'
+  hotspots:
+  - hotspotId: hulu
+    partName: Hulu
+    localPosition: {x: 0, y: 0.06800002, z: -0.0188}
+    visibleFrom: 0
+    title:
+      id: Hulu
+      en: Hilt
+    regionalTerm: 'Bali: danganan - Jawa: ukiran'
+    material:
+      id: 'Pada model: logam/batu keabu-abuan (perlu dikonfirmasi pada spesimen)'
+      en: 'On the model: greyish metal/stone (to be confirmed on the specimen)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Pegangan keris yang dipasang pada pesi. Pada lembar acuan hulu berbentuk
+        figur duduk bergaya Ganesha di atas alas teratai; identifikasi figurnya perlu
+        dikonfirmasi kurator.
+      en: The keris handle, fitted onto the pesi. On the reference sheet the hilt
+        is a seated Ganesha-style figure on a lotus base; the identification of the
+        figure needs curator confirmation.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Pegangan keris yang dipasang pada pesi. Pada lembar acuan hulu berbentuk
+        figur duduk bergaya Ganesha di atas alas teratai; identifikasi figurnya perlu
+        dikonfirmasi kurator.
+      en: The keris handle, fitted onto the pesi. On the reference sheet the hilt
+        is a seated Ganesha-style figure on a lotus base; the identification of the
+        figure needs curator confirmation.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model prosedural dari lembar acuan).
+  - hotspotId: mendak
+    partName: Mendak
+    localPosition: {x: 0, y: 0.022000015, z: -0.016197128}
+    visibleFrom: 0
+    title:
+      id: Mendak
+      en: Mendak (ring)
+    regionalTerm: 
+    material:
+      id: 'Pada model: emas dengan permata merah (perlu dikonfirmasi)'
+      en: 'On the model: gold with red gems (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Cincin logam di antara hulu dan ganja. Pada lembar acuan dihiasi deretan
+        permata merah dan butiran emas.
+      en: A metal ring between the hilt and the ganja. On the reference sheet it
+        is set with a row of red gems and gold beads.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Cincin logam di antara hulu dan ganja. Pada lembar acuan dihiasi deretan
+        permata merah dan butiran emas.
+      en: A metal ring between the hilt and the ganja. On the reference sheet it
+        is set with a row of red gems and gold beads.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model prosedural dari lembar acuan).
+  - hotspotId: warangka
+    partName: Warangka
+    localPosition: {x: 0.05, y: 0.02000001, z: -0.018433621}
+    visibleFrom: 0
+    title:
+      id: Warangka
+      en: Warangka (sheath top)
+    regionalTerm: 
+    material:
+      id: 'Pada model: kayu (bertekstur jati, perlu dikonfirmasi)'
+      en: 'On the model: wood (teak-like grain, to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Bagian atas sarung yang melebar, tempat ganja bertumpu. Pada lembar acuan
+        berbentuk perahu dengan ujung kanan memanjang naik dan ujung kiri melengkung
+        pendek.
+      en: The wide upper part of the sheath, where the ganja rests. On the reference
+        sheet it is boat-shaped, with a long upswept right end and a short curled
+        left end.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Bagian atas sarung yang melebar, tempat ganja bertumpu. Pada lembar acuan
+        berbentuk perahu dengan ujung kanan memanjang naik dan ujung kiri melengkung
+        pendek.
+      en: The wide upper part of the sheath, where the ganja rests. On the reference
+        sheet it is boat-shaped, with a long upswept right end and a short curled
+        left end.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model prosedural dari lembar acuan).
+  - hotspotId: gandar
+    partName: Gandar
+    localPosition: {x: 0, y: 0.07, z: -0.011754375}
+    visibleFrom: 0
+    title:
+      id: Gandar
+      en: Gandar (sheath body)
+    regionalTerm: 
+    material:
+      id: 'Pada model: kayu (perlu dikonfirmasi)'
+      en: 'On the model: wood (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Badan sarung yang membungkus bilah; sebagian besar tertutup pendok.
+      en: The sheath body that covers the blade; most of it is covered by the pendok.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Badan sarung yang membungkus bilah; sebagian besar tertutup pendok.
+      en: The sheath body that covers the blade; most of it is covered by the pendok.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model prosedural dari lembar acuan).
+  - hotspotId: pendok
+    partName: Pendok
+    localPosition: {x: 0, y: 0.27, z: -0.017861417}
+    visibleFrom: 0
+    title:
+      id: Pendok
+      en: Pendok (sheath sleeve)
+    regionalTerm: 
+    material:
+      id: 'Pada model: logam berwarna emas berukir (perlu dikonfirmasi)'
+      en: 'On the model: engraved gold-coloured metal (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Selongsong logam pelapis gandar. Pada lembar acuan berukir, dengan panel
+        gelap di tengah dan roset emas. Pada tahap terakhir exploded view pendok
+        dilepas dari gandar.
+      en: The metal sleeve over the gandar. On the reference sheet it is engraved,
+        with a dark central panel and a gold rosette. In the last exploded-view step
+        the pendok is slid off the gandar.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Selongsong logam pelapis gandar. Pada lembar acuan berukir, dengan panel
+        gelap di tengah dan roset emas. Pada tahap terakhir exploded view pendok
+        dilepas dari gandar.
+      en: The metal sleeve over the gandar. On the reference sheet it is engraved,
+        with a dark central panel and a gold rosette. In the last exploded-view step
+        the pendok is slid off the gandar.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model prosedural dari lembar acuan).
+  - hotspotId: ganja
+    partName: Ganja
+    localPosition: {x: 0.019999996, y: 0.0059999824, z: -0.0070827208}
+    visibleFrom: 1
+    title:
+      id: Ganja
+      en: Ganja
+    regionalTerm: 
+    material:
+      id: Besi/baja tempa berpamor (perlu dikonfirmasi)
+      en: Forged, patterned iron/steel (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Bagian melintang di pangkal bilah. Pada model ini dibuat terpisah dari
+        bilah dan dilepas pada tahap 3.
+      en: The cross-piece at the base of the blade. On this model it is a separate
+        piece, removed in step 3.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Bagian melintang di pangkal bilah. Pada model ini dibuat terpisah dari
+        bilah dan dilepas pada tahap 3.
+      en: The cross-piece at the base of the blade. On this model it is a separate
+        piece, removed in step 3.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model prosedural dari lembar acuan).
+  - hotspotId: gandik
+    partName: Wilah
+    localPosition: {x: -0.022, y: -0.02000001, z: -0.004395896}
+    visibleFrom: 1
+    title:
+      id: Gandik & Greneng
+      en: Gandik & Greneng
+    regionalTerm: 
+    material:
+      id: Besi/baja tempa (perlu dikonfirmasi)
+      en: Forged iron/steel (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Pangkal bilah yang melebar (sor-soran). Takik-takik kecil di sisi belakang
+        pada model disebut greneng; bentuk ricikan pada spesimen ditetapkan kurator.
+      en: The widened blade base (sor-soran). The small notches on the back edge
+        of the model are called greneng; the exact features on the specimen are set
+        by the curator.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Pangkal bilah yang melebar (sor-soran). Takik-takik kecil di sisi belakang
+        pada model disebut greneng; bentuk ricikan pada spesimen ditetapkan kurator.
+      en: The widened blade base (sor-soran). The small notches on the back edge
+        of the model are called greneng; the exact features on the specimen are set
+        by the curator.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model prosedural dari lembar acuan).
+  - hotspotId: pamor
+    partName: Wilah
+    localPosition: {x: 0.0068066716, y: -0.12599999, z: -0.0067374334}
+    visibleFrom: 1
+    title:
+      id: Pamor
+      en: Pamor
+    regionalTerm: 
+    material:
+      id: Besi dengan bahan pamor, mis. nikel atau besi meteorit (perlu dikonfirmasi)
+      en: Iron with pamor material, e.g. nickel or meteoric iron (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Motif pada permukaan bilah, hasil tempa lipat besi dengan bahan pamor.
+        Motif pada model dibuat prosedural; nama motif ditetapkan kurator dari spesimen.
+      en: The pattern on the blade surface, made by fold-forging iron with pamor
+        material. The pattern on the model is procedural; the motif name is set by
+        the curator from the specimen.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Motif pada permukaan bilah, hasil tempa lipat besi dengan bahan pamor.
+        Motif pada model dibuat prosedural; nama motif ditetapkan kurator dari spesimen.
+      en: The pattern on the blade surface, made by fold-forging iron with pamor
+        material. The pattern on the model is procedural; the motif name is set by
+        the curator from the specimen.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model prosedural dari lembar acuan).
+  - hotspotId: luk
+    partName: Wilah
+    localPosition: {x: 0.0032628924, y: -0.252, z: -0.0054822015}
+    visibleFrom: 1
+    title:
+      id: Luk
+      en: Luk (blade waves)
+    regionalTerm: 11 luk (menurut lembar acuan, perlu divalidasi)
+    material:
+      id: 
+      en: 
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Lekukan pada bilah. Jumlah luk selalu ganjil; model ini dibuat dengan 11
+        luk sesuai lembar acuan.
+      en: The waves of the blade. The number of luk is always odd; this model has
+        11, following the reference sheet.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Lekukan pada bilah. Jumlah luk selalu ganjil; model ini dibuat dengan 11
+        luk sesuai lembar acuan.
+      en: The waves of the blade. The number of luk is always odd; this model has
+        11, following the reference sheet.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model prosedural dari lembar acuan).

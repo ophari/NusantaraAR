@@ -1,0 +1,316 @@
+<title>Draf Laporan Nusantara AR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F6F7F9; --paper:#FFFFFF; --ink:#1C2230; --muted:#5A6275; --line:#DCE0E8;
+  --nila:#2B3F7A; --nila-soft:#E6EAF5; --sogan:#7A4E24; --isi-bg:#FFF3C9; --isi-ink:#6B4A00;
+  --ok:#1F7A4D; --ok-bg:#E3F3EA; --warn:#8A5A00; --warn-bg:#FBEFD6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#12151C; --paper:#1A1E27; --ink:#E6E8EE; --muted:#9AA2B5; --line:#2D3342;
+    --nila:#9FB2EC; --nila-soft:#232B42; --sogan:#D9A36E; --isi-bg:#3A3015; --isi-ink:#F2D27A;
+    --ok:#7ED3A6; --ok-bg:#16301F; --warn:#F0C265; --warn-bg:#352812;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#12151C; --paper:#1A1E27; --ink:#E6E8EE; --muted:#9AA2B5; --line:#2D3342;
+  --nila:#9FB2EC; --nila-soft:#232B42; --sogan:#D9A36E; --isi-bg:#3A3015; --isi-ink:#F2D27A;
+  --ok:#7ED3A6; --ok-bg:#16301F; --warn:#F0C265; --warn-bg:#352812;
+}
+body{background:var(--bg);color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15.5px;line-height:1.65}
+.wrap{max-width:820px;margin:0 auto;padding-inline:20px;padding-block:40px 64px}
+header{display:grid;gap:10px;padding-bottom:24px;border-bottom:2px solid var(--nila)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sogan)}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.15;margin:0;font-weight:800;text-wrap:balance}
+.lead{color:var(--muted);margin:0;max-width:65ch}
+.note{background:var(--isi-bg);color:var(--isi-ink);border-radius:8px;padding:12px 14px;font-size:14px}
+nav{margin-block:28px;padding:16px 18px;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+nav b{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+nav ol{margin:0;padding-left:22px;columns:2;column-gap:28px}
+nav a{color:var(--nila);text-decoration:none}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+section{margin-top:40px}
+h2{font-size:22px;line-height:1.3;margin:0 0 12px;font-weight:700;text-wrap:balance;display:flex;gap:10px;align-items:baseline}
+h2 .n{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:14px;color:var(--sogan);font-weight:500}
+h3{font-size:16.5px;margin:22px 0 8px;font-weight:700}
+p,li{max-width:68ch}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,Consolas,monospace;font-size:.88em}
+code{background:var(--nila-soft);padding:1px 5px;border-radius:4px}
+.tbl{overflow-x:auto;margin-block:12px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;font-size:14.5px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--nila-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+.isi{background:var(--isi-bg);color:var(--isi-ink);padding:1px 6px;border-radius:4px;font-weight:600;white-space:normal}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:99px;white-space:nowrap}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+ol.steps{padding-left:22px}
+ol.steps li{margin-bottom:6px}
+.mermaid{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px;overflow-x:auto}
+@page{size:A4;margin:16mm 14mm}
+@media print{.wrap{max-width:none;padding:0}nav{display:none}tr,.mermaid,h2,h3{break-inside:avoid}h2,h3{break-after:avoid}body{font-size:12.5px}}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Draf data untuk laporan · versi 0.1.0 · 26 September 2026</div>
+  <h1>Nusantara AR: aplikasi AR edukasi benda budaya Indonesia</h1>
+  <p class="lead">Rangkuman teknis tentang alat, bahan, metode, dan hasil pembuatan aplikasi. Bisa langsung dipakai untuk Bab Metodologi, Implementasi, dan Pengujian. Datanya diambil dari proyek Unity di <code>C:\Users\ophari\NusantaraAR</code>.</p>
+  <div class="note">Bagian bertanda <span class="isi">[isi]</span> belum ada datanya dan perlu diisi sendiri, misalnya spesifikasi laptop, hasil uji di HP, dan data responden.</div>
+</header>
+
+<nav aria-label="Daftar isi">
+  <b>Daftar isi</b>
+  <ol>
+    <li><a href="#identitas">Identitas aplikasi</a></li>
+    <li><a href="#perangkat">Perangkat keras</a></li>
+    <li><a href="#software">Perangkat lunak dan alat</a></li>
+    <li><a href="#paket">Library dan paket Unity</a></li>
+    <li><a href="#build">Konfigurasi build Android</a></li>
+    <li><a href="#arsitektur">Arsitektur dan modul</a></li>
+    <li><a href="#metode">Metode AR (dua mode)</a></li>
+    <li><a href="#alur">Alur penggunaan</a></li>
+    <li><a href="#fitur">Fitur dan status</a></li>
+    <li><a href="#uji">Pengujian</a></li>
+    <li><a href="#batas">Keterbatasan dan pengembangan lanjut</a></li>
+    <li><a href="#tahapan">Tahapan pengerjaan</a></li>
+  </ol>
+</nav>
+
+<section id="identitas">
+  <h2><span class="n">1</span>Identitas aplikasi</h2>
+  <div class="tbl"><table>
+    <tr><th>Item</th><th>Data</th></tr>
+    <tr><td>Nama aplikasi</td><td>Nusantara AR</td></tr>
+    <tr><td>Package ID</td><td><code>id.nusantaraar.app</code></td></tr>
+    <tr><td>Versi</td><td>0.1.0 (prototipe)</td></tr>
+    <tr><td>Platform</td><td>Android 8.0 (API 26) ke atas. iOS disiapkan (ARKit) tetapi belum diuji.</td></tr>
+    <tr><td>Jenis aplikasi</td><td>Aplikasi mobile augmented reality (AR) untuk edukasi benda budaya</td></tr>
+    <tr><td>Objek budaya pertama</td><td>Keris (bilah, ganja, hulu, warangka, pendok), model sementara</td></tr>
+    <tr><td>Bahasa antarmuka</td><td>Indonesia dan Inggris</td></tr>
+    <tr><td>Dokumen acuan</td><td>PRD v1.1 (<code>prd_aplikasi_ar_benda_budaya_indonesia_v1.1.md</code>)</td></tr>
+    <tr><td>Ukuran file APK</td><td>± 41,4 MB (<code>Builds/Android/NusantaraAR.apk</code>)</td></tr>
+  </table></div>
+</section>
+
+<section id="perangkat">
+  <h2><span class="n">2</span>Perangkat keras</h2>
+  <div class="tbl"><table>
+    <tr><th>Perangkat</th><th>Fungsi</th><th>Spesifikasi</th></tr>
+    <tr><td>Laptop/PC</td><td>Pengembangan dan build aplikasi</td><td>Windows 11 Home. <span class="isi">[isi: prosesor, RAM, GPU, penyimpanan]</span></td></tr>
+    <tr><td>Samsung Galaxy A05</td><td>Perangkat uji utama</td><td>Android, kamera belakang. Tidak masuk daftar ARCore, jadi dipakai untuk menguji mode Scan Kartu. <span class="isi">[isi: versi Android, RAM]</span></td></tr>
+    <tr><td>HP dukung ARCore</td><td>Uji mode Letakkan di Meja</td><td><span class="isi">[isi bila ada, cek di daftar perangkat ARCore Google]</span></td></tr>
+    <tr><td>Printer</td><td>Mencetak kartu penanda</td><td>Kertas A5, cetak ukuran asli (kotak hitam 8 cm)</td></tr>
+  </table></div>
+  <h3>Spesifikasi minimum perangkat pengguna</h3>
+  <ul>
+    <li>Android 8.0 (API 26) atau lebih baru, prosesor 64-bit (ARM64)</li>
+    <li>Kamera belakang dan GPU yang mendukung OpenGL ES 3.0</li>
+    <li>Mode Letakkan di Meja: HP harus mendukung Google Play Services for AR (ARCore)</li>
+    <li>Mode Scan Kartu: cukup kamera, tidak perlu ARCore</li>
+  </ul>
+</section>
+
+<section id="software">
+  <h2><span class="n">3</span>Perangkat lunak dan alat</h2>
+  <div class="tbl"><table>
+    <tr><th>Perangkat lunak</th><th>Versi</th><th>Kegunaan</th></tr>
+    <tr><td>Unity Editor</td><td>6.3 LTS (6000.3.25f1)</td><td>Game engine utama untuk membangun aplikasi 3D/AR</td></tr>
+    <tr><td>Unity Hub</td><td>terbaru</td><td>Instalasi editor dan modul</td></tr>
+    <tr><td>Android Build Support</td><td>modul Unity (Android SDK, NDK, OpenJDK)</td><td>Kompilasi ke APK Android</td></tr>
+    <tr><td>Bahasa pemrograman</td><td>C#</td><td>Seluruh logika aplikasi, UI, dan detektor marker</td></tr>
+    <tr><td>Universal Render Pipeline (URP)</td><td>17.3.0</td><td>Rendering grafis ringan untuk mobile</td></tr>
+    <tr><td>Unity Test Framework (NUnit)</td><td>1.6.0</td><td>Pengujian unit otomatis (EditMode)</td></tr>
+    <tr><td>Python</td><td><span class="isi">[isi versi]</span></td><td>Skrip bantu: membuat kartu penanda PDF/PNG, mengekstrak paket TextMesh Pro</td></tr>
+    <tr><td>ADB (Android Debug Bridge)</td><td>dari Android SDK</td><td>Memasang APK ke HP lewat USB (opsional)</td></tr>
+    <tr><td>Model 3D keris</td><td>proyek <code>keris3d</code></td><td>Model sementara hasil rekonstruksi dari foto dan gambar referensi</td></tr>
+    <tr><td>AI generatif</td><td>Gemini, Claude</td><td>Gambar/video referensi keris (Gemini); bantuan penyusunan PRD dan penulisan kode (Claude Code)</td></tr>
+  </table></div>
+  <p>Catatan: bila institusi meminta pengungkapan penggunaan AI, baris terakhir perlu dicantumkan di laporan.</p>
+</section>
+
+<section id="paket">
+  <h2><span class="n">4</span>Library dan paket Unity</h2>
+  <div class="tbl"><table>
+    <tr><th>Paket</th><th>Versi</th><th>Fungsi</th></tr>
+    <tr><td>AR Foundation</td><td>6.3.5</td><td>Kerangka AR lintas platform (deteksi bidang, anchor, raycast)</td></tr>
+    <tr><td>Google ARCore XR Plugin</td><td>6.3.5</td><td>Backend AR untuk Android. Diset <i>Optional</i> agar aplikasi tetap bisa dipasang di HP tanpa ARCore.</td></tr>
+    <tr><td>Apple ARKit XR Plugin</td><td>6.3.5</td><td>Backend AR untuk iOS (belum diuji)</td></tr>
+    <tr><td>Input System</td><td>1.20.0</td><td>Gestur sentuh (EnhancedTouch): putar, cubit untuk zoom, geser dua jari</td></tr>
+    <tr><td>uGUI + TextMesh Pro</td><td>2.0.0</td><td>Antarmuka pengguna, dibangun lewat kode</td></tr>
+    <tr><td>Universal RP</td><td>17.3.0</td><td>Pipeline rendering</td></tr>
+    <tr><td>Timeline</td><td>1.8.13</td><td>Bawaan template</td></tr>
+  </table></div>
+  <p>Tidak memakai aset berbayar dari Asset Store. Animasi exploded view dibuat sendiri (coroutine + SmoothStep), bukan DOTween. Detektor marker juga dibuat sendiri, tanpa Vuforia atau OpenCV.</p>
+</section>
+
+<section id="build">
+  <h2><span class="n">5</span>Konfigurasi build Android</h2>
+  <div class="tbl"><table>
+    <tr><th>Pengaturan</th><th>Nilai</th><th>Alasan</th></tr>
+    <tr><td>Minimum API</td><td>26 (Android 8.0)</td><td>Batas bawah ARCore</td></tr>
+    <tr><td>Target API</td><td>36</td><td>Syarat terbaru Google Play</td></tr>
+    <tr><td>Scripting backend</td><td>IL2CPP</td><td>Wajib untuk ARM64, performa lebih baik</td></tr>
+    <tr><td>Arsitektur</td><td>ARM64 saja</td><td>Syarat ARCore dan Google Play</td></tr>
+    <tr><td>Graphics API</td><td>OpenGL ES 3</td><td>Didukung ARCore</td></tr>
+    <tr><td>Page size</td><td>16 KB aligned</td><td>Syarat Google Play untuk Android 15+</td></tr>
+    <tr><td>Profil kualitas</td><td>Mobile</td><td>Profil PC tidak dipakai. Efek SSAO dihapus karena berat.</td></tr>
+    <tr><td>Izin</td><td>Kamera</td><td>Untuk AR dan pemindaian kartu</td></tr>
+  </table></div>
+</section>
+
+<section id="arsitektur">
+  <h2><span class="n">6</span>Arsitektur dan modul</h2>
+  <p>Proyek berisi 39 file C#: 33 skrip runtime, 4 skrip editor, dan 2 file pengujian. Aplikasi terdiri dari tiga scene: <code>Main</code> (katalog dan 3D Viewer), <code>AR</code> (ARCore), dan <code>Marker</code> (Scan Kartu).</p>
+  <div class="tbl"><table>
+    <tr><th>Modul (folder)</th><th>Isi</th></tr>
+    <tr><td>Core</td><td>Bahasa ID/EN (Locale, UIStrings), perpindahan scene (AppSession), pengendali utama</td></tr>
+    <tr><td>Content</td><td>Data artefak dan hotspot (ArtifactData), katalog konten (ContentCatalog)</td></tr>
+    <tr><td>Artifact</td><td>Objek 3D keris, bagian-bagiannya, exploded view 4 tahap, rotasi otomatis</td></tr>
+    <tr><td>Interaction</td><td>Gestur sentuh, kamera orbit untuk 3D Viewer</td></tr>
+    <tr><td>AR</td><td>State machine AR, penempatan di bidang (reticle + ARAnchor), izin kamera</td></tr>
+    <tr><td>Marker</td><td>Kamera (WebCamTexture), pola marker, detektor, estimasi pose, pengendali mode Scan Kartu</td></tr>
+    <tr><td>UI</td><td>Katalog, onboarding, pengaturan, bottom sheet informasi, label hotspot, layar kartu penanda</td></tr>
+    <tr><td>Audio</td><td>Narasi dan efek suara (belum ada rekaman)</td></tr>
+    <tr><td>Editor</td><td>Setup proyek otomatis, konten placeholder, render pratinjau, skrip build</td></tr>
+  </table></div>
+</section>
+
+<section id="metode">
+  <h2><span class="n">7</span>Metode AR (dua mode)</h2>
+  <div class="tbl"><table>
+    <tr><th>Mode</th><th>Metode</th><th>Syarat HP</th></tr>
+    <tr><td>Scan Kartu (utama)</td><td>Marker-based AR: kamera membaca kartu penanda, lalu keris 3D ditampilkan di atas kartu</td><td>Cukup kamera</td></tr>
+    <tr><td>Letakkan di Meja</td><td>Markerless AR: ARCore mendeteksi bidang datar, keris ditaruh di permukaan dengan ukuran 1:1</td><td>HP dukung ARCore</td></tr>
+    <tr><td>3D Viewer (cadangan)</td><td>Tampilan 3D biasa tanpa kamera</td><td>Semua HP</td></tr>
+  </table></div>
+
+  <h3>Algoritma deteksi kartu penanda (mode Scan Kartu)</h3>
+  <p>Kartu memakai pola kotak 6×6 bergaya ArUco (bingkai hitam dan 4×4 sel data, kode <code>0xEEC1</code>). Setiap frame kamera diproses dengan langkah berikut:</p>
+  <ol class="steps">
+    <li><b>Akuisisi citra.</b> Frame dari <code>WebCamTexture</code> diubah ke grayscale dan diperkecil (sisi pendek ± 360 piksel), lalu diputar sesuai orientasi layar.</li>
+    <li><b>Adaptive thresholding.</b> Citra diubah menjadi hitam-putih dengan ambang lokal agar tahan terhadap perbedaan cahaya.</li>
+    <li><b>Connected component labeling</b> (8-tetangga) untuk mencari kandidat area hitam.</li>
+    <li><b>Convex hull dan fitting segi empat.</b> Kandidat yang bentuknya bukan segi empat dibuang.</li>
+    <li><b>Dekode pola.</b> Isi kandidat diluruskan dengan homografi, sel 4×4 dibaca, dan dicocokkan pada 4 kemungkinan rotasi (jarak Hamming).</li>
+    <li><b>Homografi</b> dihitung dengan metode Direct Linear Transform (DLT).</li>
+    <li><b>Estimasi pose 3D</b> dengan metode Zhang, dengan asumsi field of view kamera 64° pada sisi panjang.</li>
+    <li><b>Penghalusan gerak</b> dengan filter One Euro agar objek tidak bergetar.</li>
+    <li><b>Rendering.</b> Gambar kamera menjadi latar dan keris 3D digambar di atas kartu. Tombol "Kunci Posisi" menahan objek walaupun kartu dijauhkan.</li>
+  </ol>
+</section>
+
+<section id="alur">
+  <h2><span class="n">8</span>Alur penggunaan</h2>
+<pre class="mermaid">
+flowchart TD
+  A[Buka aplikasi] --> B[Onboarding pertama kali]
+  B --> C[Katalog benda budaya]
+  C --> D[Detail artefak / 3D Viewer]
+  C --> E[Scan Kartu]
+  D --> E
+  D --> F{HP dukung ARCore?}
+  F -- Ya --> G[Letakkan di Meja]
+  F -- Tidak --> D
+  E --> H[Arahkan kamera ke kartu]
+  H --> I[Keris muncul di atas kartu]
+  G --> J[Pindai lantai/meja lalu ketuk untuk menaruh]
+  I --> K[Interaksi: putar, zoom, exploded view, hotspot, info]
+  J --> K
+</pre>
+</section>
+
+<section id="fitur">
+  <h2><span class="n">9</span>Fitur dan status</h2>
+  <div class="tbl"><table>
+    <tr><th>Kode</th><th>Fitur</th><th>Status</th></tr>
+    <tr><td>FR-01</td><td>Cek dukungan ARCore, fallback ke 3D Viewer</td><td><span class="pill ok">Selesai</span></td></tr>
+    <tr><td>FR-02/03</td><td>Pemindaian bidang, panduan, reticle, anchor</td><td><span class="pill ok">Selesai</span></td></tr>
+    <tr><td>FR-04</td><td>Skala 1:1 (asumsi panjang bilah 35 cm)</td><td><span class="pill ok">Selesai</span></td></tr>
+    <tr><td>FR-05</td><td>Gestur: putar, cubit untuk zoom 0,5–3×, geser dua jari</td><td><span class="pill ok">Selesai</span></td></tr>
+    <tr><td>FR-06</td><td>Reset tampilan, pindahkan objek</td><td><span class="pill ok">Selesai</span></td></tr>
+    <tr><td>FR-07</td><td>Exploded view 4 tahap, bisa dibalik</td><td><span class="pill ok">Selesai</span></td></tr>
+    <tr><td>FR-08</td><td>Hotspot/label bagian keris</td><td><span class="pill ok">Selesai</span></td></tr>
+    <tr><td>FR-09/10</td><td>Panel informasi 3 tab, audio, pelafalan, sumber</td><td><span class="pill warn">Tanpa rekaman audio</span></td></tr>
+    <tr><td>FR-11/12/13</td><td>Katalog, halaman detail, onboarding</td><td><span class="pill ok">Selesai</span></td></tr>
+    <tr><td>FR-14</td><td>Bahasa Indonesia dan Inggris</td><td><span class="pill ok">Selesai</span></td></tr>
+    <tr><td>Tambahan</td><td>Mode Scan Kartu tanpa ARCore + kartu penanda cetak</td><td><span class="pill warn">Belum diuji di HP</span></td></tr>
+  </table></div>
+</section>
+
+<section id="uji">
+  <h2><span class="n">10</span>Pengujian</h2>
+  <h3>Pengujian unit otomatis (black-box pada modul)</h3>
+  <p>15 test EditMode dengan Unity Test Framework, <b>semua lulus</b>. Enam di antaranya menguji mode Scan Kartu memakai gambar sintetis:</p>
+  <div class="tbl"><table>
+    <tr><th>Skenario uji</th><th>Yang diperiksa</th><th>Hasil</th></tr>
+    <tr><td>Deteksi dengan perspektif</td><td>Kartu terdeteksi di 4 rotasi, galat sudut &lt; 2,5 piksel</td><td><span class="pill ok">Lulus</span></td></tr>
+    <tr><td>Tanpa deteksi palsu</td><td>Gambar noise acak tidak dianggap kartu</td><td><span class="pill ok">Lulus</span></td></tr>
+    <tr><td>Akurasi pose</td><td>Posisi hasil estimasi meleset &lt; 1 cm dari posisi sebenarnya</td><td><span class="pill ok">Lulus</span></td></tr>
+    <tr><td>Rotasi kamera</td><td>Orientasi gambar kamera sesuai layar (0°, 90°, 270°)</td><td><span class="pill ok">Lulus</span></td></tr>
+    <tr><td>Keunikan pola</td><td>4 rotasi pola berbeda minimal 4 bit</td><td><span class="pill ok">Lulus</span></td></tr>
+    <tr><td>Kartu cetak + kecepatan</td><td>File kartu terdeteksi, waktu deteksi &lt; 120 ms per frame (di Editor)</td><td><span class="pill ok">Lulus</span></td></tr>
+  </table></div>
+  <p>Sembilan test lainnya menguji data artefak, exploded view, dan hotspot.</p>
+
+  <h3>Verifikasi build</h3>
+  <p>APK diperiksa: target API 36, min API 26, hanya <code>arm64-v8a</code>, ARCore <i>optional</i>, dan semua library native selaras 16 KB.</p>
+
+  <h3>Pengujian di perangkat nyata (template, perlu diisi)</h3>
+  <div class="tbl"><table>
+    <tr><th>Skenario</th><th>HP</th><th>Hasil yang diharapkan</th><th>Hasil</th></tr>
+    <tr><td>Instal dan buka aplikasi</td><td>Samsung A05</td><td>Terpasang, katalog tampil</td><td><span class="isi">[isi]</span></td></tr>
+    <tr><td>Izin kamera</td><td>Samsung A05</td><td>Muncul dialog izin, kamera terbuka</td><td><span class="isi">[isi]</span></td></tr>
+    <tr><td>Scan kartu cetak A5</td><td>Samsung A05</td><td>Keris muncul di atas kartu</td><td><span class="isi">[isi]</span></td></tr>
+    <tr><td>Jarak baca kartu</td><td>Samsung A05</td><td>Terbaca pada jarak ± 20–60 cm</td><td><span class="isi">[isi jarak min/maks]</span></td></tr>
+    <tr><td>Cahaya redup</td><td>Samsung A05</td><td>Masih terdeteksi di ruangan biasa</td><td><span class="isi">[isi]</span></td></tr>
+    <tr><td>Kunci Posisi</td><td>Samsung A05</td><td>Keris tetap tampil setelah kartu dijauhkan</td><td><span class="isi">[isi]</span></td></tr>
+    <tr><td>Exploded view dan hotspot</td><td>Samsung A05</td><td>Bagian keris terpisah, label tampil</td><td><span class="isi">[isi]</span></td></tr>
+    <tr><td>FPS rata-rata</td><td>Samsung A05</td><td>≥ 24 fps</td><td><span class="isi">[isi]</span></td></tr>
+    <tr><td>Letakkan di Meja</td><td>HP ARCore</td><td>Bidang terdeteksi, keris 1:1 di meja</td><td><span class="isi">[isi]</span></td></tr>
+  </table></div>
+
+  <h3>Pengujian pengguna (bila laporan memerlukannya)</h3>
+  <p>Contoh yang umum dipakai: kuesioner <b>System Usability Scale (SUS)</b> 10 butir skala 1–5, atau UAT dengan skala Likert. Data yang perlu dikumpulkan: <span class="isi">[isi: jumlah responden, profil (siswa/umum), skor per responden, rata-rata skor]</span>.</p>
+</section>
+
+<section id="batas">
+  <h2><span class="n">11</span>Keterbatasan dan pengembangan lanjut</h2>
+  <ul>
+    <li>Model keris masih <b>sementara</b> (rekonstruksi dari satu foto). Perlu model hasil pemindaian atau pemodelan dari spesimen asli.</li>
+    <li>Teks sejarah dan filosofi masih draf dan <b>belum divalidasi kurator</b>/ahli budaya.</li>
+    <li>Belum ada rekaman narasi dan pelafalan. Font masih bawaan (LiberationSans), belum Playfair/Inter sesuai desain.</li>
+    <li>Mode Scan Kartu memakai perkiraan FOV kamera (64°), sehingga perspektif bisa sedikit berbeda antar HP. Pelacakan hilang bila kartu tertutup, buram, terlalu jauh, atau gelap.</li>
+    <li>Baru satu benda budaya. Struktur data sudah mendukung penambahan artefak dan kartu baru.</li>
+    <li>Analitik baru mencatat ke log. iOS belum diuji.</li>
+    <li>Opsi peningkatan: Vuforia Engine (image target) untuk pelacakan gambar yang lebih stabil.</li>
+  </ul>
+</section>
+
+<section id="tahapan">
+  <h2><span class="n">12</span>Tahapan pengerjaan</h2>
+  <p>Urutan ini bisa dipakai sebagai dasar metode pengembangan (misalnya model Prototyping atau MDLC):</p>
+  <ol class="steps">
+    <li><b>Analisis kebutuhan.</b> Penyusunan dan revisi PRD (v1.0 ke v1.1).</li>
+    <li><b>Pengumpulan bahan.</b> Gambar referensi keris, video referensi, model 3D sementara.</li>
+    <li><b>Perancangan.</b> Struktur data artefak, alur layar, token desain UI, aturan gestur.</li>
+    <li><b>Implementasi.</b> Setup proyek Unity, katalog, 3D Viewer, mode AR ARCore, exploded view, hotspot, dua bahasa.</li>
+    <li><b>Uji awal di HP.</b> Ditemukan Samsung A05 tidak mendukung ARCore, sehingga kamera AR tidak terbuka.</li>
+    <li><b>Iterasi.</b> Pembuatan mode Scan Kartu dengan detektor marker sendiri dan kartu penanda cetak.</li>
+    <li><b>Pengujian.</b> 15 test unit lulus, verifikasi APK. <span class="isi">[isi: hasil uji di HP dan uji pengguna]</span></li>
+  </ol>
+</section>
+
+<footer>
+  Lampiran yang bisa disertakan: file kartu penanda <code>Docs/KartuPenanda_Keris_A5.pdf</code>, tangkapan layar aplikasi <span class="isi">[isi]</span>, dan kode sumber proyek.
+</footer>
+</div>

@@ -1,0 +1,377 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaae056f5a3ccf4d8025ecf14452651, type: 3}
+  m_Name: KERIS_JAWA_01
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactData
+  artifactId: KERIS_JAWA_01
+  displayName:
+    id: Keris Jawa (Model Blender)
+    en: Javanese Keris (Blender Model)
+  localName: Keris
+  category: 0
+  region:
+    id: Jawa
+    en: Java
+  era:
+    id: Era belum ditentukan
+    en: Era not yet determined
+  summary:
+    id: Keris gaya Jawa dengan bilah lurus berpamor, hulu Jawa Demam dari kayu sonokeling
+      bersalut kuningan, dan warangka sampir perahu kandang dari kayu kemuning. Model
+      ini dibuat di Blender dari cetak biru, bukan dipindai dari spesimen.
+    en: A Javanese-style keris with a straight patterned blade, a Jawa Demam hilt
+      of sonokeling wood with brass fittings, and a boat-shaped (sampir perahu kandang)
+      sheath of kemuning wood. The model was made in Blender from a blueprint, not
+      scanned from a specimen.
+  thumbnail: {fileID: 2800000, guid: 51bd37449aafbdb469085006397fad63, type: 3}
+  prefab: {fileID: 5740483855960442097, guid: 6d42eee96d8cfc7459826c73ed369876, type: 3}
+  specimenOwner: 
+  collectionNumber: 
+  license: Model Blender milik proyek (dibuat dari cetak biru)
+  measurementNote:
+    id: 'Skala 1:1 mengikuti cetak biru: bilah 34,5 cm + peksi 7,5 cm, hulu 11 cm
+      (lebar 4 cm), warangka lebar 18 cm. Bukan hasil pengukuran spesimen.'
+    en: '1:1 scale follows the blueprint: 34.5 cm blade + 7.5 cm tang (peksi), 11
+      cm hilt (4 cm wide), 18 cm wide sheath top. Not measured from a specimen.'
+  markerCode: 55846
+  isPlaceholder: 1
+  placeholderNote:
+    id: 'Model Blender dari cetak biru: ukiran, motif pamor, dan serat kayu adalah
+      penyederhanaan. Akan diganti aset dari spesimen asli yang divalidasi kurator.'
+    en: 'Blender model from a blueprint: the carving, pamor pattern and wood grain
+      are simplified. It will be replaced by an asset from a curator-validated specimen.'
+  hotspots:
+  - hotspotId: hulu
+    partName: Hulu
+    localPosition: {x: -0.003999993, y: 0.06999999, z: -0.015588708}
+    visibleFrom: 0
+    title:
+      id: Hulu (Jawa Demam)
+      en: Hilt (Jawa Demam)
+    regionalTerm: 'Jawa: ukiran / jejeran'
+    material:
+      id: 'Pada model: kayu sonokeling dengan tutup kuningan (sesuai cetak biru,
+        perlu dikonfirmasi)'
+      en: 'On the model: sonokeling wood with a brass cap (per the blueprint, to
+        be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Pegangan keris yang dipasang pada peksi. Bentuk Jawa Demam membungkuk ke
+        depan; pada cetak biru tingginya 11 cm dengan ukiran utu (sulur spiral) di
+        muka depan.
+      en: The keris handle, fitted onto the peksi. The Jawa Demam form leans forward;
+        on the blueprint it is 11 cm tall with utu carving (paired spirals) on the
+        front.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Pegangan keris yang dipasang pada peksi. Bentuk Jawa Demam membungkuk ke
+        depan; pada cetak biru tingginya 11 cm dengan ukiran utu (sulur spiral) di
+        muka depan.
+      en: The keris handle, fitted onto the peksi. The Jawa Demam form leans forward;
+        on the blueprint it is 11 cm tall with utu carving (paired spirals) on the
+        front.
+    sources:
+    - "Cetak biru Keris Jawa (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: selut
+    partName: Hulu
+    localPosition: {x: 0, y: 0.025999993, z: -0.0166}
+    visibleFrom: 0
+    title:
+      id: Selut
+      en: Selut (hilt collar)
+    regionalTerm: 
+    material:
+      id: 'Pada model: kuningan berukir (perlu dikonfirmasi)'
+      en: 'On the model: engraved brass (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Cincin logam di pangkal hulu, di atas mendak. Pada cetak biru berupa kuningan
+        dengan deretan butiran dan bunga.
+      en: The metal collar at the base of the hilt, above the mendak. On the blueprint
+        it is brass with rows of beads and flowers.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Cincin logam di pangkal hulu, di atas mendak. Pada cetak biru berupa kuningan
+        dengan deretan butiran dan bunga.
+      en: The metal collar at the base of the hilt, above the mendak. On the blueprint
+        it is brass with rows of beads and flowers.
+    sources:
+    - "Cetak biru Keris Jawa (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: mendak
+    partName: Mendak
+    localPosition: {x: 0, y: 0.014499992, z: -0.0153}
+    visibleFrom: 0
+    title:
+      id: Mendak
+      en: Mendak (ring)
+    regionalTerm: 
+    material:
+      id: 'Pada model: kuningan (perlu dikonfirmasi)'
+      en: 'On the model: brass (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Cincin logam di antara hulu dan ganja. Pada cetak biru berupa cincin kuningan
+        polos.
+      en: A metal ring between the hilt and the ganja. On the blueprint it is a plain
+        brass ring.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Cincin logam di antara hulu dan ganja. Pada cetak biru berupa cincin kuningan
+        polos.
+      en: A metal ring between the hilt and the ganja. On the blueprint it is a plain
+        brass ring.
+    sources:
+    - "Cetak biru Keris Jawa (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: warangka
+    partName: Warangka
+    localPosition: {x: 0.07, y: 0.017499983, z: -0.012336202}
+    visibleFrom: 0
+    title:
+      id: Warangka (Sampir Perahu Kandang)
+      en: Warangka (boat-shaped sheath top)
+    regionalTerm: 'Jawa: sampir / ladrang'
+    material:
+      id: 'Pada model: kayu kemuning (sesuai cetak biru, perlu dikonfirmasi)'
+      en: 'On the model: kemuning wood (per the blueprint, to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Bagian atas sarung yang melebar, tempat ganja bertumpu. Pada cetak biru
+        lebarnya 18 cm, berbentuk perahu dengan tanduk kanan menjulang lebih tinggi.
+      en: The wide upper part of the sheath, where the ganja rests. On the blueprint
+        it is 18 cm wide and boat-shaped, with the right horn rising higher.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Bagian atas sarung yang melebar, tempat ganja bertumpu. Pada cetak biru
+        lebarnya 18 cm, berbentuk perahu dengan tanduk kanan menjulang lebih tinggi.
+      en: The wide upper part of the sheath, where the ganja rests. On the blueprint
+        it is 18 cm wide and boat-shaped, with the right horn rising higher.
+    sources:
+    - "Cetak biru Keris Jawa (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: gandar
+    partName: Gandar
+    localPosition: {x: 0, y: 0.2, z: -0.009644901}
+    visibleFrom: 0
+    title:
+      id: Gandar
+      en: Gandar (sheath body)
+    regionalTerm: 
+    material:
+      id: 'Pada model: kayu kemuning (perlu dikonfirmasi)'
+      en: 'On the model: kemuning wood (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Badan sarung yang membungkus bilah. Pada cetak biru meruncing ke bawah
+        dengan penampang berbentuk perisai.
+      en: The sheath body that covers the blade. On the blueprint it tapers downward
+        with a shield-shaped cross-section.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Badan sarung yang membungkus bilah. Pada cetak biru meruncing ke bawah
+        dengan penampang berbentuk perisai.
+      en: The sheath body that covers the blade. On the blueprint it tapers downward
+        with a shield-shaped cross-section.
+    sources:
+    - "Cetak biru Keris Jawa (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: ganja
+    partName: Ganja
+    localPosition: {x: 0.018000007, y: 0.004999995, z: -0.0090000015}
+    visibleFrom: 1
+    title:
+      id: Ganja
+      en: Ganja
+    regionalTerm: 
+    material:
+      id: Besi/baja tempa berpamor (perlu dikonfirmasi)
+      en: Forged, patterned iron/steel (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Bagian melintang di pangkal bilah. Pada model ini dibuat terpisah dari
+        bilah dan dilepas pada tahap 3.
+      en: The cross-piece at the base of the blade. On this model it is a separate
+        piece, removed in step 3.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Bagian melintang di pangkal bilah. Pada model ini dibuat terpisah dari
+        bilah dan dilepas pada tahap 3.
+      en: The cross-piece at the base of the blade. On this model it is a separate
+        piece, removed in step 3.
+    sources:
+    - "Cetak biru Keris Jawa (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: gandik
+    partName: Wilah
+    localPosition: {x: -0.013999999, y: -0.030000001, z: -0.005417649}
+    visibleFrom: 1
+    title:
+      id: Gandik
+      en: Gandik
+    regionalTerm: 
+    material:
+      id: Besi/baja tempa (perlu dikonfirmasi)
+      en: Forged iron/steel (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Bagian tebal di pangkal depan bilah. Bentuk ricikan pada spesimen ditetapkan
+        kurator.
+      en: The thickened front part at the base of the blade. The exact features on
+        the specimen are set by the curator.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Bagian tebal di pangkal depan bilah. Bentuk ricikan pada spesimen ditetapkan
+        kurator.
+      en: The thickened front part at the base of the blade. The exact features on
+        the specimen are set by the curator.
+    sources:
+    - "Cetak biru Keris Jawa (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: pamor
+    partName: Wilah
+    localPosition: {x: 0, y: -0.120000005, z: -0.0072357655}
+    visibleFrom: 1
+    title:
+      id: Pamor
+      en: Pamor
+    regionalTerm: 
+    material:
+      id: Besi dengan bahan pamor, mis. nikel atau besi meteorit (perlu dikonfirmasi)
+      en: Iron with pamor material, e.g. nickel or meteoric iron (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Motif keperakan pada permukaan bilah, hasil tempa lipat besi dengan bahan
+        pamor. Motif pada model dibuat prosedural; nama motif ditetapkan kurator
+        dari spesimen.
+      en: The silvery pattern on the blade surface, made by fold-forging iron with
+        pamor material. The pattern on the model is procedural; the motif name is
+        set by the curator from the specimen.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Motif keperakan pada permukaan bilah, hasil tempa lipat besi dengan bahan
+        pamor. Motif pada model dibuat prosedural; nama motif ditetapkan kurator
+        dari spesimen.
+      en: The silvery pattern on the blade surface, made by fold-forging iron with
+        pamor material. The pattern on the model is procedural; the motif name is
+        set by the curator from the specimen.
+    sources:
+    - "Cetak biru Keris Jawa (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).
+  - hotspotId: ada_ada
+    partName: Wilah
+    localPosition: {x: 0, y: -0.22, z: -0.0064344844}
+    visibleFrom: 1
+    title:
+      id: Ada-ada & Bilah Lurus
+      en: Ada-ada & Straight Blade
+    regionalTerm: Bilah lurus (dapur keris lurus, perlu divalidasi)
+    material:
+      id: 
+      en: 
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Ada-ada adalah tulang tengah yang memanjang di permukaan bilah. Bilah pada
+        cetak biru lurus (tanpa luk), panjang 35-38 cm.
+      en: The ada-ada is the raised central ridge running along the blade. The blade
+        on the blueprint is straight (no luk), 35-38 cm long.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Ada-ada adalah tulang tengah yang memanjang di permukaan bilah. Bilah pada
+        cetak biru lurus (tanpa luk), panjang 35-38 cm.
+      en: The ada-ada is the raised central ridge running along the blade. The blade
+        on the blueprint is straight (no luk), 35-38 cm long.
+    sources:
+    - "Cetak biru Keris Jawa (proyek) + glosarium draf PRD v1.1 \xA76.1 - menunggu
+      validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari cetak biru).

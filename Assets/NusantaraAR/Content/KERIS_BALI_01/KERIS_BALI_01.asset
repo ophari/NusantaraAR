@@ -1,0 +1,455 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaae056f5a3ccf4d8025ecf14452651, type: 3}
+  m_Name: KERIS_BALI_01
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactData
+  artifactId: KERIS_BALI_01
+  displayName:
+    id: Keris Bali
+    en: Balinese Keris
+  localName: Keris
+  category: 0
+  region:
+    id: Bali
+    en: Bali
+  era:
+    id: Era belum ditentukan
+    en: Era not yet determined
+  summary:
+    id: Keris gaya Bali dengan bilah 9 luk berpamor banyu tetes, ganja maswatu berlapis
+      emas, hulu emas berupa figur dewa yang berlutut menyembah, dan warangka Branggah
+      dari kayu pelet dengan pendok emas bertatah permata, dipajang di jagrak ukir
+      bermotif Karang Boma. Model dibuat di Blender dari lembar acuan, bukan dipindai
+      dari spesimen.
+    en: A Balinese-style keris with a 9-wave banyu tetes patterned blade, a gold-clad
+      ganja maswatu, a gold hilt in the form of a kneeling, worshipping deity, and
+      a Branggah sheath of pelet wood with a jewelled gold pendok, displayed on a
+      stand carved with the Karang Boma motif. The model was made in Blender from
+      a reference sheet, not scanned from a specimen.
+  thumbnail: {fileID: 2800000, guid: 618dca30617606746a82f086de64f579, type: 3}
+  prefab: {fileID: 4457943029529455147, guid: c957b82b23750f147be086a74d3639b8, type: 3}
+  specimenOwner: 
+  collectionNumber: 
+  license: Model Blender milik proyek (dibuat dari lembar acuan)
+  measurementNote:
+    id: "Skala 1:1 mengikuti lembar acuan: bilah 40 cm + pesi 8 cm, hulu \xB19,5
+      cm, warangka Branggah lebar 19 cm, jagrak 45 cm. Bukan hasil pengukuran spesimen."
+    en: '1:1 scale follows the reference sheet: 40 cm blade + 8 cm tang (pesi), ~9.5
+      cm hilt, 19 cm wide Branggah sheath top, 45 cm stand. Not measured from a specimen.'
+  markerCode: 46386
+  isPlaceholder: 1
+  placeholderNote:
+    id: 'Model Blender dari lembar acuan: figur hulu, ukiran, dan motif pamor adalah
+      penyederhanaan. Akan diganti aset dari spesimen asli yang divalidasi kurator.'
+    en: 'Blender model from a reference sheet: the hilt figure, carving and pamor
+      pattern are simplified. It will be replaced by an asset from a curator-validated
+      specimen.'
+  hotspots:
+  - hotspotId: hulu
+    partName: Hulu
+    localPosition: {x: 0.07500002, y: 0, z: -0.015366316}
+    visibleFrom: 0
+    title:
+      id: Hulu (Danganan)
+      en: Hilt (Danganan)
+    regionalTerm: 'Bali: danganan - Jawa: ukiran'
+    material:
+      id: 'Pada model: emas poles (perlu dikonfirmasi pada spesimen)'
+      en: 'On the model: polished gold (to be confirmed on the specimen)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Pegangan keris berupa figur dewa bermahkota bertingkat (kruna) yang berlutut
+        dengan tangan menyembah, lengkap dengan kalung, sabuk, dan gelang. Identifikasi
+        figurnya perlu dikonfirmasi kurator.
+      en: The keris handle in the form of a deity with a tiered crown (kruna), kneeling
+        with hands in worship, with necklace, belt and bracelets. The identification
+        of the figure needs curator confirmation.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Pegangan keris berupa figur dewa bermahkota bertingkat (kruna) yang berlutut
+        dengan tangan menyembah, lengkap dengan kalung, sabuk, dan gelang. Identifikasi
+        figurnya perlu dikonfirmasi kurator.
+      en: The keris handle in the form of a deity with a tiered crown (kruna), kneeling
+        with hands in worship, with necklace, belt and bracelets. The identification
+        of the figure needs curator confirmation.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari lembar acuan).
+  - hotspotId: selut
+    partName: Selut
+    localPosition: {x: 0.025000006, y: 0, z: -0.021007061}
+    visibleFrom: 0
+    title:
+      id: Selut Bertatah Permata
+      en: Jewelled Selut
+    regionalTerm: 'Bali: selut / wewer'
+    material:
+      id: 'Pada model: emas dengan ruby, zamrud, dan safir (perlu dikonfirmasi)'
+      en: 'On the model: gold with ruby, emerald and sapphire (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Cincin cawan di pangkal hulu, dihiasi dua baris butiran emas dan sepuluh
+        permata cabochon berselang warna.
+      en: The cup-shaped collar at the base of the hilt, decorated with two rows
+        of gold beads and ten cabochon gems in alternating colours.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Cincin cawan di pangkal hulu, dihiasi dua baris butiran emas dan sepuluh
+        permata cabochon berselang warna.
+      en: The cup-shaped collar at the base of the hilt, decorated with two rows
+        of gold beads and ten cabochon gems in alternating colours.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari lembar acuan).
+  - hotspotId: warangka
+    partName: Warangka
+    localPosition: {x: -0.015000001, y: 0.049999997, z: -0.017587304}
+    visibleFrom: 0
+    title:
+      id: Warangka Branggah
+      en: Branggah Sheath Top
+    regionalTerm: 'Bali: warangka branggah'
+    material:
+      id: 'Pada model: kayu pelet berpernis (perlu dikonfirmasi)'
+      en: 'On the model: varnished pelet wood (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Kepala sarung gaya Bali yang melebar dengan dua tanduk melengkung ke atas.
+        Kayu pelet dikenal dari bercak gelapnya yang khas.
+      en: The wide Balinese-style sheath top with two upswept horns. Pelet wood is
+        known for its characteristic dark mottling.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Kepala sarung gaya Bali yang melebar dengan dua tanduk melengkung ke atas.
+        Kayu pelet dikenal dari bercak gelapnya yang khas.
+      en: The wide Balinese-style sheath top with two upswept horns. Pelet wood is
+        known for its characteristic dark mottling.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari lembar acuan).
+  - hotspotId: gandar
+    partName: Gandar
+    localPosition: {x: -0.13, y: 0, z: -0.012508988}
+    visibleFrom: 0
+    title:
+      id: Gandar
+      en: Gandar (sheath body)
+    regionalTerm: 
+    material:
+      id: 'Pada model: kayu pelet (perlu dikonfirmasi)'
+      en: 'On the model: pelet wood (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Batang sarung ramping yang membungkus bilah; bagian atasnya dibiarkan kayu.
+      en: The slender sheath body that covers the blade; its upper part is left as
+        bare wood.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Batang sarung ramping yang membungkus bilah; bagian atasnya dibiarkan kayu.
+      en: The slender sheath body that covers the blade; its upper part is left as
+        bare wood.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari lembar acuan).
+  - hotspotId: cincin
+    partName: Cincin
+    localPosition: {x: -0.2085, y: 0, z: -0.017217636}
+    visibleFrom: 0
+    title:
+      id: Cincin Permata
+      en: Jewelled Ring
+    regionalTerm: 
+    material:
+      id: 'Pada model: emas dengan zamrud dan ruby (perlu dikonfirmasi)'
+      en: 'On the model: gold with emerald and ruby (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Cincin emas di tengah sarung dengan zamrud di tengah diapit dua ruby; cincin
+        serupa ada tepat di bawah warangka.
+      en: A gold ring in the middle of the sheath with an emerald flanked by two
+        rubies; a similar ring sits just below the warangka.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Cincin emas di tengah sarung dengan zamrud di tengah diapit dua ruby; cincin
+        serupa ada tepat di bawah warangka.
+      en: A gold ring in the middle of the sheath with an emerald flanked by two
+        rubies; a similar ring sits just below the warangka.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari lembar acuan).
+  - hotspotId: pendok
+    partName: Pendok
+    localPosition: {x: -0.33, y: 0, z: -0.012528539}
+    visibleFrom: 0
+    title:
+      id: Pendok Emas
+      en: Gold Pendok
+    regionalTerm: 
+    material:
+      id: 'Pada model: emas berukir patra (perlu dikonfirmasi)'
+      en: 'On the model: gold with patra engraving (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Selongsong logam berukir sulur Bali (patra) yang membalut setengah bawah
+        gandar. Pada tahap terakhir exploded view pendok dilepas.
+      en: The metal sleeve with Balinese scroll engraving (patra) over the lower
+        half of the gandar. In the last exploded-view step the pendok is slid off.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Selongsong logam berukir sulur Bali (patra) yang membalut setengah bawah
+        gandar. Pada tahap terakhir exploded view pendok dilepas.
+      en: The metal sleeve with Balinese scroll engraving (patra) over the lower
+        half of the gandar. In the last exploded-view step the pendok is slid off.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari lembar acuan).
+  - hotspotId: jagrak
+    partName: Jagrak
+    localPosition: {x: 0, y: 0.082, z: -0.019333482}
+    visibleFrom: 0
+    title:
+      id: Jagrak Karang Boma
+      en: Karang Boma Stand
+    regionalTerm: 'Bali: jagrak / tatakan keris'
+    material:
+      id: 'Pada model: kayu jati/suren tua (perlu dikonfirmasi)'
+      en: 'On the model: aged teak/suren wood (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: 'Dudukan pajang keris dengan ukiran tembus: wajah Boma bermata besar dan
+        bertaring di tengah, diapit sayap dan sulur spiral; kakinya bertingkat dengan
+        pita meander.'
+      en: 'A pierced-carved keris display stand: a large-eyed, fanged Boma face in
+        the centre, flanked by wings and spiral scrolls; the base is stepped with
+        a meander band.'
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: 'Dudukan pajang keris dengan ukiran tembus: wajah Boma bermata besar dan
+        bertaring di tengah, diapit sayap dan sulur spiral; kakinya bertingkat dengan
+        pita meander.'
+      en: 'A pierced-carved keris display stand: a large-eyed, fanged Boma face in
+        the centre, flanked by wings and spiral scrolls; the base is stepped with
+        a meander band.'
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari lembar acuan).
+  - hotspotId: ganja
+    partName: Ganja
+    localPosition: {x: 0.0059999973, y: -0.02000001, z: -0.008800149}
+    visibleFrom: 1
+    title:
+      id: Ganja Maswatu
+      en: Ganja Maswatu
+    regionalTerm: 
+    material:
+      id: 'Pada model: berlapis emas berukir (perlu dikonfirmasi)'
+      en: 'On the model: engraved gold cladding (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Bagian melintang di pangkal bilah yang dilapisi emas dan meruncing seperti
+        segitiga di sisi greneng. Dilepas pada tahap 3.
+      en: The cross-piece at the base of the blade, clad in gold and tapering like
+        a triangle on the greneng side. Removed in step 3.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Bagian melintang di pangkal bilah yang dilapisi emas dan meruncing seperti
+        segitiga di sisi greneng. Dilepas pada tahap 3.
+      en: The cross-piece at the base of the blade, clad in gold and tapering like
+        a triangle on the greneng side. Removed in step 3.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari lembar acuan).
+  - hotspotId: gandik
+    partName: Wilah
+    localPosition: {x: -0.030000001, y: 0.0119999945, z: -0.005399108}
+    visibleFrom: 1
+    title:
+      id: Gandik & Greneng
+      en: Gandik & Greneng
+    regionalTerm: 
+    material:
+      id: Besi/baja tempa (perlu dikonfirmasi)
+      en: Forged iron/steel (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Pangkal bilah yang melebar (sor-soran) dengan kembang kacang di depan dan
+        gerigi greneng di belakang.
+      en: The widened blade base (sor-soran) with the kembang kacang at the front
+        and the serrated greneng at the back.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Pangkal bilah yang melebar (sor-soran) dengan kembang kacang di depan dan
+        gerigi greneng di belakang.
+      en: The widened blade base (sor-soran) with the kembang kacang at the front
+        and the serrated greneng at the back.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari lembar acuan).
+  - hotspotId: pamor
+    partName: Wilah
+    localPosition: {x: -0.15, y: 0, z: -0.0060414076}
+    visibleFrom: 1
+    title:
+      id: Pamor Banyu Tetes
+      en: Pamor (banyu tetes)
+    regionalTerm: 
+    material:
+      id: Campuran besi, baja, dan nikel (perlu dikonfirmasi)
+      en: Iron, steel and nickel (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: 'Motif keperakan hasil tempa lipat. Banyu tetes berarti ''tetesan air'':
+        bentuk seperti tetes berlapis garis di antara urat yang mengalir. Motif pada
+        model dibuat prosedural.'
+      en: 'The silvery pattern from fold-forging. Banyu tetes means ''dripping water'':
+        drop shapes ringed by lines among flowing veins. The pattern on the model
+        is procedural.'
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: 'Motif keperakan hasil tempa lipat. Banyu tetes berarti ''tetesan air'':
+        bentuk seperti tetes berlapis garis di antara urat yang mengalir. Motif pada
+        model dibuat prosedural.'
+      en: 'The silvery pattern from fold-forging. Banyu tetes means ''dripping water'':
+        drop shapes ringed by lines among flowing veins. The pattern on the model
+        is procedural.'
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari lembar acuan).
+  - hotspotId: luk
+    partName: Wilah
+    localPosition: {x: -0.26, y: 0, z: -0.0054472685}
+    visibleFrom: 1
+    title:
+      id: Luk 9 & Adeg-adeg
+      en: Luk (9 waves) & Ridge
+    regionalTerm: 9 luk (menurut lembar acuan, perlu divalidasi)
+    material:
+      id: 
+      en: 
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Lekukan bilah berjumlah ganjil - model ini 9 luk dengan panjang 40 cm.
+        Punggungan di tengah bilah disebut adeg-adeg, bidang rata di kiri-kanannya
+        bilik, dan tepinya kikis.
+      en: The blade waves are always odd in number - this model has 9, 40 cm long.
+        The central ridge is the adeg-adeg, the flat areas beside it the bilik, and
+        the edges the kikis.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Lekukan bilah berjumlah ganjil - model ini 9 luk dengan panjang 40 cm.
+        Punggungan di tengah bilah disebut adeg-adeg, bidang rata di kiri-kanannya
+        bilik, dan tepinya kikis.
+      en: The blade waves are always odd in number - this model has 9, 40 cm long.
+        The central ridge is the adeg-adeg, the flat areas beside it the bilik, and
+        the edges the kikis.
+    sources:
+    - "Lembar acuan Keris Bali (cetak biru proyek) + glosarium draf PRD v1.1 \xA76.1
+      - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model Blender dari lembar acuan).

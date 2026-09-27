@@ -1,0 +1,318 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaae056f5a3ccf4d8025ecf14452651, type: 3}
+  m_Name: KERIS_PLACEHOLDER_01
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactData
+  artifactId: KERIS_PLACEHOLDER_01
+  displayName:
+    id: Keris (Model Sementara)
+    en: Keris (Temporary Model)
+  localName: Keris
+  category: 0
+  region:
+    id: Asal daerah belum ditentukan
+    en: Region not yet determined
+  era:
+    id: Era belum ditentukan
+    en: Era not yet determined
+  summary:
+    id: Keris adalah senjata tikam khas nusantara yang diakui UNESCO sebagai warisan
+      budaya takbenda (2005). Model ini menampilkan keris beserta warangka di atas
+      dudukan.
+    en: The keris is an Indonesian dagger recognised by UNESCO as intangible cultural
+      heritage (2005). This model shows a keris with its sheath on a display stand.
+  thumbnail: {fileID: 2800000, guid: 9cec2d8324ff3e04d9c7bc4f09fe701f, type: 3}
+  prefab: {fileID: 3896743189292213791, guid: a886788d26efd7d49b82a558c4e1cb3f, type: 3}
+  specimenOwner: 
+  collectionNumber: 
+  license: Model sementara - rekonstruksi dari satu foto (proyek keris3d)
+  measurementNote:
+    id: Skala 1:1 memakai asumsi panjang bilah 35 cm (bilah keris lazim 33-38 cm),
+      bukan hasil pengukuran spesimen.
+    en: 1:1 scale assumes a 35 cm blade (typical keris blades are 33-38 cm); not
+      measured from a specimen.
+  markerCode: 61121
+  isPlaceholder: 1
+  placeholderNote:
+    id: 'Model sementara hasil rekonstruksi dari satu foto: sisi samping dan belakang
+      adalah perkiraan, dan warangka/gandar/pendok belum dipisah sesuai struktur
+      aslinya. Akan diganti aset dari spesimen asli yang divalidasi kurator.'
+    en: 'Temporary model reconstructed from a single photo: the sides and back are
+      estimated, and the sheath parts are not yet separated as in the real object.
+      It will be replaced by an asset from a curator-validated specimen.'
+  hotspots:
+  - hotspotId: hulu
+    partName: Hulu
+    localPosition: {x: 0.0049618036, y: -0.0016512871, z: -0.017201709}
+    visibleFrom: 0
+    title:
+      id: Hulu
+      en: Hilt
+    regionalTerm: 'Jawa: ukiran - Bali: danganan'
+    material:
+      id: Kayu (perlu dikonfirmasi pada spesimen)
+      en: Wood (to be confirmed on the specimen)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Pegangan keris, dipasang pada pesi (tangkai bilah). Bentuk dan motif ukirannya
+        berbeda menurut gaya daerah.
+      en: The keris handle, fitted onto the pesi (blade tang). Its shape and carving
+        differ by regional style.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Pegangan keris, dipasang pada pesi (tangkai bilah). Bentuk dan motif ukirannya
+        berbeda menurut gaya daerah.
+      en: The keris handle, fitted onto the pesi (blade tang). Its shape and carving
+        differ by regional style.
+    sources:
+    - "Glosarium draf PRD v1.1 \xA76.1 - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model sementara).
+  - hotspotId: mendak
+    partName: Mendak
+    localPosition: {x: -0.0018863603, y: -0.00020056963, z: -0.017468356}
+    visibleFrom: 0
+    title:
+      id: Mendak
+      en: Mendak (ring)
+    regionalTerm: 
+    material:
+      id: Logam (perlu dikonfirmasi)
+      en: Metal (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Cincin logam di antara hulu dan ganja; sering diberi hiasan.
+      en: A metal ring between the hilt and the ganja, often decorated.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Cincin logam di antara hulu dan ganja; sering diberi hiasan.
+      en: A metal ring between the hilt and the ganja, often decorated.
+    sources:
+    - "Glosarium draf PRD v1.1 \xA76.1 - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model sementara).
+  - hotspotId: warangka
+    partName: Warangka
+    localPosition: {x: -0.012697905, y: -0.004476458, z: -0.017010465}
+    visibleFrom: 0
+    title:
+      id: Warangka
+      en: Warangka (sheath top)
+    regionalTerm: 
+    material:
+      id: Kayu (perlu dikonfirmasi)
+      en: Wood (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Bagian atas sarung yang melebar; tempat ganja bertumpu saat keris disarungkan.
+      en: The wide upper part of the sheath, where the ganja rests when the keris
+        is sheathed.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Bagian atas sarung yang melebar; tempat ganja bertumpu saat keris disarungkan.
+      en: The wide upper part of the sheath, where the ganja rests when the keris
+        is sheathed.
+    sources:
+    - "Glosarium draf PRD v1.1 \xA76.1 - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model sementara).
+  - hotspotId: gandar
+    partName: Gandar
+    localPosition: {x: -0.013329592, y: -0.011997595, z: -0.012071766}
+    visibleFrom: 0
+    title:
+      id: Gandar & Pendok
+      en: Gandar & Pendok (sheath body)
+    regionalTerm: 
+    material:
+      id: Kayu dengan selongsong logam (perlu dikonfirmasi)
+      en: Wood with a metal sleeve (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Gandar adalah badan sarung yang membungkus bilah; pendok adalah selongsong
+        logam pelapisnya. Pada model sementara ini keduanya masih satu objek.
+      en: The gandar is the sheath body that covers the blade; the pendok is its
+        metal sleeve. In this temporary model they are still one object.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Gandar adalah badan sarung yang membungkus bilah; pendok adalah selongsong
+        logam pelapisnya. Pada model sementara ini keduanya masih satu objek.
+      en: The gandar is the sheath body that covers the blade; the pendok is its
+        metal sleeve. In this temporary model they are still one object.
+    sources:
+    - "Glosarium draf PRD v1.1 \xA76.1 - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model sementara).
+  - hotspotId: ganja
+    partName: Ganja
+    localPosition: {x: -0.004426077, y: -0.0033896863, z: -0.007892461}
+    visibleFrom: 1
+    title:
+      id: Ganja
+      en: Ganja
+    regionalTerm: 
+    material:
+      id: Besi/baja tempa (perlu dikonfirmasi)
+      en: Forged iron/steel (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Bagian melintang di pangkal bilah. Bisa berupa bagian terpisah, atau menyatu
+        dengan bilah (ganja iras).
+      en: The cross-piece at the base of the blade. It can be a separate piece, or
+        one with the blade (ganja iras).
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Bagian melintang di pangkal bilah. Bisa berupa bagian terpisah, atau menyatu
+        dengan bilah (ganja iras).
+      en: The cross-piece at the base of the blade. It can be a separate piece, or
+        one with the blade (ganja iras).
+    sources:
+    - "Glosarium draf PRD v1.1 \xA76.1 - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model sementara).
+  - hotspotId: gandik
+    partName: Wilah
+    localPosition: {x: 0.07211211, y: 0.07563119, z: -0.006049956}
+    visibleFrom: 1
+    title:
+      id: Gandik
+      en: Gandik
+    regionalTerm: 
+    material:
+      id: Besi/baja tempa (perlu dikonfirmasi)
+      en: Forged iron/steel (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Bagian tebal di pangkal depan bilah. Pada banyak keris terdapat kembang
+        kacang (lengkungan) di sini. Posisi titik pada model sementara masih perkiraan.
+      en: The thick front part of the blade base. Many keris have a kembang kacang
+        (curl) here. The point position on this temporary model is approximate.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Bagian tebal di pangkal depan bilah. Pada banyak keris terdapat kembang
+        kacang (lengkungan) di sini. Posisi titik pada model sementara masih perkiraan.
+      en: The thick front part of the blade base. Many keris have a kembang kacang
+        (curl) here. The point position on this temporary model is approximate.
+    sources:
+    - "Glosarium draf PRD v1.1 \xA76.1 - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model sementara).
+  - hotspotId: pamor
+    partName: Wilah
+    localPosition: {x: 0.02480929, y: 0.028869241, z: -0.005307709}
+    visibleFrom: 1
+    title:
+      id: Pamor
+      en: Pamor
+    regionalTerm: 
+    material:
+      id: Besi dengan bahan pamor, mis. nikel atau besi meteorit (perlu dikonfirmasi)
+      en: Iron with pamor material, e.g. nickel or meteoric iron (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Motif pada permukaan bilah, hasil tempa lipat besi dengan bahan pamor.
+        Nama motif ditetapkan kurator dari spesimen.
+      en: The pattern on the blade surface, made by fold-forging iron with pamor
+        material. The motif name is set by the curator from the specimen.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Motif pada permukaan bilah, hasil tempa lipat besi dengan bahan pamor.
+        Nama motif ditetapkan kurator dari spesimen.
+      en: The pattern on the blade surface, made by fold-forging iron with pamor
+        material. The motif name is set by the curator from the specimen.
+    sources:
+    - "Glosarium draf PRD v1.1 \xA76.1 - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model sementara).
+  - hotspotId: luk
+    partName: Wilah
+    localPosition: {x: -0.034833387, y: -0.030091494, z: -0.005307709}
+    visibleFrom: 1
+    title:
+      id: Luk
+      en: Luk (blade waves)
+    regionalTerm: 
+    material:
+      id: 
+      en: 
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Lekukan pada bilah. Jumlah luk selalu ganjil; jumlah pada spesimen dihitung
+        dan divalidasi kurator.
+      en: The waves of the blade. The number of luk is always odd; the count on the
+        specimen is verified by the curator.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Lekukan pada bilah. Jumlah luk selalu ganjil; jumlah pada spesimen dihitung
+        dan divalidasi kurator.
+      en: The waves of the blade. The number of luk is always odd; the count on the
+        specimen is verified by the curator.
+    sources:
+    - "Glosarium draf PRD v1.1 \xA76.1 - menunggu validasi kurator"
+    curatorValidated: 0
+    curatorNote: Belum divalidasi (model sementara).
