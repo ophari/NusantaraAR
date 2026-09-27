@@ -473,25 +473,31 @@ namespace NusantaraAR.EditorTools
             AddLights();
             var go = (GameObject)PrefabUtility.InstantiatePrefab(data.prefab);
             var inst = go.GetComponent<ArtifactInstance>();
+            inst.Init(data);
+            if (inst.exploded != null) inst.exploded.SnapTo(0);
             var b = inst.GetWorldBounds();
+            float radius = b.extents.magnitude;
+            if (radius < 1e-4f) throw new Exception("Thumbnail " + data.artifactId + ": bounds artefak kosong.");
 
             var camGo = new GameObject("ThumbCam", typeof(Camera));
             var cam = camGo.GetComponent<Camera>();
             cam.clearFlags = CameraClearFlags.SolidColor;
             cam.backgroundColor = new Color(0.16f, 0.14f, 0.12f);
             cam.fieldOfView = 30f;
-            cam.nearClipPlane = 0.01f;
-            cam.farClipPlane = 20f;
             const int w = 600, h = 740;
             cam.aspect = (float)w / h;
-            float radius = b.extents.magnitude;
-            float dist = radius / Mathf.Sin(Mathf.Deg2Rad * cam.fieldOfView * 0.5f * cam.aspect) * 0.95f;
+            // FOV horizontal sebenarnya (bukan fov vertikal * aspect) agar artefak memanjang tetap muat lebarnya.
+            float halfH = Mathf.Atan(Mathf.Tan(Mathf.Deg2Rad * cam.fieldOfView * 0.5f) * cam.aspect);
+            float dist = radius / Mathf.Sin(halfH) * 0.95f;
+            cam.nearClipPlane = Mathf.Max(0.001f, (dist - radius) * 0.5f);
+            cam.farClipPlane = dist + radius * 2f;
             var dir = Quaternion.Euler(10f, -18f, 0f) * Vector3.back;
             cam.transform.position = b.center + dir * dist;
             cam.transform.LookAt(b.center);
 
             var rt = new RenderTexture(w, h, 24, RenderTextureFormat.ARGB32) { antiAliasing = 4 };
             cam.targetTexture = rt;
+            cam.Render(); // pemanasan: render pertama di scene baru bisa kosong (shader/tekstur belum siap)
             cam.Render();
             var prev = RenderTexture.active;
             RenderTexture.active = rt;
@@ -500,15 +506,18 @@ namespace NusantaraAR.EditorTools
             tex.Apply();
             RenderTexture.active = prev;
             cam.targetTexture = null;
-            File.WriteAllBytes(thumbPath, tex.EncodeToPNG());
+            bool blank = IsUniform(tex);
+            if (!blank) File.WriteAllBytes(thumbPath, tex.EncodeToPNG());
             UnityEngine.Object.DestroyImmediate(tex);
             rt.Release();
             EditorSceneManager.CloseScene(scene, true);
+            if (blank) throw new Exception("Thumbnail " + data.artifactId + " ter-render polos (satu warna); file lama tidak ditimpa.");
 
             AssetDatabase.ImportAsset(thumbPath, ImportAssetOptions.ForceSynchronousImport);
             var imp = (TextureImporter)AssetImporter.GetAtPath(thumbPath);
             imp.textureType = TextureImporterType.Default;
             imp.mipmapEnabled = false;
+            imp.npotScale = TextureImporterNPOTScale.None; // 600x740 jangan dipaksa jadi 512x512 (gepeng + pita kosong)
             imp.maxTextureSize = 1024;
             imp.SaveAndReimport();
             data = AssetDatabase.LoadAssetAtPath<ArtifactData>(dataPath); // instance lama bisa ter-unload saat reimport
@@ -516,6 +525,29 @@ namespace NusantaraAR.EditorTools
             EditorUtility.SetDirty(data);
             AssetDatabase.SaveAssets();
             EditorSceneManager.OpenScene(MainScenePath);
+        }
+
+        static bool IsUniform(Texture2D tex)
+        {
+            var px = tex.GetPixels32();
+            var first = px[0];
+            foreach (var p in px)
+                if (Mathf.Abs(p.r - first.r) > 4 || Mathf.Abs(p.g - first.g) > 4 || Mathf.Abs(p.b - first.b) > 4) return false;
+            return true;
+        }
+
+        [MenuItem("Nusantara AR/Render Thumbnails")]
+        public static void RenderThumbnails()
+        {
+            RenderThumbnail(KerisBaliBuilder.DataPath, KerisBaliBuilder.ThumbPath);
+            RenderThumbnail(KerisSumatraBuilder.DataPath, KerisSumatraBuilder.ThumbPath);
+            Debug.Log("[NusantaraAR] Thumbnail katalog diperbarui.");
+        }
+
+        public static void RenderThumbnailsBatch()
+        {
+            try { RenderThumbnails(); EditorApplication.Exit(0); }
+            catch (Exception e) { Debug.LogException(e); EditorApplication.Exit(1); }
         }
     }
 }
