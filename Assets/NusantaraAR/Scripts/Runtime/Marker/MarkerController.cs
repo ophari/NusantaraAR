@@ -12,7 +12,10 @@ namespace NusantaraAR.Marker
     /// Mode AR "Scan QR": kamera biasa (tanpa ARCore) + deteksi kode QR; artefak yang isinya cocok
     /// (<see cref="ArtifactData.QrText"/>) muncul di atas kode QR. Kartu penanda lama (pola 6x6, dulu "Scan Kartu")
     /// tetap dikenali sebagai cadangan dari analisis frame yang sama. Berjalan di HP tanpa ARCore (mis. Galaxy A05).
-    /// Gestur: geser 1 jari = putar di atas QR, cubit = skala. "Kunci" menahan posisi agar QR boleh dijauhkan.
+    /// Artefak selalu berdiri tegak menurut sensor gravitasi, jadi QR boleh di meja, di layar/monitor, atau miring:
+    /// di meja artefak berdiri di atas QR, di layar/dinding artefak menghadap keluar dari QR ke pengguna.
+    /// Gestur: geser mendatar = putar, geser tegak = miringkan maju/mundur, cubit = skala.
+    /// "Kunci" menahan posisi agar QR boleh dijauhkan.
     /// </summary>
     public class MarkerController : MonoBehaviour
     {
@@ -41,17 +44,22 @@ namespace NusantaraAR.Marker
         readonly MarkerDetector detector = new MarkerDetector();
         readonly PoseSmoother smoother = new PoseSmoother();
         readonly List<int> codes = new List<int>();
+        readonly DeviceGravity gravity = new DeviceGravity();
 
         State state = State.Starting;
         ArtifactInstance current;
         ArtifactData currentData;
         float baseScale = 1f;
-        float userYaw;
+        Quaternion userRotation = Quaternion.identity;
         float userScale = 1f;
         float lastSeen = -10f;
         float lastQrRead = -10f;
         Pose markerPose;
         bool hasPose;
+        float wallWeight;
+        float viewerYaw;
+        bool onTable;
+        Vector3 boundsCenter, boundsExtents; // ruang lokal prefab, tanpa skala
         bool controlsShown;
 
         ArtifactHud hud;
@@ -75,6 +83,7 @@ namespace NusantaraAR.Marker
             gestures.InteractionStarted += StopAutoRotate;
             gestures.Tapped += hud.HandleTap;
             Locale.Changed += RefreshTexts;
+            gravity.Enable();
 
             if (!CameraPermission.IsGranted)
             {
@@ -90,6 +99,7 @@ namespace NusantaraAR.Marker
         void OnDestroy()
         {
             Locale.Changed -= RefreshTexts;
+            gravity.Disable();
             if (gestures != null)
             {
                 gestures.Dragged -= OnDrag;
@@ -155,6 +165,7 @@ namespace NusantaraAR.Marker
 
         void Update()
         {
+            gravity.Update(Time.deltaTime);
             if (feed.IsRunning && feed.Grab())
             {
                 feed.ConfigureDisplay(background, backgroundCanvas, cam);
@@ -173,7 +184,13 @@ namespace NusantaraAR.Marker
                     hud.SetControlsVisible(show);
                 }
             }
-            if (current != null && current.gameObject.activeSelf && hasPose) ApplyPose();
+            if (current != null && current.gameObject.activeSelf && hasPose)
+            {
+                // AutoRotate memutar transform sendiri, tapi pose ditimpa tiap frame -> putarannya disalurkan ke sini.
+                if (current.autoRotate != null && current.autoRotate.Active)
+                    userRotation = Quaternion.AngleAxis(current.autoRotate.degreesPerSecond * Time.deltaTime, Vector3.up) * userRotation;
+                ApplyPose();
+            }
 
             var kb = Keyboard.current;
             if (kb != null && kb.escapeKey.wasPressedThisFrame)
@@ -190,8 +207,24 @@ namespace NusantaraAR.Marker
             EnsureArtifact(data, size);
             if (current == null) return;
             if (!MarkerPose.TryEstimate(cornersPx, size, feed.FocalPixels, feed.Width * 0.5f, feed.Height * 0.5f, out var corners)) return;
-            var target = MarkerPose.ArtifactPose(corners);
-            if (Time.time - lastSeen > LostAfterSeconds) smoother.Reset();
+            var up = gravity.UpInCamera;
+            var target = MarkerPose.UprightPose(corners, up, out float wall, out float yawToViewer);
+            bool reacquired = Time.time - lastSeen > LostAfterSeconds;
+            if (reacquired)
+            {
+                smoother.Reset();
+                wallWeight = wall;
+            }
+            else
+            {
+                wallWeight = Mathf.Lerp(wallWeight, wall, 1f - Mathf.Exp(-6f * Time.deltaTime));
+            }
+            // QR di meja: hadapkan muka artefak ke pengguna sekali saat mulai terlihat (atau saat QR kembali
+            // direbahkan), lalu biarkan menempel pada QR. Hysteresis mencegah muka berbalik-balik di ~45°.
+            bool table = reacquired ? wall < 0.5f : onTable ? wall < 0.7f : wall < 0.3f;
+            if (reacquired || table != onTable) viewerYaw = table ? yawToViewer : 0f;
+            onTable = table;
+            target.rotation = Quaternion.AngleAxis(viewerYaw, up) * target.rotation;
             markerPose = smoother.Filter(target, Time.deltaTime);
             hasPose = true;
             if (lastSeen < 0f) Analytics.Log("marker_detected", ("artifact", currentData.artifactId));
@@ -241,7 +274,10 @@ namespace NusantaraAR.Marker
             var b = current.GetWorldBounds();
             float width = Mathf.Max(0.01f, Mathf.Max(b.size.x, b.size.z));
             baseScale = size * fitToMarker / width;
-            userYaw = 0f;
+            float s = Mathf.Max(1e-6f, go.transform.lossyScale.x);
+            boundsCenter = go.transform.InverseTransformPoint(b.center);
+            boundsExtents = b.extents / s;
+            userRotation = Quaternion.identity;
             userScale = 1f;
             hud.Bind(current, cam, ResetView, null);
         }
@@ -249,17 +285,35 @@ namespace NusantaraAR.Marker
         void ApplyPose()
         {
             var t = current.transform;
-            t.position = cam.transform.TransformPoint(markerPose.position);
-            t.rotation = cam.transform.rotation * markerPose.rotation * Quaternion.Euler(0f, userYaw, 0f);
-            t.localScale = Vector3.one * baseScale * userScale;
+            float scale = baseScale * userScale;
+            var baseRotation = cam.transform.rotation * markerPose.rotation;
+            var rotation = baseRotation * userRotation;
+            // Letak pusat artefak terhadap QR: di meja alasnya duduk di QR; di layar/dinding pusatnya tepat di
+            // depan QR dengan sisi belakang menempel ke bidang QR. Putar/miring berporos di pusat artefak.
+            var pivot = Vector3.Lerp(boundsCenter, new Vector3(0f, 0f, -boundsExtents.z), wallWeight);
+            t.position = cam.transform.TransformPoint(markerPose.position)
+                         + baseRotation * (pivot * scale) - rotation * (boundsCenter * scale);
+            t.rotation = rotation;
+            t.localScale = Vector3.one * scale;
         }
 
         // ------------------------------------------------------------------ gestur & kontrol
 
+        /// <summary>
+        /// Geser mendatar = putar pada sumbu tegak artefak; geser tegak = miringkan pada sumbu kanan layar
+        /// (ala trackball), sehingga sisi depan/atas bisa dilihat dari sudut scan mana pun.
+        /// </summary>
         void OnDrag(Vector2 delta)
         {
-            if (current == null || !current.gameObject.activeSelf) return;
-            userYaw -= delta.x * DegreesPerDp / Mathf.Max(0.01f, TouchGestures.DpToPixels(1f));
+            if (current == null || !current.gameObject.activeSelf || !hasPose) return;
+            float perPixel = DegreesPerDp / Mathf.Max(0.01f, TouchGestures.DpToPixels(1f));
+            var yaw = Quaternion.AngleAxis(-delta.x * perPixel, Vector3.up);
+            var screenRight = Quaternion.Inverse(markerPose.rotation) * Vector3.right; // sumbu kanan kamera di ruang pose
+            screenRight.y = 0f;
+            var tilt = screenRight.sqrMagnitude > 1e-4f
+                ? Quaternion.AngleAxis(delta.y * perPixel, screenRight.normalized)
+                : Quaternion.identity;
+            userRotation = Quaternion.Normalize(tilt * yaw * userRotation);
         }
 
         void OnPinch(float ratio)
@@ -275,7 +329,7 @@ namespace NusantaraAR.Marker
 
         void ResetView()
         {
-            userYaw = 0f;
+            userRotation = Quaternion.identity;
             userScale = 1f;
             if (current != null && current.autoRotate != null) current.autoRotate.Active = false;
         }

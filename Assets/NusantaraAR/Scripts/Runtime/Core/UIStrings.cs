@@ -71,7 +71,7 @@ namespace NusantaraAR
                 "Buka Nusantara AR di HP lain lalu pilih Scan QR, dan arahkan kamera ke kode ini. Bisa juga dicetak (sisi kode QR sekitar 8 cm, jangan terlipat).",
                 "Open Nusantara AR on another phone, choose Scan QR, and point the camera at this code. It can also be printed (QR code about 8 cm wide, keep it flat)."),
             ["marker.searching"] = ("Arahkan kamera ke kode QR", "Point the camera at the QR code"),
-            ["marker.tracking"] = ("QR terdeteksi - geser untuk memutar, cubit untuk zoom", "QR code detected - drag to rotate, pinch to zoom"),
+            ["marker.tracking"] = ("QR terdeteksi - geser: putar & miringkan, cubit: zoom", "QR detected - drag: rotate & tilt, pinch: zoom"),
             ["marker.locked"] = ("Posisi dikunci - kode QR boleh dijauhkan", "Position locked - you can move the QR code away"),
             ["marker.lock"] = ("Kunci Posisi", "Lock"),
             ["marker.unlock"] = ("Lepas Kunci", "Unlock"),

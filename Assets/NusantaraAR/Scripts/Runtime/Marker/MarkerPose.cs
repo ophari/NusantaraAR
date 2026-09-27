@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace NusantaraAR.Marker
 {
@@ -58,6 +59,103 @@ namespace NusantaraAR.Marker
             var normal = Vector3.Cross(top, right).normalized;
             if (Vector3.Dot(normal, -center) < 0f) normal = -normal;
             return new Pose(center, Quaternion.LookRotation(top, normal));
+        }
+
+        /// <summary>
+        /// Pose artefak yang berdiri tegak menurut gravitasi, apa pun kemiringan QR (ruang kamera Unity).
+        /// QR di meja: artefak berdiri di atas QR, muka (-Z) ke tepi bawah QR (sama seperti <see cref="ArtifactPose"/>).
+        /// QR di layar/dinding: artefak tetap tegak dan mukanya menghadap keluar dari QR (ke pengguna),
+        /// bukan terbaring dengan sisi atasnya ke kamera.
+        /// </summary>
+        /// <param name="up">Arah atas dunia dalam ruang kamera (dari sensor gravitasi).</param>
+        /// <param name="wallWeight">0 = QR mendatar (meja), 1 = QR tegak (layar/dinding); peralihan halus di 30°-65°.</param>
+        /// <param name="yawToViewer">Putaran (kelipatan 90°, pada sumbu <paramref name="up"/>) agar muka artefak
+        /// menghadap pengguna walau QR di meja diletakkan miring/terbalik; 0 bila QR tegak.</param>
+        public static Pose UprightPose(Vector3[] c, Vector3 up, out float wallWeight, out float yawToViewer)
+        {
+            var qr = ArtifactPose(c);
+            var normal = qr.up;
+            var top = qr.forward;
+            float tilt = Vector3.Angle(normal, up);
+            wallWeight = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(30f, 65f, tilt));
+
+            // Dua petunjuk arah depan (+Z, menjauhi pengguna) yang saling menguatkan di semua kemiringan:
+            // tepi atas QR (dominan saat QR mendatar) dan kebalikan normal QR (dominan saat QR tegak).
+            var forward = Vector3.ProjectOnPlane(top, up) + Vector3.ProjectOnPlane(-normal, up);
+            if (forward.sqrMagnitude < 1e-4f) forward = Vector3.ProjectOnPlane(Vector3.forward, up);
+            if (forward.sqrMagnitude < 1e-6f) forward = Vector3.ProjectOnPlane(Vector3.down, up); // kamera tepat tegak lurus ke bawah
+
+            yawToViewer = 0f;
+            var view = Vector3.ProjectOnPlane(qr.position, up); // kamera -> QR, mendatar
+            if (wallWeight < 0.5f && view.sqrMagnitude > 1e-6f)
+                yawToViewer = Mathf.Round(Vector3.SignedAngle(forward, view, up) / 90f) * 90f;
+
+            return new Pose(qr.position, Quaternion.LookRotation(forward.normalized, up));
+        }
+    }
+
+    /// <summary>
+    /// Arah atas dunia dalam ruang kamera belakang, dari sensor gravitasi HP (atau akselerometer yang diredam).
+    /// Aplikasi terkunci potret sehingga sumbu X/Y perangkat = sumbu kamera; Z perangkat keluar dari layar,
+    /// sedangkan kamera belakang memandang ke arah sebaliknya. Tanpa sensor (Editor), atas layar dianggap atas dunia.
+    /// </summary>
+    public class DeviceGravity
+    {
+        const float SmoothingPerSecond = 5f;
+
+        InputDevice gravity, accel;
+        bool enabledGravity, enabledAccel;
+        Vector3 down;
+        bool hasReading;
+
+        /// <summary>Arah atas dunia di ruang lokal kamera (Vector3.up bila tidak ada sensor).</summary>
+        public Vector3 UpInCamera => hasReading ? new Vector3(-down.x, -down.y, down.z) : Vector3.up;
+
+        public void Enable()
+        {
+            gravity = GravitySensor.current;
+            accel = Accelerometer.current;
+            enabledGravity = EnableIfNeeded(gravity);
+            enabledAccel = EnableIfNeeded(accel);
+        }
+
+        public void Disable()
+        {
+            if (enabledGravity && gravity != null && gravity.added) InputSystem.DisableDevice(gravity);
+            if (enabledAccel && accel != null && accel.added) InputSystem.DisableDevice(accel);
+            enabledGravity = enabledAccel = false;
+        }
+
+        public void Update(float dt)
+        {
+            if (!TryRead(out var raw)) return;
+            // Konvensi Unity: vektor = arah gravitasi (ke bawah) dalam g, ruang perangkat.
+            if (!hasReading)
+            {
+                down = raw;
+                hasReading = true;
+                return;
+            }
+            // Akselerometer ikut terguncang gerakan tangan; redam agar artefak tidak goyang.
+            down = Vector3.Slerp(down, raw, 1f - Mathf.Exp(-SmoothingPerSecond * dt)).normalized;
+        }
+
+        bool TryRead(out Vector3 dir)
+        {
+            dir = default;
+            var v = Vector3.zero;
+            if (gravity is GravitySensor g && g.enabled) v = g.gravity.ReadValue();
+            if (v.sqrMagnitude < 0.25f && accel is Accelerometer a && a.enabled) v = a.acceleration.ReadValue();
+            if (v.sqrMagnitude < 0.25f) return false; // belum ada data / jatuh bebas
+            dir = v.normalized;
+            return true;
+        }
+
+        static bool EnableIfNeeded(InputDevice device)
+        {
+            if (device == null || device.enabled) return false;
+            InputSystem.EnableDevice(device);
+            return true;
         }
     }
 

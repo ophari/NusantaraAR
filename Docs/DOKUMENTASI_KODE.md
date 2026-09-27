@@ -257,9 +257,20 @@ Ukuran gambar minimum 32×32 px, dan sisi marker minimum 24 px.
 
 ### 6.3 Pose (`MarkerPose`)
 - `TryEstimate`: homografi model (persegi `size` meter) → piksel. Dengan intrinsik pinhole (`f = feed.FocalPixels`, pusat = tengah gambar), didapat `K⁻¹H = [r1 r2 t]` (metode Zhang), dinormalisasi. Hasilnya posisi 4 sudut di ruang kamera Unity (y dibalik dari konvensi CV).
-- `ArtifactPose`:
-  - Sumbu atas artefak = normal kartu yang menghadap kamera.
+- `ArtifactPose` (bingkai QR/kartu mentah):
+  - Sumbu atas = normal kartu yang menghadap kamera.
   - +Z = arah tepi atas kartu, sehingga muka artefak (-Z) menghadap pengguna.
+- `UprightPose` (yang dipakai `MarkerController`): artefak **selalu tegak menurut gravitasi** (`DeviceGravity`: `GravitySensor`, atau `Accelerometer` yang diredam; tanpa sensor/Editor → atas layar = atas dunia). Menangani beberapa sudut scan:
+
+  | QR di… | Kemiringan QR | Hasil |
+  |---|---|---|
+  | meja, HP miring ±45° | < 30° | Artefak berdiri di atas QR (alas di QR), muka ke pengguna |
+  | meja, HP tegak lurus di atas | < 30° | Sama; terlihat dari atas → geser tegak untuk memiringkan dan melihat sisi depan |
+  | layar monitor/HP lain, dinding, kartu dipegang tegak | > 65° | Artefak tegak, dipusatkan di depan QR, muka menghadap keluar dari QR |
+  | layar laptop condong, buku di penyangga | 30°–65° | Peralihan halus (`wallWeight`) antara dua posisi di atas |
+
+  - Arah depan (+Z) = proyeksi mendatar tepi atas QR **ditambah** proyeksi mendatar kebalikan normal QR. Keduanya searah pada QR yang condong ke belakang menghadap pengguna, jadi tidak ada lompatan di kemiringan mana pun.
+  - `yawToViewer`: di meja, artefak diputar kelipatan 90° agar muka menghadap pengguna walau QR diletakkan miring/terbalik. Diambil sekali saat QR mulai terlihat (atau direbahkan kembali, dengan histeresis 0,3/0,7), lalu tetap menempel pada QR.
 - `PoseSmoother`: filter **One Euro** untuk posisi dan rotasi. Pose tidak bergetar saat diam dan tidak tertinggal saat bergerak cepat.
 
 ### 6.4 Loop `MarkerController`
@@ -272,12 +283,13 @@ Update:
              (QR terlihat tapi tak terbaca & QR terakhir terbaca < 2 s lalu → tetap artefak itu)
           2) bila tidak ada QR dikenali dan detectLegacyCards: MarkerDetector.Detect → FindByMarker(code)
       → EnsureArtifact(data, size)  (ganti prefab bila QR/kartu lain)
-      → TryEstimate(sudut, qrSizeMeters | markerSizeMeters) → ArtifactPose → smoother.Filter → lastSeen = now
+      → TryEstimate(sudut, qrSizeMeters | markerSizeMeters) → UprightPose(gravitasi) → yawToViewer → smoother.Filter → lastSeen = now
   State: Searching ⇄ Tracking (hilang bila > 0,6 s tak terlihat) | Locked (pose dibekukan)
-  ApplyPose: posisi/rotasi = kamera ∘ poseMarker ∘ yaw pengguna; skala = baseScale·userScale
+  ApplyPose: rotasi = kamera ∘ poseMarker ∘ rotasi pengguna; posisi: pusat bounds artefak di Lerp(alas di QR, tepat di depan QR, wallWeight);
+             skala = baseScale·userScale. Putar Otomatis disalurkan ke rotasi pengguna (pose ditimpa tiap frame).
 ```
 - `baseScale` diatur agar lebar artefak kira-kira 2,2 kali sisi QR/kartu (`fitToMarker`), jadi keris tampil "di atas QR", bukan 1:1.
-- Gestur: geser untuk memutar (yaw), pinch untuk skala (0,5×–3×).
+- Gestur: geser mendatar = putar pada sumbu tegak, geser tegak = miringkan pada sumbu kanan layar (ala trackball, berporos di pusat artefak), pinch untuk skala (0,5×–3×). Reset Tampilan mengembalikan rotasi & skala.
 - Tombol **Kunci** menahan pose sehingga QR/kartu boleh dijauhkan dari kamera.
 - `targetFrameRate = 30` untuk menghemat CPU dan panas pada HP entry-level.
 

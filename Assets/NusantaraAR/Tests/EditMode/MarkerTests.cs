@@ -88,6 +88,64 @@ namespace NusantaraAR.Tests
             Assert.Greater(Vector3.Dot(pose.up, -center.normalized), 0.3f, "normal kartu harus menghadap kamera");
         }
 
+        /// <summary>Sudut QR (TL, TR, BR, BL) di ruang kamera Unity dari pusat, arah kanan, dan arah tepi atas QR.</summary>
+        static Vector3[] QrCorners(Vector3 center, Vector3 right, Vector3 top, float size = 0.08f)
+        {
+            right = right.normalized * size * 0.5f;
+            top = top.normalized * size * 0.5f;
+            return new[] { center - right + top, center + right + top, center + right - top, center - right - top };
+        }
+
+        static void AssertDir(Vector3 expected, Vector3 actual, string what) =>
+            Assert.Greater(Vector3.Dot(expected.normalized, actual.normalized), 0.99f, $"{what}: {actual} vs {expected}");
+
+        [Test]
+        public void UprightPose_QrOnScreen_StandsUpFacingViewer()
+        {
+            // QR di monitor tepat di depan kamera: dulu artefak terbaring dan terlihat dari atas.
+            var up = Vector3.up;
+            var pose = MarkerPose.UprightPose(QrCorners(new Vector3(0f, 0f, 0.4f), Vector3.right, Vector3.up), up, out float wall, out float yaw);
+            AssertDir(up, pose.up, "atas");
+            AssertDir(Vector3.forward, pose.forward, "depan (muka -Z ke kamera)");
+            Assert.Greater(wall, 0.99f);
+            Assert.AreEqual(0f, yaw);
+        }
+
+        [Test]
+        public void UprightPose_QrOnTable_StandsOnQr()
+        {
+            // Kamera menunduk 45° ke QR di meja; tepi atas QR menjauhi pengguna.
+            var up = new Vector3(0f, 1f, -1f).normalized;
+            var away = new Vector3(0f, 1f, 1f).normalized;
+            var pose = MarkerPose.UprightPose(QrCorners(new Vector3(0f, 0f, 0.4f), Vector3.right, away), up, out float wall, out float yaw);
+            AssertDir(up, pose.up, "atas");
+            AssertDir(away, pose.forward, "depan");
+            Assert.Less(wall, 0.01f);
+            Assert.AreEqual(0f, yaw);
+        }
+
+        [Test]
+        public void UprightPose_UpsideDownQrOnTable_TurnsToViewer()
+        {
+            var up = new Vector3(0f, 1f, -1f).normalized;
+            var away = new Vector3(0f, 1f, 1f).normalized;
+            var pose = MarkerPose.UprightPose(QrCorners(new Vector3(0f, 0f, 0.4f), Vector3.left, -away), up, out _, out float yaw);
+            Assert.AreEqual(180f, Mathf.Abs(yaw));
+            AssertDir(away, Quaternion.AngleAxis(yaw, up) * pose.forward, "depan setelah yawToViewer");
+        }
+
+        [Test]
+        public void UprightPose_QrLeaningBack_StaysUpright()
+        {
+            // Layar laptop condong 45° ke belakang, kamera mendatar.
+            var up = Vector3.up;
+            var top = new Vector3(0f, 1f, 1f).normalized;
+            var pose = MarkerPose.UprightPose(QrCorners(new Vector3(0f, 0.05f, 0.4f), Vector3.right, top), up, out float wall, out _);
+            AssertDir(up, pose.up, "atas");
+            AssertDir(Vector3.forward, pose.forward, "depan");
+            Assert.That(wall, Is.InRange(0.2f, 0.8f));
+        }
+
         [Test]
         public void UprightBuffer_RotatesLikeTheScreen()
         {
