@@ -1,4 +1,4 @@
-# Keris Bali (luk 9, pamor "banyu tetes", ganja maswatu emas, hulu dederan figur dewa, warangka Branggah,
+# Keris Bali (luk 9, pamor "banyu tetes", ganja emas, danganan togogan figur dewa, warangka Bali sesrengatan,
 # pendok emas bertatah permata) di atas jagrak ukir Karang Boma -> Blender -> GLB.
 #
 # Jalankan (tanpa membuka jendela Blender):
@@ -15,7 +15,7 @@
 # Ruang lokal keris sama dengan Keris Sumatra: bilah menghadap -Z, pivot di pangkal bilah, lebar di X, tebal di Y.
 # Di GLB, empty "Keris" meletakkan keris mendatar di atas jagrak (hulu ke +X, muka depan -Y, sisi greneng ke bawah).
 # Hierarki: Keris_Bali > Jagrak (Jagrak_Ukiran, Jagrak_Kaki) + Keris > Bilah (Wilah, Ganja, Selut, Permata_Selut, Hulu, Permata_Hulu)
-#           + Sarung (Warangka_Branggah, Warangka_Celah, Gandar, Cincin, Permata_Warangka, Pendok).
+#           + Sarung (Warangka_Sesrengatan, Warangka_Celah, Gandar, Cincin, Permata_Warangka, Pendok).
 
 import bpy, math, os, sys
 import numpy as np
@@ -88,7 +88,7 @@ def torus(mb, c, n, R, r, Ry=None, cols=24, rows=6):
     mb.grid(P, uv=lambda i, j: (j / cols, i / rows), wrap_rows=True)
 
 
-# ============================================================ bilah (wilah, pesi) & ganja maswatu
+# ============================================================ bilah (wilah, pesi) & ganja
 
 def luk_center(u):
     u = np.asarray(u, float)
@@ -147,7 +147,7 @@ def part_wilah():
 
 
 def part_ganja():
-    """Ganja maswatu: palang emas di pangkal bilah, ekor segitiga meruncing di sisi greneng (+X)."""
+    """Ganja: palang berlapis emas di pangkal bilah, ekor segitiga meruncing di sisi greneng (+X)."""
     prof = [(-0.031, 0.000), (0.012, 0.000), (0.024, -0.014), (0.034, -0.030), (0.042, -0.046), (0.047, -0.040),
             (0.054, -0.026), (0.061, -0.012), (0.066, -0.002), (0.066, 0.006), (0.060, 0.0115), (0.050, 0.0135),
             (0.030, 0.0138), (0.000, 0.0138), (-0.020, 0.0135), (-0.028, 0.012), (-0.033, 0.009), (-0.035, 0.005),
@@ -229,7 +229,7 @@ def part_permata_hulu():
 
 
 def hulu_figure(parent, mat):
-    """Figur dewa berlutut (dederan) dengan tangan menyembah: metaball -> mesh, plus mahkota & perhiasan."""
+    """Figur dewa berlutut (danganan togogan) dengan tangan menyembah: metaball -> mesh, plus mahkota & perhiasan."""
     sc = bpy.context.scene
     zb = SELUT_TOP - 0.0015
     # Resolusi metaball dibatasi minimal 5 mm, jadi figur dibangun 10x lebih besar lalu diperkecil lagi.
@@ -319,32 +319,40 @@ def hulu_figure(parent, mat):
     return ob
 
 
-# ============================================================ warangka Branggah, gandar, cincin, pendok
+# ============================================================ warangka sesrengatan, gandar, cincin, pendok
 
-SAMPIR_CTRL = [(-0.080, 0.046), (-0.074, 0.022), (-0.062, 0.002), (-0.038, -0.0155), (0.000, -0.0235),
-               (0.040, -0.0185), (0.068, -0.004), (0.088, 0.018), (0.099, 0.042), (0.102, 0.064)]
+# Warangka gaya Bali "sesrengatan" (dianggap terbaik oleh komunitas keris Bali), siluet mengikuti foto sampel
+# jurnal Progresif 21(2) 2025 & KOMITEK 5(1) 2025: badan datar tempat ganja bertumpu, ujung belakang pendek
+# tumpul membulat (sisi greneng, +X), ujung depan menjulang menjadi tanduk runcing (sisi gandik, -X).
+# Profil sebagai fungsi x (ruang lokal keris): tepi atas & bawah (z), setengah tebal (y).
+SES_X = [-0.100, -0.088, -0.076, -0.064, -0.052, -0.040, -0.029, 0.029, 0.045, 0.060, 0.070, 0.080]
+SES_TOP = [0.055, 0.037, 0.025, 0.014, 0.007, 0.002, 0.000, 0.000, 0.000, 0.000, -0.001, -0.003]
+SES_BOT = [0.055, 0.028, 0.008, -0.008, -0.020, -0.028, -0.032, -0.034, -0.033, -0.031, -0.029, -0.027]
+SES_T = [0.0035, 0.0068, 0.0095, 0.0115, 0.0124, 0.0126, 0.0126, 0.0126, 0.0125, 0.0123, 0.0121, 0.0118]
+SES_END_R = 0.010    # jari-jari pembulatan ujung belakang (tumpul, hampir tegak)
 
 
 def part_sampir():
-    n = 72
-    pts, T, N, _ = sweep2d(SAMPIR_CTRL, n)
-    s = np.linspace(0, 1, n)
-    h = taper(s, 0.30, 0.55, 0.0018, 0.0240, 0.0014, 0.9, 1.1)
-    t = taper(s, 0.30, 0.55, 0.0030, 0.0150, 0.0026)
-    C = 32; a = TAU * np.arange(C) / C; ca, sa = np.cos(a), np.sin(a)
-    pc = np.where(ca < 0, spow(ca, 0.45), spow(ca, 0.70)); qs = spow(sa, 0.6)
+    n, C = 110, 36
+    x0, x1 = SES_X[0], SES_X[-1]
+    xs = x0 + (x1 - x0) * (1 - np.cos(np.linspace(0, np.pi, n))) / 2       # rapat di kedua ujung
+    zt = np.interp(xs, SES_X, SES_TOP); zb = np.interp(xs, SES_X, SES_BOT); ty = np.interp(xs, SES_X, SES_T)
+    for arr in (zt, zb, ty):                                               # haluskan sudut interpolasi linear
+        arr[1:-1] = np.convolve(np.pad(arr, 3, mode='edge'), np.ones(7) / 7, 'valid')[1:-1]
+    zc = (zt + zb) / 2; hz = np.maximum((zt - zb) / 2, 0.0006)
+    # Ujung belakang membulat. Ring terakhir sengaja tidak menyusut jadi satu titik: ring degeneratif membuat
+    # recalc normal gagal dan permukaan warangka terbalik ke dalam (tampak gelap/tembus di Unity).
+    e = np.sqrt(np.clip(1 - np.clip((xs - (x1 - SES_END_R)) / SES_END_R, 0, 1) ** 2, 0.03, 1))
+    hz *= e; ty *= np.sqrt(e)
+    a = TAU * np.arange(C) / C
+    sz = spow(np.sin(a), 0.45); cy = spow(np.cos(a), 0.55)                 # penampang persegi membulat
     P = np.zeros((n, C, 3))
-    for i in range(n):
-        P[i, :, 0] = pts[i, 0] + N[i, 0] * h[i] * pc
-        P[i, :, 1] = t[i] * qs
-        P[i, :, 2] = pts[i, 1] + N[i, 1] * h[i] * pc
-    x = P[..., 0]
-    mask = sstep(-0.058, -0.044, x) * (1 - sstep(0.056, 0.070, x))
-    P[..., 2] -= mask * np.maximum(P[..., 2], 0.0)
-    st = pts[0] + T[0] * -0.0015; en = pts[-1] + T[-1] * 0.0012
+    P[:, :, 0] = xs[:, None]
+    P[:, :, 1] = ty[:, None] * cy[None, :]
+    P[:, :, 2] = zc[:, None] + hz[:, None] * sz[None, :]
     mb = MB()
-    mb.grid(P, uv=lambda i, j: (j / C, 0.6 * i / (n - 1)),
-            start=(st[0], 0, st[1]), start_uv=(0.5, 0.0), end=(en[0], 0, en[1]), end_uv=(0.5, 0.6))
+    mb.grid(P, uv=lambda i, j: (j / C, 0.9 * i / (n - 1)),
+            start=(x0 - 0.0006, 0, zc[0]), start_uv=(0.5, 0.0), end=(x1 + 0.0004, 0, zc[-1]), end_uv=(0.5, 0.9))
     return mb
 
 
@@ -938,7 +946,7 @@ def main():
         ('Selut', part_selut(), M['emas_ukir'], bilah, True),
         ('Permata_Selut', part_permata_selut(), gems, bilah, True),
         ('Permata_Hulu', part_permata_hulu(), gems[:1], bilah, True),
-        ('Warangka_Branggah', part_sampir(), M['pelet'], sarung, True),
+        ('Warangka_Sesrengatan', part_sampir(), M['pelet'], sarung, True),
         ('Warangka_Celah', part_celah(), M['celah'], sarung, False),
         ('Gandar', part_gandar(), M['pelet'], sarung, True),
         ('Cincin', part_cincin(), M['emas_ukir'], sarung, True),

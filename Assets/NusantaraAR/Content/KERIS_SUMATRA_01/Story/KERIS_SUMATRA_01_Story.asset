@@ -1,0 +1,404 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25fd6c8569d03541b047df14ede99d2, type: 3}
+  m_Name: KERIS_SUMATRA_01_Story
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactStory
+  chapters:
+  - key: sapa
+    title:
+      id: Kenalan dulu
+      en: Say hello
+    text:
+      id: Halo! Kali ini aku akan mengajakmu mengenal keris dari Sumatra. Bentuknya
+        sedikit berbeda dari keris Jawa atau Bali, dan justru di situlah serunya.
+        Keris adalah warisan budaya bersama di seluruh Nusantara. Pada tahun 2005,
+        UNESCO menetapkannya sebagai Karya Agung Warisan Budaya Lisan dan Takbenda
+        Kemanusiaan.
+      en: Hi! This time I'll introduce you to a keris from Sumatra. Its shape is
+        a little different from Javanese or Balinese keris, and that's what makes
+        it fun. The keris is a shared heritage across the archipelago. In 2005, UNESCO
+        proclaimed it a Masterpiece of the Oral and Intangible Heritage of Humanity.
+    stage: 0
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: 25ec068a934873b44ac412e5dd4ee72a, type: 3}
+    voiceEN: {fileID: 8300000, guid: b76dd0bf0b95386418096a4bec9eb4be, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Halo!
+    - time: 1.834
+      text: Kali ini aku akan mengajakmu mengenal keris dari Sumatra.
+    - time: 6.912
+      text: Bentuknya sedikit berbeda dari keris Jawa atau Bali, dan justru di situlah
+        serunya.
+    - time: 13.735
+      text: Keris adalah warisan budaya bersama di seluruh Nusantara.
+    - time: 18.917
+      text: Pada tahun 2005, UNESCO menetapkannya sebagai Karya Agung Warisan Budaya
+        Lisan dan Takbenda Kemanusiaan.
+    cuesEN:
+    - time: 0.1
+      text: Hi!
+    - time: 0.922
+      text: This time I'll introduce you to a keris from Sumatra.
+    - time: 4.23
+      text: Its shape is a little different from Javanese or Balinese keris, and
+        that's what makes it fun.
+    - time: 10.05
+      text: The keris is a shared heritage across the archipelago.
+    - time: 13.761
+      text: In 2005, UNESCO proclaimed it a Masterpiece of the Oral and Intangible
+        Heritage of Humanity.
+  - key: sejarah
+    title:
+      id: Jejak sejarah
+      en: Traces of history
+    text:
+      id: Keris tertua yang diketahui berasal dari Jawa pada abad kesepuluh. Lewat
+        diplomasi dan perdagangan, keris menyebar ke Sumatra, Semenanjung Melayu,
+        Thailand selatan, hingga Filipina. Di dunia Melayu, keris menjadi alat kebesaran
+        dan kelengkapan pakaian adat. Di Minangkabau, misalnya, penghulu adat menyelipkan
+        keris di pinggang sebelah kiri. Keris itu melambangkan tempat bertumpu bagi
+        anak kemenakannya, sekaligus kekuatan dan perlindungan.
+      en: The earliest known keris come from tenth-century Java. Through diplomacy
+        and trade, the keris spread to Sumatra, the Malay Peninsula, southern Thailand
+        and the Philippines. In the Malay world, the keris became regalia and part
+        of traditional dress. Among the Minangkabau, for example, a customary leader
+        called a penghulu wears a keris tucked at the left side of the waist. It
+        symbolises a pillar his kin can lean on, as well as strength and protection.
+    stage: 0
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: 566a428dfbf24f24c8446d146ad75faf, type: 3}
+    voiceEN: {fileID: 8300000, guid: b5e84ef96bdc4644bbeb3e33de50931d, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Keris tertua yang diketahui berasal dari Jawa pada abad kesepuluh.
+    - time: 5.545
+      text: Lewat diplomasi dan perdagangan, keris menyebar ke Sumatra, Semenanjung
+        Melayu, Thailand selatan, hingga Filipina.
+    - time: 15.258
+      text: Di dunia Melayu, keris menjadi alat kebesaran dan kelengkapan pakaian
+        adat.
+    - time: 21.456
+      text: Di Minangkabau, misalnya, penghulu adat menyelipkan keris di pinggang
+        sebelah kiri.
+    - time: 28.696
+      text: Keris itu melambangkan tempat bertumpu bagi anak kemenakannya, sekaligus
+        kekuatan dan perlindungan.
+    cuesEN:
+    - time: 0.1
+      text: The earliest known keris come from tenth-century Java.
+    - time: 3.722
+      text: Through diplomacy and trade, the keris spread to Sumatra, the Malay Peninsula,
+        southern Thailand and the Philippines.
+    - time: 12.277
+      text: In the Malay world, the keris became regalia and part of traditional
+        dress.
+    - time: 17.745
+      text: Among the Minangkabau, for example, a customary leader called a penghulu
+        wears a keris tucked at the left side of the waist.
+    - time: 25.545
+      text: It symbolises a pillar his kin can lean on, as well as strength and protection.
+  - key: hulu
+    title:
+      id: Hulu kepala burung
+      en: The bird-head hilt
+    text:
+      id: Lihat hulunya. Hulu keris gaya Melayu sering melengkung seperti burung.
+        Di Palembang, misalnya, ada hulu ludai yang menyerupai kepala burung enggang,
+        dan hulu jawa demam yang mirip anak ayam. Kata perajinnya, kalau dilihat
+        dari belakang, lekuknya seperti orang yang duduk tahiyat dalam salat. Di
+        bawah hulu ada pendongkok, cincin logam yang di Jawa disebut mendak.
+      en: Look at the hilt. Malay-style hilts often curve like a bird. In Palembang,
+        for example, there is the hulu ludai, resembling a hornbill's head, and the
+        jawa demam, which looks like a chick. Its makers say that seen from behind,
+        the curve looks like a person seated in the tahiyat posture of prayer. Below
+        the hilt is the pendongkok, a metal ring that the Javanese call mendak.
+    stage: 0
+    focusHotspot: hulu
+    voiceID: {fileID: 8300000, guid: efa929255ae66d0468d145e88c2cea7d, type: 3}
+    voiceEN: {fileID: 8300000, guid: ba20cb9541fbdc1478f269f6a5abb422, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Lihat hulunya.
+    - time: 2.368
+      text: Hulu keris gaya Melayu sering melengkung seperti burung.
+    - time: 7.081
+      text: Di Palembang, misalnya, ada hulu ludai yang menyerupai kepala burung
+        enggang, dan hulu jawa demam yang mirip anak ayam.
+    - time: 17.029
+      text: Kata perajinnya, kalau dilihat dari belakang, lekuknya seperti orang
+        yang duduk tahiyat dalam salat.
+    - time: 24.881
+      text: Di bawah hulu ada pendongkok, cincin logam yang di Jawa disebut mendak.
+    cuesEN:
+    - time: 0.1
+      text: Look at the hilt.
+    - time: 1.365
+      text: Malay-style hilts often curve like a bird.
+    - time: 4.256
+      text: In Palembang, for example, there is the hulu ludai, resembling a hornbill's
+        head, and the jawa demam, which looks like a chick.
+    - time: 13.357
+      text: Its makers say that seen from behind, the curve looks like a person seated
+        in the tahiyat posture of prayer.
+    - time: 20.141
+      text: Below the hilt is the pendongkok, a metal ring that the Javanese call
+        mendak.
+  - key: sarung
+    title:
+      id: Sampir bulan sabit
+      en: The crescent sampir
+    text:
+      id: 'Bagian atas sarungnya disebut sampir. Di Palembang dikenal dua bentuk
+        sampir: sampir perahu, lambang budaya sungai Musi, dan sampir bulan sabit,
+        seperti pada keris ini. Batang sarungnya dibalut pendok kuningan berukir.
+        Di Palembang, pendok juga dibuat dari perak, suasa, atau emas, sering bertatah
+        batu mulia.'
+      en: 'The top of the sheath is called the sampir. Palembang knows two sampir
+        shapes: the boat-shaped sampir, a symbol of the Musi river culture, and the
+        crescent sampir, like on this keris. The sheath body is wrapped in an engraved
+        brass pendok. In Palembang, pendok are also made of silver, suasa or gold,
+        often set with gems.'
+    stage: 0
+    focusHotspot: warangka
+    voiceID: {fileID: 8300000, guid: 6064817efc615c144a8a5d8a53ad8972, type: 3}
+    voiceEN: {fileID: 8300000, guid: cfa68331e34bfc044982ff246086d7cb, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Bagian atas sarungnya disebut sampir.
+    - time: 3.761
+      text: 'Di Palembang dikenal dua bentuk sampir: sampir perahu, lambang budaya
+        sungai Musi, dan sampir bulan sabit, seperti pada keris ini.'
+    - time: 15.154
+      text: Batang sarungnya dibalut pendok kuningan berukir.
+    - time: 19.295
+      text: Di Palembang, pendok juga dibuat dari perak, suasa, atau emas, sering
+        bertatah batu mulia.
+    cuesEN:
+    - time: 0.1
+      text: The top of the sheath is called the sampir.
+    - time: 2.719
+      text: 'Palembang knows two sampir shapes: the boat-shaped sampir, a symbol
+        of the Musi river culture, and the crescent sampir, like on this keris.'
+    - time: 12.68
+      text: The sheath body is wrapped in an engraved brass pendok.
+    - time: 16.521
+      text: In Palembang, pendok are also made of silver, suasa or gold, often set
+        with gems.
+  - key: empu
+    title:
+      id: Sang empu menempa
+      en: The empu at the forge
+    text:
+      id: Ayo, kita hunus bilahnya! Bilah keris ditempa oleh seorang empu, perajin
+        yang sangat dihormati. Beberapa jenis besi dan nikel dipanaskan di bara api,
+        dipukul, lalu dilipat, puluhan hingga ratusan kali. Setelah itu, bilah direndam
+        dalam warangan, campuran air jeruk nipis dan batu arsenik. Besinya menjadi
+        hitam, sementara nikelnya tetap putih keperakan. Dari situlah pola pamor
+        muncul.
+      en: Let's draw the blade! A keris blade is forged by an empu, a highly respected
+        craftsman. Several kinds of iron and nickel are heated in glowing coals,
+        hammered and folded, dozens or even hundreds of times. Then the blade is
+        soaked in warangan, a mix of lime juice and arsenic ore. The iron turns black
+        while the nickel stays silvery white. That's how the pamor pattern appears.
+    stage: 1
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: decba66b3b5b53740a7b869642ec42f5, type: 3}
+    voiceEN: {fileID: 8300000, guid: 1cd785944cefdb64bb0d8bf720c1089c, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Ayo, kita hunus bilahnya!
+    - time: 3.618
+      text: Bilah keris ditempa oleh seorang empu, perajin yang sangat dihormati.
+    - time: 9.685
+      text: Beberapa jenis besi dan nikel dipanaskan di bara api, dipukul, lalu dilipat,
+        puluhan hingga ratusan kali.
+    - time: 18.969
+      text: Setelah itu, bilah direndam dalam warangan, campuran air jeruk nipis
+        dan batu arsenik.
+    - time: 26.951
+      text: Besinya menjadi hitam, sementara nikelnya tetap putih keperakan.
+    - time: 32.732
+      text: Dari situlah pola pamor muncul.
+    cuesEN:
+    - time: 0.1
+      text: Let's draw the blade!
+    - time: 1.665
+      text: A keris blade is forged by an empu, a highly respected craftsman.
+    - time: 7.394
+      text: Several kinds of iron and nickel are heated in glowing coals, hammered
+        and folded, dozens or even hundreds of times.
+    - time: 15.792
+      text: Then the blade is soaked in warangan, a mix of lime juice and arsenic
+        ore.
+    - time: 21.066
+      text: The iron turns black while the nickel stays silvery white.
+    - time: 24.698
+      text: That's how the pamor pattern appears.
+  - key: pamor
+    title:
+      id: Pamor wos wutah
+      en: Wos wutah pamor
+    text:
+      id: Pola pamor pada keris ini disebut wos wutah, artinya beras yang tumpah.
+        Polanya tidak beraturan, seperti butiran beras yang tumpah dari lumbung yang
+        penuh. Maknanya ungkapan syukur atas berkah, dan buah dari kerja keras menghidupi
+        keluarga.
+      en: The pamor pattern on this keris is called wos wutah, which means spilled
+        rice. The pattern is irregular, like grains spilling from a full rice store.
+        It expresses gratitude for blessings, and the reward of hard work in providing
+        for one's family.
+    stage: 1
+    focusHotspot: pamor
+    voiceID: {fileID: 8300000, guid: 33c6683630f13834ab2ba866971049f9, type: 3}
+    voiceEN: {fileID: 8300000, guid: fb783fdb705ebc34b8aa6868f9817e8a, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Pola pamor pada keris ini disebut wos wutah, artinya beras yang tumpah.
+    - time: 6.3
+      text: Polanya tidak beraturan, seperti butiran beras yang tumpah dari lumbung
+        yang penuh.
+    - time: 12.851
+      text: Maknanya ungkapan syukur atas berkah, dan buah dari kerja keras menghidupi
+        keluarga.
+    cuesEN:
+    - time: 0.1
+      text: The pamor pattern on this keris is called wos wutah, which means spilled
+        rice.
+    - time: 5.245
+      text: The pattern is irregular, like grains spilling from a full rice store.
+    - time: 9.842
+      text: It expresses gratitude for blessings, and the reward of hard work in
+        providing for one's family.
+  - key: luk
+    title:
+      id: Luk dan belalai gajah
+      en: Luk and belalai gajah
+    text:
+      id: Sekarang perhatikan lekukan bilahnya. Lekukan ini disebut luk, dan jumlahnya
+        selalu ganjil. Keris ini punya tujuh luk. Di pangkal depan bilah ada gandik,
+        dengan lengkungan kecil yang di Palembang, Riau, dan Semenanjung Melayu disebut
+        belalai gajah. Di Jawa, bagian ini disebut kembang kacang.
+      en: Now look at the curves of the blade. Each curve is called a luk, and there
+        is always an odd number of them. This keris has seven. At the front of the
+        blade base is the gandik, with a small curl that Palembang, Riau and the
+        Malay Peninsula call belalai gajah, the elephant's trunk. In Java, it is
+        called kembang kacang.
+    stage: 1
+    focusHotspot: luk
+    voiceID: {fileID: 8300000, guid: 74da3a5d8b2d75d45a32dabfaf1d02a4, type: 3}
+    voiceEN: {fileID: 8300000, guid: 17602b376e37e654ca83088a14474462, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Sekarang perhatikan lekukan bilahnya.
+    - time: 3.722
+      text: Lekukan ini disebut luk, dan jumlahnya selalu ganjil.
+    - time: 9.034
+      text: Keris ini punya tujuh luk.
+    - time: 11.914
+      text: Di pangkal depan bilah ada gandik, dengan lengkungan kecil yang di Palembang,
+        Riau, dan Semenanjung Melayu disebut belalai gajah.
+    - time: 22.094
+      text: Di Jawa, bagian ini disebut kembang kacang.
+    cuesEN:
+    - time: 0.1
+      text: Now look at the curves of the blade.
+    - time: 2.303
+      text: Each curve is called a luk, and there is always an odd number of them.
+    - time: 6.404
+      text: This keris has seven.
+    - time: 8.266
+      text: At the front of the blade base is the gandik, with a small curl that
+        Palembang, Riau and the Malay Peninsula call belalai gajah, the elephant's
+        trunk.
+    - time: 18.175
+      text: In Java, it is called kembang kacang.
+  - key: bongkar
+    title:
+      id: Karya banyak tangan
+      en: The work of many hands
+    text:
+      id: Sekarang kita bongkar semua bagiannya. Hulu dan pendongkok dilepas, lalu
+        ganja, lalu sampir. Dalam tradisi Melayu, ganja berfungsi melindungi buku
+        jari dari mata keris lawan. Setiap bagian dibuat oleh ahlinya masing-masing,
+        mulai dari empu, pengukir kayu, sampai perajin logam. Semuanya dirakit menjadi
+        satu pusaka.
+      en: Now let's take it all apart. The hilt and pendongkok come off, then the
+        ganja, then the sampir. In Malay tradition, the ganja protects the knuckles
+        from an opponent's blade. Each part is made by its own specialist, from the
+        empu to the woodcarver to the metalworker. Together, they are assembled into
+        one heirloom.
+    stage: 4
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: e5e813d2c917f2042afc44d26b086f60, type: 3}
+    voiceEN: {fileID: 8300000, guid: cebddb03f01ff8a48aa2e216f5dee046, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Sekarang kita bongkar semua bagiannya.
+    - time: 3.865
+      text: Hulu dan pendongkok dilepas, lalu ganja, lalu sampir.
+    - time: 9.607
+      text: Dalam tradisi Melayu, ganja berfungsi melindungi buku jari dari mata
+        keris lawan.
+    - time: 16.626
+      text: Setiap bagian dibuat oleh ahlinya masing-masing, mulai dari empu, pengukir
+        kayu, sampai perajin logam.
+    - time: 25.753
+      text: Semuanya dirakit menjadi satu pusaka.
+    cuesEN:
+    - time: 0.1
+      text: Now let's take it all apart.
+    - time: 2.211
+      text: The hilt and pendongkok come off, then the ganja, then the sampir.
+    - time: 6.938
+      text: In Malay tradition, the ganja protects the knuckles from an opponent's
+        blade.
+    - time: 12.068
+      text: Each part is made by its own specialist, from the empu to the woodcarver
+        to the metalworker.
+    - time: 17.719
+      text: Together, they are assembled into one heirloom.
+  - key: penutup
+    title:
+      id: Sampai jumpa
+      en: See you
+    text:
+      id: Kita rakit kembali kerisnya. Nah, sekarang kamu sudah tahu kisah di balik
+        keris Sumatra ini. Ketuk label emas di setiap bagian untuk menjelajah lebih
+        jauh, ya. Sampai jumpa!
+      en: Let's put the keris back together. And now you know the story behind this
+        Sumatran keris. Tap the gold labels on each part to explore further. See
+        you!
+    stage: 0
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: f57429e5c53a4b146b71fd65e945e167, type: 3}
+    voiceEN: {fileID: 8300000, guid: e6997bf3573213f43b1107ec0677d311, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Kita rakit kembali kerisnya.
+    - time: 3.11
+      text: Nah, sekarang kamu sudah tahu kisah di balik keris Sumatra ini.
+    - time: 8.67
+      text: Ketuk label emas di setiap bagian untuk menjelajah lebih jauh, ya.
+    - time: 14.555
+      text: Sampai jumpa!
+    cuesEN:
+    - time: 0.1
+      text: Let's put the keris back together.
+    - time: 2.303
+      text: And now you know the story behind this Sumatran keris.
+    - time: 5.844
+      text: Tap the gold labels on each part to explore further.
+    - time: 9.464
+      text: See you!
+  voiceCredit: 'Microsoft Edge TTS: id-ID-GadisNeural / en-US-AvaNeural'
+  curatorValidated: 0

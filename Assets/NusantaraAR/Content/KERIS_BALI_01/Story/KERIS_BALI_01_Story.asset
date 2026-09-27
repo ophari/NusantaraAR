@@ -1,0 +1,474 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25fd6c8569d03541b047df14ede99d2, type: 3}
+  m_Name: KERIS_BALI_01_Story
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactStory
+  chapters:
+  - key: sapa
+    title:
+      id: Kenalan dulu
+      en: Say hello
+    text:
+      id: Halo! Aku akan menemanimu mengenal keris Bali ini. Lihat, bilahnya masih
+        tersimpan rapi di dalam sarung, berdiri di atas dudukan kayu berukir. Keris
+        bukan sekadar senjata. Pada tahun 2005, UNESCO menetapkan keris Indonesia
+        sebagai Karya Agung Warisan Budaya Lisan dan Takbenda Kemanusiaan. Keren,
+        kan?
+      en: Hi there! I'll be your guide to this Balinese keris. See how the blade
+        is still resting inside its sheath, standing on a carved wooden stand? A
+        keris is much more than a weapon. In 2005, UNESCO proclaimed the Indonesian
+        keris a Masterpiece of the Oral and Intangible Heritage of Humanity. Pretty
+        amazing, right?
+    stage: 0
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: cfa67c7254b276641b018d48432ce6f6, type: 3}
+    voiceEN: {fileID: 8300000, guid: ba5679bd88e196d4294e42cc00e5b226, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Halo!
+    - time: 1.834
+      text: Aku akan menemanimu mengenal keris Bali ini.
+    - time: 6.066
+      text: Lihat, bilahnya masih tersimpan rapi di dalam sarung, berdiri di atas
+        dudukan kayu berukir.
+    - time: 14.021
+      text: Keris bukan sekadar senjata.
+    - time: 17.198
+      text: Pada tahun 2005, UNESCO menetapkan keris Indonesia sebagai Karya Agung
+        Warisan Budaya Lisan dan Takbenda Kemanusiaan.
+    - time: 27.343
+      text: Keren, kan?
+    cuesEN:
+    - time: 0.1
+      text: Hi there!
+    - time: 1.079
+      text: I'll be your guide to this Balinese keris.
+    - time: 3.748
+      text: See how the blade is still resting inside its sheath, standing on a carved
+        wooden stand?
+    - time: 9.178
+      text: A keris is much more than a weapon.
+    - time: 11.769
+      text: In 2005, UNESCO proclaimed the Indonesian keris a Masterpiece of the
+        Oral and Intangible Heritage of Humanity.
+    - time: 20.649
+      text: Pretty amazing, right?
+  - key: sejarah
+    title:
+      id: Jejak sejarah
+      en: Traces of history
+    text:
+      id: Keris tertua yang diketahui berasal dari abad kesepuluh. Bahkan relief
+        Candi Borobudur dari abad kesembilan sudah menggambarkan senjata yang mirip
+        keris. Dari Jawa, keris menyebar ke seluruh Nusantara lewat diplomasi dan
+        perdagangan. Di Bali, keris dirawat turun-temurun sebagai pusaka, dan diberikan
+        saat upacara potong gigi atau pernikahan sebagai tanda kedewasaan. Setiap
+        hari raya Tumpek Landep, yang datang tiap dua ratus sepuluh hari, keris diupacarai
+        untuk memuja Sang Hyang Siwa Pasupati.
+      en: The earliest known keris date from the tenth century. A ninth-century relief
+        at Borobudur temple even shows a weapon that looks like a keris. From Java,
+        the keris spread across the archipelago through diplomacy and trade. In Bali,
+        keris are cared for across generations as heirlooms, and given at the tooth-filing
+        rite or at weddings as a sign of adulthood. On every Tumpek Landep, a holy
+        day that comes every two hundred and ten days, keris are blessed in worship
+        of Sang Hyang Siwa Pasupati.
+    stage: 0
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: a49790ba11905eb4ca092c61ed655499, type: 3}
+    voiceEN: {fileID: 8300000, guid: f36672e8cb2accd48963d8d8cb17b5be, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Keris tertua yang diketahui berasal dari abad kesepuluh.
+    - time: 4.855
+      text: Bahkan relief Candi Borobudur dari abad kesembilan sudah menggambarkan
+        senjata yang mirip keris.
+    - time: 12.172
+      text: Dari Jawa, keris menyebar ke seluruh Nusantara lewat diplomasi dan perdagangan.
+    - time: 18.826
+      text: Di Bali, keris dirawat turun-temurun sebagai pusaka, dan diberikan saat
+        upacara potong gigi atau pernikahan sebagai tanda kedewasaan.
+    - time: 29.529
+      text: Setiap hari raya Tumpek Landep, yang datang tiap dua ratus sepuluh hari,
+        keris diupacarai untuk memuja Sang Hyang Siwa Pasupati.
+    cuesEN:
+    - time: 0.1
+      text: The earliest known keris date from the tenth century.
+    - time: 3.592
+      text: A ninth-century relief at Borobudur temple even shows a weapon that looks
+        like a keris.
+    - time: 9.373
+      text: From Java, the keris spread across the archipelago through diplomacy
+        and trade.
+    - time: 15.076
+      text: In Bali, keris are cared for across generations as heirlooms, and given
+        at the tooth-filing rite or at weddings as a sign of adulthood.
+    - time: 23.67
+      text: On every Tumpek Landep, a holy day that comes every two hundred and ten
+        days, keris are blessed in worship of Sang Hyang Siwa Pasupati.
+  - key: hulu
+    title:
+      id: Hulu yang megah
+      en: A splendid hilt
+    text:
+      id: Sekarang lihat pegangannya. Di Bali, pegangan keris disebut danganan. Hulu
+        yang berbentuk sosok manusia atau dewa disebut togogan, dan hulu berbentuk
+        Dewa Ganesha termasuk yang paling populer di Bali. Pada model ini, hulunya
+        berupa figur dewa berlapis emas yang berlutut sambil menyembah. Di bawahnya
+        ada selut bertatah permata warna-warni.
+      en: Now take a look at the handle. In Bali, it is called the danganan. Hilts
+        carved as human or divine figures are called togogan, and hilts shaped like
+        Ganesha are among the most popular in Bali. On this model, the hilt is a
+        gold figure of a deity kneeling in worship. Just below it sits a selut collar
+        studded with colourful gems.
+    stage: 0
+    focusHotspot: hulu
+    voiceID: {fileID: 8300000, guid: cbd17b602f7e7704ab1335cb39ac04b3, type: 3}
+    voiceEN: {fileID: 8300000, guid: ae3a66f9e6c67e748a90e83a7fd9d3ea, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Sekarang lihat pegangannya.
+    - time: 3.149
+      text: Di Bali, pegangan keris disebut danganan.
+    - time: 7.667
+      text: Hulu yang berbentuk sosok manusia atau dewa disebut togogan, dan hulu
+        berbentuk Dewa Ganesha termasuk yang paling populer di Bali.
+    - time: 17.511
+      text: Pada model ini, hulunya berupa figur dewa berlapis emas yang berlutut
+        sambil menyembah.
+    - time: 24.609
+      text: Di bawahnya ada selut bertatah permata warna-warni.
+    cuesEN:
+    - time: 0.1
+      text: Now take a look at the handle.
+    - time: 1.912
+      text: In Bali, it is called the danganan.
+    - time: 4.373
+      text: Hilts carved as human or divine figures are called togogan, and hilts
+        shaped like Ganesha are among the most popular in Bali.
+    - time: 12.563
+      text: On this model, the hilt is a gold figure of a deity kneeling in worship.
+    - time: 17.563
+      text: Just below it sits a selut collar studded with colourful gems.
+  - key: sarung
+    title:
+      id: Sarung dan pendok
+      en: Sheath and pendok
+    text:
+      id: Sarung keris terdiri dari dua bagian. Bagian atas yang melebar disebut
+        warangka, dan batang panjangnya disebut gandar. Bali punya lima jenis warangka,
+        dan yang ini bergaya sesrengatan, yang dianggap paling baik oleh para pecinta
+        keris Bali. Lihat, ujung belakangnya pendek dan tumpul, sedangkan ujung depannya
+        menjulang seperti tanduk. Sarungnya dibuat dari kayu timoho. Bercak hitam
+        pada kayunya disebut pelet, dan pelet yang indah sangat dicari. Bagian bawahnya
+        dibalut pendok emas berukir sulur khas Bali.
+      en: The sheath has two parts. The wide top is the warangka, and the long body
+        is the gandar. Bali has five warangka styles, and this one is sesrengatan,
+        regarded as the finest by Balinese keris lovers. See how its rear end is
+        short and blunt, while the front end rises like a horn. The sheath is made
+        of timoho wood. The black streaks in the wood are called pelet, and beautiful
+        pelet is highly sought after. Its lower half is wrapped in a gold pendok
+        with Balinese scrollwork.
+    stage: 0
+    focusHotspot: warangka
+    voiceID: {fileID: 8300000, guid: 208b6cbfb6a1c6349993a8aa71fe65db, type: 3}
+    voiceEN: {fileID: 8300000, guid: c4080c45f1c0b044ea3a0dd84f219c54, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Sarung keris terdiri dari dua bagian.
+    - time: 3.852
+      text: Bagian atas yang melebar disebut warangka, dan batang panjangnya disebut
+        gandar.
+    - time: 10.48
+      text: Bali punya lima jenis warangka, dan yang ini bergaya sesrengatan, yang
+        dianggap paling baik oleh para pecinta keris Bali.
+    - time: 20.05
+      text: Lihat, ujung belakangnya pendek dan tumpul, sedangkan ujung depannya
+        menjulang seperti tanduk.
+    - time: 27.667
+      text: Sarungnya dibuat dari kayu timoho.
+    - time: 31.443
+      text: Bercak hitam pada kayunya disebut pelet, dan pelet yang indah sangat
+        dicari.
+    - time: 37.784
+      text: Bagian bawahnya dibalut pendok emas berukir sulur khas Bali.
+    cuesEN:
+    - time: 0.1
+      text: The sheath has two parts.
+    - time: 2.003
+      text: The wide top is the warangka, and the long body is the gandar.
+    - time: 5.961
+      text: Bali has five warangka styles, and this one is sesrengatan, regarded
+        as the finest by Balinese keris lovers.
+    - time: 13.488
+      text: See how its rear end is short and blunt, while the front end rises like
+        a horn.
+    - time: 18.813
+      text: The sheath is made of timoho wood.
+    - time: 20.961
+      text: The black streaks in the wood are called pelet, and beautiful pelet is
+        highly sought after.
+    - time: 26.339
+      text: Its lower half is wrapped in a gold pendok with Balinese scrollwork.
+  - key: empu
+    title:
+      id: Sang empu menempa
+      en: The empu at the forge
+    text:
+      id: Ayo, kita hunus bilahnya! Bilah keris dibuat oleh seorang empu, perajin
+        yang sangat dihormati dan juga menguasai sastra, sejarah, dan ilmu kebatinan.
+        Empu memadukan beberapa jenis besi dengan nikel, lalu memanaskannya di bara
+        api, menempanya, dan melipatnya, puluhan hingga ratusan kali. Dulu, bahan
+        pamor sering diambil dari besi meteor. Yang terkenal adalah meteor yang jatuh
+        di dekat Candi Prambanan pada akhir abad kedelapan belas.
+      en: Let's draw the blade! A keris blade is made by an empu, a highly respected
+        craftsman who also knows literature, history and the mystical sciences. The
+        empu combines several kinds of iron with nickel, heats them in glowing coals,
+        hammers them and folds them, dozens or even hundreds of times. In the past,
+        pamor material often came from meteoric iron. A famous one is the meteorite
+        that fell near Prambanan temple at the end of the eighteenth century.
+    stage: 1
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: 15b5319da84e34547a83af8db3987f67, type: 3}
+    voiceEN: {fileID: 8300000, guid: 0e8de0343b954aa49bb4bb3a2f642e9d, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Ayo, kita hunus bilahnya!
+    - time: 3.618
+      text: Bilah keris dibuat oleh seorang empu, perajin yang sangat dihormati dan
+        juga menguasai sastra, sejarah, dan ilmu kebatinan.
+    - time: 14.06
+      text: Empu memadukan beberapa jenis besi dengan nikel, lalu memanaskannya di
+        bara api, menempanya, dan melipatnya, puluhan hingga ratusan kali.
+    - time: 25.766
+      text: Dulu, bahan pamor sering diambil dari besi meteor.
+    - time: 30.935
+      text: Yang terkenal adalah meteor yang jatuh di dekat Candi Prambanan pada
+        akhir abad kedelapan belas.
+    cuesEN:
+    - time: 0.1
+      text: Let's draw the blade!
+    - time: 1.665
+      text: A keris blade is made by an empu, a highly respected craftsman who also
+        knows literature, history and the mystical sciences.
+    - time: 11.053
+      text: The empu combines several kinds of iron with nickel, heats them in glowing
+        coals, hammers them and folds them, dozens or even hundreds of times.
+    - time: 21.404
+      text: In the past, pamor material often came from meteoric iron.
+    - time: 26.196
+      text: A famous one is the meteorite that fell near Prambanan temple at the
+        end of the eighteenth century.
+  - key: pamor
+    title:
+      id: Rahasia pamor
+      en: The secret of pamor
+    text:
+      id: Setelah bilah selesai dibentuk, lapisan-lapisan itu belum terlihat. Rahasianya
+        ada di proses yang disebut mewarangi. Bilah direndam dalam warangan, yaitu
+        air jeruk nipis yang dicampur batu arsenik. Besi dan bajanya berubah hitam,
+        sedangkan nikelnya tetap putih keperakan, dan muncullah pola pamor. Pola
+        pada keris ini disebut banyu tetes, artinya tetesan air. Maknanya rezeki
+        yang datang sedikit demi sedikit tapi terus mengalir, dan ketekunan, karena
+        tetesan air pun bisa melubangi batu.
+      en: Once the blade is shaped, those layers still can't be seen. The secret
+        is a process called mewarangi. The blade is soaked in warangan, lime juice
+        mixed with arsenic ore. The iron and steel turn black while the nickel stays
+        silvery white, and the pamor pattern appears. The pattern on this keris is
+        called banyu tetes, which means dripping water. It stands for fortune that
+        comes little by little but keeps flowing, and for perseverance, because even
+        dripping water can hollow out stone.
+    stage: 1
+    focusHotspot: pamor
+    voiceID: {fileID: 8300000, guid: 785f8f2b83f56d04e8db51a282bd0d34, type: 3}
+    voiceEN: {fileID: 8300000, guid: 002d180a4c8b3af409f75946f70ffa5e, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Setelah bilah selesai dibentuk, lapisan-lapisan itu belum terlihat.
+    - time: 5.844
+      text: Rahasianya ada di proses yang disebut mewarangi.
+    - time: 10.115
+      text: Bilah direndam dalam warangan, yaitu air jeruk nipis yang dicampur batu
+        arsenik.
+    - time: 17.042
+      text: Besi dan bajanya berubah hitam, sedangkan nikelnya tetap putih keperakan,
+        dan muncullah pola pamor.
+    - time: 25.128
+      text: Pola pada keris ini disebut banyu tetes, artinya tetesan air.
+    - time: 31.144
+      text: Maknanya rezeki yang datang sedikit demi sedikit tapi terus mengalir,
+        dan ketekunan, karena tetesan air pun bisa melubangi batu.
+    cuesEN:
+    - time: 0.1
+      text: Once the blade is shaped, those layers still can't be seen.
+    - time: 4.36
+      text: The secret is a process called mewarangi.
+    - time: 7.329
+      text: The blade is soaked in warangan, lime juice mixed with arsenic ore.
+    - time: 12.081
+      text: The iron and steel turn black while the nickel stays silvery white, and
+        the pamor pattern appears.
+    - time: 18.461
+      text: The pattern on this keris is called banyu tetes, which means dripping
+        water.
+    - time: 23.214
+      text: It stands for fortune that comes little by little but keeps flowing,
+        and for perseverance, because even dripping water can hollow out stone.
+  - key: luk
+    title:
+      id: Luk dan ganja
+      en: Luk and ganja
+    text:
+      id: Perhatikan lekukan bilahnya. Lekukan ini disebut luk, dan jumlahnya selalu
+        ganjil, umumnya tiga sampai tiga belas. Keris ini punya sembilan luk. Keris
+        Bali juga dikenal lebih besar, sekitar tiga puluh lima sampai empat puluh
+        lima sentimeter, dan bilah keris ini empat puluh sentimeter. Di pangkal bilah
+        ada ganja, bagian melintang yang menjadi alas bilah. Pada keris ini, ganjanya
+        dilapisi emas.
+      en: Look at the curves of the blade. Each curve is called a luk, and there
+        is always an odd number of them, usually three to thirteen. This keris has
+        nine. Balinese keris are also known for their size, about thirty-five to
+        forty-five centimetres, and this blade is forty. At the base of the blade
+        sits the ganja, a cross-piece that forms its foundation. On this keris, the
+        ganja is clad in gold.
+    stage: 1
+    focusHotspot: luk
+    voiceID: {fileID: 8300000, guid: 381cf96d96401f74d943eebcc474678c, type: 3}
+    voiceEN: {fileID: 8300000, guid: 9f0080649c1a12b4e8a5247460d273f1, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Perhatikan lekukan bilahnya.
+    - time: 3.216
+      text: Lekukan ini disebut luk, dan jumlahnya selalu ganjil, umumnya tiga sampai
+        tiga belas.
+    - time: 11.144
+      text: Keris ini punya sembilan luk.
+    - time: 14.088
+      text: Keris Bali juga dikenal lebih besar, sekitar tiga puluh lima sampai empat
+        puluh lima sentimeter, dan bilah keris ini empat puluh sentimeter.
+    - time: 24.698
+      text: Di pangkal bilah ada ganja, bagian melintang yang menjadi alas bilah.
+    - time: 30.701
+      text: Pada keris ini, ganjanya dilapisi emas.
+    cuesEN:
+    - time: 0.1
+      text: Look at the curves of the blade.
+    - time: 2.042
+      text: Each curve is called a luk, and there is always an odd number of them,
+        usually three to thirteen.
+    - time: 7.745
+      text: This keris has nine.
+    - time: 9.62
+      text: Balinese keris are also known for their size, about thirty-five to forty-five
+        centimetres, and this blade is forty.
+    - time: 17.316
+      text: At the base of the blade sits the ganja, a cross-piece that forms its
+        foundation.
+    - time: 22.993
+      text: On this keris, the ganja is clad in gold.
+  - key: bongkar
+    title:
+      id: Karya banyak tangan
+      en: The work of many hands
+    text:
+      id: Sekarang kita bongkar semua bagiannya. Ternyata, sebilah keris adalah hasil
+        kerja sama banyak tangan. Empu menempa bilah, pengukir membuat hulu dan sarung,
+        dan perajin logam membuat pendok serta selut. Semua bagian ini dirakit menjadi
+        satu pusaka yang utuh.
+      en: Now let's take every part apart. As you can see, a single keris is the
+        work of many hands. The empu forges the blade, carvers shape the hilt and
+        sheath, and metalsmiths make the pendok and the selut. All these parts come
+        together as one complete heirloom.
+    stage: 5
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: 61e23d91ff3855043bd85afcd654dd98, type: 3}
+    voiceEN: {fileID: 8300000, guid: d129820de152229499a5f455a402897e, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Sekarang kita bongkar semua bagiannya.
+    - time: 3.891
+      text: Ternyata, sebilah keris adalah hasil kerja sama banyak tangan.
+    - time: 9.659
+      text: Empu menempa bilah, pengukir membuat hulu dan sarung, dan perajin logam
+        membuat pendok serta selut.
+    - time: 17.68
+      text: Semua bagian ini dirakit menjadi satu pusaka yang utuh.
+    cuesEN:
+    - time: 0.1
+      text: Now let's take every part apart.
+    - time: 2.654
+      text: As you can see, a single keris is the work of many hands.
+    - time: 7.537
+      text: The empu forges the blade, carvers shape the hilt and sheath, and metalsmiths
+        make the pendok and the selut.
+    - time: 15.05
+      text: All these parts come together as one complete heirloom.
+  - key: jagrak
+    title:
+      id: Penjaga Karang Boma
+      en: The Karang Boma guardian
+    text:
+      id: Kita rakit kembali kerisnya. Terakhir, lihat dudukannya. Di tengahnya terukir
+        Karang Boma, wajah raksasa yang biasa dipahat di atas gerbang pura. Dalam
+        mitologi, Boma adalah putra Dewa Wisnu dan Dewi Pertiwi. Wajahnya memang
+        garang, tapi Boma dipercaya sebagai penjaga yang melindungi dari kekuatan
+        jahat. Nah, sekarang kamu sudah tahu kisah di balik keris Bali ini. Ketuk
+        label emas di setiap bagian untuk menjelajah lebih jauh, ya. Sampai jumpa!
+      en: Let's put the keris back together. Finally, look at its stand. In its centre
+        is carved Karang Boma, a giant's face usually carved above Balinese temple
+        gates. In mythology, Boma is the son of Wisnu and Pertiwi, the Earth goddess.
+        His face looks fierce, but Boma is believed to be a guardian that protects
+        against evil forces. And now you know the story behind this Balinese keris.
+        Tap the gold labels on each part to explore further. See you!
+    stage: 0
+    focusHotspot: jagrak
+    voiceID: {fileID: 8300000, guid: 9f649ce00ffd6184faefb42a146ba4fb, type: 3}
+    voiceEN: {fileID: 8300000, guid: 11ca4aedac1e8c7479062bdc9eec8fe0, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Kita rakit kembali kerisnya.
+    - time: 3.097
+      text: Terakhir, lihat dudukannya.
+    - time: 6.573
+      text: Di tengahnya terukir Karang Boma, wajah raksasa yang biasa dipahat di
+        atas gerbang pura.
+    - time: 13.852
+      text: Dalam mitologi, Boma adalah putra Dewa Wisnu dan Dewi Pertiwi.
+    - time: 19.829
+      text: Wajahnya memang garang, tapi Boma dipercaya sebagai penjaga yang melindungi
+        dari kekuatan jahat.
+    - time: 27.29
+      text: Nah, sekarang kamu sudah tahu kisah di balik keris Bali ini.
+    - time: 32.771
+      text: Ketuk label emas di setiap bagian untuk menjelajah lebih jauh, ya.
+    - time: 38.683
+      text: Sampai jumpa!
+    cuesEN:
+    - time: 0.1
+      text: Let's put the keris back together.
+    - time: 2.303
+      text: Finally, look at its stand.
+    - time: 4.581
+      text: In its centre is carved Karang Boma, a giant's face usually carved above
+        Balinese temple gates.
+    - time: 11.378
+      text: In mythology, Boma is the son of Wisnu and Pertiwi, the Earth goddess.
+    - time: 17.185
+      text: His face looks fierce, but Boma is believed to be a guardian that protects
+        against evil forces.
+    - time: 23.461
+      text: And now you know the story behind this Balinese keris.
+    - time: 26.977
+      text: Tap the gold labels on each part to explore further.
+    - time: 30.597
+      text: See you!
+  voiceCredit: 'Microsoft Edge TTS: id-ID-GadisNeural / en-US-AvaNeural'
+  curatorValidated: 0

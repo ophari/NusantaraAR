@@ -1,0 +1,145 @@
+{
+  "_catatan": "Naskah mode Kisah (narasi suara bercerita). Satu sumber untuk audio (Tools/narasi/kisah_tts.py) dan teks subtitle (StoryBuilder di Unity). stage = tahap exploded view saat bab dimulai (-1 = tidak diubah), focus = hotspotId yang disorot. Fakta diperiksa 28-09-2026 terhadap sumber daring (lihat _sumber); masih DRAF sampai divalidasi kurator.",
+  "_sumber": [
+    "UNESCO ICH - Indonesian Kris: https://ich.unesco.org/en/RL/indonesian-kris-00112",
+    "Wikipedia - Kris: https://en.wikipedia.org/wiki/Kris",
+    "Tempo - Sejarah Keris Sudah Tergambar di Relief Candi Borobudur: https://www.tempo.co/hiburan/sejarah-keris-sudah-tergambar-di-relief-candi-borobudur-288536",
+    "SiaranBali - Sejarah dan Karakteristik Keris Bali: https://siaranbali.com/sejarah-dan-karakteristik-keris-bali/",
+    "Keris Bali (danganan togogan): https://sejarahharirayahindu.blogspot.com/2012/01/keris-bali.html",
+    "Jurnal KOMITEK - Design Pattern Warangka Keris Bali: https://penerbitadm.pubmedia.id/index.php/KOMITEK/article/download/2638/2675/15192",
+    "Jurnal Progresif 21(2) 2025 - Warangka Keris Bali (sampel foto 5 jenis): https://ojs.stmik-banjarbaru.ac.id/index.php/progresif/article/download/2987/1492",
+    "HIMABA UGM - Timoho: https://himaba.fkt.ugm.ac.id/2019/05/05/timoho/",
+    "detikBali - Tumpek Landep: https://www.detik.com/bali/budaya/d-6387282/tumpek-landep-menurut-hindu-di-bali-makna-dan-perkembangannya",
+    "Wikipedia Indonesia - Karang boma: https://id.wikipedia.org/wiki/Karang_boma",
+    "Pusaka Keris - Pamor Banyu Tetes: https://pusakakeris.com/keris-pamor-banyu-tetes-tirto-tumetes-tetesing-warih/",
+    "Pusaka Keris - Pamor Wos Wutah: https://pusakakeris.com/keris-pamor-wos-wutah-atau-beras-wutah/",
+    "Pusaka Keris - Ricikan Keris (belalai gajah): https://pusakakeris.com/blog/arti-makna-ricikan-keris-pusaka-tosan-aji/",
+    "Harta Langit - Tata Cara Mewarangi Keris: https://www.hartalangit.com/2017/12/tata-cara-mewarangi-keris.html",
+    "RRI Palembang - Pernak-pernik Keris Palembang: https://rri.co.id/palembang/budaya/2458150/pernak-pernik-keris-palembang-yang-sarat-filosofi-dan-nilai-seni",
+    "Bagian Struktur Keris Melayu: https://kerisnusantara.wordpress.com/2012/06/27/bagian-struktur-keris-melayu/",
+    "detikSumut - Pakaian Adat Penghulu Minangkabau: https://www.detik.com/sumut/budaya/d-7618481/pakaian-adat-penghulu-minangkabau-komponen-dan-makna-filosofis"
+  ],
+  "voiceID": "id-ID-GadisNeural",
+  "voiceEN": "en-US-AvaNeural",
+  "rate": "-4%",
+  "artifacts": [
+    {
+      "artifactId": "KERIS_BALI_01",
+      "chapters": [
+        {
+          "key": "sapa", "stage": 0, "focus": "",
+          "titleID": "Kenalan dulu", "titleEN": "Say hello",
+          "id": "Halo! Aku akan menemanimu mengenal keris Bali ini. Lihat, bilahnya masih tersimpan rapi di dalam sarung, berdiri di atas dudukan kayu berukir. Keris bukan sekadar senjata. Pada tahun 2005, UNESCO menetapkan keris Indonesia sebagai Karya Agung Warisan Budaya Lisan dan Takbenda Kemanusiaan. Keren, kan?",
+          "en": "Hi there! I'll be your guide to this Balinese keris. See how the blade is still resting inside its sheath, standing on a carved wooden stand? A keris is much more than a weapon. In 2005, UNESCO proclaimed the Indonesian keris a Masterpiece of the Oral and Intangible Heritage of Humanity. Pretty amazing, right?"
+        },
+        {
+          "key": "sejarah", "stage": 0, "focus": "",
+          "titleID": "Jejak sejarah", "titleEN": "Traces of history",
+          "id": "Keris tertua yang diketahui berasal dari abad kesepuluh. Bahkan relief Candi Borobudur dari abad kesembilan sudah menggambarkan senjata yang mirip keris. Dari Jawa, keris menyebar ke seluruh Nusantara lewat diplomasi dan perdagangan. Di Bali, keris dirawat turun-temurun sebagai pusaka, dan diberikan saat upacara potong gigi atau pernikahan sebagai tanda kedewasaan. Setiap hari raya Tumpek Landep, yang datang tiap dua ratus sepuluh hari, keris diupacarai untuk memuja Sang Hyang Siwa Pasupati.",
+          "en": "The earliest known keris date from the tenth century. A ninth-century relief at Borobudur temple even shows a weapon that looks like a keris. From Java, the keris spread across the archipelago through diplomacy and trade. In Bali, keris are cared for across generations as heirlooms, and given at the tooth-filing rite or at weddings as a sign of adulthood. On every Tumpek Landep, a holy day that comes every two hundred and ten days, keris are blessed in worship of Sang Hyang Siwa Pasupati."
+        },
+        {
+          "key": "hulu", "stage": 0, "focus": "hulu",
+          "titleID": "Hulu yang megah", "titleEN": "A splendid hilt",
+          "id": "Sekarang lihat pegangannya. Di Bali, pegangan keris disebut danganan. Hulu yang berbentuk sosok manusia atau dewa disebut togogan, dan hulu berbentuk Dewa Ganesha termasuk yang paling populer di Bali. Pada model ini, hulunya berupa figur dewa berlapis emas yang berlutut sambil menyembah. Di bawahnya ada selut bertatah permata warna-warni.",
+          "en": "Now take a look at the handle. In Bali, it is called the danganan. Hilts carved as human or divine figures are called togogan, and hilts shaped like Ganesha are among the most popular in Bali. On this model, the hilt is a gold figure of a deity kneeling in worship. Just below it sits a selut collar studded with colourful gems."
+        },
+        {
+          "key": "sarung", "stage": 0, "focus": "warangka",
+          "titleID": "Sarung dan pendok", "titleEN": "Sheath and pendok",
+          "id": "Sarung keris terdiri dari dua bagian. Bagian atas yang melebar disebut warangka, dan batang panjangnya disebut gandar. Bali punya lima jenis warangka, dan yang ini bergaya sesrengatan, yang dianggap paling baik oleh para pecinta keris Bali. Lihat, ujung belakangnya pendek dan tumpul, sedangkan ujung depannya menjulang seperti tanduk. Sarungnya dibuat dari kayu timoho. Bercak hitam pada kayunya disebut pelet, dan pelet yang indah sangat dicari. Bagian bawahnya dibalut pendok emas berukir sulur khas Bali.",
+          "en": "The sheath has two parts. The wide top is the warangka, and the long body is the gandar. Bali has five warangka styles, and this one is sesrengatan, regarded as the finest by Balinese keris lovers. See how its rear end is short and blunt, while the front end rises like a horn. The sheath is made of timoho wood. The black streaks in the wood are called pelet, and beautiful pelet is highly sought after. Its lower half is wrapped in a gold pendok with Balinese scrollwork."
+        },
+        {
+          "key": "empu", "stage": 1, "focus": "",
+          "titleID": "Sang empu menempa", "titleEN": "The empu at the forge",
+          "id": "Ayo, kita hunus bilahnya! Bilah keris dibuat oleh seorang empu, perajin yang sangat dihormati dan juga menguasai sastra, sejarah, dan ilmu kebatinan. Empu memadukan beberapa jenis besi dengan nikel, lalu memanaskannya di bara api, menempanya, dan melipatnya, puluhan hingga ratusan kali. Dulu, bahan pamor sering diambil dari besi meteor. Yang terkenal adalah meteor yang jatuh di dekat Candi Prambanan pada akhir abad kedelapan belas.",
+          "en": "Let's draw the blade! A keris blade is made by an empu, a highly respected craftsman who also knows literature, history and the mystical sciences. The empu combines several kinds of iron with nickel, heats them in glowing coals, hammers them and folds them, dozens or even hundreds of times. In the past, pamor material often came from meteoric iron. A famous one is the meteorite that fell near Prambanan temple at the end of the eighteenth century."
+        },
+        {
+          "key": "pamor", "stage": 1, "focus": "pamor",
+          "titleID": "Rahasia pamor", "titleEN": "The secret of pamor",
+          "id": "Setelah bilah selesai dibentuk, lapisan-lapisan itu belum terlihat. Rahasianya ada di proses yang disebut mewarangi. Bilah direndam dalam warangan, yaitu air jeruk nipis yang dicampur batu arsenik. Besi dan bajanya berubah hitam, sedangkan nikelnya tetap putih keperakan, dan muncullah pola pamor. Pola pada keris ini disebut banyu tetes, artinya tetesan air. Maknanya rezeki yang datang sedikit demi sedikit tapi terus mengalir, dan ketekunan, karena tetesan air pun bisa melubangi batu.",
+          "en": "Once the blade is shaped, those layers still can't be seen. The secret is a process called mewarangi. The blade is soaked in warangan, lime juice mixed with arsenic ore. The iron and steel turn black while the nickel stays silvery white, and the pamor pattern appears. The pattern on this keris is called banyu tetes, which means dripping water. It stands for fortune that comes little by little but keeps flowing, and for perseverance, because even dripping water can hollow out stone."
+        },
+        {
+          "key": "luk", "stage": 1, "focus": "luk",
+          "titleID": "Luk dan ganja", "titleEN": "Luk and ganja",
+          "id": "Perhatikan lekukan bilahnya. Lekukan ini disebut luk, dan jumlahnya selalu ganjil, umumnya tiga sampai tiga belas. Keris ini punya sembilan luk. Keris Bali juga dikenal lebih besar, sekitar tiga puluh lima sampai empat puluh lima sentimeter, dan bilah keris ini empat puluh sentimeter. Di pangkal bilah ada ganja, bagian melintang yang menjadi alas bilah. Pada keris ini, ganjanya dilapisi emas.",
+          "en": "Look at the curves of the blade. Each curve is called a luk, and there is always an odd number of them, usually three to thirteen. This keris has nine. Balinese keris are also known for their size, about thirty-five to forty-five centimetres, and this blade is forty. At the base of the blade sits the ganja, a cross-piece that forms its foundation. On this keris, the ganja is clad in gold."
+        },
+        {
+          "key": "bongkar", "stage": 5, "focus": "",
+          "titleID": "Karya banyak tangan", "titleEN": "The work of many hands",
+          "id": "Sekarang kita bongkar semua bagiannya. Ternyata, sebilah keris adalah hasil kerja sama banyak tangan. Empu menempa bilah, pengukir membuat hulu dan sarung, dan perajin logam membuat pendok serta selut. Semua bagian ini dirakit menjadi satu pusaka yang utuh.",
+          "en": "Now let's take every part apart. As you can see, a single keris is the work of many hands. The empu forges the blade, carvers shape the hilt and sheath, and metalsmiths make the pendok and the selut. All these parts come together as one complete heirloom."
+        },
+        {
+          "key": "jagrak", "stage": 0, "focus": "jagrak",
+          "titleID": "Penjaga Karang Boma", "titleEN": "The Karang Boma guardian",
+          "id": "Kita rakit kembali kerisnya. Terakhir, lihat dudukannya. Di tengahnya terukir Karang Boma, wajah raksasa yang biasa dipahat di atas gerbang pura. Dalam mitologi, Boma adalah putra Dewa Wisnu dan Dewi Pertiwi. Wajahnya memang garang, tapi Boma dipercaya sebagai penjaga yang melindungi dari kekuatan jahat. Nah, sekarang kamu sudah tahu kisah di balik keris Bali ini. Ketuk label emas di setiap bagian untuk menjelajah lebih jauh, ya. Sampai jumpa!",
+          "en": "Let's put the keris back together. Finally, look at its stand. In its centre is carved Karang Boma, a giant's face usually carved above Balinese temple gates. In mythology, Boma is the son of Wisnu and Pertiwi, the Earth goddess. His face looks fierce, but Boma is believed to be a guardian that protects against evil forces. And now you know the story behind this Balinese keris. Tap the gold labels on each part to explore further. See you!"
+        }
+      ]
+    },
+    {
+      "artifactId": "KERIS_SUMATRA_01",
+      "chapters": [
+        {
+          "key": "sapa", "stage": 0, "focus": "",
+          "titleID": "Kenalan dulu", "titleEN": "Say hello",
+          "id": "Halo! Kali ini aku akan mengajakmu mengenal keris dari Sumatra. Bentuknya sedikit berbeda dari keris Jawa atau Bali, dan justru di situlah serunya. Keris adalah warisan budaya bersama di seluruh Nusantara. Pada tahun 2005, UNESCO menetapkannya sebagai Karya Agung Warisan Budaya Lisan dan Takbenda Kemanusiaan.",
+          "en": "Hi! This time I'll introduce you to a keris from Sumatra. Its shape is a little different from Javanese or Balinese keris, and that's what makes it fun. The keris is a shared heritage across the archipelago. In 2005, UNESCO proclaimed it a Masterpiece of the Oral and Intangible Heritage of Humanity."
+        },
+        {
+          "key": "sejarah", "stage": 0, "focus": "",
+          "titleID": "Jejak sejarah", "titleEN": "Traces of history",
+          "id": "Keris tertua yang diketahui berasal dari Jawa pada abad kesepuluh. Lewat diplomasi dan perdagangan, keris menyebar ke Sumatra, Semenanjung Melayu, Thailand selatan, hingga Filipina. Di dunia Melayu, keris menjadi alat kebesaran dan kelengkapan pakaian adat. Di Minangkabau, misalnya, penghulu adat menyelipkan keris di pinggang sebelah kiri. Keris itu melambangkan tempat bertumpu bagi anak kemenakannya, sekaligus kekuatan dan perlindungan.",
+          "en": "The earliest known keris come from tenth-century Java. Through diplomacy and trade, the keris spread to Sumatra, the Malay Peninsula, southern Thailand and the Philippines. In the Malay world, the keris became regalia and part of traditional dress. Among the Minangkabau, for example, a customary leader called a penghulu wears a keris tucked at the left side of the waist. It symbolises a pillar his kin can lean on, as well as strength and protection."
+        },
+        {
+          "key": "hulu", "stage": 0, "focus": "hulu",
+          "titleID": "Hulu kepala burung", "titleEN": "The bird-head hilt",
+          "id": "Lihat hulunya. Hulu keris gaya Melayu sering melengkung seperti burung. Di Palembang, misalnya, ada hulu ludai yang menyerupai kepala burung enggang, dan hulu jawa demam yang mirip anak ayam. Kata perajinnya, kalau dilihat dari belakang, lekuknya seperti orang yang duduk tahiyat dalam salat. Di bawah hulu ada pendongkok, cincin logam yang di Jawa disebut mendak.",
+          "en": "Look at the hilt. Malay-style hilts often curve like a bird. In Palembang, for example, there is the hulu ludai, resembling a hornbill's head, and the jawa demam, which looks like a chick. Its makers say that seen from behind, the curve looks like a person seated in the tahiyat posture of prayer. Below the hilt is the pendongkok, a metal ring that the Javanese call mendak."
+        },
+        {
+          "key": "sarung", "stage": 0, "focus": "warangka",
+          "titleID": "Sampir bulan sabit", "titleEN": "The crescent sampir",
+          "id": "Bagian atas sarungnya disebut sampir. Di Palembang dikenal dua bentuk sampir: sampir perahu, lambang budaya sungai Musi, dan sampir bulan sabit, seperti pada keris ini. Batang sarungnya dibalut pendok kuningan berukir. Di Palembang, pendok juga dibuat dari perak, suasa, atau emas, sering bertatah batu mulia.",
+          "en": "The top of the sheath is called the sampir. Palembang knows two sampir shapes: the boat-shaped sampir, a symbol of the Musi river culture, and the crescent sampir, like on this keris. The sheath body is wrapped in an engraved brass pendok. In Palembang, pendok are also made of silver, suasa or gold, often set with gems."
+        },
+        {
+          "key": "empu", "stage": 1, "focus": "",
+          "titleID": "Sang empu menempa", "titleEN": "The empu at the forge",
+          "id": "Ayo, kita hunus bilahnya! Bilah keris ditempa oleh seorang empu, perajin yang sangat dihormati. Beberapa jenis besi dan nikel dipanaskan di bara api, dipukul, lalu dilipat, puluhan hingga ratusan kali. Setelah itu, bilah direndam dalam warangan, campuran air jeruk nipis dan batu arsenik. Besinya menjadi hitam, sementara nikelnya tetap putih keperakan. Dari situlah pola pamor muncul.",
+          "en": "Let's draw the blade! A keris blade is forged by an empu, a highly respected craftsman. Several kinds of iron and nickel are heated in glowing coals, hammered and folded, dozens or even hundreds of times. Then the blade is soaked in warangan, a mix of lime juice and arsenic ore. The iron turns black while the nickel stays silvery white. That's how the pamor pattern appears."
+        },
+        {
+          "key": "pamor", "stage": 1, "focus": "pamor",
+          "titleID": "Pamor wos wutah", "titleEN": "Wos wutah pamor",
+          "id": "Pola pamor pada keris ini disebut wos wutah, artinya beras yang tumpah. Polanya tidak beraturan, seperti butiran beras yang tumpah dari lumbung yang penuh. Maknanya ungkapan syukur atas berkah, dan buah dari kerja keras menghidupi keluarga.",
+          "en": "The pamor pattern on this keris is called wos wutah, which means spilled rice. The pattern is irregular, like grains spilling from a full rice store. It expresses gratitude for blessings, and the reward of hard work in providing for one's family."
+        },
+        {
+          "key": "luk", "stage": 1, "focus": "luk",
+          "titleID": "Luk dan belalai gajah", "titleEN": "Luk and belalai gajah",
+          "id": "Sekarang perhatikan lekukan bilahnya. Lekukan ini disebut luk, dan jumlahnya selalu ganjil. Keris ini punya tujuh luk. Di pangkal depan bilah ada gandik, dengan lengkungan kecil yang di Palembang, Riau, dan Semenanjung Melayu disebut belalai gajah. Di Jawa, bagian ini disebut kembang kacang.",
+          "en": "Now look at the curves of the blade. Each curve is called a luk, and there is always an odd number of them. This keris has seven. At the front of the blade base is the gandik, with a small curl that Palembang, Riau and the Malay Peninsula call belalai gajah, the elephant's trunk. In Java, it is called kembang kacang."
+        },
+        {
+          "key": "bongkar", "stage": 4, "focus": "",
+          "titleID": "Karya banyak tangan", "titleEN": "The work of many hands",
+          "id": "Sekarang kita bongkar semua bagiannya. Hulu dan pendongkok dilepas, lalu ganja, lalu sampir. Dalam tradisi Melayu, ganja berfungsi melindungi buku jari dari mata keris lawan. Setiap bagian dibuat oleh ahlinya masing-masing, mulai dari empu, pengukir kayu, sampai perajin logam. Semuanya dirakit menjadi satu pusaka.",
+          "en": "Now let's take it all apart. The hilt and pendongkok come off, then the ganja, then the sampir. In Malay tradition, the ganja protects the knuckles from an opponent's blade. Each part is made by its own specialist, from the empu to the woodcarver to the metalworker. Together, they are assembled into one heirloom."
+        },
+        {
+          "key": "penutup", "stage": 0, "focus": "",
+          "titleID": "Sampai jumpa", "titleEN": "See you",
+          "id": "Kita rakit kembali kerisnya. Nah, sekarang kamu sudah tahu kisah di balik keris Sumatra ini. Ketuk label emas di setiap bagian untuk menjelajah lebih jauh, ya. Sampai jumpa!",
+          "en": "Let's put the keris back together. And now you know the story behind this Sumatran keris. Tap the gold labels on each part to explore further. See you!"
+        }
+      ]
+    }
+  ]
+}

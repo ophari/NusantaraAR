@@ -62,6 +62,21 @@ namespace NusantaraAR
                 yield return Shot("08_card_gandar");
                 hud.CloseInfo();
 
+                // Mode Kisah: bab 1 (utuh), bab hulu (sorotan), bab hunus (animasi + subtitle), lalu dihentikan.
+                inst.exploded.Assemble();
+                yield return new WaitForSeconds(3.5f);
+                hud.PlayStory();
+                yield return new WaitForSeconds(4f);
+                yield return Shot("08b_story_intro");
+                var next = GameObject.Find("UI/Full/Safe/StoryPanel/Header/Next")?.GetComponent<UnityEngine.UI.Button>();
+                next?.onClick.Invoke(); next?.onClick.Invoke();
+                yield return new WaitForSeconds(3f);
+                yield return Shot("08c_story_focus_hulu");
+                next?.onClick.Invoke(); next?.onClick.Invoke();
+                yield return new WaitForSeconds(6f);
+                yield return Shot("08d_story_drawn");
+                hud.CloseInfo();
+
                 Locale.Current = Language.EN;
                 inst.exploded.Assemble();
                 yield return new WaitForSeconds(3.5f);
