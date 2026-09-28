@@ -58,6 +58,9 @@ namespace NusantaraAR.UI
             set => labelsVisible = value;
         }
 
+        /// <summary>Bagian yang sedang diceritakan mode Kisah: titik & labelnya ditonjolkan, yang lain diredupkan.</summary>
+        public string FocusId { get; set; }
+
         public static HotspotOverlay Create(RectTransform parent)
         {
             var rt = UIKit.Rect("Hotspots", parent);
@@ -287,6 +290,10 @@ namespace NusantaraAR.UI
             foreach (var c in callouts)
                 if (c.visible && c.data.hotspotId == selectedId) selected = c;
             bool cardOpen = card.IsOpen && selected != null;
+            Callout focused = null;
+            if (!cardOpen && !string.IsNullOrEmpty(FocusId))
+                foreach (var c in callouts)
+                    if (c.visible && c.data.hotspotId == FocusId) focused = c;
             foreach (var c in callouts)
             {
                 if (!c.visible)
@@ -297,25 +304,26 @@ namespace NusantaraAR.UI
                     continue;
                 }
                 bool isSelected = c == selected;
+                bool isFocused = c == focused;
                 c.placed = true;
                 c.appear = Mathf.MoveTowards(c.appear, 1f, Time.unscaledDeltaTime * 5f);
                 float ease = 1f - (1f - c.appear) * (1f - c.appear);
 
                 c.dot.anchoredPosition = c.anchor;
                 UIKit.SetVisible(c.dot, true);
-                float dim = c.occluded ? 0.45f : 1f;
-                if (cardOpen && !isSelected) dim *= 0.4f;
+                float dim = c.occluded && !isFocused ? 0.45f : 1f;
+                if ((cardOpen && !isSelected) || (focused != null && !isFocused)) dim *= 0.4f;
                 c.dotGroup.alpha = dim;
-                c.core.localScale = Vector3.one * (isSelected ? 1.5f : 1f);
-                c.pulse.localScale = Vector3.one * (1f + 0.5f * pulsePhase);
-                c.pulse.GetComponent<Image>().color = Theme.WithAlpha(Theme.Gold, (1f - pulsePhase) * (isSelected ? 1f : 0.8f));
+                c.core.localScale = Vector3.one * (isSelected || isFocused ? 1.5f : 1f);
+                c.pulse.localScale = Vector3.one * (1f + (isFocused ? 0.9f : 0.5f) * pulsePhase);
+                c.pulse.GetComponent<Image>().color = Theme.WithAlpha(Theme.Gold, (1f - pulsePhase) * (isSelected || isFocused ? 1f : 0.8f));
 
-                bool showLabel = labelsVisible && !isSelected;
+                bool showLabel = (labelsVisible || isFocused) && !isSelected;
                 UIKit.SetVisible(c.label, showLabel);
                 if (showLabel)
                 {
                     c.labelGroup.alpha = dim * ease;
-                    c.label.localScale = Vector3.one * Mathf.Lerp(0.6f, 1f, ease);
+                    c.label.localScale = Vector3.one * (Mathf.Lerp(0.6f, 1f, ease) * (isFocused ? 1.12f : 1f));
                     float w = c.label.rect.width;
                     var edge = new Vector2(c.labelCenter.x + (c.right ? -w * 0.5f : w * 0.5f), c.labelCenter.y);
                     DrawLine(c, c.anchor, edge, dim * ease);

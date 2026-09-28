@@ -49,6 +49,7 @@ namespace NusantaraAR.EditorTools
             ConfigureURP();
             KerisBaliBuilder.Build();
             KerisSumatraBuilder.Build();
+            StoryBuilder.Build();
             PruneCatalog();
             BuildCommonAssets(out var reticleMat, out var planePrefab);
             BuildMainScene();

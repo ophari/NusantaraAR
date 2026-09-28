@@ -78,6 +78,9 @@ namespace NusantaraAR
 
         public List<HotspotData> hotspots = new List<HotspotData>();
 
+        [Tooltip("Mode Kisah (narasi bercerita). Kosong = tombol Kisah disembunyikan.")]
+        public ArtifactStory story;
+
         public HotspotData FindHotspot(string id) => hotspots.Find(h => h.hotspotId == id);
     }
 }

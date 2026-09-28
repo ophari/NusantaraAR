@@ -29,8 +29,13 @@ namespace NusantaraAR
             }
         }
 
+        /// <summary>Sudah dibuat (tanpa membuatnya, mis. dari OnDestroy saat aplikasi ditutup).</summary>
+        public static bool Exists => instance != null;
+
         public AudioClip CurrentNarration => narration.clip;
         public bool IsNarrationPlaying => narration.isPlaying;
+        /// <summary>Posisi narasi (detik).</summary>
+        public float NarrationTime => narration.time;
         public float NarrationProgress =>
             narration.clip != null && narration.clip.length > 0f ? narration.time / narration.clip.length : 0f;
 
@@ -76,6 +81,12 @@ namespace NusantaraAR
         public void PauseNarration()
         {
             if (narration.isPlaying) narration.Pause();
+        }
+
+        /// <summary>Melanjutkan narasi yang dijeda dari posisi terakhir.</summary>
+        public void ResumeNarration()
+        {
+            if (narration.clip != null && !narration.isPlaying) narration.UnPause();
         }
 
         public void StopNarration()

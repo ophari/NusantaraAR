@@ -31,6 +31,10 @@ namespace NusantaraAR
             ["dock.draw"] = ("Hunus", "Draw"),
             ["dock.sheathe"] = ("Sarungkan", "Sheathe"),
             ["dock.labels"] = ("Label", "Labels"),
+            ["dock.story"] = ("Kisah", "Story"),
+            ["story.title"] = ("Kisah", "Story"),
+            ["story.resume"] = ("Lanjut", "Resume"),
+            ["story.draft"] = ("Draf", "Draft"),
             ["ctrl.reset"] = ("Reset Tampilan", "Reset View"),
             ["ctrl.move"] = ("Pindahkan", "Move"),
 
@@ -99,8 +103,8 @@ namespace NusantaraAR
             ["settings.tutorial"] = ("Ulangi tutorial", "Replay tutorial"),
             ["settings.about"] = ("Tentang", "About"),
             ["settings.aboutBody"] = (
-                "Nusantara AR - aplikasi edukasi benda budaya Indonesia.\nModel keris saat ini adalah model sementara hasil rekonstruksi dari satu foto; akan diganti aset dari spesimen asli yang divalidasi kurator.\nSeluruh teks kuratorial masih draf.",
-                "Nusantara AR - a learning app for Indonesian cultural objects.\nThe current keris is a temporary model reconstructed from a single photo; it will be replaced by an asset from a curator-validated specimen.\nAll curatorial text is still a draft."),
+                "Nusantara AR - aplikasi edukasi benda budaya Indonesia.\nModel keris saat ini adalah model sementara hasil rekonstruksi dari satu foto; akan diganti aset dari spesimen asli yang divalidasi kurator.\nSeluruh teks kuratorial masih draf.\nSuara narator mode Kisah adalah suara sintetis (Microsoft neural TTS).",
+                "Nusantara AR - a learning app for Indonesian cultural objects.\nThe current keris is a temporary model reconstructed from a single photo; it will be replaced by an asset from a curator-validated specimen.\nAll curatorial text is still a draft.\nThe Story narrator is a synthetic voice (Microsoft neural TTS)."),
             ["settings.on"] = ("Aktif", "On"),
             ["settings.off"] = ("Nonaktif", "Off"),
 
@@ -109,8 +113,8 @@ namespace NusantaraAR
             ["onb.start"] = ("Mulai", "Start"),
             ["onb.1.title"] = ("Selamat datang", "Welcome"),
             ["onb.1.body"] = (
-                "Jelajahi benda budaya nusantara dalam 3D dan AR: bongkar bagiannya, ketuk label emas untuk membaca maknanya, dan dengarkan cara melafalkan istilah daerah.",
-                "Explore Indonesian cultural objects in 3D and AR: take them apart, tap the gold labels to learn their meaning, and hear how regional terms are pronounced."),
+                "Jelajahi benda budaya nusantara dalam 3D dan AR: bongkar bagiannya, ketuk label emas untuk membaca maknanya, atau ketuk Kisah untuk mendengarkan cerita sejarah dan cara pembuatannya.",
+                "Explore Indonesian cultural objects in 3D and AR: take them apart, tap the gold labels to learn their meaning, or tap Story to hear the tale of their history and how they are made."),
             ["onb.2.title"] = ("Cara berinteraksi", "How to interact"),
             ["onb.2.body"] = (
                 "Geser 1 jari: memutar objek\nCubit 2 jari: memperbesar / memperkecil\nGeser 2 jari: memindahkan objek (mode AR)\nKetuk label atau bagian objek: membuka penjelasan",

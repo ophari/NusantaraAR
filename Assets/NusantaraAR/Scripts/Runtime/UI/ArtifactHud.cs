@@ -7,16 +7,18 @@ namespace NusantaraAR.UI
 {
     /// <summary>
     /// Kontrol artefak yang sama di 3D Viewer dan AR (PRD Layar 2 & 4):
-    /// floating controls (Reset Tampilan, Pindahkan), dock (Bongkar/Gabung, Putar Otomatis, Tampilkan/Sembunyikan Label),
-    /// label tahap exploded view, serta label bagian + kartu info yang menempel langsung di objek.
+    /// floating controls (Reset Tampilan, Pindahkan), dock (Kisah, Bongkar/Gabung, Hunus, Putar Otomatis, Label),
+    /// label tahap exploded view, label bagian + kartu info yang menempel langsung di objek, dan panel mode Kisah
+    /// (menggantikan dock selama narasi bercerita).
     /// </summary>
     public class ArtifactHud : MonoBehaviour
     {
         RectTransform controls, dock;
-        TextMeshProUGUI explodeLabel, drawLabel, rotateLabel, labelsLabel, stageText;
-        Button drawButton;
+        TextMeshProUGUI storyLabel, explodeLabel, drawLabel, rotateLabel, labelsLabel, stageText;
+        Button storyButton, drawButton;
         Image stagePill;
         HotspotOverlay overlay;
+        StoryPanel story;
 
         ArtifactInstance artifact;
         Action onReset;
@@ -24,6 +26,7 @@ namespace NusantaraAR.UI
         bool controlsVisible = true;
 
         public HotspotOverlay Overlay => overlay;
+        public StoryPanel Story => story;
 
         /// <param name="safeRoot">Area aman (tombol).</param>
         /// <param name="fullRoot">Layar penuh (label bagian & kartu info).</param>
@@ -62,6 +65,8 @@ namespace NusantaraAR.UI
             dockBg.type = Image.Type.Sliced;
             dockBg.color = Theme.TextPanel;
             UIKit.HRow(dock, 12f, new RectOffset(14, 14, 14, 14));
+            storyButton = UIKit.Button(dock, "Story", Locale.T("dock.story"), ButtonStyle.Chip, PlayStory, out storyLabel, 28f);
+            SetToggleLook(storyLabel, true); // selalu emas: pintu masuk mode Kisah
             UIKit.Button(dock, "Explode", Locale.T("dock.explode"), ButtonStyle.Primary, ToggleExplode, out explodeLabel);
             drawButton = UIKit.Button(dock, "Draw", Locale.T("dock.draw"), ButtonStyle.Chip, ToggleDraw, out drawLabel, 28f);
             UIKit.Button(dock, "AutoRotate", Locale.T("dock.autorotate"), ButtonStyle.Chip, ToggleAutoRotate, out rotateLabel, 28f);
@@ -71,6 +76,9 @@ namespace NusantaraAR.UI
             UIKit.Place(stagePill.rectTransform, new Vector2(0.5f, 0f), new Vector2(0f, 186f), new Vector2(760f, 64f));
             stageText = UIKit.Text(stagePill.transform, "Text", "", 28f, Theme.Parchment, TextAlignmentOptions.Center);
             UIKit.Stretch(stageText.rectTransform, 20, 20, 0, 0);
+
+            story = StoryPanel.Create(safeRoot, overlay);
+            story.ActiveChanged += OnStoryActiveChanged;
 
             Locale.Changed += RefreshLabels;
         }
@@ -84,6 +92,7 @@ namespace NusantaraAR.UI
             artifact = instance;
             onReset = reset;
             onMove = move;
+            story.Bind(instance);
             overlay.Bind(instance, cam);
             if (artifact != null && artifact.exploded != null) artifact.exploded.StageChanged += OnStageChanged;
             if (artifact != null && artifact.autoRotate != null) artifact.autoRotate.ActiveChanged += OnAutoRotateChanged;
@@ -94,17 +103,31 @@ namespace NusantaraAR.UI
         {
             controlsVisible = visible;
             UIKit.SetVisible(controls, visible);
-            UIKit.SetVisible(dock, visible);
+            UIKit.SetVisible(dock, visible && !story.IsActive);
             UIKit.SetVisible(overlay, visible);
-            if (!visible) CloseInfo();
+            if (!visible) overlay.Card.Close();
+            // Kisah dijeda (bukan dihentikan) selama kontrol tersembunyi, mis. kode QR sesaat hilang dari kamera.
+            story.SetSuspended(!visible);
         }
 
-        /// <summary>Menutup kartu info bila terbuka (tombol Kembali). True bila ada yang ditutup.</summary>
+        /// <summary>Menutup kartu info atau menghentikan mode Kisah (tombol Kembali). True bila ada yang ditutup.</summary>
         public bool CloseInfo()
         {
-            if (!overlay.Card.IsOpen) return false;
-            overlay.Card.Close();
+            if (overlay.Card.IsOpen)
+            {
+                overlay.Card.Close();
+                return true;
+            }
+            if (!story.IsActive) return false;
+            story.Stop();
             return true;
+        }
+
+        /// <summary>Memulai mode Kisah dari bab pertama (dipakai juga oleh build QA).</summary>
+        public void PlayStory()
+        {
+            if (!controlsVisible || !story.HasStory) return;
+            story.Play();
         }
 
         /// <summary>Membuka kartu info bagian tertentu (dipakai juga oleh build QA).</summary>
@@ -117,7 +140,8 @@ namespace NusantaraAR.UI
         /// <summary>Ketuk di luar UI: ketuk bagian model membuka info-nya, ketuk tempat kosong menutup kartu.</summary>
         public void HandleTap(Vector2 screen)
         {
-            if (!controlsVisible || artifact == null) return;
+            // Selama Kisah berjalan, ketukan di model diabaikan agar cerita tidak terputus tanpa sengaja.
+            if (!controlsVisible || artifact == null || story.IsActive) return;
             var h = overlay.PickAt(screen);
             if (h != null) Open(h);
             else CloseInfo();
@@ -126,7 +150,7 @@ namespace NusantaraAR.UI
         void Update()
         {
             string text = null;
-            if (controlsVisible && artifact != null && artifact.exploded != null
+            if (controlsVisible && !story.IsActive && artifact != null && artifact.exploded != null
                 && (artifact.exploded.CurrentStage > 0 || artifact.exploded.IsAnimating))
                 text = artifact.exploded.CurrentStageLabel;
             bool show = !string.IsNullOrEmpty(text);
@@ -137,6 +161,8 @@ namespace NusantaraAR.UI
         void RefreshLabels()
         {
             var ex = artifact != null ? artifact.exploded : null;
+            UIKit.SetVisible(storyButton, story.HasStory);
+            storyLabel.text = Locale.T("dock.story");
             explodeLabel.text = Locale.T(ex != null && ex.IsExplodedOrExploding ? "dock.assemble" : "dock.explode");
             UIKit.SetVisible(drawButton, ex != null && ex.CanDraw);
             bool drawn = ex != null && ex.TargetStage == 1;
@@ -147,6 +173,7 @@ namespace NusantaraAR.UI
             SetToggleLook(rotateLabel, rotating);
             labelsLabel.text = Locale.T("dock.labels");
             SetToggleLook(labelsLabel, overlay.LabelsVisible);
+            foreach (var l in new[] { storyLabel, explodeLabel, drawLabel, rotateLabel, labelsLabel }) FitToLabel(l);
         }
 
         /// <summary>Tombol dock yang sedang aktif: teks emas tebal.</summary>
@@ -154,6 +181,19 @@ namespace NusantaraAR.UI
         {
             label.color = on ? Theme.Gold : Theme.Parchment;
             label.fontStyle = on ? FontStyles.Bold : FontStyles.Normal;
+        }
+
+        /// <summary>Lebar tombol dock mengikuti labelnya (lima tombol sama lebar memotong "Putar Otomatis").</summary>
+        static void FitToLabel(TextMeshProUGUI label)
+        {
+            float w = label.GetPreferredValues(label.text, 1000f, 0f).x + 40f;
+            UIKit.Layout(label.transform.parent.GetComponent<Button>(), -1, w);
+        }
+
+        void OnStoryActiveChanged(bool active)
+        {
+            UIKit.SetVisible(dock, controlsVisible && !active);
+            RefreshLabels();
         }
 
         void ToggleExplode()
@@ -217,6 +257,7 @@ namespace NusantaraAR.UI
         void Open(HotspotData h)
         {
             if (artifact == null || artifact.Data == null) return;
+            story.Stop(); // mengetuk label saat Kisah berjalan = beralih ke kartu info bagian itu
             if (artifact.autoRotate != null) artifact.autoRotate.Active = false;
             var list = overlay.ShownHotspots();
             overlay.Card.Show(artifact.Data, h, list.IndexOf(h), list.Count);

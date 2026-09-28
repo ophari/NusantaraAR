@@ -307,13 +307,19 @@ namespace NusantaraAR.EditorTools
             return data;
         }
 
-        /// <summary>Hotspot draf standar (filosofi & sejarah menunggu kurator).</summary>
+        /// <summary>
+        /// Hotspot draf. Filosofi/sejarah yang kosong ditandai "diisi kurator"; <paramref name="refs"/> = sumber rujukan
+        /// daring untuk isi teks (ditampilkan setelah sumber model).
+        /// </summary>
         public static HotspotData Hotspot(Dictionary<string, (string part, Vector3 local)> positions, string id, HotspotStage stage,
-            string titleID, string titleEN, string regional, LocalizedString material, LocalizedString craft, string source, string note)
+            string titleID, string titleEN, string regional, LocalizedString material, LocalizedString craft, string source, string note,
+            LocalizedString philosophy = default, LocalizedString history = default, params string[] refs)
         {
             var pending = new LocalizedString("[Draf] Diisi kurator setelah spesimen asli ditetapkan.",
                 "[Draft] To be written by the curator once the real specimen is chosen.");
             var (part, local) = positions[id];
+            var sources = new List<string> { source };
+            sources.AddRange(refs);
             return new HotspotData
             {
                 hotspotId = id,
@@ -323,11 +329,11 @@ namespace NusantaraAR.EditorTools
                 title = new LocalizedString(titleID, titleEN),
                 regionalTerm = regional,
                 material = material,
-                philosophy = pending,
+                philosophy = philosophy.IsEmpty ? pending : philosophy,
                 craft = craft,
-                history = pending,
+                history = history.IsEmpty ? pending : history,
                 transcript = craft,
-                sources = new List<string> { source },
+                sources = sources,
                 curatorValidated = false,
                 curatorNote = note
             };
