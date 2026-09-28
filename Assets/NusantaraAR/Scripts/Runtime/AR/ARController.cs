@@ -48,6 +48,7 @@ namespace NusantaraAR
         {
             Application.targetFrameRate = 30;
             data = AppSession.SelectedArtifact;
+            AudioManager.Instance.PlayMusic(data != null ? data.backgroundMusic : null); // sama dengan di detail: tidak mulai ulang
             BuildUI();
             hud.SetControlsVisible(false);
             session.enabled = false;

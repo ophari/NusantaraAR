@@ -114,3 +114,6 @@ InitTestScene*.unity*
 
 # Setelan lokal Claude Code (per mesin)
 .claude/settings.local.json
+
+# Unduhan mentah musik latar (Pixabay); hasil olahan ada di Assets/NusantaraAR/Content/*/Music
+/Tools/musik/asli/

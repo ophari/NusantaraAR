@@ -471,3 +471,6 @@ MonoBehaviour:
     curatorNote: Diperiksa terhadap sumber daring (28-09-2026); menunggu validasi
       kurator.
   story: {fileID: 11400000, guid: ddb0b53532b814c45b7ab1418a9979ab, type: 2}
+  backgroundMusic: {fileID: 8300000, guid: 8a1f775d35fdde241886fa8ee8c853b2, type: 3}
+  musicCredit: '"Self-Sacrifice" - Strainsofpoise (Pixabay, Pixabay Content License)
+    [AI]'

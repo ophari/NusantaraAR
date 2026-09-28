@@ -568,3 +568,6 @@ MonoBehaviour:
     curatorNote: Diperiksa terhadap sumber daring (28-09-2026); menunggu validasi
       kurator.
   story: {fileID: 11400000, guid: 59fe6527dd8075841acbb53111c55d83, type: 2}
+  backgroundMusic: {fileID: 8300000, guid: fc51c19e49cc0354cb341cea46f1a901, type: 3}
+  musicCredit: '"Gamelan Bali Yang Tenang" - LunarBoomMusic (Pixabay, Pixabay Content
+    License) [AI]'

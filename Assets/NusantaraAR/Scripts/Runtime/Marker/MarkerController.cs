@@ -320,6 +320,7 @@ namespace NusantaraAR.Marker
             go.name = data.prefab.name;
             current = go.GetComponent<ArtifactInstance>();
             current.Init(data);
+            AudioManager.Instance.PlayMusic(data.backgroundMusic);
             var b = current.GetWorldBounds();
             float width = Mathf.Max(0.01f, Mathf.Max(b.size.x, b.size.z));
             baseScale = size * fitToMarker / width;

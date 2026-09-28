@@ -99,6 +99,7 @@ namespace NusantaraAR
 
             ["settings.language"] = ("Bahasa", "Language"),
             ["settings.narrationVol"] = ("Volume narasi", "Narration volume"),
+            ["settings.musicVol"] = ("Volume musik latar", "Background music volume"),
             ["settings.sfxVol"] = ("Volume efek suara", "Sound effects volume"),
             ["settings.analytics"] = ("Bagikan data penggunaan anonim", "Share anonymous usage data"),
             ["settings.analyticsNote"] = (
@@ -107,8 +108,9 @@ namespace NusantaraAR
             ["settings.tutorial"] = ("Ulangi tutorial", "Replay tutorial"),
             ["settings.about"] = ("Tentang", "About"),
             ["settings.aboutBody"] = (
-                "Nusantara AR - aplikasi edukasi benda budaya Indonesia.\nModel keris saat ini adalah model sementara hasil rekonstruksi dari satu foto; akan diganti aset dari spesimen asli yang divalidasi kurator.\nSeluruh teks kuratorial masih draf.\nSuara narator mode Kisah adalah suara sintetis (Microsoft neural TTS).",
-                "Nusantara AR - a learning app for Indonesian cultural objects.\nThe current keris is a temporary model reconstructed from a single photo; it will be replaced by an asset from a curator-validated specimen.\nAll curatorial text is still a draft.\nThe Story narrator is a synthetic voice (Microsoft neural TTS)."),
+                "Nusantara AR - aplikasi edukasi benda budaya Indonesia.\nModel keris saat ini adalah model sementara hasil rekonstruksi dari satu foto; akan diganti aset dari spesimen asli yang divalidasi kurator.\nSeluruh teks kuratorial masih draf.\nSuara narator mode Kisah adalah suara sintetis (Microsoft neural TTS).\nMusik latar dari Pixabay; tanda [AI] = dibuat dengan AI oleh pengunggahnya.",
+                "Nusantara AR - a learning app for Indonesian cultural objects.\nThe current keris is a temporary model reconstructed from a single photo; it will be replaced by an asset from a curator-validated specimen.\nAll curatorial text is still a draft.\nThe Story narrator is a synthetic voice (Microsoft neural TTS).\nBackground music from Pixabay; [AI] = made with AI by its uploader."),
+            ["settings.musicCredits"] = ("Musik latar", "Background music"),
             ["settings.on"] = ("Aktif", "On"),
             ["settings.off"] = ("Nonaktif", "Off"),
 

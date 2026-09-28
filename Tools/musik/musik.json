@@ -1,0 +1,28 @@
+{
+ "tracks": [
+  {
+   "artifactId": "KERIS_BALI_01",
+   "raw": "Tools/musik/asli/lunarboommusic-gamelan-bali-yang-tenang-569697.mp3",
+   "file": "Assets/NusantaraAR/Content/KERIS_BALI_01/Music/KERIS_BALI_01_music.mp3",
+   "maxSeconds": 150,
+   "title": "Gamelan Bali Yang Tenang",
+   "author": "LunarBoomMusic",
+   "source": "Pixabay",
+   "url": "https://pixabay.com/music/world-gamelan-bali-yang-tenang-569697/",
+   "license": "Pixabay Content License",
+   "aiGenerated": true
+  },
+  {
+   "artifactId": "KERIS_SUMATRA_01",
+   "raw": "Tools/musik/asli/strainsofpoise-self-sacrifice-strains-of-poise-355102.mp3",
+   "file": "Assets/NusantaraAR/Content/KERIS_SUMATRA_01/Music/KERIS_SUMATRA_01_music.mp3",
+   "maxSeconds": 150,
+   "title": "Self-Sacrifice",
+   "author": "Strainsofpoise",
+   "source": "Pixabay",
+   "url": "https://pixabay.com/music/world-self-sacrifice-strains-of-poise-355102/",
+   "license": "Pixabay Content License",
+   "aiGenerated": true
+  }
+ ]
+}

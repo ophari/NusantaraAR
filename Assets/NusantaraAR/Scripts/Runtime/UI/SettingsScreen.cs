@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ namespace NusantaraAR.UI
     {
         Action onReplayTutorial;
         RectTransform content;
-        TextMeshProUGUI analyticsState;
+        TextMeshProUGUI analyticsState, musicCredits;
 
         public static SettingsScreen Create(RectTransform fullRoot, Action onReplayTutorial)
         {
@@ -46,6 +47,8 @@ namespace NusantaraAR.UI
 
             Section("settings.narrationVol");
             UIKit.Layout(UIKit.Slider(content, "Narration", AppSettings.NarrationVolume, v => AppSettings.NarrationVolume = v), 80);
+            Section("settings.musicVol");
+            UIKit.Layout(UIKit.Slider(content, "Music", AppSettings.MusicVolume, v => AppSettings.MusicVolume = v), 80);
             Section("settings.sfxVol");
             UIKit.Layout(UIKit.Slider(content, "Sfx", AppSettings.SfxVolume, v => AppSettings.SfxVolume = v), 80);
 
@@ -67,11 +70,45 @@ namespace NusantaraAR.UI
             Section("settings.about");
             var about = UIKit.Text(content, "About", Locale.T("settings.aboutBody"), Theme.Small, Theme.Parchment);
             LocalizedLabel.Attach(about, "settings.aboutBody");
-            UIKit.Layout(about, 360);
+            UIKit.Layout(about, 440);
+
+            // Kredit musik latar dari data artefak (satu baris per artefak yang punya musik).
+            int musicCount = MusicArtifacts().Count;
+            if (musicCount > 0)
+            {
+                Section("settings.musicCredits");
+                musicCredits = UIKit.Text(content, "MusicCredits", "", Theme.Small, Theme.Parchment);
+                UIKit.Layout(musicCredits, 90f * musicCount);
+            }
+
             var version = UIKit.Text(content, "Version", "v" + Application.version, 26f, Theme.Stone);
             UIKit.Layout(version, 50);
 
+            RefreshLocalized();
+        }
+
+        static List<ArtifactData> MusicArtifacts()
+        {
+            var list = new List<ArtifactData>();
+            var catalog = AppSession.Catalog;
+            if (catalog == null) return list;
+            foreach (var a in catalog.artifacts)
+                if (a != null && a.backgroundMusic != null && !string.IsNullOrEmpty(a.musicCredit)) list.Add(a);
+            return list;
+        }
+
+        void RefreshMusicCredits()
+        {
+            if (musicCredits == null) return;
+            var lines = new List<string>();
+            foreach (var a in MusicArtifacts()) lines.Add(a.displayName.Get() + ": " + a.musicCredit);
+            musicCredits.text = string.Join("\n", lines);
+        }
+
+        void RefreshLocalized()
+        {
             RefreshAnalytics();
+            RefreshMusicCredits();
         }
 
         void Section(string key)
@@ -97,11 +134,11 @@ namespace NusantaraAR.UI
 
         void OnEnable()
         {
-            Locale.Changed += RefreshAnalytics;
-            if (analyticsState != null) RefreshAnalytics();
+            Locale.Changed += RefreshLocalized;
+            if (analyticsState != null) RefreshLocalized();
         }
 
-        void OnDisable() => Locale.Changed -= RefreshAnalytics;
+        void OnDisable() => Locale.Changed -= RefreshLocalized;
 
         public void Show()
         {

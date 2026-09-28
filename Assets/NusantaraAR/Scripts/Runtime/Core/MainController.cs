@@ -111,6 +111,7 @@ namespace NusantaraAR
             current.Init(data);
             orbit.Frame(current.GetWorldBounds());
             hud.Bind(current, viewerCamera, ResetView, null);
+            AudioManager.Instance.PlayMusic(data.backgroundMusic);
             catalog.SetVisible(false);
             SetDetailVisible(true);
             RefreshDetailTexts();
@@ -120,6 +121,7 @@ namespace NusantaraAR
         void ShowCatalog()
         {
             ClearArtifact();
+            AudioManager.Instance.StopMusic();
             SetDetailVisible(false);
             catalog.SetVisible(true);
         }

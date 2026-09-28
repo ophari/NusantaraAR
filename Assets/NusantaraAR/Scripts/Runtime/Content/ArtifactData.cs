@@ -81,6 +81,11 @@ namespace NusantaraAR
         [Tooltip("Mode Kisah (narasi bercerita). Kosong = tombol Kisah disembunyikan.")]
         public ArtifactStory story;
 
+        [Header("Musik latar")]
+        [Tooltip("Diputar berulang selama artefak dibuka (3D Viewer, Scan QR, AR). Kosong = tanpa musik.")]
+        public AudioClip backgroundMusic;
+        [Tooltip("Kredit musik: judul - pembuat (sumber, lisensi)")] public string musicCredit;
+
         public HotspotData FindHotspot(string id) => hotspots.Find(h => h.hotspotId == id);
     }
 }

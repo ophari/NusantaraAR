@@ -72,11 +72,13 @@ namespace NusantaraAR
     {
         const string NarrationKey = "nusantaraar.vol.narration";
         const string SfxKey = "nusantaraar.vol.sfx";
+        const string MusicKey = "nusantaraar.vol.music";
         const string AnalyticsKey = "nusantaraar.analytics";
         const string OnboardingKey = "nusantaraar.onboarding.done";
 
         static float? narrationVolume;
         static float? sfxVolume;
+        static float? musicVolume;
 
         // Di-cache: dibaca setiap frame oleh AudioManager (PlayerPrefs di Android lewat JNI).
         public static float NarrationVolume
@@ -89,6 +91,13 @@ namespace NusantaraAR
         {
             get => sfxVolume ??= PlayerPrefs.GetFloat(SfxKey, 0.7f);
             set { sfxVolume = Mathf.Clamp01(value); PlayerPrefs.SetFloat(SfxKey, sfxVolume.Value); PlayerPrefs.Save(); }
+        }
+
+        /// <summary>Musik latar artefak; 0 = mati.</summary>
+        public static float MusicVolume
+        {
+            get => musicVolume ??= PlayerPrefs.GetFloat(MusicKey, 0.5f);
+            set { musicVolume = Mathf.Clamp01(value); PlayerPrefs.SetFloat(MusicKey, musicVolume.Value); PlayerPrefs.Save(); }
         }
 
         /// <summary>Analitik hanya aktif dengan persetujuan eksplisit (default: nonaktif).</summary>

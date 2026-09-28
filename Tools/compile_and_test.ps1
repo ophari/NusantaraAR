@@ -4,6 +4,8 @@
 #   blender --background --factory-startup --python Tools\blender\keris_sumatra.py
 # Bila naskah mode Kisah (Tools\narasi\kisah.json) diubah, buat ulang suaranya dulu (perlu internet):
 #   python Tools\narasi\kisah_tts.py
+# Bila musik latar (Tools\musik\musik.json) diganti, unduh treknya ke Tools\musik\asli\ lalu olah dulu:
+#   python Tools\musik\siapkan_musik.py
 # Tutup Unity Editor dulu (project tidak boleh terbuka di dua tempat).
 # Jalankan: powershell -ExecutionPolicy Bypass -File Tools\compile_and_test.ps1
 $ErrorActionPreference = 'Continue'

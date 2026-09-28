@@ -50,6 +50,7 @@ namespace NusantaraAR.EditorTools
             KerisBaliBuilder.Build();
             KerisSumatraBuilder.Build();
             StoryBuilder.Build();
+            MusicBuilder.Build();
             PruneCatalog();
             BuildCommonAssets(out var reticleMat, out var planePrefab);
             BuildMainScene();
