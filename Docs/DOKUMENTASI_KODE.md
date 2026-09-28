@@ -52,8 +52,7 @@ NusantaraAR/
 ├─ Docs/        kartu QR + kartu penanda lama (PNG/PDF), draf laporan, dokumen ini
 ├─ Tools/       compile_and_test.ps1, kartu_qr.py, kartu_penanda.py, blender/keris_bali.py, blender/keris_sumatra.py (+ .blend, *_textures/)
 ├─ Builds/      output APK/AAB
-├─ Logs/        setup.log, tests.log, tests.xml (dari Tools/compile_and_test.ps1)
-└─ _Arsip_ModelLama/  model & builder lama (keris sementara, Keris Bali prosedural Unity, Keris Jawa) — tidak dipakai, boleh dihapus
+└─ Logs/        setup.log, tests.log, tests.xml (dari Tools/compile_and_test.ps1)
 ```
 
 **Penting:** scene, prefab, katalog, dan GLB adalah **output generator** (GLB dari skrip Blender, sisanya dari `Scripts/Editor/`). Jika diubah manual lewat Inspector, perubahan akan **tertimpa** saat `Nusantara AR/Setup Everything` dijalankan lagi. Sumber kebenarannya ada di kode `Scripts/Editor/`.

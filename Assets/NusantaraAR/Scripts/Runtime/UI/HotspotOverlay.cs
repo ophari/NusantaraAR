@@ -29,7 +29,7 @@ namespace NusantaraAR.UI
             public HotspotData data;
             public RectTransform dot, pulse, core, line, label;
             public CanvasGroup dotGroup, lineGroup, labelGroup;
-            public Image lineImage;
+            public Image lineImage, pulseImage;
             public bool visible, occluded, right, placed;
             public Vector2 anchor, labelTarget, labelCenter;
             public float appear;
@@ -117,6 +117,7 @@ namespace NusantaraAR.UI
             dotButton.onClick.AddListener(() => Tap(h));
             c.dotGroup = c.dot.gameObject.AddComponent<CanvasGroup>();
             c.pulse = MakeCircle(c.dot, "Pulse", 50f, Theme.Gold, true);
+            c.pulseImage = c.pulse.GetComponent<Image>();
             MakeCircle(c.dot, "Halo", 42f, Theme.Chrome, false);
             c.core = MakeCircle(c.dot, "Core", 22f, Theme.Gold, false);
 
@@ -316,7 +317,7 @@ namespace NusantaraAR.UI
                 c.dotGroup.alpha = dim;
                 c.core.localScale = Vector3.one * (isSelected || isFocused ? 1.5f : 1f);
                 c.pulse.localScale = Vector3.one * (1f + (isFocused ? 0.9f : 0.5f) * pulsePhase);
-                c.pulse.GetComponent<Image>().color = Theme.WithAlpha(Theme.Gold, (1f - pulsePhase) * (isSelected || isFocused ? 1f : 0.8f));
+                c.pulseImage.color =Theme.WithAlpha(Theme.Gold, (1f - pulsePhase) * (isSelected || isFocused ? 1f : 0.8f));
 
                 bool showLabel = (labelsVisible || isFocused) && !isSelected;
                 UIKit.SetVisible(c.label, showLabel);

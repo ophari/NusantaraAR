@@ -43,6 +43,9 @@ namespace NusantaraAR.Marker
         readonly List<Vector2> src = new List<Vector2>(), dst = new List<Vector2>();
         readonly List<float> weights = new List<float>();
         readonly Dictionary<int, bool[,]> grids = new Dictionary<int, bool[,]>();
+        // Buffer per frame dipakai ulang (tanpa alokasi): finder terpakai (maks. MaxFinders) dan sampel grid finder 7x7.
+        readonly bool[] used = new bool[MaxFinders];
+        readonly float[] finderValues = new float[49];
 
         public List<QrDetection> Detect(byte[] gray, int width, int height)
         {
@@ -83,7 +86,7 @@ namespace NusantaraAR.Marker
                 if (TryTriple(i, j, k, out var t)) triples.Add(t);
             triples.Sort((a, b) => a.score.CompareTo(b.score));
 
-            var used = new bool[finders.Count];
+            System.Array.Clear(used, 0, finders.Count);
             foreach (var t in triples)
             {
                 if (used[t.tl] || used[t.tr] || used[t.bl]) continue;
@@ -102,7 +105,7 @@ namespace NusantaraAR.Marker
         {
             f = default;
             if (!Homography.FromUnitSquare(quad, out var H)) return false;
-            var values = new float[49];
+            var values = finderValues;
             float darkSum = 0f, lightSum = 0f;
             int darkCount = 0, lightCount = 0;
             for (int v = 0; v < 7; v++)

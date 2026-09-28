@@ -100,7 +100,8 @@ namespace NusantaraAR.EditorTools
                 locationPathName = path,
                 target = BuildTarget.Android,
                 targetGroup = BuildTargetGroup.Android,
-                options = BuildOptions.None
+                // LZ4HC: data aplikasi terkompres lebih rapat daripada LZ4 biasa (APK lebih kecil, build sedikit lebih lama).
+                options = BuildOptions.CompressWithLz4HC
             };
             var report = BuildPipeline.BuildPlayer(options);
             var summary = report.summary;

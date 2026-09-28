@@ -117,6 +117,9 @@ namespace NusantaraAR.EditorTools
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
             PlayerSettings.SetUseDefaultGraphicsAPIs(BuildTarget.Android, false);
             PlayerSettings.SetGraphicsAPIs(BuildTarget.Android, new[] { GraphicsDeviceType.OpenGLES3 });
+            // Ukuran APK: buang kode managed tak terpakai (kode runtime tanpa refleksi) dan kanal mesh yang tak dibaca shader.
+            PlayerSettings.SetManagedStrippingLevel(NamedBuildTarget.Android, ManagedStrippingLevel.Medium);
+            PlayerSettings.stripUnusedMeshComponents = true;
 
             // iOS (P1)
             PlayerSettings.iOS.cameraUsageDescription =

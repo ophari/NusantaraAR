@@ -99,7 +99,6 @@ Assets/NusantaraAR/
 Tools/blender/keris_bali.py, keris_sumatra.py   skrip Blender pemodel keris (+ .blend, *_textures/ hasilnya)
 Tools/kartu_qr.py                 kartu kode QR cetak A5
 Tools/kartu_penanda.py            kartu penanda 6x6 lama (cadangan)
-_Arsip_ModelLama/                 model & builder lama yang tidak dipakai lagi (boleh dihapus)
   Resources/ContentCatalog.asset
   Scenes/Main.unity, Scenes/AR.unity
 ```
@@ -110,7 +109,7 @@ UI dibangun dari kode (tanpa YAML scene), jadi perubahan tampilan cukup di `Scri
 
 Semua model 3D dibuat di **Blender 5.2** oleh skrip (tanpa klik manual), diekspor sebagai **GLB**, lalu diimpor Unity
 lewat **glTFast**. Model lama (keris sementara dari `keris3d`, Keris Bali prosedural buatan Unity, Keris Jawa) sudah
-dikeluarkan ke `_Arsip_ModelLama/`.
+dihapus dari proyek (masih ada di riwayat git).
 
 | Keris | Skrip Blender | Isi model | Exploded view |
 | --- | --- | --- | --- |

@@ -195,7 +195,8 @@ namespace NusantaraAR.EditorTools
             var android = imp.GetPlatformTextureSettings("Android");
             android.overridden = true;
             android.maxTextureSize = 2048;
-            android.format = normal ? TextureImporterFormat.ASTC_4x4 : TextureImporterFormat.ASTC_6x6;
+            // Normal map 5x5 (5,1 bpp) alih-alih 4x4 (8 bpp): ~36% lebih kecil, detail pamor/ukiran tetap terbaca.
+            android.format = normal ? TextureImporterFormat.ASTC_5x5 : TextureImporterFormat.ASTC_6x6;
             imp.SetPlatformTextureSettings(android);
             var ios = imp.GetPlatformTextureSettings("iPhone");
             ios.overridden = true;
