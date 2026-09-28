@@ -81,6 +81,10 @@ namespace NusantaraAR
             ["marker.unlock"] = ("Lepas Kunci", "Unlock"),
             ["marker.noCameraTitle"] = ("Kamera tidak ditemukan", "No camera found"),
             ["marker.noCameraBody"] = ("Perangkat ini tidak memiliki kamera yang bisa dipakai.", "This device has no usable camera."),
+            ["marker.stalledTitle"] = ("Kamera belum menampilkan gambar", "The camera shows no picture"),
+            ["marker.stalledBody"] = (
+                "Kamera mungkin sedang dipakai aplikasi lain. Tutup aplikasi yang memakai kamera, lalu coba lagi.",
+                "The camera may be in use by another app. Close any app using the camera, then try again."),
 
             ["sheet.philosophy"] = ("Filosofi", "Meaning"),
             ["sheet.craft"] = ("Kriya", "Craft"),

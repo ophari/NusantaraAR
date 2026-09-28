@@ -41,6 +41,8 @@ namespace NusantaraAR.Marker
             {
                 var devices = WebCamTexture.devices;
                 if (devices == null || devices.Length == 0) return false;
+                // Lepas tekstur lama dulu: kamera yang masih dibuka tekstur sebelumnya membuat tekstur baru tak pernah dapat frame.
+                ReleaseTexture();
                 var device = devices[0];
                 foreach (var d in devices)
                     if (!d.isFrontFacing) { device = d; break; }
@@ -62,7 +64,15 @@ namespace NusantaraAR.Marker
             if (texture != null && texture.isPlaying) texture.Stop();
         }
 
-        void OnDestroy() => StopFeed();
+        void ReleaseTexture()
+        {
+            if (texture == null) return;
+            texture.Stop();
+            Destroy(texture);
+            texture = null;
+        }
+
+        void OnDestroy() => ReleaseTexture();
 
         void OnApplicationPause(bool paused)
         {
@@ -136,6 +146,7 @@ namespace NusantaraAR.Marker
             float s = Mathf.Max(size.x / uw, size.y / uh);
 
             image.texture = texture;
+            image.enabled = true;
             image.uvRect = Mirrored ? new Rect(0, 1, 1, -1) : new Rect(0, 0, 1, 1);
             var rt = image.rectTransform;
             rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);

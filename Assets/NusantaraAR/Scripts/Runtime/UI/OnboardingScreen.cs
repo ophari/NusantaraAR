@@ -5,14 +5,16 @@ using UnityEngine.UI;
 
 namespace NusantaraAR.UI
 {
-    /// <summary>Onboarding (PRD FR-13): tutorial gestur + keselamatan AR + persetujuan analitik. Bisa dilewati.</summary>
+    /// <summary>
+    /// Onboarding (PRD FR-13): tutorial gestur + keselamatan AR. Bisa dilewati.
+    /// Persetujuan analitik hanya di Pengaturan (default nonaktif).
+    /// </summary>
     public class OnboardingScreen : MonoBehaviour
     {
         static readonly string[] Pages = { "onb.1", "onb.2", "onb.3" };
 
         int page;
-        TextMeshProUGUI title, body, nextLabel, consentLabel;
-        Button consent;
+        TextMeshProUGUI title, body, nextLabel;
         Image[] dots;
         Action onDone;
 
@@ -36,11 +38,7 @@ namespace NusantaraAR.UI
             UIKit.Stretch(title.rectTransform, 56, 56, 64, 900);
             body = UIKit.Text(card.transform, "Body", "", Theme.Body, Theme.Parchment);
             body.lineSpacing = 12f;
-            UIKit.Stretch(body.rectTransform, 56, 56, 200, 360);
-
-            consent = UIKit.Button(card.transform, "Consent", "", ButtonStyle.Chip, ToggleConsent, out consentLabel, 30f);
-            consentLabel.textWrappingMode = TextWrappingModes.Normal;
-            UIKit.Place((RectTransform)consent.transform, new Vector2(0.5f, 0f), new Vector2(0f, 220f), new Vector2(848f, 110f));
+            UIKit.Stretch(body.rectTransform, 56, 56, 200, 220);
 
             var dotsRow = UIKit.Rect("Dots", card.transform);
             UIKit.Place(dotsRow, new Vector2(0.5f, 0f), new Vector2(0f, 176f), new Vector2(120f, 20f));
@@ -78,15 +76,6 @@ namespace NusantaraAR.UI
             body.text = Locale.T(Pages[page] + ".body");
             nextLabel.text = Locale.T(page == Pages.Length - 1 ? "onb.start" : "onb.next");
             for (int i = 0; i < dots.Length; i++) dots[i].color = i == page ? Theme.Gold : Theme.Stone;
-            bool last = page == Pages.Length - 1;
-            consent.gameObject.SetActive(last);
-            consentLabel.text = (AppSettings.AnalyticsConsent ? "[x]  " : "[  ]  ") + Locale.T("settings.analytics");
-        }
-
-        void ToggleConsent()
-        {
-            AppSettings.AnalyticsConsent = !AppSettings.AnalyticsConsent;
-            Refresh();
         }
 
         void Next()

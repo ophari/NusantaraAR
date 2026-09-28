@@ -160,7 +160,7 @@ Kode kartu lama `0xEEC1` (keris sementara) dan `0xDA26` (Keris Jawa) sudah ditar
 | `Core/AppSession.cs` | 122 | `AppSession` (navigasi scene + artefak terpilih + cache katalog), `AppSettings` (PlayerPrefs: volume narasi/SFX dengan cache, persetujuan analitik, onboarding selesai), `Analytics.Log` (hanya ke `Debug.Log`, dan hanya bila pengguna setuju; belum ada penyedia analitik) |
 | `Core/MainController.cs` | 192 | Controller scene Main: membangun UI, membuka katalog/detail, 3D Viewer (instantiate prefab di `stageRoot`, `orbit.Frame`), cek dukungan ARCore, tombol back |
 | `Core/Locale.cs` | 68 | `Language {ID, EN}`, `LocalizedString`, `Locale.Current`, event `Locale.Changed`, `Locale.T(key)` |
-| `Core/UIStrings.cs` | 134 | Kamus teks antarmuka per kunci (mis. `"marker.scan"`, `"ctrl.reset"`). Konten kuratorial **tidak** disimpan di sini |
+| `Core/UIStrings.cs` | 138 | Kamus teks antarmuka per kunci (mis. `"marker.scan"`, `"ctrl.reset"`). Konten kuratorial **tidak** disimpan di sini |
 | `Core/DevCapture.cs` | 100 | Mode QA: menyusuri alur utama dan menyimpan tangkapan layar otomatis (dipakai oleh `BuildScript.BuildWindowsCapture`) |
 
 ### Content (`NusantaraAR`)
@@ -194,11 +194,11 @@ Kode kartu lama `0xEEC1` (keris sementara) dan `0xDA26` (Keris Jawa) sudah ditar
 ### Marker — mode Scan QR (+ kartu penanda lama), tanpa ARCore (`NusantaraAR.Marker`)
 | File | Baris | Isi |
 |---|---|---|
-| `Marker/MarkerController.cs` | 396 | Controller scene Marker, lihat §6.4 |
+| `Marker/MarkerController.cs` | 505 | Controller scene Marker, lihat §6.4 |
 | `Marker/DarkRegions.cs` | 336 | Analisis frame bersama: threshold adaptif, komponen gelap, segi empat (+ sudut subpiksel opsional), sampling. Dipakai detektor QR dan kartu, lihat §6.2 |
 | `Marker/QrCode.cs` | 709 | QR versi 1-10 tanpa library luar: encoder mode byte (untuk "Tampilkan QR"), decoder matriks (numerik/alfanumerik/byte), Reed-Solomon GF(256), `CreateTexture`, lihat §6.5 |
 | `Marker/QrDetector.cs` | 284 | Detektor QR di gambar kamera: pola finder → homografi → grid modul → `QrCode.TryDecode`, lihat §6.5 |
-| `Marker/CameraFeed.cs` | 151 | `WebCamTexture` → buffer grayscale **tegak** (sudah memperhitungkan `videoRotationAngle` dan mirror) di `Gray/Width/Height`. `ConfigureDisplay` memasang tekstur kamera ke `RawImage` latar dengan rotasi/aspek yang benar. `FocalPixels` adalah perkiraan fokus dari FOV asumsi |
+| `Marker/CameraFeed.cs` | 162 | `WebCamTexture` → buffer grayscale **tegak** (sudah memperhitungkan `videoRotationAngle` dan mirror) di `Gray/Width/Height`. `ConfigureDisplay` memasang tekstur kamera ke `RawImage` latar dengan rotasi/aspek yang benar. `FocalPixels` adalah perkiraan fokus dari FOV asumsi |
 | `Marker/MarkerDetector.cs` | 239 | Detektor kartu penanda lama + `Homography` (DLT 4 titik dan kuadrat terkecil), lihat §6.2 |
 | `Marker/MarkerPattern.cs` | 56 | Definisi pola 6×6, kode artefak, `IsBlack`, `HammingDistance`, `CreateTexture` |
 | `Marker/MarkerPose.cs` | 106 | Pose dari homografi + `PoseSmoother` (filter One Euro), lihat §6.3 |
@@ -213,7 +213,7 @@ Kode kartu lama `0xEEC1` (keris sementara) dan `0xDA26` (Keris Jawa) sudah ditar
 | `UI/CatalogScreen.cs` | 151 | Layar katalog per kategori, dengan tombol pengaturan dan Scan |
 | `UI/MarkerCardScreen.cs` | 65 | Menampilkan kode QR artefak layar penuh (bisa di-scan dari HP lain) |
 | `UI/SettingsScreen.cs` | 114 | Bahasa, volume, persetujuan analitik, ulangi tutorial, tentang |
-| `UI/OnboardingScreen.cs` | 109 | Tutorial gestur + keselamatan AR + persetujuan analitik |
+| `UI/OnboardingScreen.cs` | 98 | Tutorial gestur + keselamatan AR (persetujuan analitik hanya di Pengaturan) |
 | `UI/LocalizedLabel.cs` | 35 | Label TMP yang otomatis berganti saat `Locale.Changed` |
 | `UI/SafeArea.cs` | 31 | Menyesuaikan rect ke `Screen.safeArea` (notch) |
 
@@ -275,9 +275,12 @@ Ukuran gambar minimum 32×32 px, dan sisi marker minimum 24 px.
 
 ### 6.4 Loop `MarkerController`
 ```
-Start: kumpulkan markerCode dari katalog → izin kamera → tunggu kamera (≤1,5 s) → CameraFeed.StartFeed()
+Start: kumpulkan markerCode dari katalog → latar kamera disembunyikan → izin kamera → StartCamera
+       (dijaga cameraStarting: callback izin & OnApplicationFocus tidak membuka kamera dua kali)
+       → tunggu kamera (≤1,5 s) → CameraFeed.StartFeed() (melepas WebCamTexture lama dulu)
 Update:
-  feed.Grab() ada frame baru → ConfigureDisplay → ProcessFrame:
+  tidak ada frame > 3 s → buka ulang kamera (maks. 2 kali) → lalu pesan CameraStalled + Coba Lagi
+  feed.Grab() ada frame baru → ConfigureDisplay (latar kamera baru ditampilkan) → ProcessFrame:
       regions.Analyze (sekali) → FindTarget:
           1) QrDetector.Detect → FindByQr(text)
              (QR terlihat tapi tak terbaca & QR terakhir terbaca < 2 s lalu → tetap artefak itu)

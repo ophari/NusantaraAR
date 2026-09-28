@@ -19,11 +19,13 @@ namespace NusantaraAR.Marker
     /// </summary>
     public class MarkerController : MonoBehaviour
     {
-        enum State { NeedsPermission, PermissionDenied, NoCamera, Starting, Searching, Tracking, Locked }
+        enum State { NeedsPermission, PermissionDenied, NoCamera, CameraStalled, Starting, Searching, Tracking, Locked }
 
         const float LostAfterSeconds = 0.6f;
         const float KeepQrWithoutDecodeSeconds = 2f;
         const float DegreesPerDp = 0.4f;
+        const float FeedStallSeconds = 3f;
+        const int MaxFeedRestarts = 2;
 
         public Camera cam;
         public CameraFeed feed;
@@ -61,6 +63,9 @@ namespace NusantaraAR.Marker
         bool onTable;
         Vector3 boundsCenter, boundsExtents; // ruang lokal prefab, tanpa skala
         bool controlsShown;
+        bool cameraStarting;
+        float lastFrame;
+        int feedRestarts;
 
         ArtifactHud hud;
         Image statusPill;
@@ -76,6 +81,8 @@ namespace NusantaraAR.Marker
             foreach (var a in AppSession.Catalog.artifacts)
                 if (a != null && a.markerCode != 0 && !codes.Contains(a.markerCode)) codes.Add(a.markerCode);
 
+            // RawImage tanpa tekstur tampil sebagai kotak putih; baru ditampilkan CameraFeed.ConfigureDisplay saat frame pertama.
+            background.enabled = false;
             BuildUI();
             hud.SetControlsVisible(false);
             gestures.Dragged += OnDrag;
@@ -92,7 +99,7 @@ namespace NusantaraAR.Marker
             }
             else
             {
-                StartCoroutine(InitAndStartCamera());
+                StartCamera();
             }
         }
 
@@ -116,7 +123,7 @@ namespace NusantaraAR.Marker
             {
                 if (granted)
                 {
-                    StartCoroutine(InitAndStartCamera());
+                    StartCamera();
                 }
                 else
                 {
@@ -125,8 +132,21 @@ namespace NusantaraAR.Marker
             });
         }
 
+        /// <summary>
+        /// Callback izin dan OnApplicationFocus terpicu bersamaan saat dialog izin ditutup; tanpa penjaga ini kamera
+        /// dibuka dua kali dan tekstur kedua tak pernah mendapat frame (layar hitam). <paramref name="restart"/> = buka ulang
+        /// walau kamera sedang berjalan.
+        /// </summary>
+        void StartCamera(bool restart = false)
+        {
+            if (cameraStarting || (feed.IsRunning && !restart)) return;
+            StartCoroutine(InitAndStartCamera());
+        }
+
         IEnumerator InitAndStartCamera()
         {
+            cameraStarting = true;
+            background.enabled = false;
             SetState(State.Starting);
 
             // Beri jeda 1 frame agar Android activity & camera HAL terinisialisasi
@@ -140,24 +160,50 @@ namespace NusantaraAR.Marker
                 yield return new WaitForSeconds(0.1f);
             }
 
-            if (!CameraFeed.HasCamera || !feed.StartFeed())
+            bool started = CameraFeed.HasCamera && feed.StartFeed();
+            cameraStarting = false;
+            if (!started)
             {
                 SetState(State.NoCamera);
                 yield break;
             }
 
+            lastFrame = Time.time;
             SetState(State.Searching);
             Analytics.Log("marker_session_start");
         }
 
+        void RetryCamera()
+        {
+            feedRestarts = 0;
+            StartCamera(restart: true);
+        }
+
         void OnApplicationFocus(bool focus)
         {
-            if (focus && (state == State.PermissionDenied || state == State.NeedsPermission || state == State.NoCamera))
+            if (focus && (state == State.PermissionDenied || state == State.NeedsPermission || state == State.NoCamera || state == State.CameraStalled))
             {
                 if (CameraPermission.IsGranted)
                 {
-                    StartCoroutine(InitAndStartCamera());
+                    RetryCamera();
                 }
+            }
+        }
+
+        /// <summary>Kamera terbuka tapi tidak mengirim frame (mis. masih dipegang aplikasi lain): buka ulang, lalu tampilkan pesan.</summary>
+        void CheckFeedStalled()
+        {
+            if (cameraStarting || (state != State.Searching && state != State.Tracking && state != State.Locked)) return;
+            if (Time.time - lastFrame < FeedStallSeconds) return;
+            if (feedRestarts < MaxFeedRestarts)
+            {
+                feedRestarts++;
+                StartCamera(restart: true);
+            }
+            else
+            {
+                feed.StopFeed();
+                SetState(State.CameraStalled);
             }
         }
 
@@ -168,9 +214,12 @@ namespace NusantaraAR.Marker
             gravity.Update(Time.deltaTime);
             if (feed.IsRunning && feed.Grab())
             {
+                lastFrame = Time.time;
+                feedRestarts = 0;
                 feed.ConfigureDisplay(background, backgroundCanvas, cam);
                 ProcessFrame();
             }
+            else CheckFeedStalled();
 
             if (state == State.Searching || state == State.Tracking)
             {
@@ -413,7 +462,13 @@ namespace NusantaraAR.Marker
                     title = Locale.T("marker.noCameraTitle");
                     body = Locale.T("marker.noCameraBody");
                     primary = Locale.T("common.retry");
-                    action = () => StartCoroutine(InitAndStartCamera());
+                    action = RetryCamera;
+                    break;
+                case State.CameraStalled:
+                    title = Locale.T("marker.stalledTitle");
+                    body = Locale.T("marker.stalledBody");
+                    primary = Locale.T("common.retry");
+                    action = RetryCamera;
                     break;
                 case State.NeedsPermission:
                     title = Locale.T("ar.permTitle");
