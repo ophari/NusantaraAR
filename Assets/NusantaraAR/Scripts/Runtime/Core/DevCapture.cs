@@ -39,11 +39,17 @@ namespace NusantaraAR
                 Click("Onboarding/Card/Next"); yield return Shot("02_onboarding_gestures");
                 Click("Onboarding/Card/Next"); yield return Shot("03_onboarding_safety");
                 Click("Onboarding/Card/Next"); yield return Shot("04_catalog");
+                Click("NavLayer/BottomNav/Items/Settings"); yield return new WaitForSeconds(0.5f);
+                yield return Shot("04b_settings");
+                Click("NavLayer/BottomNav/Items/Settings"); yield return new WaitForSeconds(0.3f);
 
                 var main = Object.FindAnyObjectByType<MainController>();
                 Invoke(main, "OpenDetail", AppSession.Catalog.First);
                 yield return new WaitForSeconds(1f);
                 yield return Shot("05_detail_assembled");
+                Click("Safe/DetailSheet/Handle"); yield return new WaitForSeconds(0.5f);
+                yield return Shot("05b_detail_sheet_expanded");
+                Click("Safe/DetailSheet/Handle"); yield return new WaitForSeconds(0.3f);
 
                 var inst = Object.FindAnyObjectByType<ArtifactInstance>();
                 var hud = Object.FindAnyObjectByType<ArtifactHud>();
@@ -90,12 +96,27 @@ namespace NusantaraAR
                     Invoke(main, "OpenDetail", other);
                     yield return new WaitForSeconds(1f);
                     yield return DrawFrames(Object.FindAnyObjectByType<ArtifactInstance>(), "09b");
+
+                    // Probe kaca: panel kaca tanpa tint selayar = blur murni. Bentuknya harus sama letaknya dengan
+                    // tangkapan referensi (tidak terbalik/bergeser) di D3D maupun GLES.
+                    yield return Shot("12_glass_probe_reference");
+                    var probe = UIKit.Panel(GameObject.Find("UI/Full").transform, "GlassProbe", Theme.Surface, false, false);
+                    UIKit.Stretch(probe.rectTransform);
+                    probe.gameObject.AddComponent<GlassSurface>().Strength = 0f;
+                    yield return new WaitForSeconds(0.5f);
+                    yield return Shot("12_glass_probe");
+                    Destroy(probe.gameObject);
                     break;
                 }
 
                 AppSession.OpenAR(data);
                 yield return new WaitForSeconds(2.5f);
                 yield return Shot("10_ar_unsupported_fallback");
+
+                // Scan QR: tanpa webcam = dialog "Kamera tidak ditemukan"; dengan webcam = kartu panduan scan.
+                AppSession.OpenMarker(data);
+                yield return new WaitForSeconds(4f);
+                yield return Shot("11_marker");
                 Application.Quit();
             }
 

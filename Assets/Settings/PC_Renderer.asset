@@ -26,7 +26,8 @@ MonoBehaviour:
     probeVolumeBlendStatesCS: {fileID: 7200000, guid: b9a23f869c4fd45f19c5ada54dd82176, type: 3}
   m_RendererFeatures:
   - {fileID: 2517486447306924470}
-  m_RendererFeatureMap: b6e196ea95e8ef22
+  - {fileID: 5386940348112906408}
+  m_RendererFeatureMap: b6e196ea95e8ef22a8287d93b441c24a
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -68,3 +69,20 @@ MonoBehaviour:
   m_Name: ARBackgroundRendererFeature
   m_EditorClassIdentifier: Unity.XR.ARFoundation::UnityEngine.XR.ARFoundation.ARBackgroundRendererFeature
   m_Active: 1
+--- !u!114 &5386940348112906408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b90767f2cd06264dac76543be8bd2e9, type: 3}
+  m_Name: GlassBlurFeature
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.Rendering.GlassBlurFeature
+  m_Active: 1
+  shader: {fileID: 4800000, guid: 05f8632e01684164a816b66d8e3decc3, type: 3}
+  downPasses: 3
+  offset: 1.25
+  saturation: 1.15

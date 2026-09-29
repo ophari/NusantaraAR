@@ -20,12 +20,13 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.Management;
+using NusantaraAR.Rendering;
 
 namespace NusantaraAR.EditorTools
 {
     /// <summary>
     /// Setup proyek sekali jalan (idempoten): pengaturan Android/iOS, XR (ARCore/ARKit Optional),
-    /// URP (AR Background Renderer Feature), artefak dari model Blender (GLB via glTFast: Keris Bali, Keris Sumatra)
+    /// URP (AR Background Renderer Feature + GlassBlurFeature untuk UI kaca), artefak dari model Blender (GLB via glTFast: Keris Bali, Keris Sumatra)
     /// beserta prefab modular + exploded view + hotspot draf, dan scene Main + AR + Marker.
     /// Menu: Nusantara AR / Setup Everything. Batch: -executeMethod NusantaraAR.EditorTools.ProjectSetup.RunBatch
     /// </summary>
@@ -38,6 +39,13 @@ namespace NusantaraAR.EditorTools
         const string MainScenePath = Root + "/Scenes/Main.unity";
         const string ARScenePath = Root + "/Scenes/AR.unity";
         const string MarkerScenePath = Root + "/Scenes/Marker.unity";
+        const string GlassBlurShaderPath = Root + "/Shaders/GlassBlur.shader";
+        const string UIGlassShaderPath = Root + "/Shaders/UIGlass.shader";
+        const string UIGlassMaterialPath = Root + "/Resources/UIGlass.mat";
+        const string GlowMaterialPath = Root + "/Resources/GroundGlow.mat";
+        const string GlowTexturePath = CommonDir + "/T_Glow.png";
+        const string PlaneGridTexturePath = CommonDir + "/T_PlaneGrid.png";
+        const float PlaneGridTilesPerMeter = 4f; // petak grid bidang AR 25 cm
 
         [MenuItem("Nusantara AR/Setup Everything")]
         public static void RunAll()
@@ -186,6 +194,7 @@ namespace NusantaraAR.EditorTools
                 if (!data.rendererFeatures.Any(f => f is ARBackgroundRendererFeature))
                     AddRendererFeature(data, typeof(ARBackgroundRendererFeature));
             }
+            EnsureGlassBlurFeature();
             foreach (var guid in AssetDatabase.FindAssets("t:UniversalRenderPipelineAsset"))
             {
                 var asset = AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(AssetDatabase.GUIDToAssetPath(guid));
@@ -217,8 +226,31 @@ namespace NusantaraAR.EditorTools
             AssetDatabase.SaveAssets();
         }
 
+        /// <summary>
+        /// Blur kaca UI (GlassBlurFeature) di setiap renderer URP; aset renderer diubah di tempat (GUID tetap).
+        /// Shader blur dirujuk field feature sehingga ikut ter-build.
+        /// </summary>
+        static void EnsureGlassBlurFeature()
+        {
+            AssetDatabase.ImportAsset(GlassBlurShaderPath, ImportAssetOptions.ForceSynchronousImport);
+            var shader = AssetDatabase.LoadAssetAtPath<Shader>(GlassBlurShaderPath);
+            if (shader == null) throw new Exception("Shader GlassBlur tidak ditemukan: " + GlassBlurShaderPath);
+            foreach (var guid in AssetDatabase.FindAssets("t:UniversalRendererData"))
+            {
+                var data = AssetDatabase.LoadAssetAtPath<UniversalRendererData>(AssetDatabase.GUIDToAssetPath(guid));
+                if (data == null) continue;
+                var feature = data.rendererFeatures.OfType<GlassBlurFeature>().FirstOrDefault()
+                              ?? (GlassBlurFeature)AddRendererFeature(data, typeof(GlassBlurFeature));
+                if (feature.shader == shader) continue;
+                feature.shader = shader;
+                EditorUtility.SetDirty(feature);
+                EditorUtility.SetDirty(data);
+            }
+            AssetDatabase.SaveAssets();
+        }
+
         /// <summary>Sama seperti tombol "Add Renderer Feature" di inspector URP (sub-asset + feature map).</summary>
-        static void AddRendererFeature(ScriptableRendererData data, Type type)
+        static ScriptableRendererFeature AddRendererFeature(ScriptableRendererData data, Type type)
         {
             var feature = (ScriptableRendererFeature)ScriptableObject.CreateInstance(type);
             feature.name = type.Name;
@@ -234,6 +266,7 @@ namespace NusantaraAR.EditorTools
             so.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(data);
             AssetDatabase.SaveAssets();
+            return feature;
         }
 
         // ------------------------------------------------------------------ Katalog
@@ -262,24 +295,7 @@ namespace NusantaraAR.EditorTools
 
         static void BuildCommonAssets(out Material reticleMat, out GameObject planePrefab)
         {
-            reticleMat = GetOrCreateMaterial(CommonDir + "/M_Reticle.mat", "Universal Render Pipeline/Unlit");
-            reticleMat.SetColor("_BaseColor", UI.Theme.Gold);
-            reticleMat.SetFloat("_Cull", 0f);
-            EditorUtility.SetDirty(reticleMat);
-
-            var planeMat = GetOrCreateMaterial(CommonDir + "/M_ARPlane.mat", "Universal Render Pipeline/Unlit");
-            planeMat.SetFloat("_Surface", 1f);
-            planeMat.SetFloat("_Blend", 0f);
-            planeMat.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
-            planeMat.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
-            planeMat.SetFloat("_SrcBlendAlpha", (float)BlendMode.One);
-            planeMat.SetFloat("_DstBlendAlpha", (float)BlendMode.OneMinusSrcAlpha);
-            planeMat.SetFloat("_ZWrite", 0f);
-            planeMat.SetFloat("_Cull", 0f);
-            planeMat.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-            planeMat.renderQueue = (int)RenderQueue.Transparent;
-            planeMat.SetColor("_BaseColor", new Color(UI.Theme.Gold.r, UI.Theme.Gold.g, UI.Theme.Gold.b, 0.16f));
-            EditorUtility.SetDirty(planeMat);
+            BuildVisualAssets(out reticleMat, out var planeMat);
 
             var go = new GameObject("ARPlane", typeof(ARPlane), typeof(ARPlaneMeshVisualizer), typeof(MeshFilter), typeof(MeshRenderer));
             go.GetComponent<MeshRenderer>().sharedMaterial = planeMat;
@@ -287,6 +303,102 @@ namespace NusantaraAR.EditorTools
             planePrefab = PrefabUtility.SaveAsPrefabAsset(go, PlanePrefabPath);
             UnityEngine.Object.DestroyImmediate(go);
             AssetDatabase.SaveAssets();
+        }
+
+        // ------------------------------------------------------------------ Visual (AR & kaca)
+
+        [MenuItem("Nusantara AR/Build AR Visuals")]
+        public static void BuildVisualAssets() => BuildVisualAssets(out _, out _);
+
+        /// <summary>
+        /// Hanya aset tampilan, tanpa menyentuh scene & prefab: reticle terakota, grid bidang AR, material glow
+        /// (Resources/GroundGlow), material UI kaca (Resources/UIGlass), dan GlassBlurFeature di renderer URP.
+        /// Batch: -executeMethod NusantaraAR.EditorTools.ProjectSetup.BuildVisualAssetsBatch
+        /// </summary>
+        static void BuildVisualAssets(out Material reticleMat, out Material planeMat)
+        {
+            Directory.CreateDirectory(CommonDir);
+            Directory.CreateDirectory(Root + "/Resources");
+
+            reticleMat = GetOrCreateMaterial(CommonDir + "/M_Reticle.mat", "Universal Render Pipeline/Unlit");
+            reticleMat.SetColor("_BaseColor", UI.Theme.AccentSoft);
+            reticleMat.SetFloat("_Cull", 0f);
+            EditorUtility.SetDirty(reticleMat);
+
+            var grid = SaveTexture(PlaneGridTexturePath, UI.ProceduralTextures.PlaneGrid(256, true), TextureWrapMode.Repeat);
+            planeMat = GetOrCreateMaterial(CommonDir + "/M_ARPlane.mat", "Universal Render Pipeline/Unlit");
+            MakeTransparent(planeMat);
+            planeMat.SetColor("_BaseColor", Color.white);
+            SetBaseMap(planeMat, grid, new Vector2(PlaneGridTilesPerMeter, PlaneGridTilesPerMeter));
+            EditorUtility.SetDirty(planeMat);
+
+            var glowTex = SaveTexture(GlowTexturePath, UI.ProceduralTextures.RadialGlow(128, true), TextureWrapMode.Clamp);
+            var glowMat = GetOrCreateMaterial(GlowMaterialPath, "Universal Render Pipeline/Unlit");
+            MakeTransparent(glowMat);
+            glowMat.SetColor("_BaseColor", UI.Theme.WithAlpha(UI.Theme.AccentSoft, 0.6f));
+            SetBaseMap(glowMat, glowTex, Vector2.one);
+            EditorUtility.SetDirty(glowMat);
+
+            AssetDatabase.ImportAsset(UIGlassShaderPath, ImportAssetOptions.ForceSynchronousImport);
+            var uiGlassShader = AssetDatabase.LoadAssetAtPath<Shader>(UIGlassShaderPath);
+            if (uiGlassShader == null) throw new Exception("Shader UIGlass tidak ditemukan: " + UIGlassShaderPath);
+            var uiGlass = AssetDatabase.LoadAssetAtPath<Material>(UIGlassMaterialPath);
+            if (uiGlass == null)
+            {
+                uiGlass = new Material(uiGlassShader);
+                AssetDatabase.CreateAsset(uiGlass, UIGlassMaterialPath);
+            }
+            else uiGlass.shader = uiGlassShader;
+            EditorUtility.SetDirty(uiGlass);
+
+            EnsureGlassBlurFeature();
+            AssetDatabase.SaveAssets();
+        }
+
+        public static void BuildVisualAssetsBatch()
+        {
+            try { BuildVisualAssets(); EditorApplication.Exit(0); }
+            catch (Exception e) { Debug.LogException(e); EditorApplication.Exit(1); }
+        }
+
+        static void MakeTransparent(Material m)
+        {
+            m.SetFloat("_Surface", 1f);
+            m.SetFloat("_Blend", 0f);
+            m.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
+            m.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+            m.SetFloat("_SrcBlendAlpha", (float)BlendMode.One);
+            m.SetFloat("_DstBlendAlpha", (float)BlendMode.OneMinusSrcAlpha);
+            m.SetFloat("_ZWrite", 0f);
+            m.SetFloat("_Cull", 0f);
+            m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            m.renderQueue = (int)RenderQueue.Transparent;
+        }
+
+        static void SetBaseMap(Material m, Texture2D tex, Vector2 tiling)
+        {
+            foreach (var prop in new[] { "_BaseMap", "_MainTex" })
+            {
+                if (!m.HasProperty(prop)) continue;
+                m.SetTexture(prop, tex);
+                m.SetTextureScale(prop, tiling);
+            }
+        }
+
+        /// <summary>Menyimpan tekstur prosedural sebagai PNG aset (sRGB, mipmap, alpha transparan).</summary>
+        static Texture2D SaveTexture(string path, Texture2D tex, TextureWrapMode wrap)
+        {
+            File.WriteAllBytes(path, tex.EncodeToPNG());
+            UnityEngine.Object.DestroyImmediate(tex);
+            AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
+            var imp = (TextureImporter)AssetImporter.GetAtPath(path);
+            imp.textureType = TextureImporterType.Default;
+            imp.alphaIsTransparency = true;
+            imp.mipmapEnabled = true;
+            imp.wrapMode = wrap;
+            imp.filterMode = FilterMode.Trilinear;
+            imp.SaveAndReimport();
+            return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
         }
 
         // ------------------------------------------------------------------ Scene
@@ -330,7 +442,7 @@ namespace NusantaraAR.EditorTools
             camGo.tag = "MainCamera";
             var cam = camGo.GetComponent<Camera>();
             cam.clearFlags = CameraClearFlags.SolidColor;
-            cam.backgroundColor = new Color(0.09f, 0.08f, 0.07f);
+            cam.backgroundColor = UI.Theme.Stage; // MainController juga menyetelnya saat runtime
             cam.fieldOfView = 35f;
             cam.nearClipPlane = 0.02f;
             cam.farClipPlane = 30f;
@@ -487,7 +599,7 @@ namespace NusantaraAR.EditorTools
             var camGo = new GameObject("ThumbCam", typeof(Camera));
             var cam = camGo.GetComponent<Camera>();
             cam.clearFlags = CameraClearFlags.SolidColor;
-            cam.backgroundColor = new Color(0.16f, 0.14f, 0.12f);
+            cam.backgroundColor = UI.Theme.Stage; // serasi dengan kartu katalog kaca di latar gading
             cam.fieldOfView = 30f;
             const int w = 600, h = 740;
             cam.aspect = (float)w / h;

@@ -6,16 +6,24 @@ using UnityEngine.UI;
 
 namespace NusantaraAR.UI
 {
-    /// <summary>Layar 6: bahasa, volume, persetujuan analitik, ulangi tutorial, tentang (PRD §5.2).</summary>
+    /// <summary>
+    /// Layar 6: bahasa, volume, persetujuan analitik, ulangi tutorial, tentang (PRD §5.2). Kartu kaca di atas latar
+    /// kamera (<see cref="Backdrop"/>); tab Pengaturan di <see cref="BottomNav"/> tetap tampil di bawahnya.
+    /// </summary>
     public class SettingsScreen : MonoBehaviour
     {
         Action onReplayTutorial;
         RectTransform content;
-        TextMeshProUGUI analyticsState, musicCredits;
+        Segmented language;
+        SwitchToggle analytics;
+        TextMeshProUGUI musicCredits;
+
+        public event Action VisibilityChanged;
 
         public static SettingsScreen Create(RectTransform fullRoot, Action onReplayTutorial)
         {
-            var bg = UIKit.Panel(fullRoot, "SettingsScreen", Theme.Teak, false, true);
+            var bg = UIKit.Panel(fullRoot, "SettingsScreen", new Color(1f, 1f, 1f, 0f), false, true);
+            bg.canvasRenderer.cullTransparentMesh = true;
             UIKit.Stretch(bg.rectTransform);
             var area = UIKit.Rect("Safe", bg.transform);
             area.gameObject.AddComponent<SafeArea>();
@@ -28,38 +36,36 @@ namespace NusantaraAR.UI
 
         void Build(RectTransform area)
         {
-            var title = UIKit.Text(area, "Title", Locale.T("common.settings"), Theme.Title, Theme.Gold, TextAlignmentOptions.TopLeft, FontStyles.Bold);
-            LocalizedLabel.Attach(title, "common.settings");
-            UIKit.Place(title.rectTransform, new Vector2(0f, 1f), new Vector2(48f, -48f), new Vector2(700f, 80f));
-            var close = UIKit.Button(area, "Close", Locale.T("common.close"), ButtonStyle.Chip, Hide, out var cl, 30f);
-            LocalizedLabel.Attach(cl, "common.close");
-            UIKit.Place((RectTransform)close.transform, new Vector2(1f, 1f), new Vector2(-40f, -52f), new Vector2(220f, 84f));
+            var bar = TopBar.Create(area, Hide, false);
+            bar.SetTitle(Locale.T("common.settings"));
+            LocalizedLabel.Attach(bar.GetComponentInChildren<TextMeshProUGUI>(), "common.settings");
 
-            var scroll = UIKit.VerticalScroll(area, "Content", out content, 24f, new RectOffset(48, 48, 0, 80));
-            UIKit.Stretch((RectTransform)scroll.transform, 0, 0, 170, 0);
+            var scroll = UIKit.VerticalScroll(area, "Content", out content, 28f, new RectOffset(40, 40, 8, 60));
+            UIKit.Stretch((RectTransform)scroll.transform, 0, 0, 20f + TopBar.Height + 8f, BottomNav.Height);
 
-            Section("settings.language");
-            var langRow = UIKit.Rect("Language", content);
-            UIKit.Layout(langRow, 96);
-            UIKit.HRow(langRow, 16f);
-            UIKit.Button(langRow, "ID", "Bahasa Indonesia", ButtonStyle.Chip, () => SetLanguage(Language.ID));
-            UIKit.Button(langRow, "EN", "English", ButtonStyle.Chip, () => SetLanguage(Language.EN));
+            var lang = Card("settings.language");
+            language = Segmented.Create(lang, "Language", new[] { "Bahasa Indonesia", "English" }, false,
+                Locale.Current == Language.ID ? 0 : 1, i => Locale.Current = i == 0 ? Language.ID : Language.EN, 28f);
+            UIKit.Layout(language, 84f);
 
-            Section("settings.narrationVol");
-            UIKit.Layout(UIKit.Slider(content, "Narration", AppSettings.NarrationVolume, v => AppSettings.NarrationVolume = v), 80);
-            Section("settings.musicVol");
-            UIKit.Layout(UIKit.Slider(content, "Music", AppSettings.MusicVolume, v => AppSettings.MusicVolume = v), 80);
-            Section("settings.sfxVol");
-            UIKit.Layout(UIKit.Slider(content, "Sfx", AppSettings.SfxVolume, v => AppSettings.SfxVolume = v), 80);
+            var sound = Card("settings.sound");
+            VolumeRow(sound, "settings.narrationVol", AppSettings.NarrationVolume, v => AppSettings.NarrationVolume = v);
+            VolumeRow(sound, "settings.musicVol", AppSettings.MusicVolume, v => AppSettings.MusicVolume = v);
+            VolumeRow(sound, "settings.sfxVol", AppSettings.SfxVolume, v => AppSettings.SfxVolume = v);
 
-            Section("settings.analytics");
-            var analytics = UIKit.Button(content, "Analytics", "", ButtonStyle.Chip, ToggleAnalytics, out analyticsState, 32f);
-            UIKit.Layout(analytics, 96);
-            var note = UIKit.Text(content, "AnalyticsNote", Locale.T("settings.analyticsNote"), Theme.Small, Theme.Stone);
+            var privacy = Card("settings.privacy");
+            var row = UIKit.Rect("Analytics", privacy);
+            var h = UIKit.HRow(row, 20f, null, false);
+            h.childForceExpandHeight = false;
+            UIKit.Layout(row, 84f);
+            var label = UIKit.Text(row, "Label", Locale.T("settings.analytics"), 28f, Theme.Ink, TextAlignmentOptions.MidlineLeft);
+            LocalizedLabel.Attach(label, "settings.analytics");
+            UIKit.Layout(label, 84f, -1, 1f);
+            analytics = SwitchToggle.Create(row, "Switch", AppSettings.AnalyticsConsent, on => AppSettings.AnalyticsConsent = on);
+            var note = UIKit.Text(privacy, "AnalyticsNote", Locale.T("settings.analyticsNote"), 26f, Theme.InkMuted);
             LocalizedLabel.Attach(note, "settings.analyticsNote");
-            UIKit.Layout(note, 90);
 
-            var tutorial = UIKit.Button(content, "Tutorial", Locale.T("settings.tutorial"), ButtonStyle.Secondary, () =>
+            var tutorial = UIKit.IconTextButton(content, "Tutorial", Icon.Book, Locale.T("settings.tutorial"), ButtonStyle.Secondary, () =>
             {
                 Hide();
                 onReplayTutorial?.Invoke();
@@ -67,24 +73,42 @@ namespace NusantaraAR.UI
             LocalizedLabel.Attach(tl, "settings.tutorial");
             UIKit.Layout(tutorial, 100);
 
-            Section("settings.about");
-            var about = UIKit.Text(content, "About", Locale.T("settings.aboutBody"), Theme.Small, Theme.Parchment);
-            LocalizedLabel.Attach(about, "settings.aboutBody");
-            UIKit.Layout(about, 440);
+            var about = Card("settings.about");
+            var aboutText = UIKit.Text(about, "About", Locale.T("settings.aboutBody"), 28f, Theme.Ink);
+            aboutText.lineSpacing = 6f;
+            LocalizedLabel.Attach(aboutText, "settings.aboutBody");
 
             // Kredit musik latar dari data artefak (satu baris per artefak yang punya musik).
-            int musicCount = MusicArtifacts().Count;
-            if (musicCount > 0)
+            if (MusicArtifacts().Count > 0)
             {
-                Section("settings.musicCredits");
-                musicCredits = UIKit.Text(content, "MusicCredits", "", Theme.Small, Theme.Parchment);
-                UIKit.Layout(musicCredits, 90f * musicCount);
+                var credits = Card("settings.musicCredits");
+                musicCredits = UIKit.Text(credits, "MusicCredits", "", 26f, Theme.Ink);
             }
 
-            var version = UIKit.Text(content, "Version", "v" + Application.version, 26f, Theme.Stone);
+            var version = UIKit.Text(content, "Version", "v" + Application.version, 26f, Theme.InkMuted, TextAlignmentOptions.Center);
             UIKit.Layout(version, 50);
 
             RefreshLocalized();
+        }
+
+        /// <summary>Kartu kaca berjudul; isi ditumpuk vertikal (tinggi mengikuti isinya).</summary>
+        RectTransform Card(string titleKey)
+        {
+            var card = UIKit.Surface(content, "Card_" + titleKey, SurfaceStyle.Glass, 36);
+            var col = UIKit.VColumn(card.rectTransform, 16f, new RectOffset(36, 36, 28, 34));
+            col.childForceExpandHeight = false;
+            var t = UIKit.Text(card.transform, "Section", Locale.T(titleKey), 32f, Theme.Ink, TextAlignmentOptions.MidlineLeft, FontStyles.Bold);
+            LocalizedLabel.Attach(t, titleKey);
+            UIKit.Layout(t, 48);
+            return card.rectTransform;
+        }
+
+        static void VolumeRow(RectTransform card, string key, float value, UnityEngine.Events.UnityAction<float> onChanged)
+        {
+            var label = UIKit.Text(card, "Label", Locale.T(key), 28f, Theme.InkMuted, TextAlignmentOptions.BottomLeft);
+            LocalizedLabel.Attach(label, key);
+            UIKit.Layout(label, 40);
+            UIKit.Layout(UIKit.Slider(card, key, value, onChanged), 64);
         }
 
         static List<ArtifactData> MusicArtifacts()
@@ -97,45 +121,20 @@ namespace NusantaraAR.UI
             return list;
         }
 
-        void RefreshMusicCredits()
+        void RefreshLocalized()
         {
+            language.SetSelected(Locale.Current == Language.ID ? 0 : 1);
+            analytics.IsOn = AppSettings.AnalyticsConsent;
             if (musicCredits == null) return;
             var lines = new List<string>();
             foreach (var a in MusicArtifacts()) lines.Add(a.displayName.Get() + ": " + a.musicCredit);
             musicCredits.text = string.Join("\n", lines);
         }
 
-        void RefreshLocalized()
-        {
-            RefreshAnalytics();
-            RefreshMusicCredits();
-        }
-
-        void Section(string key)
-        {
-            var t = UIKit.Text(content, "Section", Locale.T(key), Theme.Body, Theme.Gold, TextAlignmentOptions.BottomLeft, FontStyles.Bold);
-            LocalizedLabel.Attach(t, key);
-            UIKit.Layout(t, 84);
-        }
-
-        static void SetLanguage(Language lang) => Locale.Current = lang;
-
-        void ToggleAnalytics()
-        {
-            AppSettings.AnalyticsConsent = !AppSettings.AnalyticsConsent;
-            RefreshAnalytics();
-        }
-
-        void RefreshAnalytics()
-        {
-            analyticsState.text = Locale.T(AppSettings.AnalyticsConsent ? "settings.on" : "settings.off");
-            analyticsState.color = AppSettings.AnalyticsConsent ? Theme.Gold : Theme.Parchment;
-        }
-
         void OnEnable()
         {
             Locale.Changed += RefreshLocalized;
-            if (analyticsState != null) RefreshLocalized();
+            if (language != null) RefreshLocalized();
         }
 
         void OnDisable() => Locale.Changed -= RefreshLocalized;
@@ -143,9 +142,13 @@ namespace NusantaraAR.UI
         public void Show()
         {
             gameObject.SetActive(true);
-            transform.SetAsLastSibling();
+            VisibilityChanged?.Invoke();
         }
 
-        public void Hide() => gameObject.SetActive(false);
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+            VisibilityChanged?.Invoke();
+        }
     }
 }

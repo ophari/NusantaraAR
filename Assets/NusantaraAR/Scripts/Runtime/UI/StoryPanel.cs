@@ -15,12 +15,13 @@ namespace NusantaraAR.UI
     /// </summary>
     public class StoryPanel : MonoBehaviour
     {
-        const float Height = 236f;
+        public const float Height = 236f;
         const float GapBetweenChapters = 0.8f;
         const float FallbackCharsPerSecond = 14f; // bab tanpa audio: subtitle berjalan dengan pewaktu
 
         RectTransform rt;
-        TextMeshProUGUI chapterLabel, caption, pauseLabel;
+        TextMeshProUGUI chapterLabel, caption;
+        Image pauseIcon;
         RectTransform progressFill;
         HotspotOverlay overlay;
 
@@ -38,10 +39,7 @@ namespace NusantaraAR.UI
 
         public static StoryPanel Create(RectTransform safeRoot, HotspotOverlay overlay)
         {
-            var bg = UIKit.Panel(safeRoot, "StoryPanel", Theme.Gold, true, true, 40);
-            var fill = UIKit.Panel(bg.transform, "Fill", Theme.Teak, true, false, 38);
-            UIKit.Stretch(fill.rectTransform, 3, 3, 3, 3);
-            fill.gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
+            var bg = UIKit.Surface(safeRoot, "StoryPanel", SurfaceStyle.Glass, 40);
             var panel = bg.gameObject.AddComponent<StoryPanel>();
             panel.rt = bg.rectTransform;
             panel.overlay = overlay;
@@ -52,28 +50,26 @@ namespace NusantaraAR.UI
 
         void Build()
         {
-            UIKit.Place(rt, new Vector2(0.5f, 0f), new Vector2(0f, 36f), new Vector2(1020f, Height));
-            UIKit.VColumn(rt, 6f, new RectOffset(30, 20, 14, 18));
+            UIKit.Place(rt, new Vector2(0.5f, 0f), new Vector2(0f, 28f), new Vector2(1020f, Height));
+            UIKit.VColumn(rt, 6f, new RectOffset(32, 20, 14, 20));
 
             var header = UIKit.Rect("Header", rt);
             UIKit.HRow(header, 10f, null, false);
             UIKit.Layout(header, 68f);
-            chapterLabel = UIKit.Text(header, "Chapter", "", 26f, Theme.Gold, TextAlignmentOptions.MidlineLeft, FontStyles.Bold);
+            chapterLabel = UIKit.Text(header, "Chapter", "", 26f, Theme.AccentText, TextAlignmentOptions.MidlineLeft, FontStyles.Bold);
             chapterLabel.textWrappingMode = TextWrappingModes.NoWrap;
             chapterLabel.overflowMode = TextOverflowModes.Ellipsis;
             chapterLabel.richText = true;
             UIKit.Layout(chapterLabel, -1, -1, 1f);
-            var pause = UIKit.Button(header, "Pause", Locale.T("sheet.pause"), ButtonStyle.Chip, TogglePause, out pauseLabel, 26f);
-            UIKit.Layout(pause, -1, 170f);
-            var next = UIKit.Button(header, "Next", ">>", ButtonStyle.Chip, Next, out var nextLabel, 28f);
-            nextLabel.richText = false;
-            nextLabel.fontStyle = FontStyles.Bold;
-            UIKit.Layout(next, -1, 96f);
-            var close = UIKit.Button(header, "Close", "X", ButtonStyle.Chip, Stop, out var closeLabel, 28f);
-            closeLabel.fontStyle = FontStyles.Bold;
-            UIKit.Layout(close, -1, 76f);
+            var pause = UIKit.IconButton(header, "Pause", Icon.Pause, TogglePause, 68f, SurfaceStyle.Outline);
+            pauseIcon = pause.transform.Find("Icon").GetComponent<Image>();
+            UIKit.Layout(pause, -1, 68f);
+            var next = UIKit.IconButton(header, "Next", Icon.SkipNext, Next, 68f, SurfaceStyle.Outline);
+            UIKit.Layout(next, -1, 68f);
+            var close = UIKit.IconButton(header, "Close", Icon.Close, Stop, 68f, SurfaceStyle.Outline);
+            UIKit.Layout(close, -1, 68f);
 
-            caption = UIKit.Text(rt, "Caption", "", 30f, Theme.Parchment, TextAlignmentOptions.MidlineLeft);
+            caption = UIKit.Text(rt, "Caption", "", 30f, Theme.Ink, TextAlignmentOptions.MidlineLeft);
             caption.enableAutoSizing = true;
             caption.fontSizeMin = 22f;
             caption.fontSizeMax = 30f;
@@ -81,9 +77,9 @@ namespace NusantaraAR.UI
             var capLayout = UIKit.Layout(caption, 100f);
             capLayout.flexibleHeight = 1f;
 
-            var bar = UIKit.Panel(rt, "Progress", Theme.WithAlpha(Theme.Border, 1f), true, false, 4);
+            var bar = UIKit.Panel(rt, "Progress", Theme.Line, true, false, 4);
             UIKit.Layout(bar, 8f);
-            var fill = UIKit.Panel(bar.transform, "Fill", Theme.Gold, true, false, 4);
+            var fill = UIKit.Panel(bar.transform, "Fill", Theme.Accent, true, false, 4);
             progressFill = fill.rectTransform;
             progressFill.anchorMin = Vector2.zero;
             progressFill.anchorMax = new Vector2(0f, 1f);
@@ -100,6 +96,9 @@ namespace NusantaraAR.UI
         }
 
         // ------------------------------------------------------------------ API
+
+        /// <summary>Jarak panel dari dasar area aman (di atas bar navigasi di 3D Viewer).</summary>
+        public void SetBottom(float y) => rt.anchoredPosition = new Vector2(0f, y);
 
         public void Bind(ArtifactInstance instance)
         {
@@ -277,9 +276,9 @@ namespace NusantaraAR.UI
         {
             if (!IsActive) return;
             var ch = story.chapters[chapter];
-            string draft = story.curatorValidated ? "" : "  <color=#A8A29E><size=22>" + Locale.T("story.draft") + "</size></color>";
+            string draft = story.curatorValidated ? "" : "  <color=" + Theme.HexOf(Theme.InkMuted) + "><size=22>" + Locale.T("story.draft") + "</size></color>";
             chapterLabel.text = Locale.T("story.title") + " " + (chapter + 1) + "/" + story.chapters.Count + "  -  " + ch.title.Get() + draft;
-            pauseLabel.text = Locale.T(paused ? "story.resume" : "sheet.pause");
+            pauseIcon.sprite = IconFactory.Get(paused ? Icon.Play : Icon.Pause);
             UpdateCaption();
         }
 

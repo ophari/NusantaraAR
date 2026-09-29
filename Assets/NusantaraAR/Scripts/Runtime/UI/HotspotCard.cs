@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -8,8 +7,8 @@ using UnityEngine.UI;
 namespace NusantaraAR.UI
 {
     /// <summary>
-    /// Kartu info yang mengembang di samping bagian artefak (menggantikan bottom sheet, PRD FR-09/10):
-    /// judul + istilah daerah + bahan, tab Teknik Kriya | Makna Filosofis | Sejarah Asal, narasi & pelafalan,
+    /// Kartu info kaca yang mengembang di samping bagian artefak (menggantikan bottom sheet, PRD FR-09/10):
+    /// judul + istilah daerah + bahan, tab Kriya | Filosofi | Sejarah, narasi & pelafalan,
     /// sumber rujukan, dan navigasi sebelum/berikutnya antar bagian. Posisinya diatur <see cref="HotspotOverlay"/>.
     /// </summary>
     public class HotspotCard : MonoBehaviour
@@ -17,19 +16,22 @@ namespace NusantaraAR.UI
         public const float Width = 640f;
         const float Pad = 30f;
         const float MaxBodyHeight = 330f;
+        const float CardGlassStrength = 0.8f; // teks panjang: tint lebih tebal dari panel biasa
 
         static readonly string[] TabKeys = { "sheet.craft", "sheet.philosophy", "sheet.history" };
 
         RectTransform rt;
         TextMeshProUGUI title, subtitle, meta, draft, body, counter, listenLabel;
+        Image listenIcon;
         ScrollRect bodyScroll;
         LayoutElement bodyLayout;
         Button listenButton, pronounceButton, prevButton, nextButton;
-        readonly List<(Image bg, TextMeshProUGUI label)> tabs = new List<(Image, TextMeshProUGUI)>();
+        Segmented tabs;
 
         HotspotData hotspot;
         int tabIndex;
         float pop;
+        bool narrating, listenDirty = true;
 
         public RectTransform Rect => rt;
         public bool IsOpen => hotspot != null;
@@ -39,15 +41,12 @@ namespace NusantaraAR.UI
 
         public static HotspotCard Create(RectTransform parent)
         {
-            // Bingkai emas tipis: panel emas + isi gelap di dalamnya (Outline membuat warna panel keruh).
-            var bg = UIKit.Panel(parent, "InfoCard", Theme.Gold, true, true, 36);
-            var fill = UIKit.Panel(bg.transform, "Fill", Theme.Teak, true, false, 34);
-            UIKit.Stretch(fill.rectTransform, 3, 3, 3, 3);
-            fill.gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
-            var card = bg.gameObject.AddComponent<HotspotCard>();
-            card.rt = bg.rectTransform;
+            var root = UIKit.Surface(parent, "InfoCard", SurfaceStyle.Glass, 40);
+            root.GetComponent<Surface>().fill.GetComponent<GlassSurface>().Strength = CardGlassStrength;
+            var card = root.gameObject.AddComponent<HotspotCard>();
+            card.rt = root.rectTransform;
             card.Build();
-            bg.gameObject.SetActive(false);
+            root.gameObject.SetActive(false);
             return card;
         }
 
@@ -55,56 +54,46 @@ namespace NusantaraAR.UI
         {
             rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
             rt.sizeDelta = new Vector2(Width, 400f);
-            UIKit.VColumn(rt, 10f, new RectOffset((int)Pad, (int)Pad, 22, 24));
+            UIKit.VColumn(rt, 10f, new RectOffset((int)Pad, (int)Pad, 24, 24));
             var fitter = rt.gameObject.AddComponent<ContentSizeFitter>();
             fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
             var header = UIKit.Rect("Header", rt);
             UIKit.HRow(header, 12f, null, false).childAlignment = TextAnchor.UpperLeft;
-            title = UIKit.Text(header, "Title", "", 38f, Theme.Gold, TextAlignmentOptions.TopLeft, FontStyles.Bold);
+            title = UIKit.Text(header, "Title", "", 38f, Theme.Ink, TextAlignmentOptions.TopLeft, FontStyles.Bold);
             UIKit.Layout(title, -1, -1, 1f);
-            var close = UIKit.Button(header, "Close", "X", ButtonStyle.Chip, Close, out var closeLabel, 28f);
-            closeLabel.fontStyle = FontStyles.Bold;
+            var close = UIKit.IconButton(header, "Close", Icon.Close, Close, 72f, SurfaceStyle.Outline);
             UIKit.Layout(close, 72f, 72f);
 
-            subtitle = UIKit.Text(rt, "Subtitle", "", 26f, Theme.Parchment, TextAlignmentOptions.TopLeft, FontStyles.Italic);
-            meta = UIKit.Text(rt, "Meta", "", 26f, Theme.Stone);
-            draft = UIKit.Text(rt, "Draft", "", 24f, Theme.Gold);
+            subtitle = UIKit.Text(rt, "Subtitle", "", 26f, Theme.InkMuted, TextAlignmentOptions.TopLeft, FontStyles.Italic);
+            meta = UIKit.Text(rt, "Meta", "", 26f, Theme.InkMuted);
+            draft = UIKit.Text(rt, "Draft", "", 24f, Theme.AccentText);
             LocalizedLabel.Attach(draft, "sheet.draft");
 
-            var tabsRow = UIKit.Rect("Tabs", rt);
-            UIKit.HRow(tabsRow, 10f);
-            UIKit.Layout(tabsRow, 64f);
-            for (int i = 0; i < TabKeys.Length; i++)
-            {
-                int index = i;
-                var b = UIKit.Button(tabsRow, "Tab" + i, Locale.T(TabKeys[i]), ButtonStyle.Chip, () => SelectTab(index), out var l, 25f);
-                LocalizedLabel.Attach(l, TabKeys[i]);
-                tabs.Add((b.GetComponent<Image>(), l));
-            }
+            tabs = Segmented.Create(rt, "Tabs", TabKeys, true, 0, SelectTab, 25f);
+            UIKit.Layout(tabs, 68f);
 
             bodyScroll = UIKit.VerticalScroll(rt, "Body", out var content, 10f, new RectOffset(0, 0, 4, 4));
             bodyLayout = UIKit.Layout(bodyScroll, 200f);
-            body = UIKit.Text(content, "Text", "", 30f, Theme.Parchment);
+            body = UIKit.Text(content, "Text", "", 30f, Theme.Ink);
             body.lineSpacing = 6f;
             body.richText = true;
 
             var footer = UIKit.Rect("Footer", rt);
             UIKit.HRow(footer, 10f, null, false);
             UIKit.Layout(footer, 72f);
-            prevButton = UIKit.Button(footer, "Prev", "<", ButtonStyle.Chip, () => Stepped?.Invoke(-1), out var prevLabel, 32f);
-            prevLabel.richText = false;
-            UIKit.Layout(prevButton, -1, 84f);
-            counter = UIKit.Text(footer, "Counter", "", 26f, Theme.Stone, TextAlignmentOptions.Center);
+            prevButton = UIKit.IconButton(footer, "Prev", Icon.ChevronLeft, () => Stepped?.Invoke(-1), 72f, SurfaceStyle.Outline);
+            UIKit.Layout(prevButton, -1, 72f);
+            counter = UIKit.Text(footer, "Counter", "", 26f, Theme.InkMuted, TextAlignmentOptions.Center);
             UIKit.Layout(counter, -1, -1, 1f);
-            listenButton = UIKit.Button(footer, "Listen", Locale.T("sheet.play"), ButtonStyle.Primary, ToggleNarration, out listenLabel, 26f);
-            UIKit.Layout(listenButton, -1, 150f);
-            pronounceButton = UIKit.Button(footer, "Pronounce", Locale.T("sheet.pronounce"), ButtonStyle.Chip, PlayPronunciation, out var pl, 24f);
-            LocalizedLabel.Attach(pl, "sheet.pronounce");
-            UIKit.Layout(pronounceButton, -1, 170f);
-            nextButton = UIKit.Button(footer, "Next", ">", ButtonStyle.Chip, () => Stepped?.Invoke(1), out var nextLabel, 32f);
-            nextLabel.richText = false;
-            UIKit.Layout(nextButton, -1, 84f);
+            listenButton = UIKit.IconTextButton(footer, "Listen", Icon.Play, Locale.T("sheet.play"), ButtonStyle.Primary,
+                ToggleNarration, out listenLabel, 26f);
+            listenIcon = listenButton.transform.Find("Content/Icon").GetComponent<Image>();
+            UIKit.Layout(listenButton, -1, 170f);
+            pronounceButton = UIKit.IconButton(footer, "Pronounce", Icon.Speaker, PlayPronunciation, 72f, SurfaceStyle.Outline);
+            UIKit.Layout(pronounceButton, -1, 72f);
+            nextButton = UIKit.IconButton(footer, "Next", Icon.ChevronRight, () => Stepped?.Invoke(1), 72f, SurfaceStyle.Outline);
+            UIKit.Layout(nextButton, -1, 72f);
 
             Locale.Changed += Refresh;
         }
@@ -155,19 +144,12 @@ namespace NusantaraAR.UI
             SetOptional(subtitle, h.regionalTerm);
             SetOptional(meta, h.material.IsEmpty ? null : Locale.T("sheet.material") + ": " + h.material.Get());
             UIKit.SetVisible(draft, !h.curatorValidated);
-
-            for (int i = 0; i < tabs.Count; i++)
-            {
-                bool on = i == tabIndex;
-                tabs[i].bg.color = on ? Theme.Gold : Theme.WithAlpha(Theme.Border, 0.95f);
-                tabs[i].label.color = on ? Theme.Teak : Theme.Parchment;
-                tabs[i].label.fontStyle = on ? FontStyles.Bold : FontStyles.Normal;
-            }
+            tabs.SetSelected(tabIndex);
 
             var text = new StringBuilder(Tab(h, tabIndex).Get());
             if (h.sources != null && h.sources.Count > 0)
             {
-                text.Append("\n\n<size=24><color=#A8A29E><b>").Append(Locale.T("sheet.sources")).Append("</b>");
+                text.Append("\n\n<size=24><color=").Append(Theme.HexOf(Theme.InkMuted)).Append("><b>").Append(Locale.T("sheet.sources")).Append("</b>");
                 foreach (var s in h.sources) text.Append("\n- ").Append(s);
                 text.Append("</color></size>");
             }
@@ -178,6 +160,7 @@ namespace NusantaraAR.UI
 
             UIKit.SetVisible(listenButton, h.Narration != null);
             UIKit.SetVisible(pronounceButton, h.pronunciation != null);
+            listenDirty = true; // label Putar/Jeda disegarkan di Update (mis. setelah ganti bahasa)
         }
 
         static LocalizedString Tab(HotspotData h, int i) => i == 0 ? h.craft : i == 1 ? h.philosophy : h.history;
@@ -220,7 +203,11 @@ namespace NusantaraAR.UI
             {
                 var am = AudioManager.Instance;
                 bool mine = am.CurrentNarration == hotspot.Narration && am.IsNarrationPlaying;
+                if (mine == narrating && !listenDirty) return;
+                narrating = mine;
+                listenDirty = false;
                 listenLabel.text = Locale.T(mine ? "sheet.pause" : "sheet.play");
+                listenIcon.sprite = IconFactory.Get(mine ? Icon.Pause : Icon.Play);
             }
         }
     }

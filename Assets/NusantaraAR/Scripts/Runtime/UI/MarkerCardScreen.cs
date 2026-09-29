@@ -26,18 +26,18 @@ namespace NusantaraAR.UI
 
         void Build(RectTransform area)
         {
-            title = UIKit.Text(area, "Title", "", Theme.Title, Theme.Teak, TextAlignmentOptions.Top, FontStyles.Bold);
+            title = UIKit.Text(area, "Title", "", Theme.Title, Theme.Ink, TextAlignmentOptions.Top, FontStyles.Bold);
             UIKit.Place(title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -60f), new Vector2(1000f, 160f));
 
             image = UIKit.Rect("Marker", area).gameObject.AddComponent<RawImage>();
             UIKit.Place(image.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0f, 80f), new Vector2(860f, 860f));
             image.raycastTarget = false;
 
-            var hint = UIKit.Text(area, "Hint", Locale.T("marker.cardHint"), Theme.Small, new Color(0.25f, 0.23f, 0.2f), TextAlignmentOptions.Top);
+            var hint = UIKit.Text(area, "Hint", Locale.T("marker.cardHint"), Theme.Small, Theme.InkMuted, TextAlignmentOptions.Top);
             LocalizedLabel.Attach(hint, "marker.cardHint");
             UIKit.Place(hint.rectTransform, new Vector2(0.5f, 0f), new Vector2(0f, 190f), new Vector2(960f, 200f));
 
-            var close = UIKit.Button(area, "Close", Locale.T("common.close"), ButtonStyle.Secondary, Hide, out var cl);
+            var close = UIKit.Button(area, "Close", Locale.T("common.close"), ButtonStyle.Primary, Hide, out var cl);
             LocalizedLabel.Attach(cl, "common.close");
             UIKit.Place((RectTransform)close.transform, new Vector2(0.5f, 0f), new Vector2(0f, 60f), new Vector2(400f, 104f));
         }
@@ -54,7 +54,7 @@ namespace NusantaraAR.UI
                 image.texture = QrCode.CreateTexture(modules, 16, 4);
                 shownText = text;
             }
-            title.text = Locale.T("marker.cardTitle") + "\n<size=40><color=#6B5B2E>" + data.displayName.Get() + "</color></size>";
+            title.text = Locale.T("marker.cardTitle") + "\n<size=40><color=" + Theme.HexOf(Theme.AccentText) + ">" + data.displayName.Get() + "</color></size>";
             gameObject.SetActive(true);
             transform.SetAsLastSibling();
             Screen.brightness = 1f;

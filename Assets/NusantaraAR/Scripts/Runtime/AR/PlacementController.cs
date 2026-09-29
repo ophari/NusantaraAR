@@ -113,6 +113,8 @@ namespace NusantaraAR
             anchor = null;
         }
 
+        public bool PlanesVisible => planesVisible;
+
         public void SetPlanesVisible(bool visible)
         {
             planesVisible = visible;

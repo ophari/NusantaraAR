@@ -2,7 +2,11 @@ using UnityEngine;
 
 namespace NusantaraAR
 {
-    /// <summary>Kamera orbit untuk mode 3D Viewer (PRD FR-12): geser = putar, pinch/scroll = zoom.</summary>
+    /// <summary>
+    /// Kamera orbit untuk mode 3D Viewer (PRD FR-12): geser = putar, pinch/scroll = zoom, tombol = putar/miring.
+    /// Bila sebagian layar tertutup UI (top bar, sheet + bar navigasi), pusat proyeksi digeser agar objek berada di
+    /// tengah area yang terlihat; ScreenPointToRay/WorldToScreenPoint ikut matriks ini sehingga ketuk & label tetap tepat.
+    /// </summary>
     [RequireComponent(typeof(Camera))]
     public class OrbitCameraController : MonoBehaviour
     {
@@ -19,11 +23,15 @@ namespace NusantaraAR
 
         [Tooltip("Kecepatan kamera menuju posisi otomatis (EaseTo)")] public float easeSpeed = 4f;
 
+        Camera cam;
         Vector3 homeTarget;
         float homeDistance, homeYaw, homePitch;
         bool easing;
         Vector3 easeTarget;
         float easeDistance;
+        float coveredTop, coveredBottom, coveredLeft, coveredRight; // fraksi layar yang tertutup UI
+
+        Camera Cam => cam != null ? cam : cam = GetComponent<Camera>();
 
         void OnEnable()
         {
@@ -37,6 +45,16 @@ namespace NusantaraAR
             if (gestures == null) return;
             gestures.Dragged -= OnDrag;
             gestures.Pinched -= OnPinch;
+        }
+
+        /// <summary>Fraksi tinggi (atas/bawah) dan lebar (kiri/kanan) layar, 0..1, yang tertutup UI.</summary>
+        public void SetCoveredScreen(float top, float bottom, float left = 0f, float right = 0f)
+        {
+            coveredTop = Mathf.Clamp(top, 0f, 0.45f);
+            coveredBottom = Mathf.Clamp(bottom, 0f, 0.6f);
+            coveredLeft = Mathf.Clamp(left, 0f, 0.35f);
+            coveredRight = Mathf.Clamp(right, 0f, 0.35f);
+            ApplyProjection();
         }
 
         /// <summary>Membingkai bounds (dunia) dan menjadikannya posisi "reset".</summary>
@@ -57,14 +75,15 @@ namespace NusantaraAR
             Apply();
         }
 
-        /// <summary>Jarak kamera agar seluruh bounds (dunia) masuk layar dari sudut mana pun.</summary>
+        /// <summary>Jarak kamera agar seluruh bounds (dunia) masuk area terlihat dari sudut mana pun.</summary>
         public float DistanceToFit(Bounds bounds)
         {
-            var cam = GetComponent<Camera>();
             float radius = Mathf.Max(0.05f, bounds.extents.magnitude);
-            float fov = Mathf.Deg2Rad * cam.fieldOfView * 0.5f;
-            if (cam.aspect < 1f) fov = Mathf.Atan(Mathf.Tan(fov) * cam.aspect); // potret: batasi oleh lebar
-            return radius / Mathf.Sin(fov) * 1.05f;
+            float tanV = Mathf.Tan(Mathf.Deg2Rad * Cam.fieldOfView * 0.5f);
+            float visibleH = Mathf.Max(0.3f, 1f - coveredTop - coveredBottom);
+            float visibleW = Mathf.Max(0.3f, 1f - coveredLeft - coveredRight);
+            float half = Mathf.Min(Mathf.Atan(tanV * visibleH), Mathf.Atan(tanV * Cam.aspect * visibleW)); // potret: dibatasi lebar
+            return radius / Mathf.Sin(half) * 1.05f;
         }
 
         /// <summary>Menggeser titik pandang & jarak secara halus (mis. mundur selama animasi hunus). Pinch membatalkan.</summary>
@@ -82,6 +101,14 @@ namespace NusantaraAR
             distance = homeDistance;
             yaw = homeYaw;
             pitch = homePitch;
+            Apply();
+        }
+
+        /// <summary>Putar/miring dari tombol (derajat orbit kamera).</summary>
+        public void Nudge(float yawDegrees, float pitchDegrees)
+        {
+            yaw += yawDegrees;
+            pitch = Mathf.Clamp(pitch + pitchDegrees, minPitch, maxPitch);
             Apply();
         }
 
@@ -118,6 +145,22 @@ namespace NusantaraAR
             var rot = Quaternion.Euler(pitch, yaw, 0f);
             transform.position = target + rot * new Vector3(0f, 0f, -distance);
             transform.rotation = rot;
+            ApplyProjection();
+        }
+
+        /// <summary>
+        /// Proyeksi off-center: pusat gambar pindah ke tengah area yang tidak tertutup UI
+        /// (NDC x = kiri − kanan, NDC y = bawah − atas; NDC' = NDC − m02/m12).
+        /// </summary>
+        void ApplyProjection()
+        {
+            var c = Cam;
+            c.ResetProjectionMatrix();
+            if (coveredTop <= 0f && coveredBottom <= 0f && coveredLeft <= 0f && coveredRight <= 0f) return;
+            var p = c.projectionMatrix;
+            p.m02 = coveredRight - coveredLeft;
+            p.m12 = coveredTop - coveredBottom;
+            c.projectionMatrix = p;
         }
     }
 }

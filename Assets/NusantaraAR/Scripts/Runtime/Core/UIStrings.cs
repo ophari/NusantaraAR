@@ -37,8 +37,17 @@ namespace NusantaraAR
             ["story.draft"] = ("Draf", "Draft"),
             ["ctrl.reset"] = ("Reset Tampilan", "Reset View"),
             ["ctrl.move"] = ("Pindahkan", "Move"),
+            ["ctrl.scale"] = ("Skala", "Scale"),
+            ["ctrl.planes"] = ("Tampilkan Bidang", "Show Surfaces"),
+            ["rail.autorotate"] = ("Putar 360°", "Spin 360°"),
+            ["rail.reset"] = ("Reset", "Reset"),
+
+            ["nav.collection"] = ("Koleksi", "Collection"),
+            ["nav.scan"] = ("Scan QR", "Scan QR"),
+            ["detail.era"] = ("Era", "Era"),
 
             ["ar.checking"] = ("Memeriksa dukungan AR...", "Checking AR support..."),
+            ["ar.detecting"] = ("Mendeteksi permukaan...", "Detecting surface..."),
             ["ar.scanning"] = ("Gerakkan HP perlahan ke arah meja atau lantai...", "Slowly move your phone toward a table or floor..."),
             ["ar.ready"] = ("Ketuk untuk meletakkan", "Tap to place"),
             ["ar.placed"] = ("1 jari: putar  |  cubit: zoom  |  2 jari: geser", "1 finger: rotate  |  pinch: zoom  |  2 fingers: move"),
@@ -98,6 +107,8 @@ namespace NusantaraAR
             ["sheet.region"] = ("Asal", "Origin"),
 
             ["settings.language"] = ("Bahasa", "Language"),
+            ["settings.sound"] = ("Suara", "Sound"),
+            ["settings.privacy"] = ("Privasi", "Privacy"),
             ["settings.narrationVol"] = ("Volume narasi", "Narration volume"),
             ["settings.musicVol"] = ("Volume musik latar", "Background music volume"),
             ["settings.sfxVol"] = ("Volume efek suara", "Sound effects volume"),

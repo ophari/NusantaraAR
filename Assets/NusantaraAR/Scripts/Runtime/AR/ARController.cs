@@ -35,12 +35,13 @@ namespace NusantaraAR
         float sessionStart;
 
         ArtifactHud hud;
-        Image statusPill;
-        TextMeshProUGUI statusText;
+        TopBar topBar;
+        CoachCard coach;
         RectTransform tips;
-        RectTransform message;
-        TextMeshProUGUI messageTitle, messageBody, primaryLabel;
-        Button primaryButton, secondaryButton;
+        MessageDialog message;
+        GroundGlow glow;
+        float glowRadius;
+        bool refreshed;
 
         public State CurrentState => state;
 
@@ -144,11 +145,23 @@ namespace NusantaraAR
                     break;
             }
 
+            UpdateGlow();
+
             var kb = Keyboard.current;
             if (kb != null && kb.escapeKey.wasPressedThisFrame)
             {
                 if (!hud.CloseInfo()) Back();
             }
+        }
+
+        /// <summary>Cahaya terakota di bawah artefak yang terpasang, mengikuti posisi & skalanya.</summary>
+        void UpdateGlow()
+        {
+            if (glow == null) return;
+            var p = placement.Placed;
+            bool show = p != null && p.gameObject.activeInHierarchy;
+            glow.SetVisible(show);
+            if (show) glow.Place(p.transform.position, p.transform.up, glowRadius * p.RelativeScale);
         }
 
         // ------------------------------------------------------------------ gestur
@@ -167,13 +180,23 @@ namespace NusantaraAR
             if (instance == null) return;
             if (first)
             {
-                hud.Bind(instance, arCamera, ResetView, BeginMove);
+                var b = instance.GetWorldBounds();
+                glowRadius = Mathf.Max(b.extents.x, b.extents.z) / Mathf.Max(0.01f, instance.RelativeScale) * 1.5f + 0.03f;
+                hud.Bind(instance, arCamera, ResetView, Nudge);
                 Analytics.Log("ar_placed", ("artifact", data.artifactId), ("seconds", Mathf.RoundToInt(Time.time - sessionStart)));
             }
             placement.SetPlanesVisible(false);
             UIKit.SetVisible(tips, false);
             hud.SetControlsVisible(true);
             SetState(State.Placed);
+        }
+
+        /// <summary>Tombol putar HUD (+ = muka artefak bergeser ke kiri; AR Meja tanpa miring).</summary>
+        void Nudge(float yawDegrees, float tiltDegrees)
+        {
+            if (!IsManipulable) return;
+            placement.Placed.RotateYaw(yawDegrees);
+            if (glow != null) glow.Pulse();
         }
 
         void OnDrag(Vector2 delta)
@@ -227,77 +250,80 @@ namespace NusantaraAR
             var safe = UIKit.Stretch(UIKit.Rect("Safe", full));
             safe.gameObject.AddComponent<SafeArea>();
 
-            hud = ArtifactHud.Create(safe, full, 160f, true);
-
-            var back = UIKit.Button(safe, "Back", Locale.T("common.back"), ButtonStyle.Secondary, Back, out var bl, 30f);
-            LocalizedLabel.Attach(bl, "common.back");
-            UIKit.Place((RectTransform)back.transform, new Vector2(0f, 1f), new Vector2(28f, -28f), new Vector2(220f, 96f));
-
-            statusPill = UIKit.Panel(safe, "StatusPill", Theme.TextPanel, true, false, 44);
-            UIKit.Place(statusPill.rectTransform, new Vector2(0.5f, 1f), new Vector2(110f, -34f), new Vector2(760f, 84f));
-            statusText = UIKit.Text(statusPill.transform, "Text", "", 28f, Theme.Parchment, TextAlignmentOptions.Center);
-            UIKit.Stretch(statusText.rectTransform, 24, 24, 4, 4);
+            const float top = 20f + TopBar.Height + 16f;
+            hud = ArtifactHud.Create(safe, full, new HudOptions
+            {
+                topInset = top,
+                tiltButtons = false, // di meja keris selalu tegak
+                panel = new ControlPanelConfig
+                {
+                    getScale = () => placement.Placed != null ? placement.Placed.RelativeScale : 1f,
+                    setScale = s =>
+                    {
+                        if (placement.Placed != null) placement.Placed.SetRelativeScale(s);
+                    },
+                    toggleKey = "ctrl.planes",
+                    getToggle = () => placement.PlanesVisible,
+                    setToggle = placement.SetPlanesVisible,
+                    buttonKey = "ctrl.move",
+                    buttonIcon = Icon.Move,
+                    onButton = BeginMove
+                }
+            });
+            topBar = TopBar.Create(safe, Back, true);
+            coach = CoachCard.Create(safe, top);
 
             // Tips setelah 15 detik tanpa bidang (PRD Layar 3)
-            var tipsBg = UIKit.Panel(safe, "Tips", Theme.TextPanel, true, true, 36);
+            var tipsBg = UIKit.Surface(safe, "Tips", SurfaceStyle.Glass, 40);
+            tipsBg.GetComponent<Surface>().fill.GetComponent<GlassSurface>().Strength = 0.85f;
             tips = tipsBg.rectTransform;
-            UIKit.Place(tips, new Vector2(0.5f, 0f), new Vector2(0f, 60f), new Vector2(980f, 560f));
-            var tt = UIKit.Text(tips, "Title", Locale.T("ar.tipsTitle"), Theme.Heading, Theme.Gold, TextAlignmentOptions.TopLeft, FontStyles.Bold);
+            UIKit.Place(tips, new Vector2(0.5f, 0f), new Vector2(0f, 40f), new Vector2(1000f, 580f));
+            var tt = UIKit.Text(tips, "Title", Locale.T("ar.tipsTitle"), Theme.Heading, Theme.Ink, TextAlignmentOptions.TopLeft, FontStyles.Bold);
             LocalizedLabel.Attach(tt, "ar.tipsTitle");
-            UIKit.Stretch(tt.rectTransform, 44, 44, 36, 460);
-            var tb = UIKit.Text(tips, "Body", Locale.T("ar.tipsBody"), Theme.Small, Theme.Parchment);
+            UIKit.Stretch(tt.rectTransform, 48, 48, 40, 470);
+            var tb = UIKit.Text(tips, "Body", Locale.T("ar.tipsBody"), Theme.Small, Theme.Ink);
             tb.lineSpacing = 10f;
             LocalizedLabel.Attach(tb, "ar.tipsBody");
-            UIKit.Stretch(tb.rectTransform, 44, 44, 110, 150);
+            UIKit.Stretch(tb.rectTransform, 48, 48, 116, 160);
             var ov = UIKit.Button(tips, "OpenViewer", Locale.T("ar.openViewer"), ButtonStyle.Primary, Back, out var ol);
             LocalizedLabel.Attach(ol, "ar.openViewer");
-            UIKit.Place((RectTransform)ov.transform, new Vector2(0.5f, 0f), new Vector2(0f, 32f), new Vector2(560f, 100f));
+            UIKit.Place((RectTransform)ov.transform, new Vector2(0.5f, 0f), new Vector2(0f, 36f), new Vector2(600f, 104f));
             tips.gameObject.SetActive(false);
 
             // Panel pesan (tidak didukung / instalasi / izin)
-            var scrim = UIKit.Panel(full, "Message", Theme.Scrim, false, true);
-            message = UIKit.Stretch(scrim.rectTransform);
-            var card = UIKit.Panel(message, "Card", Theme.TextPanel, true, true, 40);
-            UIKit.Place(card.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(940f, 760f));
-            messageTitle = UIKit.Text(card.transform, "Title", "", Theme.Heading, Theme.Gold, TextAlignmentOptions.TopLeft, FontStyles.Bold);
-            UIKit.Stretch(messageTitle.rectTransform, 52, 52, 52, 620);
-            messageBody = UIKit.Text(card.transform, "Body", "", Theme.Body, Theme.Parchment);
-            messageBody.lineSpacing = 8f;
-            UIKit.Stretch(messageBody.rectTransform, 52, 52, 140, 290);
-            primaryButton = UIKit.Button(card.transform, "Primary", "", ButtonStyle.Primary, null, out primaryLabel);
-            UIKit.Place((RectTransform)primaryButton.transform, new Vector2(0.5f, 0f), new Vector2(0f, 156f), new Vector2(620f, 104f));
-            secondaryButton = UIKit.Button(card.transform, "Secondary", Locale.T("ar.openViewer"), ButtonStyle.Chip, Back, out var sl);
-            LocalizedLabel.Attach(sl, "ar.openViewer");
-            UIKit.Place((RectTransform)secondaryButton.transform, new Vector2(0.5f, 0f), new Vector2(0f, 36f), new Vector2(620f, 100f));
-            message.gameObject.SetActive(false);
+            message = MessageDialog.Create(full, "ar.openViewer", Back);
+            glow = GroundGlow.Create();
+            if (glow != null) glow.SetVisible(false);
 
             Locale.Changed += RefreshTexts;
         }
 
         void SetState(State s)
         {
-            if (state == s && statusText != null && !string.IsNullOrEmpty(statusText.text)) return;
+            if (state == s && refreshed) return;
             state = s;
             RefreshTexts();
         }
 
         void RefreshTexts()
         {
-            string status = null;
+            if (coach == null) return;
+            refreshed = true;
+            topBar.SetTitle(data != null ? data.displayName.Get() : "");
             bool showMessage = false;
             string title = null, body = null, primary = null;
             UnityEngine.Events.UnityAction primaryAction = null;
-            bool showPrimary = true, showSecondary = true;
+            bool showPrimary = true;
 
             switch (state)
             {
-                case State.CheckingAvailability: status = Locale.T("ar.checking"); break;
-                case State.Installing: status = Locale.T("ar.installing"); break;
-                case State.Scanning: status = Locale.T("ar.scanning"); break;
-                case State.ReadyToPlace: status = Locale.T("ar.ready"); break;
-                case State.Repositioning: status = Locale.T("ar.moving"); break;
-                case State.Placed: status = Locale.T("ar.placed"); break;
-                case State.TrackingLost: status = Locale.T("ar.trackingLost"); break;
+                case State.CheckingAvailability: coach.Show(Icon.Compass, Locale.T("ar.checking")); break;
+                case State.Installing: coach.Show(Icon.Compass, Locale.T("ar.installing")); break;
+                case State.Scanning: coach.Show(Icon.Compass, Locale.T("ar.detecting"), Locale.T("ar.scanning"), true); break;
+                case State.ReadyToPlace: coach.Show(Icon.Target, Locale.T("ar.ready")); break;
+                case State.Repositioning: coach.Show(Icon.Move, Locale.T("ar.moving")); break;
+                case State.Placed: coach.Show(Icon.Move, Locale.T("ar.placed"), null, false, 5f); break;
+                case State.TrackingLost: coach.Show(Icon.Alert, Locale.T("ar.trackingLost")); break;
                 case State.Unsupported:
                     showMessage = true;
                     title = Locale.T("ar.unsupportedTitle");
@@ -326,19 +352,13 @@ namespace NusantaraAR
                     break;
             }
 
-            UIKit.SetVisible(statusPill, status != null);
-            if (status != null) statusText.text = status;
-
-            UIKit.SetVisible(message, showMessage);
-            if (!showMessage) return;
-            messageTitle.text = title;
-            messageBody.text = body;
-            UIKit.SetVisible(primaryButton, showPrimary);
-            UIKit.SetVisible(secondaryButton, showSecondary);
-            primaryButton.onClick.RemoveAllListeners();
-            primaryButton.onClick.AddListener(() => AudioManager.Instance.Click());
-            if (primaryAction != null) primaryButton.onClick.AddListener(primaryAction);
-            primaryLabel.text = primary ?? string.Empty;
+            if (!showMessage)
+            {
+                message.Hide();
+                return;
+            }
+            coach.Hide();
+            message.Show(title, body, primary, showPrimary ? primaryAction : null);
         }
 
         void OnApplicationFocus(bool focus)

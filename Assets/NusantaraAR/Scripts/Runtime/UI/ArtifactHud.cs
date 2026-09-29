@@ -1,99 +1,176 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace NusantaraAR.UI
 {
+    /// <summary>Tata letak <see cref="ArtifactHud"/> per layar.</summary>
+    public class HudOptions
+    {
+        /// <summary>Jarak rel & area label dari tepi atas area aman (di bawah top bar).</summary>
+        public float topInset = 150f;
+        /// <summary>Tinggi UI milik layar di bawah (sheet + nav di 3D Viewer). Mode kamera: 0 (panel kontrol milik HUD).</summary>
+        public float bottomInset;
+        /// <summary>Posisi panel Kisah dari dasar area aman.</summary>
+        public float storyBottom = 28f;
+        /// <summary>Tombol miring atas/bawah (3D Viewer & Scan QR; AR Meja tidak).</summary>
+        public bool tiltButtons = true;
+        /// <summary>Panel skala + saklar di mode kamera; null di 3D Viewer.</summary>
+        public ControlPanelConfig panel;
+    }
+
     /// <summary>
-    /// Kontrol artefak yang sama di 3D Viewer dan AR (PRD Layar 2 & 4):
-    /// floating controls (Reset Tampilan, Pindahkan), dock (Kisah, Bongkar/Gabung, Hunus, Putar Otomatis, Label),
-    /// label tahap exploded view, label bagian + kartu info yang menempel langsung di objek, dan panel mode Kisah
-    /// (menggantikan dock selama narasi bercerita).
+    /// Kontrol artefak yang sama di 3D Viewer, Scan QR, dan AR Meja (PRD Layar 2 & 4): rel kaca kanan (Kisah,
+    /// Bongkar/Gabung, Hunus/Sarungkan, Label, Putar 360°, Reset), klaster tahan-tekan kiri (putar & miring),
+    /// panel skala di mode kamera, pil tahap exploded view, label bagian + kartu info yang menempel di objek, dan panel
+    /// mode Kisah (menggantikan slot bawah selama narasi bercerita).
     /// </summary>
     public class ArtifactHud : MonoBehaviour
     {
-        RectTransform controls, dock;
-        TextMeshProUGUI storyLabel, explodeLabel, drawLabel, rotateLabel, labelsLabel, stageText;
-        Button storyButton, drawButton;
+        const float RotateSpeed = 90f, TiltSpeed = 60f;
+        const float Margin = 24f, RailWidth = 136f, NudgeSize = 96f;
+
+        /// <summary>Lebar (unit kanvas) yang tertutup klaster kiri / rel kanan, termasuk margin.</summary>
+        public const float LeftReserve = Margin + NudgeSize + 12f, RightReserve = Margin + RailWidth + 12f;
+
+        class RailItem
+        {
+            public Button button;
+            public Image fill, icon;
+            public TextMeshProUGUI label;
+        }
+
+        HudOptions options;
+        RectTransform rail, nudge;
+        RailItem story, explode, draw, labels, rotate;
+        readonly List<RailItem> railItems = new List<RailItem>();
         Image stagePill;
+        TextMeshProUGUI stageText;
         HotspotOverlay overlay;
-        StoryPanel story;
+        StoryPanel storyPanel;
+        ControlPanel panel;
 
         ArtifactInstance artifact;
         Action onReset;
-        Action onMove;
+        Action<float, float> onNudge;
         bool controlsVisible = true;
 
         public HotspotOverlay Overlay => overlay;
-        public StoryPanel Story => story;
+        public StoryPanel Story => storyPanel;
+        public ControlPanel Panel => panel;
 
         /// <param name="safeRoot">Area aman (tombol).</param>
         /// <param name="fullRoot">Layar penuh (label bagian & kartu info).</param>
-        /// <param name="topInset">Jarak kontrol kanan-atas dari tepi atas area aman.</param>
-        /// <param name="includeMove">Tampilkan tombol "Pindahkan" (mode AR).</param>
-        public static ArtifactHud Create(RectTransform safeRoot, RectTransform fullRoot, float topInset, bool includeMove)
+        public static ArtifactHud Create(RectTransform safeRoot, RectTransform fullRoot, HudOptions options)
         {
             var hud = safeRoot.gameObject.AddComponent<ArtifactHud>();
+            hud.options = options ?? new HudOptions();
             hud.overlay = HotspotOverlay.Create(fullRoot);
             hud.overlay.transform.SetAsFirstSibling();
-            hud.Build(safeRoot, topInset, includeMove);
+            hud.Build(safeRoot);
             hud.overlay.HotspotTapped += hud.OnHotspotTapped;
             hud.overlay.Card.Stepped += hud.Step;
+            hud.UpdateLayout();
             return hud;
         }
 
-        void Build(RectTransform safeRoot, float topInset, bool includeMove)
+        void Build(RectTransform safeRoot)
         {
-            controls = UIKit.Rect("FloatingControls", safeRoot);
-            UIKit.Place(controls, new Vector2(1f, 1f), new Vector2(-28f, -topInset), new Vector2(300f, includeMove ? 208f : 96f));
-            UIKit.VColumn(controls, 16f);
-            var reset = UIKit.Button(controls, "Reset", Locale.T("ctrl.reset"), ButtonStyle.Secondary, () => onReset?.Invoke(), out var rl, 30f);
-            LocalizedLabel.Attach(rl, "ctrl.reset");
-            UIKit.Layout(reset, 96);
-            if (includeMove)
-            {
-                var move = UIKit.Button(controls, "Move", Locale.T("ctrl.move"), ButtonStyle.Secondary, () => onMove?.Invoke(), out var ml, 30f);
-                LocalizedLabel.Attach(ml, "ctrl.move");
-                UIKit.Layout(move, 96);
-            }
+            rail = UIKit.Rect("Rail", safeRoot);
+            UIKit.Place(rail, new Vector2(1f, 1f), new Vector2(-Margin, -options.topInset), new Vector2(RailWidth, 900f));
+            var col = UIKit.VColumn(rail, 14f);
+            col.childAlignment = TextAnchor.UpperRight;
+            story = AddRail("Story", Icon.Book, "dock.story", PlayStory);
+            explode = AddRail("Explode", Icon.Layers, "dock.explode", ToggleExplode);
+            draw = AddRail("Draw", Icon.Blade, "dock.draw", ToggleDraw);
+            labels = AddRail("Labels", Icon.Tag, "dock.labels", ToggleLabels);
+            rotate = AddRail("AutoRotate", Icon.Spin360, "rail.autorotate", ToggleAutoRotate);
+            AddRail("Reset", Icon.Reset, "rail.reset", () => onReset?.Invoke());
 
-            dock = UIKit.Rect("Dock", safeRoot);
-            UIKit.Place(dock, new Vector2(0.5f, 0f), new Vector2(0f, 36f), new Vector2(1020f, 132f));
-            var dockBg = dock.gameObject.AddComponent<Image>();
-            dockBg.sprite = SpriteFactory.RoundedRect(40);
-            dockBg.type = Image.Type.Sliced;
-            dockBg.color = Theme.TextPanel;
-            UIKit.HRow(dock, 12f, new RectOffset(14, 14, 14, 14));
-            storyButton = UIKit.Button(dock, "Story", Locale.T("dock.story"), ButtonStyle.Chip, PlayStory, out storyLabel, 28f);
-            SetToggleLook(storyLabel, true); // selalu emas: pintu masuk mode Kisah
-            UIKit.Button(dock, "Explode", Locale.T("dock.explode"), ButtonStyle.Primary, ToggleExplode, out explodeLabel);
-            drawButton = UIKit.Button(dock, "Draw", Locale.T("dock.draw"), ButtonStyle.Chip, ToggleDraw, out drawLabel, 28f);
-            UIKit.Button(dock, "AutoRotate", Locale.T("dock.autorotate"), ButtonStyle.Chip, ToggleAutoRotate, out rotateLabel, 28f);
-            UIKit.Button(dock, "Labels", Locale.T("dock.labels"), ButtonStyle.Chip, ToggleLabels, out labelsLabel, 28f);
+            BuildNudge(safeRoot);
 
-            stagePill = UIKit.Panel(safeRoot, "StagePill", Theme.TextPanel, true, false, 30);
-            UIKit.Place(stagePill.rectTransform, new Vector2(0.5f, 0f), new Vector2(0f, 186f), new Vector2(760f, 64f));
-            stageText = UIKit.Text(stagePill.transform, "Text", "", 28f, Theme.Parchment, TextAlignmentOptions.Center);
+            if (options.panel != null) panel = ControlPanel.Create(safeRoot, options.panel);
+
+            stagePill = UIKit.Surface(safeRoot, "StagePill", SurfaceStyle.Glass, 32, false);
+            UIKit.Place(stagePill.rectTransform, new Vector2(0.5f, 0f), new Vector2(0f, 0f), new Vector2(760f, 64f));
+            stageText = UIKit.Text(stagePill.transform, "Text", "", 28f, Theme.Ink, TextAlignmentOptions.Center, FontStyles.Bold);
             UIKit.Stretch(stageText.rectTransform, 20, 20, 0, 0);
 
-            story = StoryPanel.Create(safeRoot, overlay);
-            story.ActiveChanged += OnStoryActiveChanged;
+            storyPanel = StoryPanel.Create(safeRoot, overlay);
+            storyPanel.ActiveChanged += OnStoryActiveChanged;
 
             Locale.Changed += RefreshLabels;
         }
 
+        RailItem AddRail(string name, Icon icon, string key, UnityEngine.Events.UnityAction onClick)
+        {
+            var item = new RailItem();
+            item.button = UIKit.RailButton(rail, name, icon, Locale.T(key), onClick, out item.icon, out item.label);
+            item.fill = item.button.GetComponent<Surface>().fill;
+            UIKit.Layout(item.button, 128f, RailWidth);
+            LocalizedLabel.Attach(item.label, key);
+            railItems.Add(item);
+            return item;
+        }
+
+        /// <summary>Klaster kiri: putar kiri/kanan (tahan-tekan) dan pil miring atas/bawah.</summary>
+        void BuildNudge(RectTransform safeRoot)
+        {
+            nudge = UIKit.Rect("Nudge", safeRoot);
+            // 2 tombol + jarak; dengan miring: jarak + celah 8 + jarak + pil 200.
+            float height = NudgeSize * 2f + 16f + (options.tiltButtons ? 16f + 8f + 16f + 200f : 0f);
+            UIKit.Place(nudge, new Vector2(0f, 0.5f), Vector2.zero, new Vector2(NudgeSize, height));
+            var col = UIKit.VColumn(nudge, 16f);
+            col.childAlignment = TextAnchor.UpperCenter;
+
+            AddHold(nudge, "RotateLeft", Icon.RotateLeft, NudgeSize, dt => Nudge(RotateSpeed * dt, 0f));
+            AddHold(nudge, "RotateRight", Icon.RotateRight, NudgeSize, dt => Nudge(-RotateSpeed * dt, 0f));
+            if (!options.tiltButtons) return;
+
+            var gap = UIKit.Rect("Gap", nudge);
+            UIKit.Layout(gap, 8f);
+            var pill = UIKit.Surface(nudge, "Tilt", SurfaceStyle.GlassChrome, 48, false);
+            UIKit.Layout(pill, 200f, NudgeSize);
+            var fill = pill.GetComponent<Surface>().fill;
+            foreach (var (name, icon, sign, anchor) in new[] { ("TiltUp", Icon.ArrowUp, 1f, 1f), ("TiltDown", Icon.ArrowDown, -1f, 0f) })
+            {
+                var half = UIKit.Panel(pill.transform, name, new Color(1f, 1f, 1f, 0f), false, true);
+                half.canvasRenderer.cullTransparentMesh = true;
+                UIKit.Place(half.rectTransform, new Vector2(0.5f, anchor), Vector2.zero, new Vector2(NudgeSize, 100f));
+                var img = UIKit.IconImage(half.transform, icon, 42f, Theme.Ink);
+                UIKit.Place(img.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(42f, 42f));
+                float s = sign;
+                var hold = HoldButton.Attach(half, fill);
+                hold.Held += dt => Nudge(0f, s * TiltSpeed * dt);
+                hold.Pressed += StopAutoRotate;
+            }
+        }
+
+        void AddHold(RectTransform parent, string name, Icon icon, float size, Action<float> held)
+        {
+            var root = UIKit.Surface(parent, name, SurfaceStyle.GlassChrome, Mathf.RoundToInt(size * 0.5f));
+            UIKit.Layout(root, size, size);
+            UIKit.IconImage(root.transform, icon, size * 0.46f, Theme.Ink);
+            var hold = HoldButton.Attach(root, root.GetComponent<Surface>().fill);
+            hold.Held += held;
+            hold.Pressed += StopAutoRotate;
+        }
+
         void OnDestroy() => Locale.Changed -= RefreshLabels;
 
-        public void Bind(ArtifactInstance instance, Camera cam, Action reset, Action move)
+        /// <param name="nudgeHandler">Putar (derajat, + = muka objek bergeser ke kiri layar) dan miring (+ = sisi atas menjauh).</param>
+        public void Bind(ArtifactInstance instance, Camera cam, Action reset, Action<float, float> nudgeHandler)
         {
             if (artifact != null && artifact.exploded != null) artifact.exploded.StageChanged -= OnStageChanged;
             if (artifact != null && artifact.autoRotate != null) artifact.autoRotate.ActiveChanged -= OnAutoRotateChanged;
             artifact = instance;
             onReset = reset;
-            onMove = move;
-            story.Bind(instance);
+            onNudge = nudgeHandler;
+            storyPanel.Bind(instance);
             overlay.Bind(instance, cam);
+            if (panel != null) panel.SetTitle(instance != null && instance.Data != null ? instance.Data.displayName.Get() : "");
             if (artifact != null && artifact.exploded != null) artifact.exploded.StageChanged += OnStageChanged;
             if (artifact != null && artifact.autoRotate != null) artifact.autoRotate.ActiveChanged += OnAutoRotateChanged;
             RefreshLabels();
@@ -102,12 +179,43 @@ namespace NusantaraAR.UI
         public void SetControlsVisible(bool visible)
         {
             controlsVisible = visible;
-            UIKit.SetVisible(controls, visible);
-            UIKit.SetVisible(dock, visible && !story.IsActive);
+            UIKit.SetVisible(rail, visible);
+            UIKit.SetVisible(nudge, visible);
             UIKit.SetVisible(overlay, visible);
+            if (panel != null) UIKit.SetVisible(panel, visible && !storyPanel.IsActive);
             if (!visible) overlay.Card.Close();
             // Kisah dijeda (bukan dihentikan) selama kontrol tersembunyi, mis. kode QR sesaat hilang dari kamera.
-            story.SetSuspended(!visible);
+            storyPanel.SetSuspended(!visible);
+            UpdateLayout();
+        }
+
+        /// <summary>Tinggi UI layar di bawah HUD berubah (mis. sheet detail dibuka/ditutup).</summary>
+        public void SetBottomInset(float value)
+        {
+            options.bottomInset = value;
+            UpdateLayout();
+        }
+
+        void UpdateLayout()
+        {
+            float slotTop = storyPanel.IsActive ? options.storyBottom + StoryPanel.Height
+                : panel != null && panel.gameObject.activeSelf ? 28f + panel.Height
+                : options.bottomInset;
+            storyPanel.SetBottom(options.storyBottom);
+            stagePill.rectTransform.anchoredPosition = new Vector2(0f, slotTop + 16f);
+
+            // Klaster kiri di tengah ruang antara top bar dan slot bawah.
+            var safe = (RectTransform)transform;
+            float free = safe.rect.height - options.topInset - slotTop;
+            nudge.anchoredPosition = new Vector2(Margin, (slotTop - options.topInset) * 0.5f);
+            UIKit.SetVisible(nudge, controlsVisible && free > nudge.sizeDelta.y + 40f);
+
+            overlay.SetReserves(options.topInset, slotTop + 96f, LeftReserve, RightReserve);
+        }
+
+        void OnRectTransformDimensionsChange()
+        {
+            if (storyPanel != null) UpdateLayout();
         }
 
         /// <summary>Menutup kartu info atau menghentikan mode Kisah (tombol Kembali). True bila ada yang ditutup.</summary>
@@ -118,16 +226,16 @@ namespace NusantaraAR.UI
                 overlay.Card.Close();
                 return true;
             }
-            if (!story.IsActive) return false;
-            story.Stop();
+            if (!storyPanel.IsActive) return false;
+            storyPanel.Stop();
             return true;
         }
 
         /// <summary>Memulai mode Kisah dari bab pertama (dipakai juga oleh build QA).</summary>
         public void PlayStory()
         {
-            if (!controlsVisible || !story.HasStory) return;
-            story.Play();
+            if (!controlsVisible || !storyPanel.HasStory) return;
+            storyPanel.Play();
         }
 
         /// <summary>Membuka kartu info bagian tertentu (dipakai juga oleh build QA).</summary>
@@ -141,7 +249,7 @@ namespace NusantaraAR.UI
         public void HandleTap(Vector2 screen)
         {
             // Selama Kisah berjalan, ketukan di model diabaikan agar cerita tidak terputus tanpa sengaja.
-            if (!controlsVisible || artifact == null || story.IsActive) return;
+            if (!controlsVisible || artifact == null || storyPanel.IsActive) return;
             var h = overlay.PickAt(screen);
             if (h != null) Open(h);
             else CloseInfo();
@@ -150,50 +258,60 @@ namespace NusantaraAR.UI
         void Update()
         {
             string text = null;
-            if (controlsVisible && !story.IsActive && artifact != null && artifact.exploded != null
+            if (controlsVisible && !storyPanel.IsActive && artifact != null && artifact.exploded != null
                 && (artifact.exploded.CurrentStage > 0 || artifact.exploded.IsAnimating))
                 text = artifact.exploded.CurrentStageLabel;
             bool show = !string.IsNullOrEmpty(text);
             UIKit.SetVisible(stagePill, show);
-            if (show) stageText.text = text;
+            if (show && stageText.text != text)
+            {
+                stageText.text = text;
+                float w = stageText.GetPreferredValues(text, 10000f, 0f).x + 64f;
+                stagePill.rectTransform.sizeDelta = new Vector2(Mathf.Clamp(w, 240f, 900f), 64f);
+            }
         }
 
         void RefreshLabels()
         {
             var ex = artifact != null ? artifact.exploded : null;
-            UIKit.SetVisible(storyButton, story.HasStory);
-            storyLabel.text = Locale.T("dock.story");
-            explodeLabel.text = Locale.T(ex != null && ex.IsExplodedOrExploding ? "dock.assemble" : "dock.explode");
-            UIKit.SetVisible(drawButton, ex != null && ex.CanDraw);
+            UIKit.SetVisible(story.button, storyPanel.HasStory);
+            SetRailLook(story, true); // selalu terakota: pintu masuk mode Kisah
+            bool exploded = ex != null && ex.IsExplodedOrExploding;
+            explode.label.text = Locale.T(exploded ? "dock.assemble" : "dock.explode");
+            SetRailLook(explode, exploded);
+            UIKit.SetVisible(draw.button, ex != null && ex.CanDraw);
             bool drawn = ex != null && ex.TargetStage == 1;
-            drawLabel.text = Locale.T(drawn ? "dock.sheathe" : "dock.draw");
-            SetToggleLook(drawLabel, drawn);
-            bool rotating = artifact != null && artifact.autoRotate != null && artifact.autoRotate.Active;
-            rotateLabel.text = Locale.T("dock.autorotate");
-            SetToggleLook(rotateLabel, rotating);
-            labelsLabel.text = Locale.T("dock.labels");
-            SetToggleLook(labelsLabel, overlay.LabelsVisible);
-            foreach (var l in new[] { storyLabel, explodeLabel, drawLabel, rotateLabel, labelsLabel }) FitToLabel(l);
+            draw.label.text = Locale.T(drawn ? "dock.sheathe" : "dock.draw");
+            SetRailLook(draw, drawn);
+            SetRailLook(labels, overlay.LabelsVisible);
+            SetRailLook(rotate, artifact != null && artifact.autoRotate != null && artifact.autoRotate.Active);
         }
 
-        /// <summary>Tombol dock yang sedang aktif: teks emas tebal.</summary>
-        static void SetToggleLook(TextMeshProUGUI label, bool on)
+        /// <summary>Tombol rel yang sedang aktif: ikon & teks terakota di atas kaca bernuansa terakota.</summary>
+        static void SetRailLook(RailItem item, bool on)
         {
-            label.color = on ? Theme.Gold : Theme.Parchment;
-            label.fontStyle = on ? FontStyles.Bold : FontStyles.Normal;
-        }
-
-        /// <summary>Lebar tombol dock mengikuti labelnya (lima tombol sama lebar memotong "Putar Otomatis").</summary>
-        static void FitToLabel(TextMeshProUGUI label)
-        {
-            float w = label.GetPreferredValues(label.text, 1000f, 0f).x + 40f;
-            UIKit.Layout(label.transform.parent.GetComponent<Button>(), -1, w);
+            item.icon.color = on ? Theme.AccentText : Theme.Ink;
+            item.label.color = on ? Theme.AccentText : Theme.Ink;
+            item.label.fontStyle = on ? FontStyles.Bold : FontStyles.Normal;
+            item.fill.color = on ? Color.Lerp(Theme.Surface, Theme.AccentSoft, 0.28f) : Theme.Surface;
         }
 
         void OnStoryActiveChanged(bool active)
         {
-            UIKit.SetVisible(dock, controlsVisible && !active);
+            if (panel != null) UIKit.SetVisible(panel, controlsVisible && !active);
             RefreshLabels();
+            UpdateLayout();
+        }
+
+        void Nudge(float yawDeg, float tiltDeg)
+        {
+            if (!controlsVisible || artifact == null) return;
+            onNudge?.Invoke(yawDeg, tiltDeg);
+        }
+
+        void StopAutoRotate()
+        {
+            if (artifact != null && artifact.autoRotate != null) artifact.autoRotate.Active = false;
         }
 
         void ToggleExplode()
@@ -257,7 +375,7 @@ namespace NusantaraAR.UI
         void Open(HotspotData h)
         {
             if (artifact == null || artifact.Data == null) return;
-            story.Stop(); // mengetuk label saat Kisah berjalan = beralih ke kartu info bagian itu
+            storyPanel.Stop(); // mengetuk label saat Kisah berjalan = beralih ke kartu info bagian itu
             if (artifact.autoRotate != null) artifact.autoRotate.Active = false;
             var list = overlay.ShownHotspots();
             overlay.Card.Show(artifact.Data, h, list.IndexOf(h), list.Count);

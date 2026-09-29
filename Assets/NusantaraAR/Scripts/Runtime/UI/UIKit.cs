@@ -7,34 +7,75 @@ using UnityEngine.UI;
 
 namespace NusantaraAR.UI
 {
-    /// <summary>Token desain PRD §5.1. Panel berisi teks memakai opasitas >= 90% (lolos WCAG AA di atas feed kamera).</summary>
+    /// <summary>
+    /// Token desain: gading (latar), terakota (aksen, ala terakota Majapahit), nila (indigo batik, bar navigasi).
+    /// Emas hanya untuk titik hotspot. Kontras teks diperiksa <c>UiThemeTests</c> (WCAG AA), termasuk teks di atas kaca
+    /// pada latar kamera terburuk (hitam/putih).
+    /// </summary>
     public static class Theme
     {
+        public static readonly Color Bg = Hex(0xF4EFE8);
+        public static readonly Color Stage = Hex(0xE8E0D5);
+        public static readonly Color Surface = Hex(0xFFFCF8);
+        public static readonly Color Line = Hex(0xE3D9CC);
+        public static readonly Color Ink = Hex(0x2A2420);
+        public static readonly Color InkMuted = Hex(0x5E534C);
+        public static readonly Color Accent = Hex(0xB85A3C);
+        /// <summary>Terakota tua untuk teks (Accent terlalu terang untuk teks kecil di atas kaca).</summary>
+        public static readonly Color AccentText = Hex(0x8F4128);
+        public static readonly Color AccentSoft = Hex(0xE28D66);
+        public static readonly Color OnAccent = Color.white;
+        public static readonly Color Nav = Hex(0x1E2B3F);
+        public static readonly Color NavIcon = Hex(0xEDE6DC);
+        public static readonly Color NavActive = Hex(0xF2A57F);
         public static readonly Color Gold = Hex(0xD4AF37);
-        public static readonly Color Teak = Hex(0x1E1B18);
-        public static readonly Color Border = Hex(0x3A342D);
-        public static readonly Color Parchment = Hex(0xF5F3EF);
-        public static readonly Color Stone = Hex(0xA8A29E);
 
-        /// <summary>Panel berisi teks: opasitas 92%.</summary>
-        public static Color TextPanel => WithAlpha(Teak, 0.92f);
-        /// <summary>Elemen tanpa teks (halo hotspot, dll): boleh 80%.</summary>
-        public static Color Chrome => WithAlpha(Teak, 0.8f);
-        public static readonly Color Scrim = new Color(0f, 0f, 0f, 0.55f);
+        public static readonly Color Scrim = new Color(0.08f, 0.07f, 0.06f, 0.45f);
+        public static readonly Color ShadowTint = new Color(0.2f, 0.12f, 0.08f, 0.2f);
+        public static readonly Color GlassHighlight = new Color(1f, 1f, 1f, 0.75f);
+
+        /// <summary>Kekuatan tint kaca di atas blur untuk panel berteks (0 = blur murni, 1 = warna penuh).</summary>
+        public const float GlassStrength = 0.68f;
+        /// <summary>Tombol ikon tanpa teks: blur lebih tampak.</summary>
+        public const float GlassChromeStrength = 0.55f;
+        public const float NavGlassStrength = 0.94f;
 
         public const float Body = 36f;
         public const float Small = 30f;
         public const float Button = 34f;
         public const float Heading = 44f;
         public const float Title = 60f;
+        public const float Caption = 22f;
 
         public static Color Hex(int rgb) =>
             new Color(((rgb >> 16) & 0xFF) / 255f, ((rgb >> 8) & 0xFF) / 255f, (rgb & 0xFF) / 255f, 1f);
 
         public static Color WithAlpha(Color c, float a) => new Color(c.r, c.g, c.b, a);
+
+        /// <summary>"#RRGGBB" untuk rich text TextMeshPro.</summary>
+        public static string HexOf(Color c) => "#" + ColorUtility.ToHtmlStringRGB(c);
+
+        // ------------------------------------------------------------------ WCAG
+
+        public static float Luminance(Color c) =>
+            0.2126f * Mathf.GammaToLinearSpace(c.r) + 0.7152f * Mathf.GammaToLinearSpace(c.g) + 0.0722f * Mathf.GammaToLinearSpace(c.b);
+
+        public static float Contrast(Color a, Color b)
+        {
+            float la = Luminance(a), lb = Luminance(b);
+            return (Mathf.Max(la, lb) + 0.05f) / (Mathf.Min(la, lb) + 0.05f);
+        }
+
+        /// <summary>Warna akhir kaca di atas latar tertentu (dicampur di ruang linear seperti shader UIGlass di proyek Linear).</summary>
+        public static Color GlassOver(Color tint, float strength, Color behind)
+        {
+            float Mix(float t, float b) =>
+                Mathf.LinearToGammaSpace(Mathf.Lerp(Mathf.GammaToLinearSpace(b), Mathf.GammaToLinearSpace(t), strength));
+            return new Color(Mix(tint.r, behind.r), Mix(tint.g, behind.g), Mix(tint.b, behind.b), 1f);
+        }
     }
 
-    /// <summary>Sprite prosedural (tanpa file gambar): kotak bersudut bulat 9-slice dan lingkaran.</summary>
+    /// <summary>Sprite prosedural (tanpa file gambar): kotak bersudut bulat 9-slice, garis tepi, bayangan lembut, lingkaran.</summary>
     public static class SpriteFactory
     {
         static readonly Dictionary<string, Sprite> Cache = new Dictionary<string, Sprite>();
@@ -44,24 +85,47 @@ namespace NusantaraAR.UI
             string key = "rr" + radius;
             if (Cache.TryGetValue(key, out var s) && s != null) return s;
             int size = radius * 2 + 4;
-            var tex = NewTexture(size);
-            var px = new Color32[size * size];
             float c = size * 0.5f, inner = c - radius;
-            for (int y = 0; y < size; y++)
-            for (int x = 0; x < size; x++)
+            s = Sliced(key, size, radius + 1, (x, y) =>
             {
-                float dx = Mathf.Max(0f, Mathf.Abs(x + 0.5f - c) - inner);
-                float dy = Mathf.Max(0f, Mathf.Abs(y + 0.5f - c) - inner);
-                float d = Mathf.Sqrt(dx * dx + dy * dy);
-                px[y * size + x] = new Color32(255, 255, 255, (byte)(Mathf.Clamp01(radius - d + 0.5f) * 255));
-            }
-            tex.SetPixels32(px);
-            tex.Apply(false, true);
-            float b = radius + 1;
-            s = Sprite.Create(tex, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), 100f, 0,
-                SpriteMeshType.FullRect, new Vector4(b, b, b, b));
-            s.name = key;
-            Cache[key] = s;
+                float dx = Mathf.Max(0f, Mathf.Abs(x - c) - inner);
+                float dy = Mathf.Max(0f, Mathf.Abs(y - c) - inner);
+                return Mathf.Clamp01(radius - Mathf.Sqrt(dx * dx + dy * dy) + 0.5f);
+            });
+            return s;
+        }
+
+        /// <summary>Garis tepi kotak bersudut bulat (garis sorot kaca, garis chip).</summary>
+        public static Sprite RoundedOutline(int radius, float thickness = 2f)
+        {
+            string key = "ro" + radius + "_" + thickness;
+            if (Cache.TryGetValue(key, out var s) && s != null) return s;
+            int size = radius * 2 + 4;
+            float c = size * 0.5f, half = c - 0.5f;
+            s = Sliced(key, size, radius + 1, (x, y) =>
+            {
+                float sd = SdRoundBox(x - c, y - c, half, half, radius);
+                return Mathf.Clamp01(0.5f - sd) * Mathf.Clamp01(sd + thickness + 0.5f);
+            });
+            return s;
+        }
+
+        /// <summary>
+        /// Bayangan lembut 9-slice. Rect bayangan = rect target diperlebar <paramref name="blur"/> di tiap sisi;
+        /// tepi target berada tepat di pertengahan pudar, sudutnya sama dengan <see cref="RoundedRect"/>.
+        /// </summary>
+        public static Sprite Shadow(int radius, int blur)
+        {
+            string key = "sh" + radius + "_" + blur;
+            if (Cache.TryGetValue(key, out var s) && s != null) return s;
+            int size = (radius + blur) * 2 + 4;
+            float c = size * 0.5f, half = c - blur;
+            s = Sliced(key, size, radius + blur + 1, (x, y) =>
+            {
+                float sd = SdRoundBox(x - c, y - c, half, half, radius);
+                float t = Mathf.Clamp01((sd + blur * 0.35f) / (blur * 1.35f));
+                return (1f - t) * (1f - t) * (1f - t * 0.5f);
+            });
             return s;
         }
 
@@ -90,6 +154,30 @@ namespace NusantaraAR.UI
             return s;
         }
 
+        /// <summary>Jarak bertanda ke kotak bersudut bulat berpusat di (0,0) dengan setengah ukuran (hw, hh).</summary>
+        public static float SdRoundBox(float x, float y, float hw, float hh, float r)
+        {
+            float qx = Mathf.Abs(x) - (hw - r), qy = Mathf.Abs(y) - (hh - r);
+            float ox = Mathf.Max(qx, 0f), oy = Mathf.Max(qy, 0f);
+            return Mathf.Sqrt(ox * ox + oy * oy) + Mathf.Min(Mathf.Max(qx, qy), 0f) - r;
+        }
+
+        static Sprite Sliced(string key, int size, float border, Func<float, float, float> alpha)
+        {
+            var tex = NewTexture(size);
+            var px = new Color32[size * size];
+            for (int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+                px[y * size + x] = new Color32(255, 255, 255, (byte)(Mathf.Clamp01(alpha(x + 0.5f, y + 0.5f)) * 255));
+            tex.SetPixels32(px);
+            tex.Apply(false, true);
+            var s = Sprite.Create(tex, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), 100f, 0,
+                SpriteMeshType.FullRect, new Vector4(border, border, border, border));
+            s.name = key;
+            Cache[key] = s;
+            return s;
+        }
+
         static Texture2D NewTexture(int size) =>
             new Texture2D(size, size, TextureFormat.RGBA32, false)
             {
@@ -101,6 +189,25 @@ namespace NusantaraAR.UI
 
     public enum ButtonStyle { Primary, Secondary, Ghost, Chip }
 
+    /// <summary>
+    /// Solid = kartu gading, Glass = kaca buram berteks, GlassChrome = kaca tombol ikon, NavGlass = kaca nila,
+    /// Accent = terakota, Outline = gading bergaris tepi (chip).
+    /// </summary>
+    public enum SurfaceStyle { Solid, Glass, GlassChrome, NavGlass, Accent, Outline }
+
+    /// <summary>
+    /// Bagian panel berelevasi. Akar (transparan, penerima sentuhan) memegang tata letak dan konten; anak <c>Shadow</c>,
+    /// <c>Fill</c>, <c>Highlight</c> diabaikan layout group. Warna panel diganti lewat <see cref="fill"/>.
+    /// </summary>
+    [DisallowMultipleComponent]
+    public class Surface : MonoBehaviour
+    {
+        public Image root, shadow, fill, highlight;
+
+        public static Image FillOf(Component c) =>
+            c != null && c.TryGetComponent(out Surface s) ? s.fill : c != null ? c.GetComponent<Image>() : null;
+    }
+
     /// <summary>Pembuat UI uGUI dari kode (tanpa YAML scene/prefab).</summary>
     public static class UIKit
     {
@@ -110,6 +217,8 @@ namespace NusantaraAR.UI
             var canvas = go.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = sortingOrder;
+            // UV1 membawa kekuatan tint kaca (GlassSurface).
+            canvas.additionalShaderChannels |= AdditionalCanvasShaderChannels.TexCoord1;
             var scaler = go.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1080, 1920);
@@ -163,6 +272,60 @@ namespace NusantaraAR.UI
             return img;
         }
 
+        /// <summary>Panel berelevasi (bayangan + isi + garis sorot). Mengembalikan akar; isi ada di <see cref="Surface.fill"/>.</summary>
+        public static Image Surface(Transform parent, string name, SurfaceStyle style, int radius = 32, bool raycast = true,
+            bool shadow = true)
+        {
+            var root = Panel(parent, name, new Color(1f, 1f, 1f, 0f), false, raycast);
+            root.canvasRenderer.cullTransparentMesh = true;
+            var parts = root.gameObject.AddComponent<Surface>();
+            parts.root = root;
+
+            if (shadow)
+            {
+                int blur = Mathf.Clamp(radius / 2 + 10, 14, 30);
+                parts.shadow = Panel(root.transform, "Shadow", Theme.ShadowTint, false, false);
+                parts.shadow.sprite = SpriteFactory.Shadow(radius, blur);
+                parts.shadow.type = Image.Type.Sliced;
+                float drop = blur * 0.35f;
+                Stretch(parts.shadow.rectTransform, -blur, -blur, -blur + drop, -blur - drop);
+                IgnoreLayout(parts.shadow);
+            }
+
+            Color fillColor;
+            switch (style)
+            {
+                case SurfaceStyle.NavGlass: fillColor = Theme.Nav; break;
+                case SurfaceStyle.Accent: fillColor = Theme.Accent; break;
+                default: fillColor = Theme.Surface; break;
+            }
+            parts.fill = Panel(root.transform, "Fill", fillColor, true, false, radius);
+            Stretch(parts.fill.rectTransform);
+            IgnoreLayout(parts.fill);
+            if (style == SurfaceStyle.Glass || style == SurfaceStyle.GlassChrome || style == SurfaceStyle.NavGlass)
+            {
+                var glass = parts.fill.gameObject.AddComponent<GlassSurface>();
+                glass.Strength = style == SurfaceStyle.Glass ? Theme.GlassStrength
+                    : style == SurfaceStyle.GlassChrome ? Theme.GlassChromeStrength : Theme.NavGlassStrength;
+            }
+
+            Color? edge = style == SurfaceStyle.Glass || style == SurfaceStyle.GlassChrome ? Theme.GlassHighlight
+                : style == SurfaceStyle.NavGlass ? new Color(1f, 1f, 1f, 0.12f)
+                : style == SurfaceStyle.Outline ? Theme.Line
+                : (Color?)null;
+            if (edge.HasValue)
+            {
+                parts.highlight = Panel(root.transform, "Highlight", edge.Value, false, false);
+                parts.highlight.sprite = SpriteFactory.RoundedOutline(radius, style == SurfaceStyle.Outline ? 2.5f : 2f);
+                parts.highlight.type = Image.Type.Sliced;
+                Stretch(parts.highlight.rectTransform);
+                IgnoreLayout(parts.highlight);
+            }
+            return root;
+        }
+
+        static void IgnoreLayout(Component c) => c.gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
+
         public static TextMeshProUGUI Text(Transform parent, string name, string text, float size, Color color,
             TextAlignmentOptions align = TextAlignmentOptions.TopLeft, FontStyles style = FontStyles.Normal)
         {
@@ -180,39 +343,114 @@ namespace NusantaraAR.UI
             return t;
         }
 
-        public static Button Button(Transform parent, string name, string label, ButtonStyle style, UnityAction onClick,
-            out TextMeshProUGUI labelText, float fontSize = Theme.Button)
+        public static Image IconImage(Transform parent, Icon icon, float size, Color color, string name = "Icon")
         {
-            Color bg, fg;
-            switch (style)
-            {
-                case ButtonStyle.Primary: bg = Theme.Gold; fg = Theme.Teak; break;
-                case ButtonStyle.Secondary: bg = Theme.TextPanel; fg = Theme.Parchment; break;
-                case ButtonStyle.Chip: bg = Theme.WithAlpha(Theme.Border, 0.95f); fg = Theme.Parchment; break;
-                default: bg = new Color(0, 0, 0, 0); fg = Theme.Parchment; break;
-            }
-            var img = Panel(parent, name, bg, style != ButtonStyle.Ghost, true, style == ButtonStyle.Chip ? 40 : 28);
-            var button = img.gameObject.AddComponent<Button>();
-            button.targetGraphic = img;
+            var img = Panel(parent, name, color, false, false);
+            img.sprite = IconFactory.Get(icon);
+            img.preserveAspect = true;
+            img.rectTransform.sizeDelta = new Vector2(size, size);
+            return img;
+        }
+
+        static Button AddButton(Image root, Graphic target, UnityAction onClick)
+        {
+            var button = root.gameObject.AddComponent<Button>();
+            button.targetGraphic = target;
             var colors = button.colors;
             colors.normalColor = Color.white;
             colors.highlightedColor = Color.white;
-            colors.pressedColor = new Color(0.8f, 0.8f, 0.8f, 1f);
-            colors.disabledColor = new Color(1f, 1f, 1f, 0.35f);
+            colors.selectedColor = Color.white;
+            colors.pressedColor = new Color(0.82f, 0.8f, 0.78f, 1f);
+            colors.disabledColor = new Color(1f, 1f, 1f, 0.4f);
             button.colors = colors;
             if (onClick != null) button.onClick.AddListener(onClick);
             button.onClick.AddListener(() => AudioManager.Instance.Click());
+            return button;
+        }
 
-            labelText = Text(img.transform, "Label", label, fontSize, fg, TextAlignmentOptions.Center,
+        public static Button Button(Transform parent, string name, string label, ButtonStyle style, UnityAction onClick,
+            out TextMeshProUGUI labelText, float fontSize = Theme.Button)
+        {
+            Image root;
+            Graphic target;
+            Color fg;
+            switch (style)
+            {
+                case ButtonStyle.Primary:
+                    root = Surface(parent, name, SurfaceStyle.Accent, 44);
+                    fg = Theme.OnAccent;
+                    break;
+                case ButtonStyle.Secondary:
+                    root = Surface(parent, name, SurfaceStyle.Glass, 44);
+                    fg = Theme.Ink;
+                    break;
+                case ButtonStyle.Chip:
+                    root = Surface(parent, name, SurfaceStyle.Outline, 44, true, false);
+                    fg = Theme.Ink;
+                    break;
+                default:
+                    root = Panel(parent, name, new Color(1f, 1f, 1f, 0f), false, true);
+                    root.canvasRenderer.cullTransparentMesh = true;
+                    fg = Theme.InkMuted;
+                    break;
+            }
+
+            labelText = Text(root.transform, "Label", label, fontSize, fg, TextAlignmentOptions.Center,
                 style == ButtonStyle.Primary ? FontStyles.Bold : FontStyles.Normal);
             labelText.textWrappingMode = TextWrappingModes.NoWrap;
             labelText.overflowMode = TextOverflowModes.Ellipsis;
-            Stretch(labelText.rectTransform, 16, 16, 4, 4);
-            return button;
+            Stretch(labelText.rectTransform, 20, 20, 4, 4);
+            target = style == ButtonStyle.Ghost ? (Graphic)labelText : root.GetComponent<Surface>().fill;
+            return AddButton(root, target, onClick);
         }
 
         public static Button Button(Transform parent, string name, string label, ButtonStyle style, UnityAction onClick) =>
             Button(parent, name, label, style, onClick, out _);
+
+        /// <summary>Tombol utama dengan ikon di kiri label (mis. "Scan QR (AR)").</summary>
+        public static Button IconTextButton(Transform parent, string name, Icon icon, string label, ButtonStyle style,
+            UnityAction onClick, out TextMeshProUGUI labelText, float fontSize = Theme.Button)
+        {
+            var b = Button(parent, name, label, style, onClick, out labelText, fontSize);
+            var row = Rect("Content", b.transform);
+            Stretch(row, 20, 20, 0, 0);
+            var h = HRow(row, 14f, null, false);
+            h.childControlWidth = true;
+            h.childForceExpandHeight = false;
+            var img = IconImage(row, icon, fontSize * 1.25f, labelText.color);
+            Layout(img, fontSize * 1.25f, fontSize * 1.25f);
+            labelText.transform.SetParent(row, false);
+            labelText.overflowMode = TextOverflowModes.Overflow;
+            return b;
+        }
+
+        /// <summary>Tombol ikon bulat (circle) atau kotak bulat, gaya kaca.</summary>
+        public static Button IconButton(Transform parent, string name, Icon icon, UnityAction onClick, float size = 96f,
+            SurfaceStyle style = SurfaceStyle.GlassChrome, bool circle = true)
+        {
+            var root = Surface(parent, name, style, circle ? Mathf.RoundToInt(size * 0.5f) : 28);
+            root.rectTransform.sizeDelta = new Vector2(size, size);
+            var iconColor = style == SurfaceStyle.Accent ? Theme.OnAccent : style == SurfaceStyle.NavGlass ? Theme.NavIcon : Theme.Ink;
+            IconImage(root.transform, icon, size * 0.46f, iconColor);
+            return AddButton(root, root.GetComponent<Surface>().fill, onClick);
+        }
+
+        /// <summary>Tombol rel: kotak kaca dengan ikon di atas dan keterangan kecil di bawah.</summary>
+        public static Button RailButton(Transform parent, string name, Icon icon, string label, UnityAction onClick,
+            out Image iconImage, out TextMeshProUGUI labelText, float width = 136f, float height = 128f)
+        {
+            var root = Surface(parent, name, SurfaceStyle.Glass, 32);
+            root.rectTransform.sizeDelta = new Vector2(width, height);
+            iconImage = IconImage(root.transform, icon, 50f, Theme.Ink);
+            Place(iconImage.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -20f), new Vector2(50f, 50f));
+            labelText = Text(root.transform, "Label", label, Theme.Caption, Theme.Ink, TextAlignmentOptions.Bottom);
+            labelText.textWrappingMode = TextWrappingModes.NoWrap;
+            labelText.enableAutoSizing = true;
+            labelText.fontSizeMin = 16f;
+            labelText.fontSizeMax = Theme.Caption;
+            Stretch(labelText.rectTransform, 8, 8, 76, 14);
+            return AddButton(root, root.GetComponent<Surface>().fill, onClick);
+        }
 
         public static LayoutElement Layout(Component c, float preferredHeight = -1, float preferredWidth = -1, float flexibleWidth = -1)
         {
@@ -259,6 +497,7 @@ namespace NusantaraAR.UI
             viewport.gameObject.AddComponent<RectMask2D>();
             var hit = viewport.gameObject.AddComponent<Image>(); // area geser menerima raycast
             hit.color = new Color(0, 0, 0, 0);
+            hit.canvasRenderer.cullTransparentMesh = true;
             content = Rect("Content", viewport);
             content.anchorMin = new Vector2(0, 1);
             content.anchorMax = new Vector2(1, 1);
@@ -281,30 +520,39 @@ namespace NusantaraAR.UI
         {
             var root = Rect(name, parent);
             var slider = root.gameObject.AddComponent<Slider>();
-            var bg = Panel(root, "Background", Theme.WithAlpha(Theme.Border, 1f), true, true, 10);
-            Stretch(bg.rectTransform, 0, 0, 22, 22);
-            var fillArea = Rect("Fill Area", root);
-            Stretch(fillArea, 0, 0, 22, 22);
-            var fill = Panel(fillArea, "Fill", Theme.Gold, true, false, 10);
+            // Track tipis 14 unit di tengah; knob 48 unit berbayangan.
+            var bg = Panel(root, "Background", Theme.Line, true, true, 8);
+            MidBand(bg.rectTransform, 0f, 14f);
+            var fillArea = MidBand(Rect("Fill Area", root), 0f, 14f);
+            var fill = Panel(fillArea, "Fill", Theme.Accent, true, false, 8);
             fill.rectTransform.anchorMin = Vector2.zero;
             fill.rectTransform.anchorMax = new Vector2(0, 1);
             fill.rectTransform.sizeDelta = Vector2.zero;
-            var handleArea = Rect("Handle Area", root);
-            Stretch(handleArea, 20, 20, 0, 0);
-            var handle = Panel(handleArea, "Handle", Theme.Parchment, false, true);
-            handle.sprite = SpriteFactory.Circle();
-            handle.rectTransform.sizeDelta = new Vector2(44, 0);
+            var handleArea = MidBand(Rect("Handle Area", root), -48f, 48f);
+            var handle = Surface(handleArea, "Handle", SurfaceStyle.Solid, 24);
+            handle.rectTransform.sizeDelta = new Vector2(48, 0);
             handle.rectTransform.anchorMin = new Vector2(0, 0);
             handle.rectTransform.anchorMax = new Vector2(0, 1);
             slider.fillRect = fill.rectTransform;
             slider.handleRect = handle.rectTransform;
-            slider.targetGraphic = handle;
+            slider.targetGraphic = handle.GetComponent<Surface>().fill;
             slider.minValue = 0f;
             slider.maxValue = 1f;
             slider.value = value;
             slider.interactable = interactable;
             if (onChanged != null) slider.onValueChanged.AddListener(onChanged);
             return slider;
+        }
+
+        /// <summary>Pita mendatar selebar induk (+ <paramref name="widthDelta"/>) dengan tinggi tetap, di tengah vertikal.</summary>
+        static RectTransform MidBand(RectTransform rt, float widthDelta, float height)
+        {
+            rt.anchorMin = new Vector2(0f, 0.5f);
+            rt.anchorMax = new Vector2(1f, 0.5f);
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.anchoredPosition = Vector2.zero;
+            rt.sizeDelta = new Vector2(widthDelta, height);
+            return rt;
         }
 
         public static void Clear(Transform t)

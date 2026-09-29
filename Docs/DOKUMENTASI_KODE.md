@@ -14,15 +14,15 @@ Dokumen ini menjelaskan cara kerja kode proyek: arsitektur, alur data, tanggung 
 | AR | AR Foundation 6.3 + ARCore (**Optional**, jadi aplikasi tetap terpasang di HP tanpa ARCore) |
 | Input | Input System (bukan Input Manager lama) |
 | Target | Android, IL2CPP ARM64, minSdk 26, targetSdk 36 |
-| UI | uGUI + TextMeshPro, **dibuat seluruhnya dari kode** (`UIKit`), tanpa prefab UI dan tanpa layout di YAML scene |
+| UI | uGUI + TextMeshPro, **dibuat seluruhnya dari kode** (`UIKit`), tanpa prefab UI dan tanpa layout di YAML scene. Gaya gading · terakota · nila dengan **kaca buram sungguhan** (blur kamera lewat `GlassBlurFeature` URP, lihat §5.1) |
 | Bahasa kode | C#; komentar dan teks dalam Bahasa Indonesia |
-| Jumlah kode | 47 file C#, ±8.840 baris (Runtime 36 file / 6.426 baris, Editor 7 / 1.490, Test 4 / 921) |
+| Jumlah kode | 70 file C# + 2 shader, ±12.500 baris (Runtime 53 file / 9.370 baris, Editor 10 / 1.960, Test 7 / 1.200) |
 
 ### Assembly dan namespace
 
 | Assembly (`.asmdef`) | Folder | Namespace | Isi |
 |---|---|---|---|
-| `NusantaraAR.Runtime` | `Assets/NusantaraAR/Scripts/Runtime` | `NusantaraAR`, `NusantaraAR.UI`, `NusantaraAR.Marker` | Semua kode yang ikut ke APK |
+| `NusantaraAR.Runtime` | `Assets/NusantaraAR/Scripts/Runtime` | `NusantaraAR`, `NusantaraAR.UI`, `NusantaraAR.Marker`, `NusantaraAR.Rendering` | Semua kode yang ikut ke APK (merujuk URP Runtime untuk `GlassBlurFeature`) |
 | `NusantaraAR.Editor` | `Assets/NusantaraAR/Scripts/Editor` | `NusantaraAR.EditorTools` | Generator proyek/konten/scene, build script. **Tidak ikut ke APK** |
 | `NusantaraAR.Tests.EditMode` | `Assets/NusantaraAR/Tests/EditMode` | `NusantaraAR.Tests` | Uji NUnit (EditMode) |
 
@@ -95,7 +95,9 @@ Resources/ContentCatalog.asset ──► AppSession.Catalog (lazy, cache statis)
              └─ markerCode ──► MarkerController (kartu lama, cadangan) ──► FindByMarker(code)
 ```
 
-Satu komponen UI, yaitu `ArtifactHud`, dipakai di ketiga scene. Tiap controller cukup memanggil `hud.Bind(instance, camera, onReset, onMove)`, dan `ArtifactHud` yang mengatur label bagian + kartu info di AR, tombol Bongkar/Gabung, Putar Otomatis, dan Tampilkan/Sembunyikan Label. Controller meneruskan ketukan di luar UI ke `hud.HandleTap` agar bagian model bisa diketuk langsung.
+Satu komponen UI, yaitu `ArtifactHud`, dipakai di ketiga scene. Tiap controller membuatnya dengan `HudOptions` (jarak atas, ruang bawah milik layar, tombol miring ya/tidak, `ControlPanelConfig` untuk mode kamera) lalu memanggil `hud.Bind(instance, camera, onReset, onNudge)`. `ArtifactHud` mengatur rel kaca kanan (Kisah, Bongkar/Gabung, Hunus/Sarungkan, Label, Putar 360°, Reset), klaster tahan-tekan kiri (putar/miring, diteruskan ke `onNudge`: + yaw = muka objek bergeser ke kiri, + tilt = sisi atas menjauh), panel skala + saklar di mode kamera, label bagian + kartu info, dan panel Kisah. Controller meneruskan ketukan di luar UI ke `hud.HandleTap` agar bagian model bisa diketuk langsung.
+
+Scene Main memakai `BottomNav` (Koleksi · Scan QR · Pengaturan), `TopBar`, dan `DetailSheet`; latar katalog/pengaturan digambar kamera (`Backdrop`) supaya kartu kaca punya sesuatu untuk di-blur. Scene AR & Marker memakai `TopBar` (judul dalam pil kaca), `CoachCard` (panduan kamera), `ControlPanel`, dan `MessageDialog`.
 
 ### 3.3 Pola yang dipakai konsisten
 
@@ -180,7 +182,7 @@ Kode kartu lama `0xEEC1` (keris sementara) dan `0xDA26` (Keris Jawa) sudah ditar
 | File | Baris | Isi |
 |---|---|---|
 | `Interaction/TouchGestures.cs` | 203 | Satu sumber gestur untuk semua scene. Event: `Tapped`, `Dragged` (1 jari), `Pinched` (rasio jarak), `TwoFingerPanned/Ended`, `InteractionStarted`. Dua jari diputuskan sekali menjadi Pinch **atau** Pan. Sentuhan di atas UI diabaikan (`IsOverUI`). `DpToPixels` untuk ambang yang tidak bergantung DPI |
-| `Interaction/OrbitCameraController.cs` | 123 | Kamera orbit 3D Viewer: geser untuk memutar, pinch/scroll untuk zoom. `Frame(bounds)` membingkai artefak dan menjadikannya posisi reset; `EaseTo` menggeser kamera halus (dipakai `MainController` untuk mundur selama animasi hunus lalu kembali) |
+| `Interaction/OrbitCameraController.cs` | 170 | Kamera orbit 3D Viewer: geser untuk memutar, pinch/scroll untuk zoom, `Nudge` untuk tombol putar/miring. `Frame(bounds)` membingkai artefak dan menjadikannya posisi reset; `EaseTo` menggeser kamera halus (dipakai `MainController` untuk mundur selama animasi hunus lalu kembali). `SetCoveredScreen(atas, bawah)` menggeser pusat proyeksi (matriks off-center, `m12`) agar keris di tengah area yang tidak tertutup top bar / sheet / nav; `DistanceToFit` memakai tinggi area terlihat |
 
 ### AR — mode ARCore (`NusantaraAR`)
 | File | Baris | Isi |
@@ -205,16 +207,38 @@ Kode kartu lama `0xEEC1` (keris sementara) dan `0xDA26` (Keris Jawa) sudah ditar
 ### UI (`NusantaraAR.UI`)
 | File | Baris | Isi |
 |---|---|---|
-| `UI/UIKit.cs` | 321 | `Theme` (token warna/ukuran PRD §5.1; panel teks memakai opasitas 92% agar lolos WCAG AA di atas kamera), `SpriteFactory` (rounded-rect 9-slice & lingkaran prosedural), `UIKit` (Canvas, Rect, Stretch, Place, Panel, Text, Button, HRow/VColumn, VerticalScroll, Slider, …) |
-| `UI/ArtifactHud.cs` | 201 | HUD bersama: tombol Reset (+ Pindahkan di AR), dock Bongkar/Gabung, Putar Otomatis, Tampilkan/Sembunyikan Label, label tahap. `HandleTap` (ketuk bagian model → buka info, ketuk kosong → tutup), `CloseInfo` (tombol Kembali), navigasi sebelum/berikutnya |
-| `UI/HotspotOverlay.cs` | 401 | Anotasi di AR setiap `LateUpdate`: titik emas di model + garis penunjuk + label "Nama (i)" di kiri/kanan objek (histeresis sisi, label bertabrakan diturunkan, posisi dihaluskan). Titik tertutup geometri diredupkan. `PickAt` meraycast model untuk memilih hotspot bagian yang diketuk. Kartu info diletakkan di samping bagian terpilih dan ikut bergerak bersama objek |
-| `UI/HotspotCard.cs` | 227 | Kartu info yang mengembang di samping bagian: judul, istilah daerah, bahan, status draf, tab Kriya/Filosofi/Sejarah, sumber, tombol Dengar/Pelafalan (hanya bila ada audio), dan `<` `n / N` `>` antar bagian yang tampil di layar |
-| `UI/CatalogScreen.cs` | 151 | Layar katalog per kategori, dengan tombol pengaturan dan Scan |
+| `UI/UIKit.cs` | 560 | `Theme` (token gading/terakota/nila + `AccentText` untuk teks terakota; `Contrast`/`GlassOver` untuk uji WCAG), `SpriteFactory` (rounded-rect, garis tepi, bayangan lembut 9-slice, lingkaran), `Surface` (panel berelevasi: akar transparan + `Shadow` + `Fill` + `Highlight`; warna diganti lewat `fill`), `UIKit` (Canvas dengan UV1, Panel, `Surface`, Text, Button, `IconTextButton`, `IconButton`, `RailButton`, HRow/VColumn, VerticalScroll, Slider, …) |
+| `UI/IconFactory.cs` | 330 | 31 ikon garis prosedural (`enum Icon`) digambar sebagai medan jarak di grid 24 unit, dirasterisasi ke tekstur putih ber-mipmap dan di-cache |
+| `UI/GlassSurface.cs` | 60 | `BaseMeshEffect` yang menjadikan Image kaca buram: material bersama `Resources/UIGlass`, kekuatan tint di UV1, mendaftar ke `GlassBlur` selama aktif |
+| `UI/ArtifactHud.cs` | 400 | HUD bersama (lihat §3.2): rel kaca kanan, klaster `HoldButton` kiri, `ControlPanel` di mode kamera, pil tahap, panel Kisah (menggantikan slot bawah), reserve area untuk `HotspotOverlay`. `HandleTap`, `CloseInfo` (tombol Kembali), navigasi sebelum/berikutnya |
+| `UI/HotspotOverlay.cs` | 440 | Anotasi di AR setiap `LateUpdate`: titik emas (cincin putih + halo gelap) + garis penunjuk bersarung + label kaca "Nama (i)" di kiri/kanan objek (histeresis sisi, label bertabrakan diturunkan, posisi dihaluskan). `SetReserves` menjauhkan label & kartu dari top bar, rel, klaster kiri, dan slot bawah (plus inset notch/gesture bar). `PickAt` meraycast model untuk memilih hotspot bagian yang diketuk |
+| `UI/HotspotCard.cs` | 215 | Kartu kaca yang mengembang di samping bagian: judul, istilah daerah, bahan, status draf, tab bersegmen Kriya/Filosofi/Sejarah, sumber, Putar/Jeda + Pelafalan (hanya bila ada audio), dan chevron `n / N` antar bagian yang tampil di layar |
+| `UI/StoryPanel.cs` | 320 | Mode Kisah: panel kaca dengan tombol ikon Jeda/Lanjut/Tutup, subtitle per kalimat, progress terakota; `SetBottom` mengikuti layar (di atas bar navigasi di 3D Viewer) |
+| `UI/CatalogScreen.cs` | 155 | Layar katalog per kategori (akar transparan di atas `Backdrop`), kartu kaca bergambar; Scan QR & Pengaturan di `BottomNav` |
+| `UI/DetailSheet.cs` | 215 | Lembar kaca detail di 3D Viewer: nama, nama lokal, Asal/Era, ringkasan (ketuk pegangan), CTA Scan QR (AR), Letakkan di Meja (ARCore), Tampilkan QR; `HeightChanged` untuk framing kamera |
+| `UI/BottomNav.cs` | 115 | Bar navigasi kaca nila: Koleksi · Scan QR (lingkaran terakota menonjol) · Pengaturan |
+| `UI/TopBar.cs` | 75 | Tombol kembali bulat + judul tengah (dalam pil kaca di atas kamera) |
+| `UI/CoachCard.cs` | 145 | Kartu panduan kamera: versi besar ber-ikon animasi (kompas, bingkai scan) dan pil petunjuk yang bisa pudar sendiri |
+| `UI/ControlPanel.cs` | 140 | Panel skala (slider logaritmik 0,5–3×, sinkron dengan cubit) + saklar + tombol lebar opsional untuk Scan QR / AR Meja |
+| `UI/MessageDialog.cs` | 65 | Dialog kaca (izin kamera, AR tidak tersedia, kamera tidak ditemukan) |
+| `UI/Backdrop.cs` | 85 | Latar scene Main yang digambar kamera (Screen Space-Camera): gradasi gading + gumpalan terakota/nila + motif kawung samar |
+| `UI/HoldButton.cs`, `UI/SwitchToggle.cs`, `UI/Segmented.cs` | 70 / 90 / 70 | Tombol tahan-tekan (putar/miring), saklar geser, kontrol bersegmen |
+| `UI/ProceduralTextures.cs` | 120 | Tekstur latar, petak kawung, glow radial, grid bidang AR (runtime & editor) |
 | `UI/MarkerCardScreen.cs` | 65 | Menampilkan kode QR artefak layar penuh (bisa di-scan dari HP lain) |
-| `UI/SettingsScreen.cs` | 114 | Bahasa, volume, persetujuan analitik, ulangi tutorial, tentang |
-| `UI/OnboardingScreen.cs` | 98 | Tutorial gestur + keselamatan AR (persetujuan analitik hanya di Pengaturan) |
+| `UI/SettingsScreen.cs` | 175 | Kartu kaca: Bahasa (bersegmen), Suara (3 slider), Privasi (saklar analitik), Ulangi tutorial, Tentang + kredit musik |
+| `UI/OnboardingScreen.cs` | 105 | Tutorial gestur + keselamatan AR dengan ikon per halaman (persetujuan analitik hanya di Pengaturan) |
 | `UI/LocalizedLabel.cs` | 35 | Label TMP yang otomatis berganti saat `Locale.Changed` |
 | `UI/SafeArea.cs` | 31 | Menyesuaikan rect ke `Screen.safeArea` (notch) |
+
+### Rendering (`NusantaraAR.Rendering`) — kaca buram
+
+| File | Baris | Isi |
+|---|---|---|
+| `Rendering/GlassBlurFeature.cs` | 195 | `GlassBlur` (hitungan elemen kaca aktif, material UI, global `_GlassBlurTex`) dan `GlassBlurFeature` (Render Graph, `AfterRenderingTransparents`): warna kamera → turun 1/2…1/8 → naik ke 1/4 (dual-Kawase) → RTHandle persisten. Hanya jalan bila ada kaca aktif |
+| `Shaders/GlassBlur.shader` | — | Pass Down / Up / Final (saturasi) untuk Blitter |
+| `Shaders/UIGlass.shader` | — | Turunan UI-Default: sampel `_GlassBlurTex` di koordinat layar dari posisi clip (`ComputeScreenPos`; vertex kanvas Overlay ada di ruang kanvas, bukan piksel), campur dengan warna vertex sesuai kekuatan tint UV1. Diverifikasi dengan tangkapan `12_glass_probe` di build QA |
+
+Alur satu frame: kamera merender model 3D + latar kamera (`Backdrop` / feed Scan QR / gambar ARCore) → `GlassBlurFeature` mem-blur warna kamera ke RT persisten → kanvas Overlay digambar; setiap Image ber-`GlassSurface` menampilkan RT itu (bagian tepat di belakangnya) dicampur tint gading/nila. Blur hanya menangkap apa yang digambar kamera, bukan UI lain di bawah panel.
 
 ### Audio (`NusantaraAR`)
 | File | Baris | Isi |
@@ -320,11 +344,12 @@ Update:
 | Nusantara AR / Build Keris Sumatra | `KerisSumatraBuilder.BuildMenu` | Mengimpor ulang `keris_sumatra.glb`, membangun prefab + konten + thumbnail |
 | Nusantara AR / Render Stage Previews | `PreviewRenderer.Render` | Merender PNG tiap tahap exploded setiap artefak ke `Previews/{id}_stage_N.png` (untuk QA visual) |
 | Nusantara AR / Render Thumbnails | `ProjectSetup.RenderThumbnails` | Merender ulang thumbnail katalog kedua keris tanpa menjalankan Setup Everything |
+| Nusantara AR / Build AR Visuals | `ProjectSetup.BuildVisualAssets` | Tanpa menyentuh scene/prefab: reticle terakota, grid bidang AR (`T_PlaneGrid`), glow (`T_Glow`, `Resources/GroundGlow`), material UI kaca (`Resources/UIGlass`), dan `GlassBlurFeature` di setiap renderer URP |
 | Nusantara AR / Build / Android APK (uji perangkat) | `BuildScript.BuildAndroidApk` | `Builds/Android/NusantaraAR.apk` (pindah ke platform Android dulu bila perlu) |
 | Nusantara AR / Build / Android App Bundle (.aab) | `BuildScript.BuildAndroidAab` | `Builds/Android/NusantaraAR.aab` |
 | *(batch saja)* | `BuildScript.BuildWindowsCapture` | Build QA Windows `Builds/QA/NusantaraAR.exe` dengan `DevCapture`; platform aktif dikembalikan setelahnya |
 
-Versi batch (tanpa GUI): `ProjectSetup.RunBatch`, `ProjectSetup.RenderThumbnailsBatch`, `PreviewRenderer.RenderBatch`, dan `BuildScript.*`. Semuanya dipanggil lewat `-executeMethod`. Render (thumbnail, preview, QA) butuh GPU, jadi **jangan** pakai `-nographics`.
+Versi batch (tanpa GUI): `ProjectSetup.RunBatch`, `ProjectSetup.BuildVisualAssetsBatch`, `ProjectSetup.RenderThumbnailsBatch`, `PreviewRenderer.RenderBatch`, dan `BuildScript.*`. Semuanya dipanggil lewat `-executeMethod`. Render (thumbnail, preview, QA) butuh GPU, jadi **jangan** pakai `-nographics`.
 
 ### 7.2 Urutan `ProjectSetup.RunAll` (idempoten)
 1. `EnsureFolders`: membuat folder Art/Content/Resources/Prefabs/Scenes.
@@ -390,6 +415,7 @@ Skrip ini menjalankan `ProjectSetup.RunBatch`, lalu EditMode test, lalu `Tools/k
 |---|---|
 | `ArtifactTests.cs` | Dijalankan untuk **setiap** artefak: katalog hanya berisi Keris Bali + Sumatra; ditemukan lewat kode kartunya dan lewat isi QR-nya (termasuk QR hasil `QrCode.Encode`), kode unik, kartu lama (EEC1, DA26) tidak dikenali; semua mesh berasal dari GLB Blender; hotspot menunjuk bagian yang ada dan berada di muka depan; aturan tampil hotspot saat utuh/dihunus; setiap tahap menggerakkan bagian; pivot di dasar; clamp skala relatif; fallback `LocalizedString` |
 | `KerisBlenderTests.cs` | Bali: kode B532, 11 hotspot, 1 + 5 tahap, jagrak 45 cm di y = 0, keris bersandar di atasnya dengan hulu di +X, bilah 40 + 8 cm, bilah terhunus di atas sarung, tahap terakhir melepas pendok. Sumatra: kode F0E4, 9 hotspot, 1 + 4 tahap, tinggi ±52 cm di dudukan, sampir di +X, bilah 36 + 7,2 cm, bilah terhunus di samping sarung |
+| `UiThemeTests.cs` | Kontras WCAG AA token warna, termasuk teks di atas kaca pada latar kamera terburuk (hitam & putih, dicampur di ruang linear); setiap `Icon` menghasilkan bentuk yang terlihat dan tidak menyentuh tepi; slider skala logaritmik & bolak-balik; aset kaca/AR sudah dibangun (`UIGlass`, `GroundGlow`, `GlassBlurFeature` di semua renderer) |
 | `MarkerTests.cs` | Deteksi marker perspektif di 4 orientasi (gambar sintetis); tidak ada false positive pada noise; pose cocok dengan transform yang diketahui; pemetaan rotasi buffer kamera; keunikan rotasi kode & jarak antar kode; memilih artefak yang benar saat semua kode dicari; mendeteksi **PNG kartu cetak** asli di `Docs/` dengan cukup cepat |
 | `QrTests.cs` | Encoder identik bit-per-bit dengan pustaka Python `qrcode`; decoder membaca QR Python mode byte & campuran; round-trip semua tingkat ECC dan versi 1-10; koreksi Reed-Solomon (kerusakan kecil terkoreksi, kerusakan besar ditolak); deteksi perspektif di 4 orientasi dengan galat sudut < 2,5 px; jauh/dekat; miring kuat dan gradasi cahaya; QR tak terbaca tetap memberi pose; tanpa false positive (noise, kartu lama) dan QR tidak terbaca sebagai kartu; pose cocok dengan transform yang diketahui; mendeteksi **PNG kartu QR cetak** di `Docs/` dengan cukup cepat (analisis + QR + kartu per frame) |
 

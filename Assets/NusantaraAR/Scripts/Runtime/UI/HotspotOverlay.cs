@@ -20,8 +20,6 @@ namespace NusantaraAR.UI
         const float Reach = 120f;         // jarak mendatar titik -> label/kartu
         const float SideHysteresis = 40f;
         const float EdgeMargin = 16f;
-        const float TopReserve = 150f;    // tombol Kembali / kontrol kanan-atas
-        const float BottomReserve = 290f; // dock + label tahap
         const float Smoothing = 14f;
 
         class Callout
@@ -29,7 +27,7 @@ namespace NusantaraAR.UI
             public HotspotData data;
             public RectTransform dot, pulse, core, line, label;
             public CanvasGroup dotGroup, lineGroup, labelGroup;
-            public Image lineImage, pulseImage;
+            public Image pulseImage;
             public bool visible, occluded, right, placed;
             public Vector2 anchor, labelTarget, labelCenter;
             public float appear;
@@ -47,6 +45,8 @@ namespace NusantaraAR.UI
         Vector2 cardCenter;
         bool cardRight = true, cardPlaced;
         bool labelsVisible = true;
+        // Area yang tertutup UI (unit kanvas, di dalam area aman): top bar, sheet/nav/panel, klaster kiri, rel kanan.
+        float topReserve = 150f, bottomReserve = 290f, leftReserve, rightReserve;
 
         public HotspotCard Card => card;
         public string SelectedId => card.Current?.hotspotId;
@@ -60,6 +60,15 @@ namespace NusantaraAR.UI
 
         /// <summary>Bagian yang sedang diceritakan mode Kisah: titik & labelnya ditonjolkan, yang lain diredupkan.</summary>
         public string FocusId { get; set; }
+
+        /// <summary>Label & kartu info dijauhkan dari area yang tertutup kontrol HUD.</summary>
+        public void SetReserves(float top, float bottom, float left, float right)
+        {
+            topReserve = top;
+            bottomReserve = bottom;
+            leftReserve = left;
+            rightReserve = right;
+        }
 
         public static HotspotOverlay Create(RectTransform parent)
         {
@@ -99,12 +108,12 @@ namespace NusantaraAR.UI
         {
             var c = new Callout { data = h };
 
+            // Garis penunjuk bersarung (tepi gelap + inti emas) agar terlihat di latar terang maupun kamera.
             c.line = UIKit.Rect("Line_" + h.hotspotId, lineLayer);
             c.line.anchorMin = c.line.anchorMax = new Vector2(0.5f, 0.5f);
             c.line.pivot = new Vector2(0f, 0.5f);
-            c.lineImage = c.line.gameObject.AddComponent<Image>();
-            c.lineImage.color = Theme.Gold;
-            c.lineImage.raycastTarget = false;
+            LineStrip(c.line, "Casing", Theme.WithAlpha(Theme.Ink, 0.35f), 9f);
+            LineStrip(c.line, "Core", Theme.Gold, 4f);
             c.lineGroup = c.line.gameObject.AddComponent<CanvasGroup>();
 
             c.dot = UIKit.Rect("Dot_" + h.hotspotId, dotLayer);
@@ -118,11 +127,12 @@ namespace NusantaraAR.UI
             c.dotGroup = c.dot.gameObject.AddComponent<CanvasGroup>();
             c.pulse = MakeCircle(c.dot, "Pulse", 50f, Theme.Gold, true);
             c.pulseImage = c.pulse.GetComponent<Image>();
-            MakeCircle(c.dot, "Halo", 42f, Theme.Chrome, false);
+            MakeCircle(c.dot, "Halo", 44f, Theme.WithAlpha(Theme.Ink, 0.55f), false);
+            MakeCircle(c.dot, "Rim", 31f, Theme.Surface, false);
             c.core = MakeCircle(c.dot, "Core", 22f, Theme.Gold, false);
 
-            // Label: pil emas "Nama Bagian (i)" seperti papan keterangan museum.
-            var pill = UIKit.Panel(labelLayer, "Label_" + h.hotspotId, Theme.Gold, true, true, 34);
+            // Label: pil kaca "Nama Bagian (i)" seperti papan keterangan museum.
+            var pill = UIKit.Surface(labelLayer, "Label_" + h.hotspotId, SurfaceStyle.Glass, 34);
             c.label = pill.rectTransform;
             c.label.anchorMin = c.label.anchorMax = c.label.pivot = new Vector2(0.5f, 0.5f);
             var row = UIKit.HRow(c.label, 12f, new RectOffset(24, 12, 0, 0), false);
@@ -130,20 +140,31 @@ namespace NusantaraAR.UI
             var fitter = c.label.gameObject.AddComponent<ContentSizeFitter>();
             fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
             c.label.sizeDelta = new Vector2(200f, LabelHeight);
-            var title = UIKit.Text(c.label, "Title", h.title.Get(), 28f, Theme.Teak, TextAlignmentOptions.MidlineLeft, FontStyles.Bold);
+            var title = UIKit.Text(c.label, "Title", h.title.Get(), 28f, Theme.Ink, TextAlignmentOptions.MidlineLeft, FontStyles.Bold);
             title.textWrappingMode = TextWrappingModes.NoWrap;
-            var icon = UIKit.Panel(c.label, "Info", Theme.Teak, false, false);
+            var icon = UIKit.Panel(c.label, "Info", Theme.Gold, false, false);
             icon.sprite = SpriteFactory.Circle();
             UIKit.Layout(icon, 44f, 44f);
-            var i = UIKit.Text(icon.transform, "i", "i", 28f, Theme.Gold, TextAlignmentOptions.Center, FontStyles.Bold);
+            var i = UIKit.Text(icon.transform, "i", "i", 28f, Theme.Ink, TextAlignmentOptions.Center, FontStyles.Bold);
             UIKit.Stretch(i.rectTransform);
             var labelButton = pill.gameObject.AddComponent<Button>();
-            labelButton.targetGraphic = pill;
+            labelButton.targetGraphic = pill.GetComponent<Surface>().fill;
             labelButton.onClick.AddListener(() => Tap(h));
             c.labelGroup = pill.gameObject.AddComponent<CanvasGroup>();
 
             SetShown(c, false);
             return c;
+        }
+
+        static void LineStrip(RectTransform line, string name, Color color, float thickness)
+        {
+            var img = UIKit.Panel(line, name, color, false, false);
+            var rt = img.rectTransform;
+            rt.anchorMin = new Vector2(0f, 0.5f);
+            rt.anchorMax = new Vector2(1f, 0.5f);
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.anchoredPosition = Vector2.zero;
+            rt.sizeDelta = new Vector2(0f, thickness);
         }
 
         static RectTransform MakeCircle(RectTransform parent, string name, float size, Color color, bool ring)
@@ -221,7 +242,13 @@ namespace NusantaraAR.UI
             var container = (RectTransform)transform;
             var size = container.rect.size;
             float halfW = size.x * 0.5f, halfH = size.y * 0.5f;
-            float top = halfH - TopReserve, bottom = -halfH + BottomReserve;
+            // Reserve diukur di area aman; tambahkan inset notch / gesture bar (overlay ini layar penuh).
+            var safe = Screen.safeArea;
+            float ky = Screen.height > 0 ? size.y / Screen.height : 1f, kx = Screen.width > 0 ? size.x / Screen.width : 1f;
+            float top = halfH - topReserve - (Screen.height - safe.yMax) * ky;
+            float bottom = -halfH + bottomReserve + safe.yMin * ky;
+            float left = -halfW + EdgeMargin + leftReserve + safe.xMin * kx;
+            float right = halfW - EdgeMargin - rightReserve - (Screen.width - safe.xMax) * kx;
             float t = 1f - Mathf.Exp(-Smoothing * Time.unscaledDeltaTime);
             float pulsePhase = Mathf.Repeat(Time.unscaledTime * 0.9f, 1f);
             string selectedId = SelectedId;
@@ -260,7 +287,7 @@ namespace NusantaraAR.UI
             {
                 float w = Mathf.Max(c.label.rect.width, 120f);
                 float cx = c.right ? c.anchor.x + Reach + w * 0.5f : c.anchor.x - Reach - w * 0.5f;
-                cx = Mathf.Clamp(cx, -halfW + EdgeMargin + w * 0.5f, halfW - EdgeMargin - w * 0.5f);
+                cx = Mathf.Clamp(cx, left + w * 0.5f, Mathf.Max(left + w * 0.5f, right - w * 0.5f));
                 float cy = Mathf.Min(c.anchor.y, top - LabelHeight * 0.5f);
                 for (int guard = 0; guard < placedSide.Count + 1; guard++)
                 {
@@ -317,7 +344,7 @@ namespace NusantaraAR.UI
                 c.dotGroup.alpha = dim;
                 c.core.localScale = Vector3.one * (isSelected || isFocused ? 1.5f : 1f);
                 c.pulse.localScale = Vector3.one * (1f + (isFocused ? 0.9f : 0.5f) * pulsePhase);
-                c.pulseImage.color =Theme.WithAlpha(Theme.Gold, (1f - pulsePhase) * (isSelected || isFocused ? 1f : 0.8f));
+                c.pulseImage.color = Theme.WithAlpha(Theme.Gold, (1f - pulsePhase) * (isSelected || isFocused ? 1f : 0.8f));
 
                 bool showLabel = (labelsVisible || isFocused) && !isSelected;
                 UIKit.SetVisible(c.label, showLabel);
@@ -334,23 +361,23 @@ namespace NusantaraAR.UI
 
             // 5) Kartu info menempel di samping bagian yang dipilih.
             card.SetShown(cardOpen);
-            if (cardOpen) PlaceCard(selected, halfW, top, bottom, t);
+            if (cardOpen) PlaceCard(selected, left, right, top, bottom, t);
             else cardPlaced = false;
         }
 
-        void PlaceCard(Callout c, float halfW, float top, float bottom, float t)
+        void PlaceCard(Callout c, float left, float right, float top, float bottom, float t)
         {
             float w = HotspotCard.Width;
             float h = card.Rect.rect.height;
-            float roomRight = halfW - EdgeMargin - (c.anchor.x + Reach);
-            float roomLeft = (c.anchor.x - Reach) - (-halfW + EdgeMargin);
+            float roomRight = right - (c.anchor.x + Reach);
+            float roomLeft = (c.anchor.x - Reach) - left;
             bool fitsRight = roomRight >= w, fitsLeft = roomLeft >= w;
             if (!cardPlaced) cardRight = fitsRight || (!fitsLeft && roomRight >= roomLeft);
             else if (cardRight && !fitsRight && fitsLeft) cardRight = false;
             else if (!cardRight && !fitsLeft && fitsRight) cardRight = true;
 
             float cx = cardRight ? c.anchor.x + Reach + w * 0.5f : c.anchor.x - Reach - w * 0.5f;
-            cx = Mathf.Clamp(cx, -halfW + EdgeMargin + w * 0.5f, halfW - EdgeMargin - w * 0.5f);
+            cx = Mathf.Clamp(cx, left + w * 0.5f, Mathf.Max(left + w * 0.5f, right - w * 0.5f));
             float cy = h >= top - bottom ? (top + bottom) * 0.5f : Mathf.Clamp(c.anchor.y, bottom + h * 0.5f, top - h * 0.5f);
             var target = new Vector2(cx, cy);
             cardCenter = cardPlaced ? Vector2.Lerp(cardCenter, target, t) : target;
@@ -373,7 +400,7 @@ namespace NusantaraAR.UI
             }
             UIKit.SetVisible(c.line, true);
             c.line.anchoredPosition = from;
-            c.line.sizeDelta = new Vector2(len, 4f);
+            c.line.sizeDelta = new Vector2(len, 9f);
             c.line.localRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg);
             c.lineGroup.alpha = alpha;
         }

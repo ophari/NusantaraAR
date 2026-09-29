@@ -6,6 +6,8 @@
         "Unity.XR.ARSubsystems",
         "Unity.XR.CoreUtils",
         "Unity.InputSystem",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.RenderPipelines.Core.Runtime",
         "Unity.TextMeshPro",
         "UnityEngine.UI"
     ],

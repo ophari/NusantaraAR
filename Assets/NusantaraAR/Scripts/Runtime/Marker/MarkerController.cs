@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using NusantaraAR.UI;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -68,12 +67,11 @@ namespace NusantaraAR.Marker
         int feedRestarts;
 
         ArtifactHud hud;
-        Image statusPill;
-        TextMeshProUGUI statusText, lockLabel;
-        Button lockButton;
-        RectTransform message;
-        TextMeshProUGUI messageTitle, messageBody, primaryLabel;
-        Button primaryButton;
+        TopBar topBar;
+        CoachCard coach;
+        MessageDialog message;
+        GroundGlow glow;
+        bool uiReady, refreshed;
 
         void Start()
         {
@@ -227,6 +225,7 @@ namespace NusantaraAR.Marker
                 SetState(seen ? State.Tracking : State.Searching);
                 if (current != null) current.gameObject.SetActive(seen);
                 bool show = seen && current != null;
+                if (glow != null) glow.SetVisible(show);
                 if (show != controlsShown)
                 {
                     controlsShown = show;
@@ -329,7 +328,8 @@ namespace NusantaraAR.Marker
             boundsExtents = b.extents / s;
             userRotation = Quaternion.identity;
             userScale = 1f;
-            hud.Bind(current, cam, ResetView, null);
+            hud.Bind(current, cam, ResetView, RotateBy);
+            RefreshTexts();
         }
 
         void ApplyPose()
@@ -345,6 +345,14 @@ namespace NusantaraAR.Marker
                          + baseRotation * (pivot * scale) - rotation * (boundsCenter * scale);
             t.rotation = rotation;
             t.localScale = Vector3.one * scale;
+
+            // Cahaya di bawah artefak hanya saat QR rebah di meja (memudar bila QR berdiri di layar/dinding).
+            if (glow != null)
+            {
+                float radius = Mathf.Max(boundsExtents.x, boundsExtents.z) * scale * 1.5f;
+                glow.Place(cam.transform.TransformPoint(markerPose.position), baseRotation * Vector3.up, radius,
+                    Mathf.Clamp01(1f - wallWeight * 1.6f));
+            }
         }
 
         // ------------------------------------------------------------------ gestur & kontrol
@@ -355,15 +363,22 @@ namespace NusantaraAR.Marker
         /// </summary>
         void OnDrag(Vector2 delta)
         {
-            if (current == null || !current.gameObject.activeSelf || !hasPose) return;
             float perPixel = DegreesPerDp / Mathf.Max(0.01f, TouchGestures.DpToPixels(1f));
-            var yaw = Quaternion.AngleAxis(-delta.x * perPixel, Vector3.up);
+            RotateBy(-delta.x * perPixel, delta.y * perPixel);
+        }
+
+        /// <summary>Gestur & tombol HUD: + yaw = muka artefak bergeser ke kiri, + tilt = sisi atas menjauh.</summary>
+        void RotateBy(float yawDegrees, float tiltDegrees)
+        {
+            if (current == null || !current.gameObject.activeSelf || !hasPose) return;
+            var yaw = Quaternion.AngleAxis(yawDegrees, Vector3.up);
             var screenRight = Quaternion.Inverse(markerPose.rotation) * Vector3.right; // sumbu kanan kamera di ruang pose
             screenRight.y = 0f;
             var tilt = screenRight.sqrMagnitude > 1e-4f
-                ? Quaternion.AngleAxis(delta.y * perPixel, screenRight.normalized)
+                ? Quaternion.AngleAxis(tiltDegrees, screenRight.normalized)
                 : Quaternion.identity;
             userRotation = Quaternion.Normalize(tilt * yaw * userRotation);
+            if (glow != null) glow.Pulse();
         }
 
         void OnPinch(float ratio)
@@ -412,53 +427,52 @@ namespace NusantaraAR.Marker
             var safe = UIKit.Stretch(UIKit.Rect("Safe", full));
             safe.gameObject.AddComponent<SafeArea>();
 
-            hud = ArtifactHud.Create(safe, full, 160f, false);
-
-            var back = UIKit.Button(safe, "Back", Locale.T("common.back"), ButtonStyle.Secondary, Back, out var bl, 30f);
-            LocalizedLabel.Attach(bl, "common.back");
-            UIKit.Place((RectTransform)back.transform, new Vector2(0f, 1f), new Vector2(28f, -28f), new Vector2(220f, 96f));
-
-            lockButton = UIKit.Button(safe, "Lock", "", ButtonStyle.Secondary, ToggleLock, out lockLabel, 30f);
-            UIKit.Place((RectTransform)lockButton.transform, new Vector2(1f, 1f), new Vector2(-28f, -272f), new Vector2(300f, 96f));
-
-            statusPill = UIKit.Panel(safe, "StatusPill", Theme.TextPanel, true, false, 44);
-            UIKit.Place(statusPill.rectTransform, new Vector2(0.5f, 1f), new Vector2(110f, -34f), new Vector2(760f, 84f));
-            statusText = UIKit.Text(statusPill.transform, "Text", "", 28f, Theme.Parchment, TextAlignmentOptions.Center);
-            UIKit.Stretch(statusText.rectTransform, 24, 24, 4, 4);
-
-            var scrim = UIKit.Panel(full, "Message", Theme.Scrim, false, true);
-            message = UIKit.Stretch(scrim.rectTransform);
-            var card = UIKit.Panel(message, "Card", Theme.TextPanel, true, true, 40);
-            UIKit.Place(card.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(940f, 700f));
-            messageTitle = UIKit.Text(card.transform, "Title", "", Theme.Heading, Theme.Gold, TextAlignmentOptions.TopLeft, FontStyles.Bold);
-            UIKit.Stretch(messageTitle.rectTransform, 52, 52, 52, 560);
-            messageBody = UIKit.Text(card.transform, "Body", "", Theme.Body, Theme.Parchment);
-            UIKit.Stretch(messageBody.rectTransform, 52, 52, 140, 280);
-            primaryButton = UIKit.Button(card.transform, "Primary", "", ButtonStyle.Primary, null, out primaryLabel);
-            UIKit.Place((RectTransform)primaryButton.transform, new Vector2(0.5f, 0f), new Vector2(0f, 150f), new Vector2(620f, 104f));
-            var secondary = UIKit.Button(card.transform, "Back", Locale.T("common.back"), ButtonStyle.Chip, Back, out var sl);
-            LocalizedLabel.Attach(sl, "common.back");
-            UIKit.Place((RectTransform)secondary.transform, new Vector2(0.5f, 0f), new Vector2(0f, 36f), new Vector2(620f, 100f));
-            message.gameObject.SetActive(false);
+            const float top = 20f + TopBar.Height + 16f;
+            hud = ArtifactHud.Create(safe, full, new HudOptions
+            {
+                topInset = top,
+                tiltButtons = true,
+                panel = new ControlPanelConfig
+                {
+                    getScale = () => userScale,
+                    setScale = s => userScale = Mathf.Clamp(s, ArtifactInstance.MinScale, ArtifactInstance.MaxScale),
+                    toggleKey = "marker.lock",
+                    getToggle = () => state == State.Locked,
+                    setToggle = on =>
+                    {
+                        if (on != (state == State.Locked)) ToggleLock();
+                    },
+                    toggleEnabled = () => state == State.Locked || (current != null && current.gameObject.activeSelf)
+                }
+            });
+            topBar = TopBar.Create(safe, Back, true);
+            coach = CoachCard.Create(safe, top);
+            message = MessageDialog.Create(full, "common.back", Back);
+            glow = GroundGlow.Create();
+            if (glow != null) glow.SetVisible(false);
+            uiReady = true;
         }
 
         void SetState(State s)
         {
-            if (state == s && statusText != null && !string.IsNullOrEmpty(statusText.text)) return;
+            if (state == s && refreshed) return;
             state = s;
             RefreshTexts();
         }
 
         void RefreshTexts()
         {
-            string status = null, title = null, body = null, primary = null;
+            if (!uiReady) return;
+            refreshed = true;
+            string title = null, body = null, primary = null;
             UnityEngine.Events.UnityAction action = null;
+            topBar.SetTitle(currentData != null ? currentData.displayName.Get() : Locale.T("nav.scan"));
             switch (state)
             {
                 case State.Starting:
-                case State.Searching: status = Locale.T("marker.searching"); break;
-                case State.Tracking: status = Locale.T("marker.tracking"); break;
-                case State.Locked: status = Locale.T("marker.locked"); break;
+                case State.Searching: coach.Show(Icon.ScanFrame, Locale.T("marker.searching"), null, true); break;
+                case State.Tracking: coach.Show(Icon.Move, Locale.T("marker.tracking"), null, false, 5f); break;
+                case State.Locked: coach.Show(Icon.Lock, Locale.T("marker.locked"), null, false, 5f); break;
                 case State.NoCamera:
                     title = Locale.T("marker.noCameraTitle");
                     body = Locale.T("marker.noCameraBody");
@@ -484,23 +498,13 @@ namespace NusantaraAR.Marker
                     action = CameraPermission.OpenAppSettings;
                     break;
             }
-            UIKit.SetVisible(statusPill, status != null);
-            if (status != null) statusText.text = status;
-
-            bool showLock = state == State.Tracking || state == State.Locked;
-            UIKit.SetVisible(lockButton, showLock);
-            lockLabel.text = Locale.T(state == State.Locked ? "marker.unlock" : "marker.lock");
-
-            bool showMessage = title != null;
-            UIKit.SetVisible(message, showMessage);
-            if (!showMessage) return;
-            messageTitle.text = title;
-            messageBody.text = body;
-            UIKit.SetVisible(primaryButton, action != null);
-            primaryButton.onClick.RemoveAllListeners();
-            primaryButton.onClick.AddListener(() => AudioManager.Instance.Click());
-            if (action != null) primaryButton.onClick.AddListener(action);
-            primaryLabel.text = primary ?? string.Empty;
+            if (title == null)
+            {
+                message.Hide();
+                return;
+            }
+            coach.Hide();
+            message.Show(title, body, primary, action);
         }
     }
 }

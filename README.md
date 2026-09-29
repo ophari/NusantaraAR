@@ -34,6 +34,8 @@ Alat bantu lain:
 - **Nusantara AR → Render Stage Previews** → `Previews/<ID>_stage_N.png` (setiap tahap exploded view + titik hotspot, semua artefak).
 - **Nusantara AR → Build Keris Bali / Build Keris Sumatra** — impor ulang GLB Blender satu keris (prefab, konten, thumbnail).
 - **Nusantara AR → Render Thumbnails** — render ulang thumbnail katalog saja (batch: `ProjectSetup.RenderThumbnailsBatch`, tanpa `-nographics`).
+- **Nusantara AR → Build AR Visuals** — aset tampilan saja, tanpa menyentuh scene: grid bidang AR, reticle terakota, glow
+  bawah keris, material UI kaca, dan `GlassBlurFeature` di renderer URP (batch: `ProjectSetup.BuildVisualAssetsBatch`).
 - Test: Window → General → Test Runner → EditMode (`NusantaraAR.Tests.EditMode`).
 - Build QA Windows dengan tangkapan layar otomatis alur utama (define `NUSANTARA_CAPTURE`, profil kualitas Mobile):
   `-executeMethod NusantaraAR.EditorTools.BuildScript.BuildWindowsCapture`, lalu jalankan
@@ -46,6 +48,11 @@ dan semua library native berselaras 16 KB (segmen LOAD `0x4000`).
 ## Catatan teknis / penyimpangan dari PRD
 
 - **Canvas Scaler match = 0 (lebar)**, bukan 0,5: dengan 0,5 lebar kanvas turun ke ~980 unit di HP 9:19,5 sehingga tata letak 1080 unit terpotong.
+- **Palet PRD §5.1 (jati/emas) diganti** gading · terakota · nila (referensi desain baru); emas tinggal untuk titik hotspot.
+  Kontras WCAG AA dijaga `UiThemeTests`, termasuk teks di atas kaca pada latar kamera terburuk (hitam/putih).
+- **Kaca buram sungguhan**: URP tidak punya grab-pass untuk uGUI, jadi `GlassBlurFeature` (Render Graph) mem-blur warna kamera
+  ke RT ¼ resolusi yang dibaca shader `NusantaraAR/UI/Glass`. Blur hanya menangkap yang digambar kamera (model, feed kamera,
+  latar `Backdrop` di scene Main), bukan UI lain di bawah panel. Hanya berjalan bila ada panel kaca aktif.
 - **Profil kualitas "PC"** (Forward+, HDR) dari template tidak dipakai di Android; di player Windows profil ini tidak menampilkan objek 3D ke layar.
   Aplikasi ini menargetkan profil "Mobile" — bila kelak ada target desktop, selidiki dulu.
 - Efek SSAO dihapus dari renderer URP (mahal di mobile, dan resource-nya tidak ikut di build).
@@ -88,7 +95,9 @@ Assets/NusantaraAR/
     Artifact/    ArtifactInstance, ArtifactPart, ExplodedViewController, AutoRotate
     Interaction/ TouchGestures (aturan gestur PRD §4.3), OrbitCameraController (3D Viewer)
     AR/          ARController (state machine §4.2), PlacementController (reticle + ARAnchor), CameraPermission, ReticleView
-    UI/          UIKit (token desain §5.1), ArtifactHud, HotspotOverlay (label di AR), HotspotCard, Catalog/Settings/Onboarding
+    UI/          UIKit (token desain), IconFactory (ikon prosedural), GlassSurface (kaca), ArtifactHud (rel + tombol putar),
+                 HotspotOverlay/HotspotCard, TopBar, BottomNav, DetailSheet, CoachCard, ControlPanel, Catalog/Settings/Onboarding
+    Rendering/   GlassBlurFeature (blur kamera untuk UI kaca)
     Audio/       AudioManager (2 AudioSource: narasi + SFX, ducking)
   Scripts/Editor/ ProjectSetup, PreviewRenderer, BuildScript, BuildGuard (pengaman platform build),
                   GlbArtifact (GLB -> prefab artefak), KerisBaliBuilder, KerisSumatraBuilder (bagian, tahap, hotspot, konten)
@@ -103,7 +112,8 @@ Tools/kartu_penanda.py            kartu penanda 6x6 lama (cadangan)
   Scenes/Main.unity, Scenes/AR.unity
 ```
 
-UI dibangun dari kode (tanpa YAML scene), jadi perubahan tampilan cukup di `Scripts/Runtime/UI`.
+UI dibangun dari kode (tanpa YAML scene), jadi perubahan tampilan cukup di `Scripts/Runtime/UI`. Shader kaca & blur ada di
+`Assets/NusantaraAR/Shaders/`.
 
 ## Model keris (Blender → GLB → Unity)
 
