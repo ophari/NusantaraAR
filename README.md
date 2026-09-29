@@ -36,6 +36,8 @@ Alat bantu lain:
 - **Nusantara AR → Render Thumbnails** — render ulang thumbnail katalog saja (batch: `ProjectSetup.RenderThumbnailsBatch`, tanpa `-nographics`).
 - **Nusantara AR → Build AR Visuals** — aset tampilan saja, tanpa menyentuh scene: grid bidang AR, reticle terakota, glow
   bawah keris, material UI kaca, dan `GlassBlurFeature` di renderer URP (batch: `ProjectSetup.BuildVisualAssetsBatch`).
+- **Nusantara AR → Bangun Kisah** — aset mode Kisah dari `Tools/narasi/` (naskah + MP3 hasil `python Tools/narasi/kisah_tts.py`, butuh `pip install edge-tts` dan internet).
+- **Nusantara AR → Pasang Musik Latar** — musik latar tiap keris dari `Tools/musik/musik.json` (MP3 diolah `python Tools/musik/siapkan_musik.py`, butuh ffmpeg).
 - Test: Window → General → Test Runner → EditMode (`NusantaraAR.Tests.EditMode`).
 - Build QA Windows dengan tangkapan layar otomatis alur utama (define `NUSANTARA_CAPTURE`, profil kualitas Mobile):
   `-executeMethod NusantaraAR.EditorTools.BuildScript.BuildWindowsCapture`, lalu jalankan
@@ -90,26 +92,31 @@ Opsi peningkatan: Vuforia Engine (image target, gratis paket Basic, butuh akun +
 ```
 Assets/NusantaraAR/
   Scripts/Runtime/
-    Core/        Locale & UIStrings (ID/EN), AppSession, AppSettings, Analytics (opt-in), MainController
-    Content/     ArtifactData, HotspotData, ContentCatalog (model data PRD §6.2)
-    Artifact/    ArtifactInstance, ArtifactPart, ExplodedViewController, AutoRotate
+    Core/        Locale & UIStrings (ID/EN), AppSession, AppSettings, Analytics (opt-in), MainController, DevCapture (QA)
+    Content/     ArtifactData, HotspotData, ArtifactStory (mode Kisah), ContentCatalog (model data PRD §6.2)
+    Artifact/    ArtifactInstance, ArtifactPart, ExplodedViewController, AutoRotate, GroundGlow
     Interaction/ TouchGestures (aturan gestur PRD §4.3), OrbitCameraController (3D Viewer)
     AR/          ARController (state machine §4.2), PlacementController (reticle + ARAnchor), CameraPermission, ReticleView
     UI/          UIKit (token desain), IconFactory (ikon prosedural), GlassSurface (kaca), ArtifactHud (rel + tombol putar),
-                 HotspotOverlay/HotspotCard, TopBar, BottomNav, DetailSheet, CoachCard, ControlPanel, Catalog/Settings/Onboarding
+                 HotspotOverlay/HotspotCard, StoryPanel (Kisah), TopBar, BottomNav, DetailSheet, CoachCard, ControlPanel,
+                 Catalog/Settings/Onboarding
     Rendering/   GlassBlurFeature (blur kamera untuk UI kaca)
-    Audio/       AudioManager (2 AudioSource: narasi + SFX, ducking)
+    Audio/       AudioManager (3 AudioSource: narasi + SFX + musik latar; fade & ducking saat narasi)
+    Marker/      MarkerController, QrDetector/QrCode, DarkRegions, CameraFeed, MarkerPose (+ kartu 6x6 lama)
   Scripts/Editor/ ProjectSetup, PreviewRenderer, BuildScript, BuildGuard (pengaman platform build),
-                  GlbArtifact (GLB -> prefab artefak), KerisBaliBuilder, KerisSumatraBuilder (bagian, tahap, hotspot, konten)
-  Content/KERIS_BALI_01/          prefab, ArtifactData, thumbnail (dibangkitkan KerisBaliBuilder)
-  Content/KERIS_SUMATRA_01/       prefab, ArtifactData, thumbnail (dibangkitkan KerisSumatraBuilder)
+                  GlbArtifact (GLB -> prefab artefak), KerisBaliBuilder, KerisSumatraBuilder (bagian, tahap, hotspot, konten),
+                  KerisRefs (sumber rujukan), StoryBuilder (Kisah), MusicBuilder (musik latar)
+  Content/KERIS_BALI_01/          prefab, ArtifactData, thumbnail (dibangkitkan KerisBaliBuilder), Story/ (Kisah), Music/
+  Content/KERIS_SUMATRA_01/       prefab, ArtifactData, thumbnail (dibangkitkan KerisSumatraBuilder), Story/, Music/
   Art/KerisBali/                  keris_bali.glb (ekspor Blender) + Materials/ + Textures/ (ASTC, dari builder)
   Art/KerisSumatra/               keris_sumatra.glb (ekspor Blender) + Materials/ + Textures/
+  Resources/ContentCatalog.asset, UIGlass.mat, GroundGlow.mat
+  Scenes/Main.unity, AR.unity, Marker.unity (Scan QR)
 Tools/blender/keris_bali.py, keris_sumatra.py   skrip Blender pemodel keris (+ .blend, *_textures/ hasilnya)
 Tools/kartu_qr.py                 kartu kode QR cetak A5
 Tools/kartu_penanda.py            kartu penanda 6x6 lama (cadangan)
-  Resources/ContentCatalog.asset
-  Scenes/Main.unity, Scenes/AR.unity
+Tools/narasi/                     naskah Kisah (kisah.json), waktu subtitle, kisah_tts.py (suara TTS)
+Tools/musik/                      daftar trek (musik.json), siapkan_musik.py (asli/ tidak di-commit)
 ```
 
 UI dibangun dari kode (tanpa YAML scene), jadi perubahan tampilan cukup di `Scripts/Runtime/UI`. Shader kaca & blur ada di
@@ -123,7 +130,7 @@ dihapus dari proyek (masih ada di riwayat git).
 
 | Keris | Skrip Blender | Isi model | Exploded view |
 | --- | --- | --- | --- |
-| **Keris Bali** `KERIS_BALI_01` | `Tools/blender/keris_bali.py` | Bilah 40 cm luk 9 pamor banyu tetes, ganja maswatu emas, hulu figur dewa emas + selut berpermata, warangka Branggah kayu pelet, pendok & cincin emas berpermata, **jagrak Karang Boma** 45 cm. 11 hotspot | 5 tahap: hunus → hulu + selut → ganja → warangka → pendok |
+| **Keris Bali** `KERIS_BALI_01` | `Tools/blender/keris_bali.py` | Bilah 40 cm luk 9 pamor banyu tetes, ganja emas, hulu (danganan) figur dewa emas + selut berpermata, warangka sesrengatan khas Bali dari kayu timoho berpelet, pendok & cincin emas berpermata, **jagrak Karang Boma** 45 cm. 11 hotspot | 5 tahap: hunus → hulu + selut → ganja → warangka → pendok |
 | **Keris Sumatra** `KERIS_SUMATRA_01` | `Tools/blender/keris_sumatra.py` | Bilah 36 cm luk 7 pamor wos wutah, hulu burl berukir, mendak, sampir bulan sabit, pendok kuningan, dudukan kayu. 9 hotspot | 4 tahap: hunus → hulu + mendak → ganja → warangka |
 
 Mengubah model:
@@ -162,13 +169,16 @@ Catatan builder (`GlbArtifact`):
 | FR-07 exploded view berurutan, bisa dibalik | Bali 5 tahap (termasuk lepas pendok), Sumatra 4 tahap |
 | Hunus / Sarungkan: animasi bilah dicabut dari warangka tanpa membongkar | jalur `drawOut` di builder; test `Draw_BladeLeavesSheathWithoutPassingThroughIt` memastikan bilah tidak menembus warangka/gandar |
 | FR-08 hotspot per state: titik + garis + label nama bagian langsung di AR (tidak saling tumpuk), redup saat tertutup, ketuk bagian model | |
-| FR-09/10 kartu info menempel di samping bagian (menggantikan bottom sheet), 3 tab, audio + pelafalan, sumber, navigasi antar bagian | belum ada rekaman audio; transkrip terpisah ditiadakan (teks tab = isi narasi) |
+| FR-09/10 kartu info menempel di samping bagian (menggantikan bottom sheet), 3 tab, audio + pelafalan, sumber, navigasi antar bagian | isi diperiksa terhadap sumber daring (`KerisRefs`); audio per bagian belum ada; transkrip terpisah ditiadakan (teks tab = isi narasi) |
 | FR-11/12/13 katalog → detail (3D Viewer) → AR, onboarding | |
+| Mode Kisah: narator (suara TTS perempuan, ID/EN) bercerita 9 bab per keris, subtitle per kalimat, model ikut dihunus/dibongkar, label bagian disorot | `StoryPanel`, naskah `Tools/narasi/kisah.json` |
+| Musik latar per keris (gamelan Bali / gambus Melayu), fade & diredam saat narasi, slider volume + kredit di Pengaturan | trek Pixabay, ditandai AI oleh pengunggah |
 | FR-14 ID/EN | implementasi ringan (`Locale`), bukan Unity Localization package |
 
 **Belum / perlu keputusan:**
-- Model keris dibuat di Blender dari cetak biru/lembar acuan (bukan spesimen museum; figur hulu Bali sangat disederhanakan), dan semua teks kuratorial masih **draf**. Filosofi & sejarah sengaja dikosongkan untuk diisi kurator.
-- Belum ada rekaman narasi/pelafalan dan font Playfair/Inter (saat ini LiberationSans bawaan TMP).
+- Model keris dibuat di Blender dari cetak biru/lembar acuan (bukan spesimen museum; figur hulu Bali sangat disederhanakan). Teks kuratorial dan naskah Kisah sudah diperiksa terhadap sumber daring, tetapi masih **draf** sampai divalidasi kurator; tab yang belum punya isi diberi penanda "diisi kurator".
+- Narasi mode Kisah memakai TTS, bukan rekaman narator. Narasi per bagian dan rekaman pelafalan belum ada. Font Playfair/Inter juga belum ada (saat ini LiberationSans bawaan TMP).
+- Musik latar (Pixabay, ditandai AI) perlu ditinjau lisensi dan kesesuaian budayanya sebelum rilis publik.
 - Analitik baru menulis ke log (penyedia belum dipilih, PRD §14 #5).
 - iOS belum diuji (PRD merekomendasikan Android dulu).
 - Uji lapangan (tracking, drift, termal, FPS) wajib di perangkat nyata — belum dilakukan.

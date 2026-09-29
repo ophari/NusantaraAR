@@ -16,7 +16,8 @@ Dokumen ini menjelaskan cara kerja kode proyek: arsitektur, alur data, tanggung 
 | Target | Android, IL2CPP ARM64, minSdk 26, targetSdk 36 |
 | UI | uGUI + TextMeshPro, **dibuat seluruhnya dari kode** (`UIKit`), tanpa prefab UI dan tanpa layout di YAML scene. Gaya gading · terakota · nila dengan **kaca buram sungguhan** (blur kamera lewat `GlassBlurFeature` URP, lihat §5.1) |
 | Bahasa kode | C#; komentar dan teks dalam Bahasa Indonesia |
-| Jumlah kode | 70 file C# + 2 shader, ±12.500 baris (Runtime 53 file / 9.370 baris, Editor 10 / 1.960, Test 7 / 1.200) |
+| Jumlah kode | 70 file C# + 2 shader, ±12.550 baris (Runtime 53 file / 9.390 baris, Editor 10 / 1.960, Test 7 / 1.200) |
+| Audio | Narasi mode Kisah (Microsoft neural TTS, ID/EN), musik latar per keris (Pixabay), SFX klik prosedural |
 
 ### Assembly dan namespace
 
@@ -41,7 +42,9 @@ NusantaraAR/
 │  │  └─ KerisSumatra/            keris_sumatra.glb (ekspor Blender)
 │  ├─ Content/
 │  │  ├─ KERIS_BALI_01/           .prefab + .asset (ArtifactData) + _thumb.png
-│  │  └─ KERIS_SUMATRA_01/        .prefab + .asset + _thumb.png
+│  │  │  ├─ Story/                <ID>_Story.asset (ArtifactStory) + 9 bab × 2 bahasa .mp3 (narasi Kisah)
+│  │  │  └─ Music/                <ID>_music.mp3 (musik latar)
+│  │  └─ KERIS_SUMATRA_01/        .prefab + .asset + _thumb.png + Story/ + Music/
 │  ├─ Prefabs/                    ARPlane.prefab
 │  ├─ Resources/                  ContentCatalog.asset (dimuat saat runtime)
 │  ├─ Scenes/                     Main.unity, AR.unity, Marker.unity (DIHASILKAN oleh ProjectSetup)
@@ -50,12 +53,13 @@ NusantaraAR/
 │  │  └─ Editor/
 │  └─ Tests/EditMode/
 ├─ Docs/        kartu QR + kartu penanda lama (PNG/PDF), draf laporan, dokumen ini
-├─ Tools/       compile_and_test.ps1, kartu_qr.py, kartu_penanda.py, blender/keris_bali.py, blender/keris_sumatra.py (+ .blend, *_textures/)
+├─ Tools/       compile_and_test.ps1, kartu_qr.py, kartu_penanda.py, blender/keris_bali.py, blender/keris_sumatra.py (+ .blend, *_textures/),
+│               narasi/ (kisah.json, kisah_cues.json, kisah_tts.py), musik/ (musik.json, siapkan_musik.py, asli/ tidak di-commit)
 ├─ Builds/      output APK/AAB
 └─ Logs/        setup.log, tests.log, tests.xml (dari Tools/compile_and_test.ps1)
 ```
 
-**Penting:** scene, prefab, katalog, dan GLB adalah **output generator** (GLB dari skrip Blender, sisanya dari `Scripts/Editor/`). Jika diubah manual lewat Inspector, perubahan akan **tertimpa** saat `Nusantara AR/Setup Everything` dijalankan lagi. Sumber kebenarannya ada di kode `Scripts/Editor/`.
+**Penting:** scene, prefab, katalog, aset Kisah, dan GLB adalah **output generator** (GLB dari skrip Blender, MP3 narasi/musik dari skrip Python di `Tools/`, sisanya dari `Scripts/Editor/`). Jika diubah manual lewat Inspector, perubahan akan **tertimpa** saat `Nusantara AR/Setup Everything` dijalankan lagi. Sumber kebenarannya ada di kode `Scripts/Editor/`.
 
 ---
 
@@ -92,7 +96,9 @@ Resources/ContentCatalog.asset ──► AppSession.Catalog (lazy, cache statis)
              │                              └─ AutoRotate
              ├─ hotspots ──► HotspotOverlay (titik + label di AR) ──tap──► HotspotCard (isi kuratorial + narasi, menempel di objek)
              ├─ artifactId ──► QrText "NUSANTARA:<id>" ──► MarkerController (isi QR terbaca) ──► FindByQr(text)
-             └─ markerCode ──► MarkerController (kartu lama, cadangan) ──► FindByMarker(code)
+             ├─ markerCode ──► MarkerController (kartu lama, cadangan) ──► FindByMarker(code)
+             ├─ story (ArtifactStory) ──► StoryPanel (bab: suara + subtitle + tahap exploded + sorotan hotspot)
+             └─ backgroundMusic ──► AudioManager.PlayMusic (3D Viewer, Scan QR, AR; StopMusic saat kembali ke katalog)
 ```
 
 Satu komponen UI, yaitu `ArtifactHud`, dipakai di ketiga scene. Tiap controller membuatnya dengan `HudOptions` (jarak atas, ruang bawah milik layar, tombol miring ya/tidak, `ControlPanelConfig` untuk mode kamera) lalu memanggil `hud.Bind(instance, camera, onReset, onNudge)`. `ArtifactHud` mengatur rel kaca kanan (Kisah, Bongkar/Gabung, Hunus/Sarungkan, Label, Putar 360°, Reset), klaster tahan-tekan kiri (putar/miring, diteruskan ke `onNudge`: + yaw = muka objek bergeser ke kiri, + tilt = sisi atas menjauh), panel skala + saklar di mode kamera, label bagian + kartu info, dan panel Kisah. Controller meneruskan ketukan di luar UI ke `hud.HandleTap` agar bagian model bisa diketuk langsung.
@@ -142,7 +148,7 @@ KERIS_xxx (root)                 ← ArtifactInstance, ExplodedViewController, A
 
 | ID | Sumber model | Kode kartu | Tahap exploded | Catatan |
 |---|---|---|---|---|
-| `KERIS_BALI_01` | **Blender GLB** (`Tools/blender/keris_bali.py` → `KerisBaliBuilder`) | `0xB532` (46386) | 1 utuh + 5 | Bilah 40 cm + pesi 8 cm, luk 9, pamor banyu tetes, hulu figur dewa emas, warangka Branggah, di atas jagrak Karang Boma 45 cm. 11 hotspot |
+| `KERIS_BALI_01` | **Blender GLB** (`Tools/blender/keris_bali.py` → `KerisBaliBuilder`) | `0xB532` (46386) | 1 utuh + 5 | Bilah 40 cm + pesi 8 cm, luk 9, pamor banyu tetes, hulu (danganan) figur dewa emas, warangka sesrengatan khas Bali dari kayu timoho, di atas jagrak Karang Boma 45 cm. 11 hotspot |
 | `KERIS_SUMATRA_01` | **Blender GLB** (`Tools/blender/keris_sumatra.py` → `KerisSumatraBuilder`) | `0xF0E4` (61668) | 1 utuh + 4 | Bilah 36 cm + pesi 7,2 cm, luk 7, pamor wos wutah, hulu burl berukir, sampir bulan sabit, berdiri di dudukan kayu. 9 hotspot |
 
 Tahap Keris Bali (keris terbaring mendatar di jagrak, hulu ke +X): utuh (tersarung) → bilah dihunus (terangkat di atas sarung) → hulu + selut dilepas → ganja dilepas → warangka dilepas dari gandar → pendok dilepas dari gandar.
@@ -158,16 +164,17 @@ Kode kartu lama `0xEEC1` (keris sementara) dan `0xDA26` (Keris Jawa) sudah ditar
 ### Core (`NusantaraAR`)
 | File | Baris | Isi |
 |---|---|---|
-| `Core/AppSession.cs` | 122 | `AppSession` (navigasi scene + artefak terpilih + cache katalog), `AppSettings` (PlayerPrefs: volume narasi/SFX dengan cache, persetujuan analitik, onboarding selesai), `Analytics.Log` (hanya ke `Debug.Log`, dan hanya bila pengguna setuju; belum ada penyedia analitik) |
-| `Core/MainController.cs` | 192 | Controller scene Main: membangun UI, membuka katalog/detail, 3D Viewer (instantiate prefab di `stageRoot`, `orbit.Frame`), cek dukungan ARCore, tombol back |
+| `Core/AppSession.cs` | 131 | `AppSession` (navigasi scene + artefak terpilih + cache katalog), `AppSettings` (PlayerPrefs: volume narasi/musik/SFX dengan cache, default 1 / 0,5 / 0,7; persetujuan analitik; onboarding selesai), `Analytics.Log` (hanya ke `Debug.Log`, dan hanya bila pengguna setuju; belum ada penyedia analitik) |
+| `Core/MainController.cs` | 327 | Controller scene Main: membangun UI, membuka katalog/detail, 3D Viewer (instantiate prefab di `stageRoot`, `orbit.Frame`), memulai musik latar artefak saat detail dibuka dan menghentikannya saat kembali ke katalog, cek dukungan ARCore, tombol back |
 | `Core/Locale.cs` | 68 | `Language {ID, EN}`, `LocalizedString`, `Locale.Current`, event `Locale.Changed`, `Locale.T(key)` |
-| `Core/UIStrings.cs` | 138 | Kamus teks antarmuka per kunci (mis. `"marker.scan"`, `"ctrl.reset"`). Konten kuratorial **tidak** disimpan di sini |
-| `Core/DevCapture.cs` | 100 | Mode QA: menyusuri alur utama dan menyimpan tangkapan layar otomatis (dipakai oleh `BuildScript.BuildWindowsCapture`) |
+| `Core/UIStrings.cs` | 151 | Kamus teks antarmuka per kunci (mis. `"marker.scan"`, `"ctrl.reset"`, `"dock.story"`). Konten kuratorial **tidak** disimpan di sini |
+| `Core/DevCapture.cs` | 164 | Mode QA: menyusuri alur utama (termasuk mode Kisah) dan menyimpan tangkapan layar otomatis (dipakai oleh `BuildScript.BuildWindowsCapture`) |
 
 ### Content (`NusantaraAR`)
 | File | Baris | Isi |
 |---|---|---|
-| `Content/ArtifactData.cs` | 80 | `ScriptableObject` satu artefak: identitas, kategori, region/era/ringkasan, thumbnail, prefab, data spesimen, `markerCode` (kartu lama), `QrText` (isi QR, diturunkan dari `artifactId`), flag placeholder, `hotspots`. Juga `HotspotData`, `HotspotStage`, `ArtifactCategory` |
+| `Content/ArtifactData.cs` | 91 | `ScriptableObject` satu artefak: identitas, kategori, region/era/ringkasan, thumbnail, prefab, data spesimen, `markerCode` (kartu lama), `QrText` (isi QR, diturunkan dari `artifactId`), flag placeholder, `hotspots`, `story` (aset Kisah terpisah), `backgroundMusic` + `musicCredit`. Juga `HotspotData`, `HotspotStage`, `ArtifactCategory` |
+| `Content/ArtifactStory.cs` | 48 | `ScriptableObject` mode Kisah: daftar `StoryChapter` (kunci, judul & teks dua bahasa, `stage` exploded saat bab mulai atau -1, `focusHotspot` yang disorot, klip `voiceID/EN`, `cuesID/EN` = waktu mulai tiap kalimat), `voiceCredit`, `curatorValidated`. Suara dan subtitle selalu dari bahasa yang sama |
 | `Content/ContentCatalog.cs` | 52 | Daftar artefak di `Resources/ContentCatalog`; `Find(id)`, `FindByQr(text)` (awalan `QrPrefix = "NUSANTARA:"`), `FindByMarker(code)`, `NonEmptyCategories()` (kategori tanpa isi disembunyikan) |
 
 ### Artifact (`NusantaraAR`)
@@ -177,56 +184,57 @@ Kode kartu lama `0xEEC1` (keris sementara) dan `0xDA26` (Keris Jawa) sudah ditar
 | `Artifact/ArtifactPart.cs` | 26 | Lihat §4 |
 | `Artifact/ExplodedViewController.cs` | 248 | Lihat §4; animasi dijalankan lewat coroutine, event `StageChanged`. Tahap dengan `drawOut` (tahap 1 keris) dianimasikan sebagai cabut dari sarung (`DrawPath`: tarik lurus sepanjang sumbu sarung sampai pucuk lolos, lalu lengkung Bezier kubik ke pose tercabut; ±1,6 dtk). `ToggleDraw` = tombol Hunus/Sarungkan (tahap 0 ↔ 1 saja), `TryGetDrawSweepBounds` untuk pembingkaian kamera |
 | `Artifact/AutoRotate.cs` | 30 | Turntable, event `ActiveChanged` |
+| `Artifact/GroundGlow.cs` | 91 | Cahaya terakota lembut di bawah artefak (3D Viewer, AR Meja, Scan QR di meja): quad prosedural dengan material `Resources/GroundGlow`, sedikit lebih terang saat objek dimanipulasi. `Create` mengembalikan null bila material belum dibangun (menu Build AR Visuals) |
 
 ### Interaction (`NusantaraAR`)
 | File | Baris | Isi |
 |---|---|---|
 | `Interaction/TouchGestures.cs` | 203 | Satu sumber gestur untuk semua scene. Event: `Tapped`, `Dragged` (1 jari), `Pinched` (rasio jarak), `TwoFingerPanned/Ended`, `InteractionStarted`. Dua jari diputuskan sekali menjadi Pinch **atau** Pan. Sentuhan di atas UI diabaikan (`IsOverUI`). `DpToPixels` untuk ambang yang tidak bergantung DPI |
-| `Interaction/OrbitCameraController.cs` | 170 | Kamera orbit 3D Viewer: geser untuk memutar, pinch/scroll untuk zoom, `Nudge` untuk tombol putar/miring. `Frame(bounds)` membingkai artefak dan menjadikannya posisi reset; `EaseTo` menggeser kamera halus (dipakai `MainController` untuk mundur selama animasi hunus lalu kembali). `SetCoveredScreen(atas, bawah)` menggeser pusat proyeksi (matriks off-center, `m12`) agar keris di tengah area yang tidak tertutup top bar / sheet / nav; `DistanceToFit` memakai tinggi area terlihat |
+| `Interaction/OrbitCameraController.cs` | 166 | Kamera orbit 3D Viewer: geser untuk memutar, pinch/scroll untuk zoom, `Nudge` untuk tombol putar/miring. `Frame(bounds)` membingkai artefak dan menjadikannya posisi reset; `EaseTo` menggeser kamera halus (dipakai `MainController` untuk mundur selama animasi hunus lalu kembali). `SetCoveredScreen(atas, bawah)` menggeser pusat proyeksi (matriks off-center, `m12`) agar keris di tengah area yang tidak tertutup top bar / sheet / nav; `DistanceToFit` memakai tinggi area terlihat |
 
 ### AR — mode ARCore (`NusantaraAR`)
 | File | Baris | Isi |
 |---|---|---|
-| `AR/ARController.cs` | 345 | State machine: `CheckingAvailability → (Unsupported / Installing → InstallFailed) → NeedsPermission / PermissionDenied → Scanning ⇄ ReadyToPlace → Placed ⇄ Repositioning`, dengan `TrackingLost` bila sesi kehilangan tracking. Tips ditampilkan setelah 15 detik tanpa bidang. Gestur: tap untuk meletakkan, geser 1 jari untuk memutar, pinch untuk skala, geser 2 jari untuk memindahkan. Semua jalur gagal menawarkan kembali ke 3D Viewer |
-| `AR/PlacementController.cs` | 131 | Raycast dari tengah layar ke bidang (`UpdateTarget`), `Place` (membuat anchor + menghadap kamera), `BeginReposition`, `DragTo`, `SetPlanesVisible` |
+| `AR/ARController.cs` | 370 | State machine: `CheckingAvailability → (Unsupported / Installing → InstallFailed) → NeedsPermission / PermissionDenied → Scanning ⇄ ReadyToPlace → Placed ⇄ Repositioning`, dengan `TrackingLost` bila sesi kehilangan tracking. Tips ditampilkan setelah 15 detik tanpa bidang. Gestur: tap untuk meletakkan, geser 1 jari untuk memutar, pinch untuk skala, geser 2 jari untuk memindahkan. Semua jalur gagal menawarkan kembali ke 3D Viewer |
+| `AR/PlacementController.cs` | 133 | Raycast dari tengah layar ke bidang (`UpdateTarget`), `Place` (membuat anchor + menghadap kamera), `BeginReposition`, `DragTo`, `SetPlanesVisible` |
 | `AR/ReticleView.cs` | 84 | Cincin penanda posisi letak (mesh prosedural) |
 | `AR/CameraPermission.cs` | 69 | `IsGranted`, `Request(callback)`, `OpenAppSettings()` (intent Android ke halaman info aplikasi). Dipakai oleh AR dan Marker |
 
 ### Marker — mode Scan QR (+ kartu penanda lama), tanpa ARCore (`NusantaraAR.Marker`)
 | File | Baris | Isi |
 |---|---|---|
-| `Marker/MarkerController.cs` | 505 | Controller scene Marker, lihat §6.4 |
+| `Marker/MarkerController.cs` | 510 | Controller scene Marker, lihat §6.4 |
 | `Marker/DarkRegions.cs` | 336 | Analisis frame bersama: threshold adaptif, komponen gelap, segi empat (+ sudut subpiksel opsional), sampling. Dipakai detektor QR dan kartu, lihat §6.2 |
 | `Marker/QrCode.cs` | 709 | QR versi 1-10 tanpa library luar: encoder mode byte (untuk "Tampilkan QR"), decoder matriks (numerik/alfanumerik/byte), Reed-Solomon GF(256), `CreateTexture`, lihat §6.5 |
-| `Marker/QrDetector.cs` | 284 | Detektor QR di gambar kamera: pola finder → homografi → grid modul → `QrCode.TryDecode`, lihat §6.5 |
+| `Marker/QrDetector.cs` | 287 | Detektor QR di gambar kamera: pola finder → homografi → grid modul → `QrCode.TryDecode`, lihat §6.5 |
 | `Marker/CameraFeed.cs` | 162 | `WebCamTexture` → buffer grayscale **tegak** (sudah memperhitungkan `videoRotationAngle` dan mirror) di `Gray/Width/Height`. `ConfigureDisplay` memasang tekstur kamera ke `RawImage` latar dengan rotasi/aspek yang benar. `FocalPixels` adalah perkiraan fokus dari FOV asumsi |
 | `Marker/MarkerDetector.cs` | 239 | Detektor kartu penanda lama + `Homography` (DLT 4 titik dan kuadrat terkecil), lihat §6.2 |
-| `Marker/MarkerPattern.cs` | 56 | Definisi pola 6×6, kode artefak, `IsBlack`, `HammingDistance`, `CreateTexture` |
-| `Marker/MarkerPose.cs` | 106 | Pose dari homografi + `PoseSmoother` (filter One Euro), lihat §6.3 |
+| `Marker/MarkerPattern.cs` | 59 | Definisi pola 6×6, kode artefak, `IsBlack`, `HammingDistance`, `CreateTexture` |
+| `Marker/MarkerPose.cs` | 204 | Pose dari homografi, `UprightPose` + `DeviceGravity`, dan `PoseSmoother` (filter One Euro), lihat §6.3 |
 
 ### UI (`NusantaraAR.UI`)
 | File | Baris | Isi |
 |---|---|---|
-| `UI/UIKit.cs` | 560 | `Theme` (token gading/terakota/nila + `AccentText` untuk teks terakota; `Contrast`/`GlassOver` untuk uji WCAG), `SpriteFactory` (rounded-rect, garis tepi, bayangan lembut 9-slice, lingkaran), `Surface` (panel berelevasi: akar transparan + `Shadow` + `Fill` + `Highlight`; warna diganti lewat `fill`), `UIKit` (Canvas dengan UV1, Panel, `Surface`, Text, Button, `IconTextButton`, `IconButton`, `RailButton`, HRow/VColumn, VerticalScroll, Slider, …) |
-| `UI/IconFactory.cs` | 330 | 31 ikon garis prosedural (`enum Icon`) digambar sebagai medan jarak di grid 24 unit, dirasterisasi ke tekstur putih ber-mipmap dan di-cache |
+| `UI/UIKit.cs` | 569 | `Theme` (token gading/terakota/nila + `AccentText` untuk teks terakota; `Contrast`/`GlassOver` untuk uji WCAG), `SpriteFactory` (rounded-rect, garis tepi, bayangan lembut 9-slice, lingkaran), `Surface` (panel berelevasi: akar transparan + `Shadow` + `Fill` + `Highlight`; warna diganti lewat `fill`), `UIKit` (Canvas dengan UV1, Panel, `Surface`, Text, Button, `IconTextButton`, `IconButton`, `RailButton`, HRow/VColumn, VerticalScroll, Slider, …) |
+| `UI/IconFactory.cs` | 352 | 31 ikon garis prosedural (`enum Icon`) digambar sebagai medan jarak di grid 24 unit, dirasterisasi ke tekstur putih ber-mipmap dan di-cache |
 | `UI/GlassSurface.cs` | 60 | `BaseMeshEffect` yang menjadikan Image kaca buram: material bersama `Resources/UIGlass`, kekuatan tint di UV1, mendaftar ke `GlassBlur` selama aktif |
-| `UI/ArtifactHud.cs` | 400 | HUD bersama (lihat §3.2): rel kaca kanan, klaster `HoldButton` kiri, `ControlPanel` di mode kamera, pil tahap, panel Kisah (menggantikan slot bawah), reserve area untuk `HotspotOverlay`. `HandleTap`, `CloseInfo` (tombol Kembali), navigasi sebelum/berikutnya |
-| `UI/HotspotOverlay.cs` | 440 | Anotasi di AR setiap `LateUpdate`: titik emas (cincin putih + halo gelap) + garis penunjuk bersarung + label kaca "Nama (i)" di kiri/kanan objek (histeresis sisi, label bertabrakan diturunkan, posisi dihaluskan). `SetReserves` menjauhkan label & kartu dari top bar, rel, klaster kiri, dan slot bawah (plus inset notch/gesture bar). `PickAt` meraycast model untuk memilih hotspot bagian yang diketuk |
-| `UI/HotspotCard.cs` | 215 | Kartu kaca yang mengembang di samping bagian: judul, istilah daerah, bahan, status draf, tab bersegmen Kriya/Filosofi/Sejarah, sumber, Putar/Jeda + Pelafalan (hanya bila ada audio), dan chevron `n / N` antar bagian yang tampil di layar |
-| `UI/StoryPanel.cs` | 320 | Mode Kisah: panel kaca dengan tombol ikon Jeda/Lanjut/Tutup, subtitle per kalimat, progress terakota; `SetBottom` mengikuti layar (di atas bar navigasi di 3D Viewer) |
-| `UI/CatalogScreen.cs` | 155 | Layar katalog per kategori (akar transparan di atas `Backdrop`), kartu kaca bergambar; Scan QR & Pengaturan di `BottomNav` |
-| `UI/DetailSheet.cs` | 215 | Lembar kaca detail di 3D Viewer: nama, nama lokal, Asal/Era, ringkasan (ketuk pegangan), CTA Scan QR (AR), Letakkan di Meja (ARCore), Tampilkan QR; `HeightChanged` untuk framing kamera |
-| `UI/BottomNav.cs` | 115 | Bar navigasi kaca nila: Koleksi · Scan QR (lingkaran terakota menonjol) · Pengaturan |
-| `UI/TopBar.cs` | 75 | Tombol kembali bulat + judul tengah (dalam pil kaca di atas kamera) |
-| `UI/CoachCard.cs` | 145 | Kartu panduan kamera: versi besar ber-ikon animasi (kompas, bingkai scan) dan pil petunjuk yang bisa pudar sendiri |
-| `UI/ControlPanel.cs` | 140 | Panel skala (slider logaritmik 0,5–3×, sinkron dengan cubit) + saklar + tombol lebar opsional untuk Scan QR / AR Meja |
-| `UI/MessageDialog.cs` | 65 | Dialog kaca (izin kamera, AR tidak tersedia, kamera tidak ditemukan) |
-| `UI/Backdrop.cs` | 85 | Latar scene Main yang digambar kamera (Screen Space-Camera): gradasi gading + gumpalan terakota/nila + motif kawung samar |
-| `UI/HoldButton.cs`, `UI/SwitchToggle.cs`, `UI/Segmented.cs` | 70 / 90 / 70 | Tombol tahan-tekan (putar/miring), saklar geser, kontrol bersegmen |
+| `UI/ArtifactHud.cs` | 384 | HUD bersama (lihat §3.2): rel kaca kanan, klaster `HoldButton` kiri, `ControlPanel` di mode kamera, pil tahap, panel Kisah (menggantikan slot bawah), reserve area untuk `HotspotOverlay`. `HandleTap`, `CloseInfo` (tombol Kembali), navigasi sebelum/berikutnya |
+| `UI/HotspotOverlay.cs` | 437 | Anotasi di AR setiap `LateUpdate`: titik emas (cincin putih + halo gelap) + garis penunjuk bersarung + label kaca "Nama (i)" di kiri/kanan objek (histeresis sisi, label bertabrakan diturunkan, posisi dihaluskan). `SetReserves` menjauhkan label & kartu dari top bar, rel, klaster kiri, dan slot bawah (plus inset notch/gesture bar). `PickAt` meraycast model untuk memilih hotspot bagian yang diketuk. Label bagian yang sedang diceritakan di mode Kisah disorot |
+| `UI/HotspotCard.cs` | 214 | Kartu kaca yang mengembang di samping bagian: judul, istilah daerah, bahan, status draf, tab bersegmen Kriya/Filosofi/Sejarah, sumber, Putar/Jeda + Pelafalan (hanya bila ada audio), dan chevron `n / N` antar bagian yang tampil di layar |
+| `UI/StoryPanel.cs` | 315 | Mode Kisah (tombol Kisah di rel): memutar bab demi bab dari `ArtifactData.story`. Tiap bab memindah tahap exploded (hunus/bongkar/rakit), menyorot label `focusHotspot`, dan menampilkan subtitle per kalimat sesuai `cues` (tanpa klip: `SplitSentences` membagi waktu sebanding panjang teks). Panel kaca dengan Jeda/Lanjut/Tutup + progress terakota menggantikan slot bawah; model tetap bisa diputar/di-zoom. `SetSuspended` menjeda suara saat HUD disembunyikan (QR hilang, mode Pindahkan); `SetBottom` mengikuti layar |
+| `UI/CatalogScreen.cs` | 161 | Layar katalog per kategori (akar transparan di atas `Backdrop`), kartu kaca bergambar; Scan QR & Pengaturan di `BottomNav` |
+| `UI/DetailSheet.cs` | 187 | Lembar kaca detail di 3D Viewer: nama, nama lokal, Asal/Era, ringkasan (ketuk pegangan), CTA Scan QR (AR), Letakkan di Meja (ARCore), Tampilkan QR; `HeightChanged` untuk framing kamera |
+| `UI/BottomNav.cs` | 97 | Bar navigasi kaca nila: Koleksi · Scan QR (lingkaran terakota menonjol) · Pengaturan |
+| `UI/TopBar.cs` | 62 | Tombol kembali bulat + judul tengah (dalam pil kaca di atas kamera) |
+| `UI/CoachCard.cs` | 124 | Kartu panduan kamera: versi besar ber-ikon animasi (kompas, bingkai scan) dan pil petunjuk yang bisa pudar sendiri |
+| `UI/ControlPanel.cs` | 117 | Panel skala (slider logaritmik 0,5–3×, sinkron dengan cubit) + saklar + tombol lebar opsional untuk Scan QR / AR Meja |
+| `UI/MessageDialog.cs` | 56 | Dialog kaca (izin kamera, AR tidak tersedia, kamera tidak ditemukan) |
+| `UI/Backdrop.cs` | 74 | Latar scene Main yang digambar kamera (Screen Space-Camera): gradasi gading + gumpalan terakota/nila + motif kawung samar |
+| `UI/HoldButton.cs`, `UI/SwitchToggle.cs`, `UI/Segmented.cs` | 67 / 83 / 65 | Tombol tahan-tekan (putar/miring), saklar geser, kontrol bersegmen |
 | `UI/ProceduralTextures.cs` | 120 | Tekstur latar, petak kawung, glow radial, grid bidang AR (runtime & editor) |
 | `UI/MarkerCardScreen.cs` | 65 | Menampilkan kode QR artefak layar penuh (bisa di-scan dari HP lain) |
-| `UI/SettingsScreen.cs` | 175 | Kartu kaca: Bahasa (bersegmen), Suara (3 slider), Privasi (saklar analitik), Ulangi tutorial, Tentang + kredit musik |
-| `UI/OnboardingScreen.cs` | 105 | Tutorial gestur + keselamatan AR dengan ikon per halaman (persetujuan analitik hanya di Pengaturan) |
+| `UI/SettingsScreen.cs` | 154 | Kartu kaca: Bahasa (bersegmen), Suara (slider narasi, musik latar, efek), Privasi (saklar analitik), Ulangi tutorial, Tentang, lalu Kredit musik (judul, pembuat, sumber, lisensi tiap artefak yang punya musik) |
+| `UI/OnboardingScreen.cs` | 107 | Tutorial gestur + keselamatan AR dengan ikon per halaman (persetujuan analitik hanya di Pengaturan) |
 | `UI/LocalizedLabel.cs` | 35 | Label TMP yang otomatis berganti saat `Locale.Changed` |
 | `UI/SafeArea.cs` | 31 | Menyesuaikan rect ke `Screen.safeArea` (notch) |
 
@@ -234,7 +242,7 @@ Kode kartu lama `0xEEC1` (keris sementara) dan `0xDA26` (Keris Jawa) sudah ditar
 
 | File | Baris | Isi |
 |---|---|---|
-| `Rendering/GlassBlurFeature.cs` | 195 | `GlassBlur` (hitungan elemen kaca aktif, material UI, global `_GlassBlurTex`) dan `GlassBlurFeature` (Render Graph, `AfterRenderingTransparents`): warna kamera → turun 1/2…1/8 → naik ke 1/4 (dual-Kawase) → RTHandle persisten. Hanya jalan bila ada kaca aktif |
+| `Rendering/GlassBlurFeature.cs` | 181 | `GlassBlur` (hitungan elemen kaca aktif, material UI, global `_GlassBlurTex`) dan `GlassBlurFeature` (Render Graph, `AfterRenderingTransparents`): warna kamera → turun 1/2…1/8 → naik ke 1/4 (dual-Kawase) → RTHandle persisten. Hanya jalan bila ada kaca aktif |
 | `Shaders/GlassBlur.shader` | — | Pass Down / Up / Final (saturasi) untuk Blitter |
 | `Shaders/UIGlass.shader` | — | Turunan UI-Default: sampel `_GlassBlurTex` di koordinat layar dari posisi clip (`ComputeScreenPos`; vertex kanvas Overlay ada di ruang kanvas, bukan piksel), campur dengan warna vertex sesuai kekuatan tint UV1. Diverifikasi dengan tangkapan `12_glass_probe` di build QA |
 
@@ -243,7 +251,7 @@ Alur satu frame: kamera merender model 3D + latar kamera (`Backdrop` / feed Scan
 ### Audio (`NusantaraAR`)
 | File | Baris | Isi |
 |---|---|---|
-| `Audio/AudioManager.cs` | 118 | Singleton (`AudioManager.Instance`): narasi (play/pause/stop/seek/progress) dan SFX (`Click`). Volume diambil dari `AppSettings` |
+| `Audio/AudioManager.cs` | 193 | Singleton `DontDestroyOnLoad` (`AudioManager.Instance`) dengan tiga `AudioSource`: **narasi** (play/pause/resume/stop/seek/progress, dijeda saat aplikasi ke latar), **SFX** (`Click` prosedural, diredam ke 35% selama narasi), dan **musik latar** (loop). `PlayMusic(clip)`: klip yang sama tidak dimulai ulang antarscene (detail → Scan QR → kembali), klip lain menggantikan dengan fade 0,8 dtk, `null`/`StopMusic` = fade lalu berhenti. Musik diredam ke 30% selama narasi dan di-fade 2 dtk di batas loop (`LoopEnvelope`) agar tidak berbunyi klik. Volume dari `AppSettings` |
 
 ---
 
@@ -342,6 +350,8 @@ Update:
 | Nusantara AR / Setup Everything | `ProjectSetup.RunAll` | Membangun seluruh proyek (lihat 7.2) |
 | Nusantara AR / Build Keris Bali | `KerisBaliBuilder.BuildMenu` | Mengimpor ulang `keris_bali.glb`, membangun prefab + konten + thumbnail |
 | Nusantara AR / Build Keris Sumatra | `KerisSumatraBuilder.BuildMenu` | Mengimpor ulang `keris_sumatra.glb`, membangun prefab + konten + thumbnail |
+| Nusantara AR / Bangun Kisah | `StoryBuilder.BuildMenu` | Membangun `<ID>_Story.asset` dari `Tools/narasi/kisah.json` + MP3 + `kisah_cues.json`, lalu memasangnya ke `ArtifactData.story` (lihat 7.6) |
+| Nusantara AR / Pasang Musik Latar | `MusicBuilder.BuildMenu` | Memasang `backgroundMusic` + `musicCredit` dari `Tools/musik/musik.json` (lihat 7.6) |
 | Nusantara AR / Render Stage Previews | `PreviewRenderer.Render` | Merender PNG tiap tahap exploded setiap artefak ke `Previews/{id}_stage_N.png` (untuk QA visual) |
 | Nusantara AR / Render Thumbnails | `ProjectSetup.RenderThumbnails` | Merender ulang thumbnail katalog kedua keris tanpa menjalankan Setup Everything |
 | Nusantara AR / Build AR Visuals | `ProjectSetup.BuildVisualAssets` | Tanpa menyentuh scene/prefab: reticle terakota, grid bidang AR (`T_PlaneGrid`), glow (`T_Glow`, `Resources/GroundGlow`), material UI kaca (`Resources/UIGlass`), dan `GlassBlurFeature` di setiap renderer URP |
@@ -349,7 +359,7 @@ Update:
 | Nusantara AR / Build / Android App Bundle (.aab) | `BuildScript.BuildAndroidAab` | `Builds/Android/NusantaraAR.aab` |
 | *(batch saja)* | `BuildScript.BuildWindowsCapture` | Build QA Windows `Builds/QA/NusantaraAR.exe` dengan `DevCapture`; platform aktif dikembalikan setelahnya |
 
-Versi batch (tanpa GUI): `ProjectSetup.RunBatch`, `ProjectSetup.BuildVisualAssetsBatch`, `ProjectSetup.RenderThumbnailsBatch`, `PreviewRenderer.RenderBatch`, dan `BuildScript.*`. Semuanya dipanggil lewat `-executeMethod`. Render (thumbnail, preview, QA) butuh GPU, jadi **jangan** pakai `-nographics`.
+Versi batch (tanpa GUI): `ProjectSetup.RunBatch`, `ProjectSetup.BuildVisualAssetsBatch`, `ProjectSetup.RenderThumbnailsBatch`, `PreviewRenderer.RenderBatch`, `StoryBuilder.BuildBatch`, `MusicBuilder.BuildBatch`, dan `BuildScript.*`. Semuanya dipanggil lewat `-executeMethod`. Render (thumbnail, preview, QA) butuh GPU, jadi **jangan** pakai `-nographics`.
 
 ### 7.2 Urutan `ProjectSetup.RunAll` (idempoten)
 1. `EnsureFolders`: membuat folder Art/Content/Resources/Prefabs/Scenes.
@@ -358,16 +368,17 @@ Versi batch (tanpa GUI): `ProjectSetup.RunBatch`, `ProjectSetup.BuildVisualAsset
 4. `ConfigureXR`: loader ARCore/ARKit diset **Optional**.
 5. `ConfigureURP`: menambahkan `ARBackgroundRendererFeature` ke renderer URP.
 6. `KerisBaliBuilder.Build()` lalu `KerisSumatraBuilder.Build()`: impor GLB Blender, prefab modular, tahap exploded, hotspot, dan konten draf, lalu mendaftarkannya ke katalog.
-7. `PruneCatalog`: katalog hanya berisi artefak model Blender (Bali, Sumatra), berurutan.
-8. `BuildCommonAssets`: material reticle dan `ARPlane.prefab`.
-9. `BuildMainScene`, `BuildARScene`, `BuildMarkerScene`: kamera, cahaya, EventSystem (Input System UI module), controller, dan referensinya.
-10. `RenderThumbnail(dataPath, thumbPath)` untuk tiap artefak (600×740 px, `Content/<ID>/<ID>_thumb.png`).
+7. `StoryBuilder.Build()` lalu `MusicBuilder.Build()`: memasang aset Kisah dan musik latar ke `ArtifactData` (dijalankan **setelah** builder keris karena `ArtifactData` dibuat ulang di langkah 6; lihat 7.6).
+8. `PruneCatalog`: katalog hanya berisi artefak model Blender (Bali, Sumatra), berurutan.
+9. `BuildCommonAssets`: material reticle dan `ARPlane.prefab`.
+10. `BuildMainScene`, `BuildARScene`, `BuildMarkerScene`: kamera, cahaya, EventSystem (Input System UI module), controller, dan referensinya.
+11. `RenderThumbnail(dataPath, thumbPath)` untuk tiap artefak (600×740 px, `Content/<ID>/<ID>_thumb.png`).
     - Parameternya **path**, bukan instance, karena `ArtifactData` bisa sudah di-unload setelah pergantian scene.
     - Artefak di-`Init` dan di-`SnapTo(0)` (utuh). Jarak kamera memakai FOV horizontal sebenarnya, dan near/far clip dihitung dari bounds.
     - Kamera merender **dua kali**. Render pertama di scene baru URP bisa kosong karena shader/tekstur belum siap; dulu ini menghasilkan thumbnail abu-abu polos.
     - Bila hasilnya satu warna (`IsUniform`), file lama **tidak ditimpa** dan muncul exception. Bounds kosong juga memicu exception.
     - Importer diset `npotScale = None`. Tanpa itu Unity membulatkan 600×740 menjadi 512×512, sehingga gambar gepeng dan ada pita kosong di katalog.
-11. Mengisi Build Settings dengan urutan `Main`, `AR`, `Marker`, lalu `SaveAssets`.
+12. Mengisi Build Settings dengan urutan `Main`, `AR`, `Marker`, lalu `SaveAssets`.
 
 ### 7.3 Model Blender → GLB → prefab (`GlbArtifact`, `KerisBaliBuilder`, `KerisSumatraBuilder`)
 - **Sumber model**: skrip Blender 5.2 tanpa GUI di `Tools/blender/` membangun geometri, tekstur PBR (warna, ORM, normal map), dan material, lalu mengekspor GLB (tekstur tertanam) ke `Art/KerisBali/keris_bali.glb` dan `Art/KerisSumatra/keris_sumatra.glb`:
@@ -384,7 +395,7 @@ Versi batch (tanpa GUI): `ProjectSetup.RunBatch`, `ProjectSetup.BuildVisualAsset
 - Bila model Blender diubah: jalankan skrip Blender, lalu menu **Build Keris Bali / Build Keris Sumatra** (atau `Tools/compile_and_test.ps1`).
 
 ### 7.4 Konten draf
-`KerisBaliBuilder.Fill` dan `KerisSumatraBuilder.Fill` menulis judul, material, teknik, dan istilah daerah ke setiap hotspot; filosofi & sejarah berisi penanda untuk kurator. Semua hotspot ditandai `curatorValidated = false` sampai divalidasi kurator.
+`KerisBaliBuilder.Fill` dan `KerisSumatraBuilder.Fill` menulis judul, istilah daerah, bahan, teknik, filosofi, dan sejarah ke setiap hotspot lewat `GlbArtifact.Hotspot`. Isi teks sudah diperiksa terhadap sumber daring (UNESCO, Wikipedia, jurnal, media, situs perkerisan; 28-09-2026). Rujukannya dikumpulkan di `KerisRefs` dan tampil sebagai "Sumber rujukan" di kartu info. Tab Filosofi/Sejarah yang belum punya isi otomatis diberi penanda "[Draf] Diisi kurator…". Istilah Keris Sumatra memakai istilah Melayu/Palembang (mis. pendongkok untuk mendak, sampir untuk warangka). Semua hotspot tetap `curatorValidated = false` sampai divalidasi kurator.
 
 ### 7.5 Build dan pengaman platform (`BuildScript`, `BuildGuard`)
 **Masalah yang dicegah:** ARCore diinisialisasi sejak aplikasi dibuka (`InitManagerOnStart = true` di `ConfigureXR`), jadi **semua** kamera, termasuk 3D Viewer di scene Main, dirender lewat jalur XR URP. URP menghitung *shader prefiltering* (varian mana yang dibuang) dari **platform aktif** editor, bukan dari target build. Bila APK di-build saat platform aktif masih Standalone (mis. sisa build QA Windows), `Mobile_RPAsset.m_PrefilterXRKeywords` menjadi `1`. Varian XR dibuang, dan model 3D **tidak tampil di HP** padahal build "sukses". Satu-satunya jejak di log: pesan ARCore *"Cannot get path to the Gradle launcher unless the active build platform is Android"*.
@@ -399,6 +410,21 @@ Pengaman berlapis:
 
 Build batch dari command line tetap disarankan memakai `-buildTarget Android` agar Unity langsung terbuka di platform yang benar (tanpa impor ulang aset di tengah build).
 
+### 7.6 Narasi Kisah dan musik latar (`StoryBuilder`, `MusicBuilder`)
+Aset audio dibuat oleh skrip Python di `Tools/`, lalu dipasang ke konten oleh builder editor. Keduanya menulis ke field/aset yang **tidak** disentuh builder keris, sehingga tetap terpasang saat model dibangun ulang.
+
+**Mode Kisah**
+1. Naskah: `Tools/narasi/kisah.json`, berisi suara (`voiceID` = `id-ID-GadisNeural`, `voiceEN` = `en-US-AvaNeural`) dan per artefak 9 bab (`key`, `titleID/EN`, teks `id`/`en`, `stage`, `focus` = hotspotId yang disorot).
+2. Suara: `python Tools/narasi/kisah_tts.py [--force]` (paket `edge-tts`, perlu internet) menulis `Content/<ID>/Story/<ID>_<nn>_<key>_<id|en>.mp3` dan waktu mulai tiap kalimat ke `Tools/narasi/kisah_cues.json`. Bab yang tidak berubah dilewati (cache hash).
+3. Unity: **Bangun Kisah** (atau Setup Everything) membuat `Content/<ID>/Story/<ID>_Story.asset` (`ArtifactStory`) dan memasangnya ke `ArtifactData.story`. Bila naskah tidak ada, builder hanya memberi peringatan.
+
+**Musik latar**
+1. Daftar trek: `Tools/musik/musik.json` (per artefak: berkas mentah, berkas tujuan, `maxSeconds`, judul, pembuat, sumber, URL, lisensi, `aiGenerated`).
+2. Pixabay memblokir unduhan otomatis, jadi unduh tiap trek manual ke `Tools/musik/asli/` (tidak di-commit). Lalu `python Tools/musik/siapkan_musik.py` (butuh `ffmpeg`/`ffprobe`) menyamakan kenyaringan ke -20 LUFS, memotong ke `maxSeconds` dengan fade-out 3 dtk, dan menulis `Content/<ID>/Music/<ID>_music.mp3`.
+3. Unity: **Pasang Musik Latar** (atau Setup Everything) mengisi `backgroundMusic` + `musicCredit`. Klip diimpor sebagai Vorbis ter-stream (dicek `MusicTests`).
+
+Trek saat ini: "Gamelan Bali Yang Tenang" (LunarBoomMusic) untuk Keris Bali dan "Self-Sacrifice" (Strainsofpoise, gambus Melayu) untuk Keris Sumatra. Keduanya dari Pixabay (Pixabay Content License) dan ditandai hasil AI oleh pengunggahnya.
+
 ---
 
 ## 8. Pengujian
@@ -409,7 +435,7 @@ Jalankan semuanya dengan satu perintah (Unity Editor harus **ditutup** lebih dul
 powershell -ExecutionPolicy Bypass -File Tools\compile_and_test.ps1
 ```
 
-Skrip ini menjalankan `ProjectSetup.RunBatch`, lalu EditMode test, lalu `Tools/kartu_qr.py` dan `Tools/kartu_penanda.py` (kartu QR + kartu penanda lama, PDF/PNG Keris Bali + Keris Sumatra). Log disimpan di `Logs/`.
+Skrip ini menjalankan `ProjectSetup.RunBatch` (termasuk Bangun Kisah dan Pasang Musik Latar dari MP3 yang sudah ada), lalu EditMode test, lalu `Tools/kartu_qr.py` dan `Tools/kartu_penanda.py` (kartu QR + kartu penanda lama, PDF/PNG Keris Bali + Keris Sumatra). Log disimpan di `Logs/`.
 
 | File | Yang diuji |
 |---|---|
@@ -417,6 +443,8 @@ Skrip ini menjalankan `ProjectSetup.RunBatch`, lalu EditMode test, lalu `Tools/k
 | `KerisBlenderTests.cs` | Bali: kode B532, 11 hotspot, 1 + 5 tahap, jagrak 45 cm di y = 0, keris bersandar di atasnya dengan hulu di +X, bilah 40 + 8 cm, bilah terhunus di atas sarung, tahap terakhir melepas pendok. Sumatra: kode F0E4, 9 hotspot, 1 + 4 tahap, tinggi ±52 cm di dudukan, sampir di +X, bilah 36 + 7,2 cm, bilah terhunus di samping sarung |
 | `UiThemeTests.cs` | Kontras WCAG AA token warna, termasuk teks di atas kaca pada latar kamera terburuk (hitam & putih, dicampur di ruang linear); setiap `Icon` menghasilkan bentuk yang terlihat dan tidak menyentuh tepi; slider skala logaritmik & bolak-balik; aset kaca/AR sudah dibangun (`UIGlass`, `GroundGlow`, `GlassBlurFeature` di semua renderer) |
 | `MarkerTests.cs` | Deteksi marker perspektif di 4 orientasi (gambar sintetis); tidak ada false positive pada noise; pose cocok dengan transform yang diketahui; pemetaan rotasi buffer kamera; keunikan rotasi kode & jarak antar kode; memilih artefak yang benar saat semua kode dicari; mendeteksi **PNG kartu cetak** asli di `Docs/` dengan cukup cepat |
+| `StoryTests.cs` | Dijalankan untuk setiap artefak: setiap bab punya suara + subtitle di kedua bahasa; klip narasi terkompresi, mono, dan dimuat saat dibutuhkan; `stage` bab valid dan `focusHotspot` menunjuk hotspot yang tampil di tahap itu; `SplitSentences` membagi waktu sepanjang teks |
+| `MusicTests.cs` | Dijalankan untuk setiap artefak: ada musik latar berkredit; klip di-stream sebagai Vorbis; `LoopEnvelope` fade di kedua ujung |
 | `QrTests.cs` | Encoder identik bit-per-bit dengan pustaka Python `qrcode`; decoder membaca QR Python mode byte & campuran; round-trip semua tingkat ECC dan versi 1-10; koreksi Reed-Solomon (kerusakan kecil terkoreksi, kerusakan besar ditolak); deteksi perspektif di 4 orientasi dengan galat sudut < 2,5 px; jauh/dekat; miring kuat dan gradasi cahaya; QR tak terbaca tetap memberi pose; tanpa false positive (noise, kartu lama) dan QR tidak terbaca sebagai kartu; pose cocok dengan transform yang diketahui; mendeteksi **PNG kartu QR cetak** di `Docs/` dengan cukup cepat (analisis + QR + kartu per frame) |
 
 ---
@@ -440,6 +468,11 @@ Tidak perlu kode tambahan: isi QR diturunkan dari `artifactId`. Tambahkan baris 
 3. Set `ArtifactData.markerCode`. `MarkerController` otomatis mengambil semua kode dari katalog.
 4. Tambahkan baris baru di tabel `KARTU` pada `Tools/kartu_penanda.py`. Tambahkan juga `TestCase` baru di `Detects_PrintableCard_AndIsFastEnough`.
 
+### Kisah dan musik untuk artefak baru
+- Tambahkan entri artefak (9 bab atau berapa pun) di `Tools/narasi/kisah.json`, jalankan `kisah_tts.py`, lalu **Bangun Kisah**. `focus` harus hotspotId yang tampil pada `stage` bab itu (dicek `StoryTests`).
+- Tambahkan trek di `Tools/musik/musik.json`, unduh ke `Tools/musik/asli/`, jalankan `siapkan_musik.py`, lalu **Pasang Musik Latar**.
+- Tambahkan ID ke `[TestFixture]` di `StoryTests` dan `MusicTests`.
+
 ### Menambah teks UI / bahasa
 - Kunci baru ditambahkan di `UIStrings`, lalu dipakai lewat `Locale.T("kunci")` dan `LocalizedLabel.Attach(label, "kunci")` agar teksnya ikut berganti bahasa.
 - Konten artefak memakai `LocalizedString` di aset, bukan `UIStrings`.
@@ -449,7 +482,8 @@ Tidak perlu kode tambahan: isi QR diturunkan dari `artifactId`. Tambahkan baris 
 ## 10. Batasan dan hal yang perlu diketahui
 
 - **Konten kuratorial masih draf**: semua `curatorValidated = false`. Keris Bali dan Keris Sumatra dimodelkan di Blender dari cetak biru/lembar acuan, bukan dari spesimen museum; figur hulu Bali sangat disederhanakan.
-- **Narasi audio belum ada**: field `narrationID/EN` masih kosong, sehingga pemutar tampil tanpa klip.
+- **Narasi**: mode Kisah sudah bersuara (TTS neural, ID/EN; naskah juga masih draf, `ArtifactStory.curatorValidated = false`). Narasi per hotspot (`narrationID/EN`) dan rekaman pelafalan masih kosong, sehingga pemutar di kartu info tampil tanpa klip.
+- **Musik latar** berasal dari Pixabay dan ditandai hasil AI oleh pengunggah. Periksa lisensi dan kesesuaian budayanya sebelum rilis publik.
 - **Analitik** hanya menulis ke log dan belum terhubung ke penyedia mana pun.
 - **Scan QR / kartu**:
   - Jaraknya berupa perkiraan, karena FOV kamera diasumsikan, bukan hasil kalibrasi.
@@ -460,5 +494,5 @@ Tidak perlu kode tambahan: isi QR diturunkan dari `artifactId`. Tambahkan baris 
 - **AR ARCore** tidak bisa diuji di Galaxy A05. Jalur tersebut hanya teruji di Editor, sebatas cabang "tidak didukung".
 - **Aset hasil generator** (scene, prefab, katalog, GLB di Art/KerisBali dan Art/KerisSumatra) jangan diedit manual; ubah skrip Blender / kode editor lalu jalankan ulang.
 - Tekstur GLB diimpor glTFast sebagai sub-aset; ukuran dan kompresinya mengikuti glTFast, bukan TextureImporter Unity (perhatikan ukuran APK dan memori di perangkat kelas bawah).
-- APK `Builds/Android/NusantaraAR.apk` (50,0 MB) dibangun ulang 27-09-2026 (platform aktif Android, thumbnail katalog baru), tetapi belum diuji di perangkat.
+- APK `Builds/Android/NusantaraAR.apk` ±49,7 MB (dibangun 29-09-2026). Sebelum pengecilan ukurannya 56,2 MB; turun berkat stripping managed Medium, kompresi LZ4HC, normal map ASTC 5×5, dan pembuangan paket yang tidak terpakai.
 - **Jangan build Android dengan platform aktif selain Android**; lihat §7.5. `BuildGuard` akan menghentikan build semacam itu, jadi jangan dihapus.
