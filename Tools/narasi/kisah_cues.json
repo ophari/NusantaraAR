@@ -967,6 +967,490 @@
      "text": "See you!"
     }
    ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_01_sapa_id.mp3",
+   "hash": "6a598935d2b13b0c71b26aa7841a804e91fa9082",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Halo!"
+    },
+    {
+     "time": 1.834,
+     "text": "Selamat datang di Candi Borobudur, candi Buddha terbesar di dunia."
+    },
+    {
+     "time": 7.849,
+     "text": "Model di depanmu dibuat dengan skala satu banding dua ratus."
+    },
+    {
+     "time": 13.162,
+     "text": "Aslinya, kaki candi berukuran seratus dua puluh tiga kali seratus dua puluh tiga meter, dan puncaknya menjulang tiga puluh lima meter dari tanah."
+    },
+    {
+     "time": 24.295,
+     "text": "Yuk, kita jelajahi bersama!"
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_01_sapa_en.mp3",
+   "hash": "0812451b0624cd6bf3dbde8e246b7f22c83deed5",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Hi there!"
+    },
+    {
+     "time": 1.079,
+     "text": "Welcome to Borobudur, the largest Buddhist temple in the world."
+    },
+    {
+     "time": 5.688,
+     "text": "The model in front of you is built at a scale of one to two hundred."
+    },
+    {
+     "time": 9.855,
+     "text": "The real base measures one hundred and twenty-three by one hundred and twenty-three metres, and its summit rises thirty-five metres above the ground."
+    },
+    {
+     "time": 18.982,
+     "text": "Let's explore it together!"
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_02_sejarah_id.mp3",
+   "hash": "28801e41eb523bf7401f7c9def1bd3b7f1da54a4",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Borobudur dibangun pada abad kesembilan, di masa Wangsa Syailendra, di Magelang, Jawa Tengah."
+    },
+    {
+     "time": 8.396,
+     "text": "Prasasti Karangtengah dari tahun 824 menyebut sebuah bangunan suci bernama Jinalaya yang diresmikan oleh Pramodhawardhani, putri Raja Samaratungga."
+    },
+    {
+     "time": 20.624,
+     "text": "Menurut cerita rakyat, arsiteknya bernama Gunadharma, meski namanya tidak tercatat di prasasti mana pun."
+    },
+    {
+     "time": 29.282,
+     "text": "Candi ini disusun dari sekitar lima puluh lima ribu meter kubik batu andesit tanpa semen sama sekali."
+    },
+    {
+     "time": 37.211,
+     "text": "Batu-batunya saling mengunci dengan tonjolan, lekukan, dan sambungan ekor burung."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_02_sejarah_en.mp3",
+   "hash": "b777f63b803d8345d7fd40773cf3c618df1c0b73",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Borobudur was built in the ninth century, in the time of the Sailendra dynasty, in Magelang, Central Java."
+    },
+    {
+     "time": 7.537,
+     "text": "The Karangtengah inscription of 824 mentions a sacred building called Jinalaya, inaugurated by Pramodhawardhani, daughter of King Samaratungga."
+    },
+    {
+     "time": 18.735,
+     "text": "According to folk tales its architect was Gunadharma, although his name is not recorded in any inscription."
+    },
+    {
+     "time": 25.506,
+     "text": "The temple is built from about fifty-five thousand cubic metres of andesite stone, with no mortar at all."
+    },
+    {
+     "time": 32.081,
+     "text": "The stones lock together with knobs, indentations and dovetail joints."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_03_kamadhatu_id.mp3",
+   "hash": "1ea23fb7bea3ad3111b836050e39dcb464407517",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Borobudur tersusun dalam tiga tingkatan alam menurut kosmologi Buddha."
+    },
+    {
+     "time": 6.001,
+     "text": "Yang paling bawah adalah Kamadhatu, alam keinginan, yaitu kaki candi ini."
+    },
+    {
+     "time": 13.11,
+     "text": "Di balik kaki yang kamu lihat, tersembunyi kaki asli dengan seratus enam puluh panel relief Karmawibhangga tentang hukum sebab-akibat."
+    },
+    {
+     "time": 22.667,
+     "text": "Kaki asli itu ditutup karena cacat struktur saat candi masih dibangun, dan reliefnya baru ditemukan secara tidak sengaja oleh insinyur Belanda Jan Willem IJzerman pada tahun 1885."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_03_kamadhatu_en.mp3",
+   "hash": "0c1622c77b73746ca7a56bb982f7347e802c7bca",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Borobudur is arranged in three realms of Buddhist cosmology."
+    },
+    {
+     "time": 4.425,
+     "text": "The lowest is Kamadhatu, the realm of desire, which is this base."
+    },
+    {
+     "time": 9.204,
+     "text": "Behind the base you can see lies the original base, with one hundred and sixty Karmavibhangga relief panels about the law of cause and effect."
+    },
+    {
+     "time": 18.253,
+     "text": "It was covered because of structural defects while the temple was being built, and its reliefs were only discovered by chance by the Dutch engineer Jan Willem IJzerman in 1885."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_04_relief_id.mp3",
+   "hash": "14d1be34f3329b7812a0e69f17e776f01d73ba16",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Di atasnya berdiri lima teras persegi."
+    },
+    {
+     "time": 3.995,
+     "text": "Inilah Rupadhatu, alam berbentuk."
+    },
+    {
+     "time": 7.889,
+     "text": "Dinding lorongnya penuh relief, seluruhnya sekitar dua ribu enam ratus tujuh puluh dua panel."
+    },
+    {
+     "time": 15.467,
+     "text": "Relief dibaca sambil berjalan searah jarum jam, yang disebut pradaksina."
+    },
+    {
+     "time": 21.873,
+     "text": "Ada kisah hidup Sang Buddha dalam Lalitavistara, kisah kehidupan-kehidupan sebelumnya dalam Jataka dan Avadana, serta pengembaraan Sudhana mencari Kebijaksanaan Sempurna dalam Gandavyuha."
+    },
+    {
+     "time": 36.001,
+     "text": "Relief naratifnya terbentang sepanjang kira-kira tiga kilometer."
+    },
+    {
+     "time": 41.352,
+     "text": "Pada model ini reliefnya dibuat bergaya, bukan salinan relief asli."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_04_relief_en.mp3",
+   "hash": "2483fca80d64c3f7a2c76f99f4b4042a1ff84233",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Above it stand five square terraces."
+    },
+    {
+     "time": 2.98,
+     "text": "This is Rupadhatu, the world of forms."
+    },
+    {
+     "time": 5.988,
+     "text": "The gallery walls are covered in reliefs, about two thousand six hundred and seventy-two panels in all."
+    },
+    {
+     "time": 12.355,
+     "text": "They are read while walking clockwise, which is called pradakshina."
+    },
+    {
+     "time": 16.417,
+     "text": "There is the life of the Buddha in the Lalitavistara, his former lives in the Jataka and Avadana, and Sudhana's search for Perfect Wisdom in the Gandavyuha."
+    },
+    {
+     "time": 25.988,
+     "text": "The narrative reliefs stretch for about three kilometres."
+    },
+    {
+     "time": 29.503,
+     "text": "On this model the reliefs are stylised, not copies of the real ones."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_05_relung_id.mp3",
+   "hash": "3829284e63a6b2f86fa6072bfa203f5f4eb247c9",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Lihat deretan relung di atas pagar langkan."
+    },
+    {
+     "time": 4.021,
+     "text": "Ada empat ratus tiga puluh dua relung, masing-masing berisi arca Buddha duduk."
+    },
+    {
+     "time": 10.519,
+     "text": "Sikap tangannya berbeda menurut arah mata angin: memanggil bumi sebagai saksi di sisi timur, memberi sedekah di selatan, bermeditasi di barat, dan keberanian tanpa rasa takut di utara."
+    },
+    {
+     "time": 24.764,
+     "text": "Di langkan kelima, semua arca bersikap witarka mudra, lambang nalar dan kebajikan."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_05_relung_en.mp3",
+   "hash": "e9c939c6d40fe8b248107f4cd6e148340e33c1ea",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Look at the rows of niches along the balustrades."
+    },
+    {
+     "time": 3.084,
+     "text": "There are four hundred and thirty-two of them, each holding a seated Buddha."
+    },
+    {
+     "time": 7.524,
+     "text": "Their hand gestures change with the compass: calling the earth to witness on the east side, giving alms on the south, meditation on the west, and fearlessness on the north."
+    },
+    {
+     "time": 18.995,
+     "text": "On the fifth balustrade, every statue shows the vitarka mudra, the gesture of reasoning and virtue."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_06_stupa_induk_id.mp3",
+   "hash": "2d0ce8e4d79b217fa3916b6ebceb01147be0877f",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Sekarang kita bongkar dari puncak."
+    },
+    {
+     "time": 3.409,
+     "text": "Stupa induk diangkat."
+    },
+    {
+     "time": 6.092,
+     "text": "Inilah stupa terbesar sekaligus titik tertinggi candi, dan bagian dalamnya kosong."
+    },
+    {
+     "time": 12.954,
+     "text": "Dahulu puncaknya pernah dimahkotai chattra, payung batu bersusun tiga."
+    },
+    {
+     "time": 19.36,
+     "text": "Theodoor van Erp menyusunnya kembali saat pemugaran tahun 1907 sampai 1911, lalu membongkarnya lagi karena batu aslinya tidak cukup."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_06_stupa_induk_en.mp3",
+   "hash": "4fc2f51397600e59f03a4059f4f18c337f00c750",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Now let's take it apart from the top."
+    },
+    {
+     "time": 2.42,
+     "text": "The main stupa is lifted."
+    },
+    {
+     "time": 4.464,
+     "text": "This is the largest stupa and the highest point of the temple, and its interior is empty."
+    },
+    {
+     "time": 10.232,
+     "text": "Its summit was once crowned by a chattra, a three-tiered stone parasol."
+    },
+    {
+     "time": 15.245,
+     "text": "Theodoor van Erp rebuilt it during the restoration of 1907 to 1911, then dismantled it again because there were not enough original stones."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_07_arupadhatu_id.mp3",
+   "hash": "ff70b6ea0c600d7086232d11326a313021602764",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Tiga teras melingkar kini terpisah."
+    },
+    {
+     "time": 3.592,
+     "text": "Inilah Arupadhatu, alam tanpa bentuk."
+    },
+    {
+     "time": 7.915,
+     "text": "Perhatikan, dindingnya polos tanpa relief."
+    },
+    {
+     "time": 12.695,
+     "text": "Di sini berdiri tujuh puluh dua stupa terawang: tiga puluh dua, dua puluh empat, dan enam belas di tiap lingkaran."
+    },
+    {
+     "time": 22.329,
+     "text": "Lubangnya berbentuk belah ketupat di dua teras bawah dan persegi di teras teratas."
+    },
+    {
+     "time": 28.787,
+     "text": "Di dalam setiap stupa duduk arca Buddha dengan sikap tangan memutar roda dharma."
+    },
+    {
+     "time": 35.024,
+     "text": "Dulu orang percaya menyentuh arca di dalam stupa membawa keberuntungan, tetapi kebiasaan itu sudah lama dilarang demi menjaga candi."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_07_arupadhatu_en.mp3",
+   "hash": "641c933fba43c719da8ee47f04194954d8fa0dc8",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "The three circular terraces are now apart."
+    },
+    {
+     "time": 3.058,
+     "text": "This is Arupadhatu, the formless world."
+    },
+    {
+     "time": 6.248,
+     "text": "Notice how plain the walls are, with no reliefs."
+    },
+    {
+     "time": 9.842,
+     "text": "Here stand seventy-two perforated stupas: thirty-two, twenty-four and sixteen on each ring."
+    },
+    {
+     "time": 17.068,
+     "text": "Their openings are diamond-shaped on the two lower terraces and square on the top one."
+    },
+    {
+     "time": 22.277,
+     "text": "Inside every stupa sits a Buddha turning the wheel of the dharma."
+    },
+    {
+     "time": 26.573,
+     "text": "People once believed that touching a statue inside a stupa brought good luck, but the practice has long been banned to protect the temple."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_08_bongkar_id.mp3",
+   "hash": "12a1cbd84269a7ab457cc211324f11075a677769",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Sekarang semua tingkat terpisah."
+    },
+    {
+     "time": 3.396,
+     "text": "Dari bawah: kaki candi sebagai Kamadhatu, lima teras persegi sebagai Rupadhatu, lalu tiga teras melingkar dan stupa induk sebagai Arupadhatu."
+    },
+    {
+     "time": 15.753,
+     "text": "Seluruhnya sembilan tingkat, enam persegi dan tiga melingkar, dimahkotai stupa induk."
+    },
+    {
+     "time": 22.954,
+     "text": "Tinggi tiap teras pada model ini adalah perkiraan, karena kami belum menemukan data ukur resminya."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_08_bongkar_en.mp3",
+   "hash": "fab3d328b03eff9c66351323626d537836e0e112",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Now every level is apart."
+    },
+    {
+     "time": 2.368,
+     "text": "From the bottom: the base as Kamadhatu, five square terraces as Rupadhatu, then three circular terraces and the main stupa as Arupadhatu."
+    },
+    {
+     "time": 13.136,
+     "text": "Nine levels in all, six square and three circular, crowned by the main stupa."
+    },
+    {
+     "time": 18.631,
+     "text": "The height of each terrace on this model is an estimate, because we have not yet found official survey data."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_09_penutup_id.mp3",
+   "hash": "392292b01717fbd9be5433fa64eb995a0fe8e92c",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Kita rakit kembali candinya."
+    },
+    {
+     "time": 3.188,
+     "text": "Pada tahun 1814, Thomas Stamford Raffles mengutus H.C. Cornelius untuk membersihkan Borobudur dari semak belukar."
+    },
+    {
+     "time": 13.632,
+     "text": "Pemugaran besar tahun 1975 sampai 1982 membongkar dan menyusun kembali lebih dari satu juta batu, dan pada tahun 1991 Borobudur ditetapkan sebagai Warisan Dunia UNESCO."
+    },
+    {
+     "time": 31.419,
+     "text": "Hingga kini, setiap Waisak umat Buddha berjalan mengelilingi candi searah jarum jam."
+    },
+    {
+     "time": 38.488,
+     "text": "Ketuk label emas di setiap tingkat untuk menjelajah lebih jauh, ya."
+    },
+    {
+     "time": 44.269,
+     "text": "Sampai jumpa!"
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/BOROBUDUR_01/Story/BOROBUDUR_01_09_penutup_en.mp3",
+   "hash": "dad3d66b1e68843c0e01e2dea99c8f686d8533f6",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Let's put the temple back together."
+    },
+    {
+     "time": 2.198,
+     "text": "In 1814, Thomas Stamford Raffles sent H.C. Cornelius to clear Borobudur of its overgrowth."
+    },
+    {
+     "time": 9.738,
+     "text": "The major restoration of 1975 to 1982 dismantled and rebuilt more than one million stones, and in 1991 Borobudur was inscribed as a UNESCO World Heritage Site."
+    },
+    {
+     "time": 22.993,
+     "text": "To this day, at every Vesak, Buddhists walk clockwise around the temple."
+    },
+    {
+     "time": 28.357,
+     "text": "Tap the gold labels on each level to explore further."
+    },
+    {
+     "time": 31.99,
+     "text": "See you!"
+    }
+   ]
   }
  ]
 }

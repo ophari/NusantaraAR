@@ -21,6 +21,7 @@ namespace NusantaraAR
             ["cat.KerisSenjata"] = ("Keris & Senjata", "Keris & Weapons"),
             ["cat.Arca"] = ("Arca", "Statues"),
             ["cat.KriaLogam"] = ("Kria Logam", "Metalcraft"),
+            ["cat.Candi"] = ("Candi", "Temples"),
 
             ["detail.viewAR"] = ("Lihat di AR", "View in AR"),
             ["detail.arUnsupported"] = ("Perangkat ini belum mendukung AR", "This device does not support AR"),
@@ -119,8 +120,8 @@ namespace NusantaraAR
             ["settings.tutorial"] = ("Ulangi tutorial", "Replay tutorial"),
             ["settings.about"] = ("Tentang", "About"),
             ["settings.aboutBody"] = (
-                "Nusantara AR - aplikasi edukasi benda budaya Indonesia.\nModel keris saat ini adalah model sementara hasil rekonstruksi dari satu foto; akan diganti aset dari spesimen asli yang divalidasi kurator.\nSeluruh teks kuratorial masih draf.\nSuara narator mode Kisah adalah suara sintetis (Microsoft neural TTS).\nMusik latar dari Pixabay; tanda [AI] = dibuat dengan AI oleh pengunggahnya.",
-                "Nusantara AR - a learning app for Indonesian cultural objects.\nThe current keris is a temporary model reconstructed from a single photo; it will be replaced by an asset from a curator-validated specimen.\nAll curatorial text is still a draft.\nThe Story narrator is a synthetic voice (Microsoft neural TTS).\nBackground music from Pixabay; [AI] = made with AI by its uploader."),
+                "Nusantara AR - aplikasi edukasi benda budaya Indonesia.\nModel 3D saat ini adalah model Blender sementara: keris dibuat dari lembar acuan, Candi Borobudur dari data ukuran bersumber ditambah perkiraan (skala 1:200). Model akan diganti atau divalidasi kurator.\nSeluruh teks kuratorial masih draf.\nSuara narator mode Kisah adalah suara sintetis (Microsoft neural TTS).\nMusik latar dari Pixabay; tanda [AI] = dibuat dengan AI oleh pengunggahnya.",
+                "Nusantara AR - a learning app for Indonesian cultural objects.\nThe current 3D models are temporary Blender models: the keris were made from reference sheets, Borobudur temple from sourced dimensions plus estimates (1:200 scale). They will be replaced or validated by a curator.\nAll curatorial text is still a draft.\nThe Story narrator is a synthetic voice (Microsoft neural TTS).\nBackground music from Pixabay; [AI] = made with AI by its uploader."),
             ["settings.musicCredits"] = ("Musik latar", "Background music"),
             ["settings.on"] = ("Aktif", "On"),
             ["settings.off"] = ("Nonaktif", "Off"),

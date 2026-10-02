@@ -32,12 +32,12 @@ adb install -r Builds/Android/NusantaraAR.apk
 
 Alat bantu lain:
 - **Nusantara AR → Render Stage Previews** → `Previews/<ID>_stage_N.png` (setiap tahap exploded view + titik hotspot, semua artefak).
-- **Nusantara AR → Build Keris Bali / Build Keris Sumatra** — impor ulang GLB Blender satu keris (prefab, konten, thumbnail).
+- **Nusantara AR → Build Keris Bali / Build Keris Sumatra / Build Candi Borobudur** — impor ulang GLB Blender satu artefak (prefab, konten, thumbnail).
 - **Nusantara AR → Render Thumbnails** — render ulang thumbnail katalog saja (batch: `ProjectSetup.RenderThumbnailsBatch`, tanpa `-nographics`).
 - **Nusantara AR → Build AR Visuals** — aset tampilan saja, tanpa menyentuh scene: grid bidang AR, reticle terakota, glow
   bawah keris, material UI kaca, dan `GlassBlurFeature` di renderer URP (batch: `ProjectSetup.BuildVisualAssetsBatch`).
 - **Nusantara AR → Bangun Kisah** — aset mode Kisah dari `Tools/narasi/` (naskah + MP3 hasil `python Tools/narasi/kisah_tts.py`, butuh `pip install edge-tts` dan internet).
-- **Nusantara AR → Pasang Musik Latar** — musik latar tiap keris dari `Tools/musik/musik.json` (MP3 diolah `python Tools/musik/siapkan_musik.py`, butuh ffmpeg).
+- **Nusantara AR → Pasang Musik Latar** — musik latar tiap artefak dari `Tools/musik/musik.json` (MP3 diolah `python Tools/musik/siapkan_musik.py`, butuh ffmpeg).
 - Test: Window → General → Test Runner → EditMode (`NusantaraAR.Tests.EditMode`).
 - Build QA Windows dengan tangkapan layar otomatis alur utama (define `NUSANTARA_CAPTURE`, profil kualitas Mobile):
   `-executeMethod NusantaraAR.EditorTools.BuildScript.BuildWindowsCapture`, lalu jalankan
@@ -73,12 +73,13 @@ Kartu kode QR (cetak A5 tanpa diperkecil, sisi QR 8 cm) — satu kartu per artef
 | --- | --- | --- |
 | Keris Bali (model Blender) | `Docs/KartuQR_KerisBali_A5.pdf` | `NUSANTARA:KERIS_BALI_01` |
 | Keris Sumatra (model Blender) | `Docs/KartuQR_KerisSumatra_A5.pdf` | `NUSANTARA:KERIS_SUMATRA_01` |
+| Candi Borobudur (model Blender) | `Docs/KartuQR_CandiBorobudur_A5.pdf` | `NUSANTARA:BOROBUDUR_01` |
 
 Kartu QR dibuat ulang dengan `python Tools/kartu_qr.py` (butuh `pip install pillow qrcode`). Isi QR diturunkan dari
 `artifactId` (`ArtifactData.QrText`), jadi artefak baru otomatis punya QR. Atau tekan tombol **Tampilkan QR** di halaman
 detail untuk menampilkannya di layar HP/laptop lain.
 
-Kartu penanda 6x6 lama (`Docs/KartuPenanda_*_A5.pdf`, kode `B532` / `F0E4`, `python Tools/kartu_penanda.py`) kodenya
+Kartu penanda 6x6 lama (`Docs/KartuPenanda_*_A5.pdf`, kode `B532` / `F0E4` / `E3B1`, `python Tools/kartu_penanda.py`) kodenya
 tetap disimpan dan masih dikenali di mode Scan QR sebagai cadangan (`MarkerController.detectLegacyCards`), tetapi tidak
 lagi ditampilkan di UI. Kartu `EEC1` (keris sementara) dan `DA26` (Keris Jawa) sudah ditarik dan tidak dikenali lagi.
 
@@ -104,15 +105,17 @@ Assets/NusantaraAR/
     Audio/       AudioManager (3 AudioSource: narasi + SFX + musik latar; fade & ducking saat narasi)
     Marker/      MarkerController, QrDetector/QrCode, DarkRegions, CameraFeed, MarkerPose (+ kartu 6x6 lama)
   Scripts/Editor/ ProjectSetup, PreviewRenderer, BuildScript, BuildGuard (pengaman platform build),
-                  GlbArtifact (GLB -> prefab artefak), KerisBaliBuilder, KerisSumatraBuilder (bagian, tahap, hotspot, konten),
-                  KerisRefs (sumber rujukan), StoryBuilder (Kisah), MusicBuilder (musik latar)
+                  GlbArtifact (GLB -> prefab artefak), KerisBaliBuilder, KerisSumatraBuilder, CandiBorobudurBuilder
+                  (bagian, tahap, hotspot, konten), KerisRefs/CandiRefs (sumber rujukan), StoryBuilder (Kisah), MusicBuilder (musik latar)
   Content/KERIS_BALI_01/          prefab, ArtifactData, thumbnail (dibangkitkan KerisBaliBuilder), Story/ (Kisah), Music/
   Content/KERIS_SUMATRA_01/       prefab, ArtifactData, thumbnail (dibangkitkan KerisSumatraBuilder), Story/, Music/
+  Content/BOROBUDUR_01/           prefab, ArtifactData, thumbnail (dibangkitkan CandiBorobudurBuilder), Story/, Music/
   Art/KerisBali/                  keris_bali.glb (ekspor Blender) + Materials/ + Textures/ (ASTC, dari builder)
   Art/KerisSumatra/               keris_sumatra.glb (ekspor Blender) + Materials/ + Textures/
+  Art/CandiBorobudur/             candi_borobudur.glb (ekspor Blender) + Materials/ + Textures/
   Resources/ContentCatalog.asset, UIGlass.mat, GroundGlow.mat
   Scenes/Main.unity, AR.unity, Marker.unity (Scan QR)
-Tools/blender/keris_bali.py, keris_sumatra.py   skrip Blender pemodel keris (+ .blend, *_textures/ hasilnya)
+Tools/blender/keris_bali.py, keris_sumatra.py, candi_borobudur.py   skrip Blender pemodel artefak (+ .blend, *_textures/ hasilnya)
 Tools/kartu_qr.py                 kartu kode QR cetak A5
 Tools/kartu_penanda.py            kartu penanda 6x6 lama (cadangan)
 Tools/narasi/                     naskah Kisah (kisah.json), waktu subtitle, kisah_tts.py (suara TTS)
@@ -122,16 +125,17 @@ Tools/musik/                      daftar trek (musik.json), siapkan_musik.py (as
 UI dibangun dari kode (tanpa YAML scene), jadi perubahan tampilan cukup di `Scripts/Runtime/UI`. Shader kaca & blur ada di
 `Assets/NusantaraAR/Shaders/`.
 
-## Model keris (Blender → GLB → Unity)
+## Model artefak (Blender → GLB → Unity)
 
 Semua model 3D dibuat di **Blender 5.2** oleh skrip (tanpa klik manual), diekspor sebagai **GLB**, lalu diimpor Unity
 lewat **glTFast**. Model lama (keris sementara dari `keris3d`, Keris Bali prosedural buatan Unity, Keris Jawa) sudah
 dihapus dari proyek (masih ada di riwayat git).
 
-| Keris | Skrip Blender | Isi model | Exploded view |
+| Artefak | Skrip Blender | Isi model | Exploded view |
 | --- | --- | --- | --- |
 | **Keris Bali** `KERIS_BALI_01` | `Tools/blender/keris_bali.py` | Bilah 40 cm luk 9 pamor banyu tetes, ganja emas, hulu (danganan) figur dewa emas + selut berpermata, warangka sesrengatan khas Bali dari kayu timoho berpelet, pendok & cincin emas berpermata, **jagrak Karang Boma** 45 cm. 11 hotspot | 5 tahap: hunus → hulu + selut → ganja → warangka → pendok |
 | **Keris Sumatra** `KERIS_SUMATRA_01` | `Tools/blender/keris_sumatra.py` | Bilah 36 cm luk 7 pamor wos wutah, hulu burl berukir, mendak, sampir bulan sabit, pendok kuningan, dudukan kayu. 9 hotspot | 4 tahap: hunus → hulu + mendak → ganja → warangka |
+| **Candi Borobudur** `BOROBUDUR_01` (kategori Candi) | `Tools/blender/candi_borobudur.py` (data & sumber: `Docs/Borobudur_Data.md`) | 123 × 123 × 35 m, **prefab 1:200** (61,5 × 17,5 cm): kaki, 5 teras persegi berelief, 5 langkan dengan 432 relung-arca, tangga & gapura, 3 teras melingkar dengan 72 stupa terawang + arca, stupa induk. ±308 ribu segitiga. 10 hotspot | 4 tahap, tingkat dipisah ke atas: stupa induk → teras melingkar (Arupadhatu) → teras 3-5 → teras 1-2 dari kaki (Kamadhatu) |
 
 Mengubah model:
 
@@ -140,21 +144,29 @@ Mengubah model:
    ```bash
    "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" --background --factory-startup --python Tools/blender/keris_bali.py
    "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" --background --factory-startup --python Tools/blender/keris_sumatra.py
+   "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" --background --factory-startup --python Tools/blender/candi_borobudur.py -- --export
    ```
-2. Di Unity: **Nusantara AR → Build Keris Bali / Build Keris Sumatra** (atau Setup Everything).
+   Skrip candi bawaannya hanya menyimpan `.blend`; `--export` menulis GLB, `--render` merender pratinjau Cycles (berat).
+2. Di Unity: **Nusantara AR → Build Keris Bali / Build Keris Sumatra / Build Candi Borobudur** (atau Setup Everything).
 
 Catatan builder (`GlbArtifact`):
 - Setiap objek Blender dipetakan ke satu bagian (`ArtifactPart`); objek tanpa bagian menghentikan build.
 - Sumbu Blender (Z atas, depan -Y) → Unity (Y atas, depan -Z); arah hasil glTFast diperiksa otomatis.
 - Tekstur mentah GLB (ARGB32, ±70 MB/keris) **tidak** dipakai: material disalin dan memakai PNG sumber yang sama dari
   `Tools/blender/*_textures/`, dikompres ASTC (±10 MB/keris di HP).
-- Hotspot diletakkan dengan raycast ke muka depan bagiannya; animasi `Cabut_Keris` di GLB diabaikan (aplikasi memakai exploded view).
+- Hotspot diletakkan dengan raycast ke muka depan bagiannya (`Front`; artefak besar memakai `reach`/`gap` lebih besar);
+  animasi `Cabut_Keris` di GLB diabaikan (aplikasi memakai exploded view).
+- Artefak yang terlalu besar untuk meja (candi) diperkecil **di child `Model`**, bukan di root prefab: root harus tetap
+  skala 1 karena Scan QR menghitung skala dari ukuran dunia prefab, dan slider AR memakai skala root.
+- Model simetris (candi) memanggil `Load` dengan `rightPart = null` agar pemeriksaan arah +X dilewati.
 
 ## Menambah artefak baru
 
 1. Modelkan di Blender dengan **objek terpisah per bagian** (origin di titik sambung, 1 unit = 1 m, muka depan -Y), ekspor GLB ke `Art/<Nama>/`.
 2. Tulis builder seperti `KerisSumatraBuilder`: `GlbArtifact.Load` → `UseCompressedTextures` → `SetStages` → `Front` (hotspot) → `Save`, lalu panggil dari `ProjectSetup.RunAll` dan tambahkan ID-nya ke `PruneCatalog`.
-3. Tambahkan baris di `Tools/kartu_qr.py` (kartu QR cetak) dan ID di `[TestFixture]` `ArtifactTests`. Kode kartu 6x6 lama opsional (`MarkerPattern` + `Tools/kartu_penanda.py`).
+3. Tambahkan baris di `Tools/kartu_qr.py` (kartu QR cetak) dan ID di `[TestFixture]` `ArtifactTests`, `StoryTests`, `MusicTests`.
+   Tes `ArtifactTests` mewajibkan kode kartu 6x6 (`MarkerPattern` + `Tools/kartu_penanda.py` + `MarkerTests.AllCodes`); pilih kode
+   yang keempat rotasinya berjarak ≥ 10 dan ≥ 6 dari kode lain. Kategori baru: tambahkan di **akhir** `ArtifactCategory` + `cat.*` di `UIStrings`.
 4. Setel `curatorValidated = true` hanya setelah sign-off kurator (gerbang rilis PRD §6.4).
 
 ## Status terhadap PRD v1.1

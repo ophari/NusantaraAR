@@ -8,6 +8,7 @@ namespace NusantaraAR.Tests
     /// <summary>Uji mode Kisah setiap artefak: suara ID/EN, subtitle per kalimat, tahap & sorotan yang valid.</summary>
     [TestFixture("KERIS_BALI_01")]
     [TestFixture("KERIS_SUMATRA_01")]
+    [TestFixture("BOROBUDUR_01")]
     public class StoryTests
     {
         readonly string id;
@@ -69,19 +70,22 @@ namespace NusantaraAR.Tests
         {
             var ex = instance.exploded;
             ex.SnapTo(0);
-            bool drew = false;
+            bool drew = false, exploded = false;
             foreach (var ch in story.chapters)
             {
                 Assert.Less(ch.stage, ex.StageCount, ch.key + ": tahap tidak ada");
                 if (ch.stage >= 0) ex.SnapTo(ch.stage);
                 drew |= ex.CurrentStage == 1;
+                exploded |= ex.CurrentStage > 0;
                 if (string.IsNullOrEmpty(ch.focusHotspot)) continue;
                 var h = instance.Data.FindHotspot(ch.focusHotspot);
                 Assert.IsNotNull(h, ch.key + ": hotspot " + ch.focusHotspot + " tidak ada");
                 Assert.IsTrue(instance.IsHotspotAvailable(h), ch.key + ": " + ch.focusHotspot + " tidak terlihat pada tahap " + ex.CurrentStage);
             }
-            Assert.IsTrue(drew, "Kisah harus menghunus bilah (cara pembuatan & pamor)");
-            Assert.AreEqual(0, story.chapters.Last().stage, "Kisah berakhir dengan keris dirakit kembali");
+            if (ex.CanDraw)
+                Assert.IsTrue(drew, "Kisah keris harus menghunus bilah (cara pembuatan & pamor)");
+            Assert.IsTrue(exploded, "Kisah harus memperlihatkan bongkar (tahap > 0)");
+            Assert.AreEqual(0, story.chapters.Last().stage, "Kisah berakhir dengan artefak dirakit kembali");
         }
 
         [Test]

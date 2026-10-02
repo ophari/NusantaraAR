@@ -1,7 +1,8 @@
-# Compile + bangun ulang konten (Keris Bali & Keris Sumatra dari GLB Blender) + EditMode test + kartu QR & kartu penanda.
+# Compile + bangun ulang konten (Keris Bali, Keris Sumatra, Candi Borobudur dari GLB Blender) + EditMode test + kartu QR & kartu penanda.
 # Bila model diubah, ekspor ulang GLB dulu:
 #   blender --background --factory-startup --python Tools\blender\keris_bali.py
 #   blender --background --factory-startup --python Tools\blender\keris_sumatra.py
+#   blender --background --factory-startup --python Tools\blender\candi_borobudur.py -- --export
 # Bila naskah mode Kisah (Tools\narasi\kisah.json) diubah, buat ulang suaranya dulu (perlu internet):
 #   python Tools\narasi\kisah_tts.py
 # Bila musik latar (Tools\musik\musik.json) diganti, unduh treknya ke Tools\musik\asli\ lalu olah dulu:
@@ -31,7 +32,7 @@ if (Test-Path "$logs\tests.xml") {
     $x.SelectNodes("//test-case[@result='Failed']") | ForEach-Object { Write-Host "   GAGAL: $($_.fullname)"; Write-Host "     $($_.failure.message.InnerText)" }
 }
 
-Write-Host '3/3 Kartu QR + kartu penanda lama Keris Bali + Keris Sumatra...'
+Write-Host '3/3 Kartu QR + kartu penanda lama semua artefak...'
 python (Join-Path $PSScriptRoot 'kartu_qr.py')
 python (Join-Path $PSScriptRoot 'kartu_penanda.py')
 
