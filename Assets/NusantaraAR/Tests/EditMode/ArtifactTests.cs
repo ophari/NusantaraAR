@@ -41,6 +41,7 @@ namespace NusantaraAR.Tests
     [TestFixture("KERIS_BALI_01")]
     [TestFixture("KERIS_SUMATRA_01")]
     [TestFixture("BOROBUDUR_01")]
+    [TestFixture("KARAMBIT_01")]
     public class ArtifactTests : ArtifactFixture
     {
         public ArtifactTests(string id) : base(id) { }
@@ -49,7 +50,7 @@ namespace NusantaraAR.Tests
         public void Catalog_HoldsTheBlenderArtifacts()
         {
             var ids = catalog.artifacts.Where(a => a != null).Select(a => a.artifactId).ToList();
-            CollectionAssert.AreEquivalent(new[] { "KERIS_BALI_01", "KERIS_SUMATRA_01", "BOROBUDUR_01" }, ids);
+            CollectionAssert.AreEquivalent(new[] { "KERIS_BALI_01", "KERIS_SUMATRA_01", "BOROBUDUR_01", "KARAMBIT_01" }, ids);
             var cats = catalog.NonEmptyCategories();
             Assert.IsTrue(cats.Contains(ArtifactCategory.KerisSenjata));
             Assert.IsTrue(cats.Contains(ArtifactCategory.Candi));
@@ -151,13 +152,16 @@ namespace NusantaraAR.Tests
         public void EveryStage_MovesSomething()
         {
             Assert.GreaterOrEqual(instance.exploded.StageCount, 5);
+            // Pusat bounds tiap bagian di ruang Model (bukan posisi pivot): bagian yang diputar pada pivotnya (sarung
+            // karambit) juga terhitung, dan artefak yang diperkecil (candi 1:200) diukur dalam meter aslinya.
             var parts = go.GetComponentsInChildren<ArtifactPart>().ToList();
+            Vector3 Center(ArtifactPart p) => instance.modelRoot.InverseTransformPoint(GlbBounds(p).center);
             instance.exploded.SnapTo(0);
-            var prev = parts.Select(p => p.transform.localPosition).ToList();
+            var prev = parts.Select(Center).ToList();
             for (int s = 1; s < instance.exploded.StageCount; s++)
             {
                 instance.exploded.SnapTo(s);
-                var now = parts.Select(p => p.transform.localPosition).ToList();
+                var now = parts.Select(Center).ToList();
                 Assert.IsTrue(now.Zip(prev, (a, b) => (a - b).magnitude).Any(d => d > 0.05f), "Tahap " + s + " tidak menggerakkan bagian mana pun");
                 prev = now;
             }

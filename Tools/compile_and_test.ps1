@@ -1,8 +1,9 @@
-# Compile + bangun ulang konten (Keris Bali, Keris Sumatra, Candi Borobudur dari GLB Blender) + EditMode test + kartu QR & kartu penanda.
+# Compile + bangun ulang konten (Keris Bali, Keris Sumatra, Candi Borobudur, Karambit dari GLB Blender) + EditMode test + kartu QR & kartu penanda.
 # Bila model diubah, ekspor ulang GLB dulu:
 #   blender --background --factory-startup --python Tools\blender\keris_bali.py
 #   blender --background --factory-startup --python Tools\blender\keris_sumatra.py
 #   blender --background --factory-startup --python Tools\blender\candi_borobudur.py -- --export
+#   blender --background --factory-startup --python Tools\blender\karambit.py
 # Bila naskah mode Kisah (Tools\narasi\kisah.json) diubah, buat ulang suaranya dulu (perlu internet):
 #   python Tools\narasi\kisah_tts.py
 # Bila musik latar (Tools\musik\musik.json) diganti, unduh treknya ke Tools\musik\asli\ lalu olah dulu:

@@ -225,9 +225,19 @@ namespace NusantaraAR.EditorTools
         /// Tahap 0 = utuh; renderer <paramref name="hiddenWhenAssembled"/> disembunyikan (mis. bilah di dalam sarung).
         /// </summary>
         public static void SetStages(Built b, string[] hiddenWhenAssembled,
-            params (string id, string en, Dictionary<string, Vector3> offsets)[] stages)
+            params (string id, string en, Dictionary<string, Vector3> offsets)[] stages) =>
+            SetStages(b, hiddenWhenAssembled, stages.Select(s => (s.id, s.en, s.offsets, (Dictionary<string, Quaternion>)null)).ToArray());
+
+        /// <summary>
+        /// Seperti <see cref="SetStages(Built, string[], ValueTuple{string, string, Dictionary{string, Vector3}}[])"/>, ditambah
+        /// rotasi per tahap (kumulatif dari pose utuh, terhadap pivot bagian). Bagian yang diputar pada pivot di pusat
+        /// lengkungnya meluncur menyusuri lengkung itu (mis. sarung karambit dilepas dari bilah cakar).
+        /// </summary>
+        public static void SetStages(Built b, string[] hiddenWhenAssembled,
+            params (string id, string en, Dictionary<string, Vector3> offsets, Dictionary<string, Quaternion> rotations)[] stages)
         {
-            var moving = stages.SelectMany(s => s.offsets.Keys).Distinct().ToList();
+            var moving = stages.SelectMany(s => s.offsets.Keys.Concat(s.rotations?.Keys ?? Enumerable.Empty<string>()))
+                .Distinct().ToList();
             var home = moving.ToDictionary(n => n, n => b.parts[n].transform.localPosition);
             b.exploded.stages = new List<ExplodedViewController.Stage>();
             for (int i = 0; i < stages.Length; i++)
@@ -236,9 +246,11 @@ namespace NusantaraAR.EditorTools
                 foreach (var n in moving)
                 {
                     stages[i].offsets.TryGetValue(n, out var off);
+                    var rot = Quaternion.identity;
+                    if (stages[i].rotations != null && stages[i].rotations.TryGetValue(n, out var r)) rot = r;
                     st.poses.Add(new ExplodedViewController.PartPose
                     {
-                        part = b.parts[n].transform, localPosition = home[n] + off, localRotation = Quaternion.identity
+                        part = b.parts[n].transform, localPosition = home[n] + off, localRotation = rot
                     });
                 }
                 if (i == 0)
@@ -251,6 +263,13 @@ namespace NusantaraAR.EditorTools
         {
             var d = basis != null ? new Dictionary<string, Vector3>(basis) : new Dictionary<string, Vector3>();
             foreach (var p in parts) d[p] = (d.TryGetValue(p, out var o) ? o : Vector3.zero) + offset;
+            return d;
+        }
+
+        public static Dictionary<string, Quaternion> Turn(IEnumerable<string> parts, Quaternion rotation, Dictionary<string, Quaternion> basis = null)
+        {
+            var d = basis != null ? new Dictionary<string, Quaternion>(basis) : new Dictionary<string, Quaternion>();
+            foreach (var p in parts) d[p] = rotation * (d.TryGetValue(p, out var r) ? r : Quaternion.identity);
             return d;
         }
 

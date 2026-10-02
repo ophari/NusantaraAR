@@ -1,0 +1,387 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25fd6c8569d03541b047df14ede99d2, type: 3}
+  m_Name: KARAMBIT_01_Story
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactStory
+  chapters:
+  - key: sapa
+    title:
+      id: Kenalan dulu
+      en: Say hello
+    text:
+      id: Halo! Kali ini kita berkenalan dengan senjata kecil dari Minangkabau, Sumatra
+        Barat. Orang Minang menyebutnya kurambiak atau karambiak, dan dalam bahasa
+        Indonesia kita mengenalnya sebagai kerambit atau karambit. Ukurannya hanya
+        segenggam tangan, tetapi ceritanya panjang.
+      en: Hi! This time we'll meet a small weapon from Minangkabau, in West Sumatra.
+        The Minang people call it kurambiak or karambiak, and in Indonesian it is
+        known as kerambit or karambit. It is only as big as a hand, but its story
+        is a long one.
+    stage: 0
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: 21c8ba3de1cf21d439895b538d1584ac, type: 3}
+    voiceEN: {fileID: 8300000, guid: 0f80394e01db51245925a2212dbdc221, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Halo!
+    - time: 1.834
+      text: Kali ini kita berkenalan dengan senjata kecil dari Minangkabau, Sumatra
+        Barat.
+    - time: 8.357
+      text: Orang Minang menyebutnya kurambiak atau karambiak, dan dalam bahasa Indonesia
+        kita mengenalnya sebagai kerambit atau karambit.
+    - time: 17.693
+      text: Ukurannya hanya segenggam tangan, tetapi ceritanya panjang.
+    cuesEN:
+    - time: 0.1
+      text: Hi!
+    - time: 0.922
+      text: This time we'll meet a small weapon from Minangkabau, in West Sumatra.
+    - time: 5.089
+      text: The Minang people call it kurambiak or karambiak, and in Indonesian it
+        is known as kerambit or karambit.
+    - time: 12.576
+      text: It is only as big as a hand, but its story is a long one.
+  - key: cakar
+    title:
+      id: Cakar harimau
+      en: A tiger's claw
+    text:
+      id: 'Lihat, sarungnya meluncur lepas mengikuti lengkung bilah. Bilah ini melengkung
+        seperti kuku harimau. Menurut cerita rakyat, bentuknya terinspirasi cakar
+        harimau Sumatra yang dahulu banyak berkeliaran di hutan. Ini sejalan dengan
+        falsafah Minangkabau, alam takambang jadi guru: alam yang terbentang adalah
+        guru kita.'
+      en: 'Look, the sheath slides off along the curve of the blade. The blade curves
+        like a tiger''s claw. According to folklore, its shape was inspired by the
+        claws of the Sumatran tiger, which once roamed the forests in great numbers.
+        This fits the Minangkabau philosophy alam takambang jadi guru: nature unfolded
+        is our teacher.'
+    stage: 1
+    focusHotspot: mata
+    voiceID: {fileID: 8300000, guid: 85aec562127661e499a5140c944a8f02, type: 3}
+    voiceEN: {fileID: 8300000, guid: d057c208c83aaa442a0e2ca797d9b691, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Lihat, sarungnya meluncur lepas mengikuti lengkung bilah.
+    - time: 5.258
+      text: Bilah ini melengkung seperti kuku harimau.
+    - time: 9.282
+      text: Menurut cerita rakyat, bentuknya terinspirasi cakar harimau Sumatra yang
+        dahulu banyak berkeliaran di hutan.
+    - time: 17.407
+      text: 'Ini sejalan dengan falsafah Minangkabau, alam takambang jadi guru: alam
+        yang terbentang adalah guru kita.'
+    cuesEN:
+    - time: 0.1
+      text: Look, the sheath slides off along the curve of the blade.
+    - time: 3.8
+      text: The blade curves like a tiger's claw.
+    - time: 6.352
+      text: According to folklore, its shape was inspired by the claws of the Sumatran
+        tiger, which once roamed the forests in great numbers.
+    - time: 14.659
+      text: 'This fits the Minangkabau philosophy alam takambang jadi guru: nature
+        unfolded is our teacher.'
+  - key: sejarah
+    title:
+      id: Dari sawah ke silek
+      en: From the fields to silek
+    text:
+      id: Awalnya karambit adalah alat tani, dipakai untuk menggaruk akar dan menanam
+        padi. Lama-kelamaan ia menjadi senjata dalam silek, silat Minangkabau, terutama
+        aliran silek harimau. Catatan tertulis tertua tentang kurambiak yang dikutip
+        para penulis berasal dari sebuah jurnal Inggris tahun 1827. Lewat para perantau
+        Minang dan jaringan dagang, karambit menyebar ke Jawa, Semenanjung Melayu,
+        Filipina, hingga Thailand.
+      en: The karambit began as a farming tool, used to rake roots and plant rice.
+        Over time it became a weapon of silek, Minangkabau silat, especially the
+        tiger style called silek harimau. The oldest written record of the kurambiak
+        that writers cite comes from a British journal of 1827. Through Minang migrants
+        and trade networks, the karambit spread to Java, the Malay Peninsula, the
+        Philippines and Thailand.
+    stage: 1
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: f0559cb6cf3ee5a458bf410f294ef0ae, type: 3}
+    voiceEN: {fileID: 8300000, guid: 1944da1235b5df4498fc91f855c1014d, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Awalnya karambit adalah alat tani, dipakai untuk menggaruk akar dan menanam
+        padi.
+    - time: 7.277
+      text: Lama-kelamaan ia menjadi senjata dalam silek, silat Minangkabau, terutama
+        aliran silek harimau.
+    - time: 15.662
+      text: Catatan tertulis tertua tentang kurambiak yang dikutip para penulis berasal
+        dari sebuah jurnal Inggris tahun 1827.
+    - time: 25.506
+      text: Lewat para perantau Minang dan jaringan dagang, karambit menyebar ke
+        Jawa, Semenanjung Melayu, Filipina, hingga Thailand.
+    cuesEN:
+    - time: 0.1
+      text: The karambit began as a farming tool, used to rake roots and plant rice.
+    - time: 5.258
+      text: Over time it became a weapon of silek, Minangkabau silat, especially
+        the tiger style called silek harimau.
+    - time: 13.071
+      text: The oldest written record of the kurambiak that writers cite comes from
+        a British journal of 1827.
+    - time: 20.532
+      text: Through Minang migrants and trade networks, the karambit spread to Java,
+        the Malay Peninsula, the Philippines and Thailand.
+  - key: lubang
+    title:
+      id: Lubang di gagang
+      en: The finger ring
+    text:
+      id: 'Perhatikan lubang di ujung gagang. Karambit dipegang dengan jari telunjuk
+        masuk ke lubang ini, sehingga bilahnya keluar dari bawah kepalan tangan.
+        Karena itu karambit sulit dirampas. Perajin di Sungai Pua, Agam, punya pedoman
+        turun-temurun: gagang idealnya selebar empat buku jari. Gagang ini dibuat
+        dari kayu kemuning, kayu yang dipercaya bertuah.'
+      en: 'Notice the ring at the end of the grip. The karambit is held with the
+        index finger through this ring, so the blade comes out from below the fist.
+        That makes it hard to take away. The makers of Sungai Pua, in Agam, follow
+        a guideline handed down for generations: the grip should ideally be four
+        knuckles wide. This grip is made of kemuning wood, believed to carry spiritual
+        power.'
+    stage: 1
+    focusHotspot: lubang
+    voiceID: {fileID: 8300000, guid: e1877d97ca628724d95d9102ff322823, type: 3}
+    voiceEN: {fileID: 8300000, guid: 0823377be522dd44ebbfa6aae900d88a, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Perhatikan lubang di ujung gagang.
+    - time: 3.645
+      text: Karambit dipegang dengan jari telunjuk masuk ke lubang ini, sehingga
+        bilahnya keluar dari bawah kepalan tangan.
+    - time: 12.07
+      text: Karena itu karambit sulit dirampas.
+    - time: 15.859
+      text: 'Perajin di Sungai Pua, Agam, punya pedoman turun-temurun: gagang idealnya
+        selebar empat buku jari.'
+    - time: 25.169
+      text: Gagang ini dibuat dari kayu kemuning, kayu yang dipercaya bertuah.
+    cuesEN:
+    - time: 0.1
+      text: Notice the ring at the end of the grip.
+    - time: 2.628
+      text: The karambit is held with the index finger through this ring, so the
+        blade comes out from below the fist.
+    - time: 8.904
+      text: That makes it hard to take away.
+    - time: 11.027
+      text: 'The makers of Sungai Pua, in Agam, follow a guideline handed down for
+        generations: the grip should ideally be four knuckles wide.'
+    - time: 20.493
+      text: This grip is made of kemuning wood, believed to carry spiritual power.
+  - key: gerigi
+    title:
+      id: Jantan atau betina
+      en: Male or female
+    text:
+      id: 'Sekarang lihat punggung bilahnya. Ada tujuh gerigi kecil di bagian bawah.
+        Kerambit Minangkabau punya dua jenis: jantan dengan tujuh gerigi, dan betina
+        dengan lima. Jadi, karambit di depanmu ini jantan. Seorang pandai besi di
+        Sijunjung bercerita bahwa ia menempa bilahnya dari baja bekas bar gergaji
+        mesin.'
+      en: 'Now look at the spine of the blade. There are seven small serrations near
+        its base. Minangkabau karambits come in two types: the male, with seven serrations,
+        and the female, with five. So the karambit in front of you is a male. A blacksmith
+        in Sijunjung explains that he forges his blades from the steel of old chainsaw
+        bars.'
+    stage: 1
+    focusHotspot: gerigi
+    voiceID: {fileID: 8300000, guid: 493d58f94e27d53448d86a73cfcfa8ea, type: 3}
+    voiceEN: {fileID: 8300000, guid: e3fac82771d99514b9e748d8fc8a9f67, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Sekarang lihat punggung bilahnya.
+    - time: 3.37
+      text: Ada tujuh gerigi kecil di bagian bawah.
+    - time: 7.355
+      text: 'Kerambit Minangkabau punya dua jenis: jantan dengan tujuh gerigi, dan
+        betina dengan lima.'
+    - time: 15.467
+      text: Jadi, karambit di depanmu ini jantan.
+    - time: 19.972
+      text: Seorang pandai besi di Sijunjung bercerita bahwa ia menempa bilahnya
+        dari baja bekas bar gergaji mesin.
+    cuesEN:
+    - time: 0.1
+      text: Now look at the spine of the blade.
+    - time: 2.329
+      text: There are seven small serrations near its base.
+    - time: 5.18
+      text: 'Minangkabau karambits come in two types: the male, with seven serrations,
+        and the female, with five.'
+    - time: 12.863
+      text: So the karambit in front of you is a male.
+    - time: 15.649
+      text: A blacksmith in Sijunjung explains that he forges his blades from the
+        steel of old chainsaw bars.
+  - key: kaluak
+    title:
+      id: Kaluak paku
+      en: The fern spiral
+    text:
+      id: Di dekat pangkal bilah ada ukiran kaluak paku, pucuk pakis yang bergelung.
+        Motif ini mengingatkan bahwa hidup harus diperjuangkan tanpa henti, sambil
+        selalu mengingat yang benar. Sarungnya pun berukir, dengan garis tinta emas
+        dan ornamen adat yang disebut pola pituah adat, hiasan yang membawa nasihat.
+      en: Near the base of the blade is a kaluak paku carving, the curled tip of
+        a young fern. This motif is a reminder that life must be striven for without
+        rest, while always remembering what is right. The sheath is carved too, with
+        gold-ink lines and customary ornament called pola pituah adat, decoration
+        that carries good counsel.
+    stage: 1
+    focusHotspot: kaluak
+    voiceID: {fileID: 8300000, guid: 7009cf5e1007b5d4e93047be6465193b, type: 3}
+    voiceEN: {fileID: 8300000, guid: 477fa629793416144a6daff954517f9d, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Di dekat pangkal bilah ada ukiran kaluak paku, pucuk pakis yang bergelung.
+    - time: 6.391
+      text: Motif ini mengingatkan bahwa hidup harus diperjuangkan tanpa henti, sambil
+        selalu mengingat yang benar.
+    - time: 14.295
+      text: Sarungnya pun berukir, dengan garis tinta emas dan ornamen adat yang
+        disebut pola pituah adat, hiasan yang membawa nasihat.
+    cuesEN:
+    - time: 0.1
+      text: Near the base of the blade is a kaluak paku carving, the curled tip of
+        a young fern.
+    - time: 5.922
+      text: This motif is a reminder that life must be striven for without rest,
+        while always remembering what is right.
+    - time: 13.006
+      text: The sheath is carved too, with gold-ink lines and customary ornament
+        called pola pituah adat, decoration that carries good counsel.
+  - key: makna
+    title:
+      id: Harimau tanpa kuku
+      en: A tiger without claws
+    text:
+      id: 'Dulu, permainan kurambiak hanya diwariskan kepada para datuk dan kalangan
+        raja. Ada pepatah: pendekar yang belum menguasai kurambiak ibarat harimau
+        tanpa kuku, ayam tanpa taji, burung tanpa paruh. Lengkungnya juga diibaratkan
+        tulang rusuk yang melindungi tubuh, pengingat bahwa kekuatan sejati berasal
+        dari dalam diri.'
+      en: In the past, the art of the kurambiak was passed down only to datuk, the
+        clan leaders, and to royalty. A saying goes that a fighter who has not mastered
+        the kurambiak is like a tiger without claws, a rooster without spurs, a bird
+        without a beak. Its curve is also likened to a rib protecting the body, a
+        reminder that true strength comes from within.
+    stage: 1
+    focusHotspot: ujung
+    voiceID: {fileID: 8300000, guid: cb06fe0e7c807d84bb3f8606341583b8, type: 3}
+    voiceEN: {fileID: 8300000, guid: 3f559d0522c39b040bd5fba58e583dfd, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Dulu, permainan kurambiak hanya diwariskan kepada para datuk dan kalangan
+        raja.
+    - time: 7.029
+      text: 'Ada pepatah: pendekar yang belum menguasai kurambiak ibarat harimau
+        tanpa kuku, ayam tanpa taji, burung tanpa paruh.'
+    - time: 17.016
+      text: Lengkungnya juga diibaratkan tulang rusuk yang melindungi tubuh, pengingat
+        bahwa kekuatan sejati berasal dari dalam diri.
+    cuesEN:
+    - time: 0.1
+      text: In the past, the art of the kurambiak was passed down only to datuk,
+        the clan leaders, and to royalty.
+    - time: 7.602
+      text: A saying goes that a fighter who has not mastered the kurambiak is like
+        a tiger without claws, a rooster without spurs, a bird without a beak.
+    - time: 16.834
+      text: Its curve is also likened to a rib protecting the body, a reminder that
+        true strength comes from within.
+  - key: bongkar
+    title:
+      id: Dibongkar
+      en: Taken apart
+    text:
+      id: 'Sekarang kita bongkar. Karambit diangkat dari dudukannya, hulu dilepas,
+        lalu cincin kuningan. Tampaklah puting, tangkai bilah yang masuk ke gagang.
+        Karambit Minangkabau memakai puting separuh: bilahnya hanya tertanam sebagian
+        di dalam gagang.'
+      en: 'Now let''s take it apart. The karambit is lifted from its stand, the hilt
+        comes off, and then the brass ferrule. Now you can see the tang, the part
+        of the blade that goes into the grip. The Minangkabau karambit uses a half
+        tang: the blade is only partly set into the grip.'
+    stage: 4
+    focusHotspot: puting
+    voiceID: {fileID: 8300000, guid: bde6203de613f2347bf763f7bf3b49bb, type: 3}
+    voiceEN: {fileID: 8300000, guid: 0b7d49ad4ba83f348bff7337fa9eec39, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Sekarang kita bongkar.
+    - time: 2.862
+      text: Karambit diangkat dari dudukannya, hulu dilepas, lalu cincin kuningan.
+    - time: 9.685
+      text: Tampaklah puting, tangkai bilah yang masuk ke gagang.
+    - time: 14.49
+      text: 'Karambit Minangkabau memakai puting separuh: bilahnya hanya tertanam
+        sebagian di dalam gagang.'
+    cuesEN:
+    - time: 0.1
+      text: Now let's take it apart.
+    - time: 1.938
+      text: The karambit is lifted from its stand, the hilt comes off, and then the
+        brass ferrule.
+    - time: 7.758
+      text: Now you can see the tang, the part of the blade that goes into the grip.
+    - time: 12.029
+      text: 'The Minangkabau karambit uses a half tang: the blade is only partly
+        set into the grip.'
+  - key: penutup
+    title:
+      id: Kembali utuh
+      en: Whole again
+    text:
+      id: Kini karambit kembali utuh di sarungnya. Dari alat tani di sawah, kurambiak
+        menjadi bagian dari silek Minangkabau dan kini dikenal di seluruh dunia.
+        Perlu diingat, model ini dibuat dari foto dan catatan, bukan dari spesimen
+        asli, dan isinya masih menunggu pemeriksaan kurator. Terima kasih sudah mendengarkan!
+      en: Now the karambit is whole again in its sheath. From a farming tool in the
+        rice fields, the kurambiak became part of Minangkabau silek and is now known
+        around the world. Keep in mind that this model was made from photos and records,
+        not from a real specimen, and its content is still awaiting a curator's review.
+        Thanks for listening!
+    stage: 0
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: 5978a571bf9d04448a0a5c950dd653df, type: 3}
+    voiceEN: {fileID: 8300000, guid: a370d0a5239fb5541b9b10aafafa22c5, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Kini karambit kembali utuh di sarungnya.
+    - time: 4.047
+      text: Dari alat tani di sawah, kurambiak menjadi bagian dari silek Minangkabau
+        dan kini dikenal di seluruh dunia.
+    - time: 12.446
+      text: Perlu diingat, model ini dibuat dari foto dan catatan, bukan dari spesimen
+        asli, dan isinya masih menunggu pemeriksaan kurator.
+    - time: 23.136
+      text: Terima kasih sudah mendengarkan!
+    cuesEN:
+    - time: 0.1
+      text: Now the karambit is whole again in its sheath.
+    - time: 3.188
+      text: From a farming tool in the rice fields, the kurambiak became part of
+        Minangkabau silek and is now known around the world.
+    - time: 11.027
+      text: Keep in mind that this model was made from photos and records, not from
+        a real specimen, and its content is still awaiting a curator's review.
+    - time: 19.959
+      text: Thanks for listening!
+  voiceCredit: 'Microsoft Edge TTS: id-ID-GadisNeural / en-US-AvaNeural'
+  curatorValidated: 0

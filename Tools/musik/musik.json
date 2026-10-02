@@ -35,6 +35,18 @@
    "url": "https://pixabay.com/music/world-beautiful-ambient-gamelan-music-free-for-content-creators-434887/",
    "license": "Pixabay Content License",
    "aiGenerated": false
+  },
+  {
+   "artifactId": "KARAMBIT_01",
+   "raw": "Tools/musik/asli/agerabeatz-traditional-249214.mp3",
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Music/KARAMBIT_01_music.mp3",
+   "maxSeconds": 180,
+   "title": "Traditional",
+   "author": "agerabeatz",
+   "source": "Pixabay",
+   "url": "https://pixabay.com/music/beats-traditional-249214/",
+   "license": "Pixabay Content License",
+   "aiGenerated": false
   }
  ]
 }

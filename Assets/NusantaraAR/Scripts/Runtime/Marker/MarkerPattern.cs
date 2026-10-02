@@ -26,6 +26,13 @@ namespace NusantaraAR.Marker
         /// </summary>
         public const int BorobudurCode = 0xE3B1;
 
+        /// <summary>
+        /// Kode marker untuk Karambit (pola ##.. / .##. / ...# / .##.); keempat rotasinya berjarak >= 10, jarak ke semua
+        /// rotasi tiga kode di atas >= 7, dan >= 5 dari kartu yang sudah ditarik (0xEEC1, 0xDA26; tidak ada kode yang
+        /// memenuhi >= 6 sekaligus).
+        /// </summary>
+        public const int KarambitCode = 0xC616;
+
         /// <summary>True bila sel (kolom u, baris v; 0..5, dari kiri-atas) berwarna hitam.</summary>
         public static bool IsBlack(int code, int u, int v)
         {

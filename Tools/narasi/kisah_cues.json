@@ -1451,6 +1451,402 @@
      "text": "See you!"
     }
    ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_01_sapa_id.mp3",
+   "hash": "cbab3887038108d4f5db9eabb19416dfb61a726e",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Halo!"
+    },
+    {
+     "time": 1.834,
+     "text": "Kali ini kita berkenalan dengan senjata kecil dari Minangkabau, Sumatra Barat."
+    },
+    {
+     "time": 8.357,
+     "text": "Orang Minang menyebutnya kurambiak atau karambiak, dan dalam bahasa Indonesia kita mengenalnya sebagai kerambit atau karambit."
+    },
+    {
+     "time": 17.693,
+     "text": "Ukurannya hanya segenggam tangan, tetapi ceritanya panjang."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_01_sapa_en.mp3",
+   "hash": "60ea60c5a31233016573f663618fdca4934483e8",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Hi!"
+    },
+    {
+     "time": 0.922,
+     "text": "This time we'll meet a small weapon from Minangkabau, in West Sumatra."
+    },
+    {
+     "time": 5.089,
+     "text": "The Minang people call it kurambiak or karambiak, and in Indonesian it is known as kerambit or karambit."
+    },
+    {
+     "time": 12.576,
+     "text": "It is only as big as a hand, but its story is a long one."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_02_cakar_id.mp3",
+   "hash": "363a900dfa78e743c4bc57917de3585671f7c16b",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Lihat, sarungnya meluncur lepas mengikuti lengkung bilah."
+    },
+    {
+     "time": 5.258,
+     "text": "Bilah ini melengkung seperti kuku harimau."
+    },
+    {
+     "time": 9.282,
+     "text": "Menurut cerita rakyat, bentuknya terinspirasi cakar harimau Sumatra yang dahulu banyak berkeliaran di hutan."
+    },
+    {
+     "time": 17.407,
+     "text": "Ini sejalan dengan falsafah Minangkabau, alam takambang jadi guru: alam yang terbentang adalah guru kita."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_02_cakar_en.mp3",
+   "hash": "38faa5fc4650076b4dab065a6c883dde37a4f44e",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Look, the sheath slides off along the curve of the blade."
+    },
+    {
+     "time": 3.8,
+     "text": "The blade curves like a tiger's claw."
+    },
+    {
+     "time": 6.352,
+     "text": "According to folklore, its shape was inspired by the claws of the Sumatran tiger, which once roamed the forests in great numbers."
+    },
+    {
+     "time": 14.659,
+     "text": "This fits the Minangkabau philosophy alam takambang jadi guru: nature unfolded is our teacher."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_03_sejarah_id.mp3",
+   "hash": "70e771430b02ed584df88e3063ee2e6f23a13be3",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Awalnya karambit adalah alat tani, dipakai untuk menggaruk akar dan menanam padi."
+    },
+    {
+     "time": 7.277,
+     "text": "Lama-kelamaan ia menjadi senjata dalam silek, silat Minangkabau, terutama aliran silek harimau."
+    },
+    {
+     "time": 15.662,
+     "text": "Catatan tertulis tertua tentang kurambiak yang dikutip para penulis berasal dari sebuah jurnal Inggris tahun 1827."
+    },
+    {
+     "time": 25.506,
+     "text": "Lewat para perantau Minang dan jaringan dagang, karambit menyebar ke Jawa, Semenanjung Melayu, Filipina, hingga Thailand."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_03_sejarah_en.mp3",
+   "hash": "c5b42678bd350d49f5a5096d5a9e9f85ec32af4a",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "The karambit began as a farming tool, used to rake roots and plant rice."
+    },
+    {
+     "time": 5.258,
+     "text": "Over time it became a weapon of silek, Minangkabau silat, especially the tiger style called silek harimau."
+    },
+    {
+     "time": 13.071,
+     "text": "The oldest written record of the kurambiak that writers cite comes from a British journal of 1827."
+    },
+    {
+     "time": 20.532,
+     "text": "Through Minang migrants and trade networks, the karambit spread to Java, the Malay Peninsula, the Philippines and Thailand."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_04_lubang_id.mp3",
+   "hash": "a7fe20b078aa9d722eddd96fc2b5b7a0ed125a56",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Perhatikan lubang di ujung gagang."
+    },
+    {
+     "time": 3.645,
+     "text": "Karambit dipegang dengan jari telunjuk masuk ke lubang ini, sehingga bilahnya keluar dari bawah kepalan tangan."
+    },
+    {
+     "time": 12.07,
+     "text": "Karena itu karambit sulit dirampas."
+    },
+    {
+     "time": 15.859,
+     "text": "Perajin di Sungai Pua, Agam, punya pedoman turun-temurun: gagang idealnya selebar empat buku jari."
+    },
+    {
+     "time": 25.169,
+     "text": "Gagang ini dibuat dari kayu kemuning, kayu yang dipercaya bertuah."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_04_lubang_en.mp3",
+   "hash": "2eb118e61d6707f2be578878f6c6f7041ff8eeb3",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Notice the ring at the end of the grip."
+    },
+    {
+     "time": 2.628,
+     "text": "The karambit is held with the index finger through this ring, so the blade comes out from below the fist."
+    },
+    {
+     "time": 8.904,
+     "text": "That makes it hard to take away."
+    },
+    {
+     "time": 11.027,
+     "text": "The makers of Sungai Pua, in Agam, follow a guideline handed down for generations: the grip should ideally be four knuckles wide."
+    },
+    {
+     "time": 20.493,
+     "text": "This grip is made of kemuning wood, believed to carry spiritual power."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_05_gerigi_id.mp3",
+   "hash": "443e7c7fbce8c5d20d55d2287eb506cac37b38b4",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Sekarang lihat punggung bilahnya."
+    },
+    {
+     "time": 3.37,
+     "text": "Ada tujuh gerigi kecil di bagian bawah."
+    },
+    {
+     "time": 7.355,
+     "text": "Kerambit Minangkabau punya dua jenis: jantan dengan tujuh gerigi, dan betina dengan lima."
+    },
+    {
+     "time": 15.467,
+     "text": "Jadi, karambit di depanmu ini jantan."
+    },
+    {
+     "time": 19.972,
+     "text": "Seorang pandai besi di Sijunjung bercerita bahwa ia menempa bilahnya dari baja bekas bar gergaji mesin."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_05_gerigi_en.mp3",
+   "hash": "2390df2c11770b9549fae30e0d19b93cbb852031",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Now look at the spine of the blade."
+    },
+    {
+     "time": 2.329,
+     "text": "There are seven small serrations near its base."
+    },
+    {
+     "time": 5.18,
+     "text": "Minangkabau karambits come in two types: the male, with seven serrations, and the female, with five."
+    },
+    {
+     "time": 12.863,
+     "text": "So the karambit in front of you is a male."
+    },
+    {
+     "time": 15.649,
+     "text": "A blacksmith in Sijunjung explains that he forges his blades from the steel of old chainsaw bars."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_06_kaluak_id.mp3",
+   "hash": "a11af6e23189e648e1646c0a6cbd54dbe20dcb4d",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Di dekat pangkal bilah ada ukiran kaluak paku, pucuk pakis yang bergelung."
+    },
+    {
+     "time": 6.391,
+     "text": "Motif ini mengingatkan bahwa hidup harus diperjuangkan tanpa henti, sambil selalu mengingat yang benar."
+    },
+    {
+     "time": 14.295,
+     "text": "Sarungnya pun berukir, dengan garis tinta emas dan ornamen adat yang disebut pola pituah adat, hiasan yang membawa nasihat."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_06_kaluak_en.mp3",
+   "hash": "fbab6afaae823d9594942e61777a8ea7659b6b93",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Near the base of the blade is a kaluak paku carving, the curled tip of a young fern."
+    },
+    {
+     "time": 5.922,
+     "text": "This motif is a reminder that life must be striven for without rest, while always remembering what is right."
+    },
+    {
+     "time": 13.006,
+     "text": "The sheath is carved too, with gold-ink lines and customary ornament called pola pituah adat, decoration that carries good counsel."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_07_makna_id.mp3",
+   "hash": "8297141836f66272d0ee5359069163d2af23d727",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Dulu, permainan kurambiak hanya diwariskan kepada para datuk dan kalangan raja."
+    },
+    {
+     "time": 7.029,
+     "text": "Ada pepatah: pendekar yang belum menguasai kurambiak ibarat harimau tanpa kuku, ayam tanpa taji, burung tanpa paruh."
+    },
+    {
+     "time": 17.016,
+     "text": "Lengkungnya juga diibaratkan tulang rusuk yang melindungi tubuh, pengingat bahwa kekuatan sejati berasal dari dalam diri."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_07_makna_en.mp3",
+   "hash": "bc289962b35428f759543e92eecb18afbdebe794",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "In the past, the art of the kurambiak was passed down only to datuk, the clan leaders, and to royalty."
+    },
+    {
+     "time": 7.602,
+     "text": "A saying goes that a fighter who has not mastered the kurambiak is like a tiger without claws, a rooster without spurs, a bird without a beak."
+    },
+    {
+     "time": 16.834,
+     "text": "Its curve is also likened to a rib protecting the body, a reminder that true strength comes from within."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_08_bongkar_id.mp3",
+   "hash": "ae4639b31860acf5a688d36831754a5c939b2342",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Sekarang kita bongkar."
+    },
+    {
+     "time": 2.862,
+     "text": "Karambit diangkat dari dudukannya, hulu dilepas, lalu cincin kuningan."
+    },
+    {
+     "time": 9.685,
+     "text": "Tampaklah puting, tangkai bilah yang masuk ke gagang."
+    },
+    {
+     "time": 14.49,
+     "text": "Karambit Minangkabau memakai puting separuh: bilahnya hanya tertanam sebagian di dalam gagang."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_08_bongkar_en.mp3",
+   "hash": "d463d9af7b9b34010227248b661724dc3c8decdf",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Now let's take it apart."
+    },
+    {
+     "time": 1.938,
+     "text": "The karambit is lifted from its stand, the hilt comes off, and then the brass ferrule."
+    },
+    {
+     "time": 7.758,
+     "text": "Now you can see the tang, the part of the blade that goes into the grip."
+    },
+    {
+     "time": 12.029,
+     "text": "The Minangkabau karambit uses a half tang: the blade is only partly set into the grip."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_09_penutup_id.mp3",
+   "hash": "8c88415841fca0740514fe0aa9b4a6f6d989e21f",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Kini karambit kembali utuh di sarungnya."
+    },
+    {
+     "time": 4.047,
+     "text": "Dari alat tani di sawah, kurambiak menjadi bagian dari silek Minangkabau dan kini dikenal di seluruh dunia."
+    },
+    {
+     "time": 12.446,
+     "text": "Perlu diingat, model ini dibuat dari foto dan catatan, bukan dari spesimen asli, dan isinya masih menunggu pemeriksaan kurator."
+    },
+    {
+     "time": 23.136,
+     "text": "Terima kasih sudah mendengarkan!"
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Story/KARAMBIT_01_09_penutup_en.mp3",
+   "hash": "b7426bc93754227ec82daeb8adb503942f2e4952",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Now the karambit is whole again in its sheath."
+    },
+    {
+     "time": 3.188,
+     "text": "From a farming tool in the rice fields, the kurambiak became part of Minangkabau silek and is now known around the world."
+    },
+    {
+     "time": 11.027,
+     "text": "Keep in mind that this model was made from photos and records, not from a real specimen, and its content is still awaiting a curator's review."
+    },
+    {
+     "time": 19.959,
+     "text": "Thanks for listening!"
+    }
+   ]
   }
  ]
 }
