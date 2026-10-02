@@ -40,13 +40,15 @@ NusantaraAR/
 │  │  ├─ Common/                  material & mesh bersama (reticle, bidang AR)
 │  │  ├─ KerisBali/               keris_bali.glb (ekspor Blender; mesh/material/tekstur diimpor glTFast)
 │  │  ├─ KerisSumatra/            keris_sumatra.glb (ekspor Blender)
-│  │  └─ CandiBorobudur/          candi_borobudur.glb (ekspor Blender, skala asli 123 m)
+│  │  ├─ CandiBorobudur/          candi_borobudur.glb (ekspor Blender, skala asli 123 m)
+│  │  └─ Karambit/                karambit.glb (ekspor Blender)
 │  ├─ Content/
 │  │  ├─ KERIS_BALI_01/           .prefab + .asset (ArtifactData) + _thumb.png
 │  │  │  ├─ Story/                <ID>_Story.asset (ArtifactStory) + 9 bab × 2 bahasa .mp3 (narasi Kisah)
 │  │  │  └─ Music/                <ID>_music.mp3 (musik latar)
 │  │  ├─ KERIS_SUMATRA_01/        .prefab + .asset + _thumb.png + Story/ + Music/
-│  │  └─ BOROBUDUR_01/            .prefab + .asset + _thumb.png + Story/ + Music/
+│  │  ├─ BOROBUDUR_01/            .prefab + .asset + _thumb.png + Story/ + Music/
+│  │  └─ KARAMBIT_01/             .prefab + .asset + _thumb.png + Story/ + Music/
 │  ├─ Prefabs/                    ARPlane.prefab
 │  ├─ Resources/                  ContentCatalog.asset (dimuat saat runtime)
 │  ├─ Scenes/                     Main.unity, AR.unity, Marker.unity (DIHASILKAN oleh ProjectSetup)
@@ -116,7 +118,7 @@ Scene Main memakai `BottomNav` (Koleksi · Scan QR · Pengaturan), `TopBar`, dan
 | Event C# (`event Action<…>`) | `TouchGestures.Tapped/Dragged/Pinched`, `ExplodedViewController.StageChanged`, `Locale.Changed` | Komponen tidak saling kenal secara langsung |
 | Unsubscribe di `OnDestroy` | semua controller | Mencegah handler menempel ke objek yang sudah dihancurkan saat pindah scene |
 | `LocalizedString {id, en}` + `Locale.T(key)` | konten dan teks UI | Dua bahasa; EN kosong jatuh ke ID |
-| Generator idempoten di editor | `ProjectSetup.RunAll`, `KerisBaliBuilder.Build`, `KerisSumatraBuilder.Build`, `CandiBorobudurBuilder.Build` | Proyek bisa dibangun ulang dari nol secara deterministik |
+| Generator idempoten di editor | `ProjectSetup.RunAll`, `KerisBaliBuilder.Build`, `KerisSumatraBuilder.Build`, `CandiBorobudurBuilder.Build`, `KarambitBuilder.Build` | Proyek bisa dibangun ulang dari nol secara deterministik |
 
 ---
 
@@ -153,6 +155,7 @@ KERIS_xxx (root)                 ← ArtifactInstance, ExplodedViewController, A
 | `KERIS_BALI_01` | **Blender GLB** (`Tools/blender/keris_bali.py` → `KerisBaliBuilder`) | `0xB532` (46386) | 1 utuh + 5 | Bilah 40 cm + pesi 8 cm, luk 9, pamor banyu tetes, hulu (danganan) figur dewa emas, warangka sesrengatan khas Bali dari kayu timoho, di atas jagrak Karang Boma 45 cm. 11 hotspot |
 | `KERIS_SUMATRA_01` | **Blender GLB** (`Tools/blender/keris_sumatra.py` → `KerisSumatraBuilder`) | `0xF0E4` (61668) | 1 utuh + 4 | Bilah 36 cm + pesi 7,2 cm, luk 7, pamor wos wutah, hulu burl berukir, sampir bulan sabit, berdiri di dudukan kayu. 9 hotspot |
 | `BOROBUDUR_01` | **Blender GLB** (`Tools/blender/candi_borobudur.py` → `CandiBorobudurBuilder`) | `0xE3B1` (58289) | 1 utuh + 4 | Kategori `Candi`. Denah 123 × 123 m, tinggi 35 m (data & sumber: `Docs/Borobudur_Data.md`), prefab **1:200** (61,5 × 17,5 cm). 10 bagian = 10 tingkat (kaki, 5 teras persegi, 3 teras melingkar, stupa induk); langkan, 432 relung-arca, tangga, gapura, 72 stupa terawang + arca ikut tingkatnya. 10 hotspot, semua `Utuh` |
+| `KARAMBIT_01` | **Blender GLB** (`Tools/blender/karambit.py` → `KarambitBuilder`) | `0xC616` (50710) | 1 utuh + 4 | Kurambiak Minangkabau jantan (data, sumber & foto acuan: `Docs/Karambit_Data.md`), tinggi 15,9 cm tanpa sarung, berdiri di dudukan kayu. Punggung bilah = busur R 5,2 cm sapuan 120°, 7 gerigi, motif kaluak paku; cincin kuningan; hulu kemuning berlubang; sarung berukir tinta emas. 9 hotspot |
 
 Tahap Keris Bali (keris terbaring mendatar di jagrak, hulu ke +X): utuh (tersarung) → bilah dihunus (terangkat di atas sarung) → hulu + selut dilepas → ganja dilepas → warangka dilepas dari gandar → pendok dilepas dari gandar.
 
@@ -160,7 +163,9 @@ Tahap Keris Sumatra (keris berdiri di dudukan): utuh (tersarung) → bilah dihun
 
 Tahap Candi Borobudur (tingkat dipisah ke atas, tiap batas 6 m skala asli): utuh → stupa induk diangkat → tiga teras melingkar (Arupadhatu) dipisah → teras persegi 3-5 dipisah → teras persegi 1-2 dipisah dari kaki (Kamadhatu). Tanpa `drawOut`, jadi tombol Hunus tidak tampil.
 
-Kode kartu lama `0xEEC1` (keris sementara) dan `0xDA26` (Keris Jawa) sudah ditarik; `0xF0E4` berjarak ≥ 6 bit dari keduanya sehingga kartu lama yang terlanjur dicetak tidak akan memunculkan Keris Sumatra. `0xE3B1` (Borobudur) dipilih dengan pencarian menyeluruh: keempat rotasinya berjarak ≥ 10, ≥ 7 dari semua rotasi kode keris, dan ≥ 6 dari kartu yang ditarik.
+Tahap Karambit (berdiri di dudukan, lekuk cakar ke +X): utuh (tersarung) → sarung **diputar 130°** pada pusat busur punggung bilah sehingga meluncur lepas menyusuri lengkung (bilah cakar tidak bisa dicabut lurus) → pisau diangkat dari lengan penjepit dudukan → hulu dilepas dari puting → cincin dilepas. Tanpa `drawOut` (tanpa tombol Hunus); bilah tidak disembunyikan saat utuh karena celah tipis antara cincin dan mulut sarung tetap harus tertutup.
+
+Kode kartu lama `0xEEC1` (keris sementara) dan `0xDA26` (Keris Jawa) sudah ditarik; `0xF0E4` berjarak ≥ 6 bit dari keduanya sehingga kartu lama yang terlanjur dicetak tidak akan memunculkan Keris Sumatra. `0xE3B1` (Borobudur) dipilih dengan pencarian menyeluruh: keempat rotasinya berjarak ≥ 10, ≥ 7 dari semua rotasi kode keris, dan ≥ 6 dari kartu yang ditarik. `0xC616` (Karambit) dicari dengan cara yang sama: rotasi ≥ 10, ≥ 7 dari ketiga kode aktif, dan ≥ 5 dari kartu yang ditarik (tidak ada kode yang memenuhi ≥ 6 sekaligus).
 
 `ArtifactCategory` disimpan sebagai angka di aset, jadi kategori baru (mis. `Candi`) selalu ditambahkan di **akhir** enum, lengkap dengan label `cat.<Nama>` di `UIStrings`.
 
@@ -358,6 +363,7 @@ Update:
 | Nusantara AR / Build Keris Bali | `KerisBaliBuilder.BuildMenu` | Mengimpor ulang `keris_bali.glb`, membangun prefab + konten + thumbnail |
 | Nusantara AR / Build Keris Sumatra | `KerisSumatraBuilder.BuildMenu` | Mengimpor ulang `keris_sumatra.glb`, membangun prefab + konten + thumbnail |
 | Nusantara AR / Build Candi Borobudur | `CandiBorobudurBuilder.BuildMenu` | Mengimpor ulang `candi_borobudur.glb`, membangun prefab 1:200 + konten + thumbnail |
+| Nusantara AR / Build Karambit | `KarambitBuilder.BuildMenu` | Mengimpor ulang `karambit.glb`, membangun prefab + konten + thumbnail |
 | Nusantara AR / Bangun Kisah | `StoryBuilder.BuildMenu` | Membangun `<ID>_Story.asset` dari `Tools/narasi/kisah.json` + MP3 + `kisah_cues.json`, lalu memasangnya ke `ArtifactData.story` (lihat 7.6) |
 | Nusantara AR / Pasang Musik Latar | `MusicBuilder.BuildMenu` | Memasang `backgroundMusic` + `musicCredit` dari `Tools/musik/musik.json` (lihat 7.6) |
 | Nusantara AR / Render Stage Previews | `PreviewRenderer.Render` | Merender PNG tiap tahap exploded setiap artefak ke `Previews/{id}_stage_N.png` (untuk QA visual) |
@@ -375,9 +381,9 @@ Versi batch (tanpa GUI): `ProjectSetup.RunBatch`, `ProjectSetup.BuildVisualAsset
 3. `ConfigurePlayer`: package id, IL2CPP ARM64, SDK, orientasi, izin kamera, dan setelan Android lainnya.
 4. `ConfigureXR`: loader ARCore/ARKit diset **Optional**.
 5. `ConfigureURP`: menambahkan `ARBackgroundRendererFeature` ke renderer URP.
-6. `KerisBaliBuilder.Build()`, `KerisSumatraBuilder.Build()`, lalu `CandiBorobudurBuilder.Build()`: impor GLB Blender, prefab modular, tahap exploded, hotspot, dan konten draf, lalu mendaftarkannya ke katalog.
+6. `KerisBaliBuilder.Build()`, `KerisSumatraBuilder.Build()`, `CandiBorobudurBuilder.Build()`, lalu `KarambitBuilder.Build()`: impor GLB Blender, prefab modular, tahap exploded, hotspot, dan konten draf, lalu mendaftarkannya ke katalog.
 7. `StoryBuilder.Build()` lalu `MusicBuilder.Build()`: memasang aset Kisah dan musik latar ke `ArtifactData` (dijalankan **setelah** builder artefak karena `ArtifactData` dibuat ulang di langkah 6; lihat 7.6).
-8. `PruneCatalog`: katalog hanya berisi artefak model Blender (Bali, Sumatra, Borobudur), berurutan. Keris tetap di depan (DevCapture memakai artefak pertama).
+8. `PruneCatalog`: katalog hanya berisi artefak model Blender (Bali, Sumatra, Borobudur, Karambit), berurutan. Keris tetap di depan (DevCapture memakai artefak pertama).
 9. `BuildCommonAssets`: material reticle dan `ARPlane.prefab`.
 10. `BuildMainScene`, `BuildARScene`, `BuildMarkerScene`: kamera, cahaya, EventSystem (Input System UI module), controller, dan referensinya.
 11. `RenderThumbnail(dataPath, thumbPath)` untuk tiap artefak (600×740 px, `Content/<ID>/<ID>_thumb.png`).
@@ -388,7 +394,7 @@ Versi batch (tanpa GUI): `ProjectSetup.RunBatch`, `ProjectSetup.BuildVisualAsset
     - Importer diset `npotScale = None`. Tanpa itu Unity membulatkan 600×740 menjadi 512×512, sehingga gambar gepeng dan ada pita kosong di katalog.
 12. Mengisi Build Settings dengan urutan `Main`, `AR`, `Marker`, lalu `SaveAssets`.
 
-### 7.3 Model Blender → GLB → prefab (`GlbArtifact`, `KerisBaliBuilder`, `KerisSumatraBuilder`, `CandiBorobudurBuilder`)
+### 7.3 Model Blender → GLB → prefab (`GlbArtifact`, `KerisBaliBuilder`, `KerisSumatraBuilder`, `CandiBorobudurBuilder`, `KarambitBuilder`)
 - **Sumber model**: skrip Blender 5.2 tanpa GUI di `Tools/blender/` membangun geometri, tekstur PBR (warna, ORM, normal map), dan material, lalu mengekspor GLB (tekstur tertanam) ke `Art/KerisBali/keris_bali.glb` dan `Art/KerisSumatra/keris_sumatra.glb`:
   ```bash
   "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" --background --factory-startup --python Tools/blender/keris_bali.py
@@ -398,14 +404,15 @@ Versi batch (tanpa GUI): `ProjectSetup.RunBatch`, `ProjectSetup.BuildVisualAsset
   Skrip candi kebalikannya: bawaannya hanya menyimpan `.blend` (tekstur di-pack); `-- --export` menulis `Art/CandiBorobudur/candi_borobudur.glb`, `-- --render` merender pratinjau Cycles dari 4 kamera.
 - **Impor**: paket **glTFast** (`com.unity.cloud.gltfast`) mengimpor GLB sebagai model beserta mesh, material (shader graph glTF PBR untuk URP), dan tekstur. Animasi GLB `Cabut_Keris` diabaikan; aplikasi memakai `ExplodedViewController`.
 - **`GlbArtifact.Load`**: instansiasi GLB, kelompokkan node Blender ke `ArtifactPart` lewat tabel nama (`Warangka_Sampir` + `Warangka_Celah` → `Warangka`, `Permata_Selut` → `Selut`, dst.; node tanpa bagian memicu exception), pasang pivot bagian di titik sambung, tambah `MeshCollider` (oklusi hotspot), dan geser model agar dasar alas di y = 0 dan pusat alas di XZ = 0.
-- **Sumbu**: Blender (x, y, z) → ruang Model Unity (x, z, y); muka depan Blender (-Y) menjadi -Z. Arah pencerminan glTF→Unity diperiksa dari sisi +X satu bagian acuan (hulu Bali / warangka Sumatra); bila terbalik, model diputar 180° di Y. Candi simetris empat arah memakai `rightPart = null` (pemeriksaan dilewati, hasil deterministik).
+- **Sumbu**: Blender (x, y, z) → ruang Model Unity (x, z, y); muka depan Blender (-Y) menjadi -Z. Arah pencerminan glTF→Unity diperiksa dari sisi +X satu bagian acuan (hulu Bali / warangka Sumatra); bila terbalik, model diputar 180° di Y. Karambit memakai sarung sebagai acuan +X. Candi simetris empat arah memakai `rightPart = null` (pemeriksaan dilewati, hasil deterministik).
 - **`GlbArtifact.SetStages` / `Move` / `Front`**: tahap exploded dari offset kumulatif per bagian; hotspot diletakkan `gap` (bawaan 3 mm) di depan permukaan terdepan (-Z) bagian pada koordinat (x, y) tertentu, dengan sinar dari z = −`reach` (bawaan 2 m). Keris dihitung pada pose "dihunus"; candi pada pose utuh dengan `reach` 100 m dan `gap` 0,6 m (= 3 mm setelah 1:200). Hotspot di luar bagian memicu exception.
+- **Rotasi tahap (`SetStages(..., rotations)` + `Turn`)**: overload yang juga menerima rotasi kumulatif per bagian (terhadap pivotnya); overload lama mendelegasikan dengan rotasi identitas. Dipakai sarung karambit yang ber-pivot di pusat busur bilah: memutarnya = meluncur menyusuri lengkung. `ExplodedViewController` sudah meng-slerp `localRotation`.
 - **Artefak besar**: `ArtifactData.prefab` berskala nyata, tetapi candi 123 m tidak muat di kamera mana pun (far clip viewer 30 m, AR 20 m). `CandiBorobudurBuilder` memperkecil **child `Model`** ke 1:200 setelah hotspot dihitung; root tetap skala 1 karena `MarkerController` menghitung skala kartu dari ukuran dunia prefab dan slider AR memakai skala root. Pose exploded dan hotspot relatif terhadap bagiannya, jadi ikut terskala. MeshCollider arca & kisi stupa (±220 ribu segitiga) dilepas agar pemuatan di HP ringan; oklusi hotspot cukup memakai collider teras.
 - **`GlbArtifact.Save`**: prefab di `Content/<ID>/`, `ArtifactData` (+ katalog). Konten draf (`Fill`) ada di file builder masing-masing.
-- Bila model Blender diubah: jalankan skrip Blender, lalu menu **Build Keris Bali / Build Keris Sumatra / Build Candi Borobudur** (atau `Tools/compile_and_test.ps1`).
+- Bila model Blender diubah: jalankan skrip Blender, lalu menu **Build Keris Bali / Build Keris Sumatra / Build Candi Borobudur / Build Karambit** (atau `Tools/compile_and_test.ps1`).
 
 ### 7.4 Konten draf
-`KerisBaliBuilder.Fill` dan `KerisSumatraBuilder.Fill` menulis judul, istilah daerah, bahan, teknik, filosofi, dan sejarah ke setiap hotspot lewat `GlbArtifact.Hotspot`. Isi teks sudah diperiksa terhadap sumber daring (UNESCO, Wikipedia, jurnal, media, situs perkerisan; 28-09-2026). Rujukannya dikumpulkan di `KerisRefs` dan tampil sebagai "Sumber rujukan" di kartu info. Tab Filosofi/Sejarah yang belum punya isi otomatis diberi penanda "[Draf] Diisi kurator…". Istilah Keris Sumatra memakai istilah Melayu/Palembang (mis. pendongkok untuk mendak, sampir untuk warangka). `CandiBorobudurBuilder.Fill` mengikuti pola yang sama dengan rujukan di `CandiRefs` (Wikipedia EN/ID, Kompas 2024, dll.; diperiksa 01-10-2026); ukuran yang tidak bersumber disebut "perkiraan". Semua hotspot tetap `curatorValidated = false` sampai divalidasi kurator.
+`KerisBaliBuilder.Fill` dan `KerisSumatraBuilder.Fill` menulis judul, istilah daerah, bahan, teknik, filosofi, dan sejarah ke setiap hotspot lewat `GlbArtifact.Hotspot`. Isi teks sudah diperiksa terhadap sumber daring (UNESCO, Wikipedia, jurnal, media, situs perkerisan; 28-09-2026). Rujukannya dikumpulkan di `KerisRefs` dan tampil sebagai "Sumber rujukan" di kartu info. Tab Filosofi/Sejarah yang belum punya isi otomatis diberi penanda "[Draf] Diisi kurator…". Istilah Keris Sumatra memakai istilah Melayu/Palembang (mis. pendongkok untuk mendak, sampir untuk warangka). `CandiBorobudurBuilder.Fill` mengikuti pola yang sama dengan rujukan di `CandiRefs` (Wikipedia EN/ID, Kompas 2024, dll.; diperiksa 01-10-2026); ukuran yang tidak bersumber disebut "perkiraan". `KarambitBuilder.Fill` memakai `KarambitRefs` (Wikipedia EN/ID, jurnal Wiraseptya & Afdhal 2019, ANTARA 2017, Berita Minang 2025, The Met; diperiksa 02-10-2026); klaim yang hanya ada di tulisan populer (mis. Dharmasraya abad ke-12) tidak dipakai. Semua hotspot tetap `curatorValidated = false` sampai divalidasi kurator.
 
 ### 7.5 Build dan pengaman platform (`BuildScript`, `BuildGuard`)
 **Masalah yang dicegah:** ARCore diinisialisasi sejak aplikasi dibuka (`InitManagerOnStart = true` di `ConfigureXR`), jadi **semua** kamera, termasuk 3D Viewer di scene Main, dirender lewat jalur XR URP. URP menghitung *shader prefiltering* (varian mana yang dibuang) dari **platform aktif** editor, bukan dari target build. Bila APK di-build saat platform aktif masih Standalone (mis. sisa build QA Windows), `Mobile_RPAsset.m_PrefilterXRKeywords` menjadi `1`. Varian XR dibuang, dan model 3D **tidak tampil di HP** padahal build "sukses". Satu-satunya jejak di log: pesan ARCore *"Cannot get path to the Gradle launcher unless the active build platform is Android"*.
@@ -433,7 +440,7 @@ Aset audio dibuat oleh skrip Python di `Tools/`, lalu dipasang ke konten oleh bu
 2. Pixabay memblokir unduhan otomatis, jadi unduh tiap trek manual ke `Tools/musik/asli/` (tidak di-commit). Lalu `python Tools/musik/siapkan_musik.py` (butuh `ffmpeg`/`ffprobe`) menyamakan kenyaringan ke -20 LUFS, memotong ke `maxSeconds` dengan fade-out 3 dtk, dan menulis `Content/<ID>/Music/<ID>_music.mp3`.
 3. Unity: **Pasang Musik Latar** (atau Setup Everything) mengisi `backgroundMusic` + `musicCredit`. Klip diimpor sebagai Vorbis ter-stream (dicek `MusicTests`).
 
-Trek saat ini: "Gamelan Bali Yang Tenang" (LunarBoomMusic) untuk Keris Bali dan "Self-Sacrifice" (Strainsofpoise, gambus Melayu) untuk Keris Sumatra. Keduanya dari Pixabay (Pixabay Content License) dan ditandai hasil AI oleh pengunggahnya. Trek Candi Borobudur tercatat di `Tools/musik/musik.json`.
+Trek saat ini: "Gamelan Bali Yang Tenang" (LunarBoomMusic) untuk Keris Bali dan "Self-Sacrifice" (Strainsofpoise, gambus Melayu) untuk Keris Sumatra. Keduanya dari Pixabay (Pixabay Content License) dan ditandai hasil AI oleh pengunggahnya. Trek Candi Borobudur dan Karambit ("Traditional" - agerabeatz, bertag Minangkabau) tercatat di `Tools/musik/musik.json`.
 
 ---
 
@@ -445,12 +452,13 @@ Jalankan semuanya dengan satu perintah (Unity Editor harus **ditutup** lebih dul
 powershell -ExecutionPolicy Bypass -File Tools\compile_and_test.ps1
 ```
 
-Skrip ini menjalankan `ProjectSetup.RunBatch` (termasuk Bangun Kisah dan Pasang Musik Latar dari MP3 yang sudah ada), lalu EditMode test, lalu `Tools/kartu_qr.py` dan `Tools/kartu_penanda.py` (kartu QR + kartu penanda lama, PDF/PNG Keris Bali, Keris Sumatra, Candi Borobudur). Log disimpan di `Logs/`.
+Skrip ini menjalankan `ProjectSetup.RunBatch` (termasuk Bangun Kisah dan Pasang Musik Latar dari MP3 yang sudah ada), lalu EditMode test, lalu `Tools/kartu_qr.py` dan `Tools/kartu_penanda.py` (kartu QR + kartu penanda lama, PDF/PNG Keris Bali, Keris Sumatra, Candi Borobudur, Karambit). Log disimpan di `Logs/`.
 
 | File | Yang diuji |
 |---|---|
-| `ArtifactTests.cs` | Dijalankan untuk **setiap** artefak (kelas dasar `ArtifactFixture`): katalog berisi tepat Keris Bali + Sumatra + Borobudur dengan kategori KerisSenjata + Candi; ditemukan lewat kode kartunya dan lewat isi QR-nya (termasuk QR hasil `QrCode.Encode`), kode unik, kartu lama (EEC1, DA26) tidak dikenali; semua mesh berasal dari GLB Blender; hotspot menunjuk bagian yang ada dan berada di muka depan; hotspot `Utuh` tampil saat utuh dan semua tampil di tahap 1; setiap tahap menggerakkan bagian; pivot di dasar; clamp skala relatif; fallback `LocalizedString`. Kelas `KerisDrawTests` (keris saja): bilah tersembunyi di sarung, tampil saat dihunus, dan jalur hunus tidak menembus sarung |
+| `ArtifactTests.cs` | Dijalankan untuk **setiap** artefak (kelas dasar `ArtifactFixture`): katalog berisi tepat Keris Bali + Sumatra + Borobudur + Karambit dengan kategori KerisSenjata + Candi; ditemukan lewat kode kartunya dan lewat isi QR-nya (termasuk QR hasil `QrCode.Encode`), kode unik, kartu lama (EEC1, DA26) tidak dikenali; semua mesh berasal dari GLB Blender; hotspot menunjuk bagian yang ada dan berada di muka depan; hotspot `Utuh` tampil saat utuh dan semua tampil di tahap 1; setiap tahap menggerakkan bagian (pusat bounds di ruang Model, jadi rotasi ikut terhitung); pivot di dasar; clamp skala relatif; fallback `LocalizedString`. Kelas `KerisDrawTests` (keris saja): bilah tersembunyi di sarung, tampil saat dihunus, dan jalur hunus tidak menembus sarung |
 | `BorobudurTests.cs` | Root skala 1 dan child `Model` 1:200; tapak ±61,5 cm, tinggi 17,5 cm, pusat di titik letak; kategori Candi, kode E3B1, 10 tingkat, 10 hotspot `Utuh`, 1 + 4 tahap tanpa tombol Hunus; di tahap terakhir setiap tingkat melayang di atas tingkat bawahnya |
+| `KarambitTests.cs` | Kategori KerisSenjata, kode C616, 5 bagian, 9 hotspot, 1 + 4 tahap tanpa tombol Hunus; dudukan di y = 0, lubang hulu di puncak, lekuk ke +X; tinggi ±15,9 cm, tebal bilah 3-6 mm; punggung bilah = busur 5,2 cm berpusat di pivot sarung; selama sarung diputar lepas, setiap verteks bilah di rentang sudut sarung tetap di dalam selubungnya; pisau, hulu, lalu cincin terangkat berurutan |
 | `KerisBlenderTests.cs` | Bali: kode B532, 11 hotspot, 1 + 5 tahap, jagrak 45 cm di y = 0, keris bersandar di atasnya dengan hulu di +X, bilah 40 + 8 cm, bilah terhunus di atas sarung, tahap terakhir melepas pendok. Sumatra: kode F0E4, 9 hotspot, 1 + 4 tahap, tinggi ±52 cm di dudukan, sampir di +X, bilah 36 + 7,2 cm, bilah terhunus di samping sarung |
 | `UiThemeTests.cs` | Kontras WCAG AA token warna, termasuk teks di atas kaca pada latar kamera terburuk (hitam & putih, dicampur di ruang linear); setiap `Icon` menghasilkan bentuk yang terlihat dan tidak menyentuh tepi; slider skala logaritmik & bolak-balik; aset kaca/AR sudah dibangun (`UIGlass`, `GroundGlow`, `GlassBlurFeature` di semua renderer) |
 | `MarkerTests.cs` | Deteksi marker perspektif di 4 orientasi (gambar sintetis); tidak ada false positive pada noise; pose cocok dengan transform yang diketahui; pemetaan rotasi buffer kamera; keunikan rotasi kode & jarak antar kode; memilih artefak yang benar saat semua kode dicari; mendeteksi **PNG kartu cetak** asli di `Docs/` dengan cukup cepat |
@@ -468,7 +476,7 @@ Skrip ini menjalankan `ProjectSetup.RunBatch` (termasuk Bangun Kisah dan Pasang 
 2. `GlbArtifact.Save` membuat `ArtifactData` dan mendaftarkannya ke katalog; tambahkan ID-nya ke `ProjectSetup.PruneCatalog`.
 3. Tambahkan ID ke `[TestFixture]` di `ArtifactTests`, `StoryTests`, dan `MusicTests`; beri kode kartu 6x6 (`MarkerPattern`, `MarkerTests.AllCodes`, `Tools/kartu_penanda.py`) karena `ArtifactTests` mewajibkannya.
 4. **Supaya perubahan tidak hilang**, panggil builder-nya dari `ProjectSetup.RunAll` beserta `RenderThumbnail`-nya.
-5. Tambahkan test khusus (pola: `KerisBlenderTests`, `BorobudurTests`).
+5. Tambahkan test khusus (pola: `KerisBlenderTests`, `BorobudurTests`, `KarambitTests`).
 
 ### Kode QR artefak baru
 Tidak perlu kode tambahan: isi QR diturunkan dari `artifactId`. Tambahkan baris di tabel `KARTU` pada `Tools/kartu_qr.py` untuk kartu cetaknya, dan `TestCase` baru di `Detects_PrintableQrCard_AndIsFastEnough`.

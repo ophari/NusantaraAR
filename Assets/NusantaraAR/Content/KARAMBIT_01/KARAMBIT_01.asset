@@ -1,0 +1,504 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaae056f5a3ccf4d8025ecf14452651, type: 3}
+  m_Name: KARAMBIT_01
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactData
+  artifactId: KARAMBIT_01
+  displayName:
+    id: Karambit Minangkabau
+    en: Minangkabau Karambit
+  localName: Kurambiak
+  category: 0
+  region:
+    id: Minangkabau, Sumatra Barat
+    en: Minangkabau, West Sumatra
+  era:
+    id: Tradisi Minangkabau; catatan tertulis tertua 1827
+    en: Minangkabau tradition; earliest written record 1827
+  summary:
+    id: 'Kurambiak, pisau genggam kecil Minangkabau berbilah melengkung seperti cakar
+      harimau, dengan lubang di ujung gagang untuk jari telunjuk. Model ini jenis
+      jantan (7 gerigi di punggung bilah): hulu kayu kemuning berukir, cincin kuningan,
+      dan sarung kayu berukir tinta emas. Model dibuat di Blender dari foto acuan
+      dan data bersumber, bukan dipindai dari spesimen.'
+    en: 'The kurambiak, a small Minangkabau hand-held knife whose blade curves like
+      a tiger''s claw, with a ring at the end of the grip for the index finger. This
+      model is the male type (7 serrations on the spine): a carved kemuning-wood
+      hilt, a brass ferrule and a wooden sheath carved with gold-ink lines. It was
+      made in Blender from reference photos and sourced data, not scanned from a
+      specimen.'
+  thumbnail: {fileID: 2800000, guid: 5833d5bbbaae03e42bdc68ff93fc6545, type: 3}
+  prefab: {fileID: 545017950004828382, guid: 25c6c453a7237884da3c1609c14aaa46, type: 3}
+  specimenOwner: 
+  collectionNumber: 
+  license: Model Blender milik proyek (dibuat dari foto acuan & data bersumber)
+  measurementNote:
+    id: "Skala 1:1 direka dari sumber: karambit 10,5 x 15,9 cm tanpa sarung, hulu
+      \xB19,7 cm termasuk lubang (\xD8 dalam 2,2 cm), punggung bilah melengkung 120\xB0
+      sepanjang 10,9 cm, tebal bilah 5 mm. Pembanding: karambit Met Museum 36.25.823ab
+      14,6 cm. Bukan hasil pengukuran spesimen."
+    en: "1:1 scale estimated from sources: the karambit is 10.5 x 15.9 cm without
+      its sheath, the hilt ~9.7 cm including the ring (2.2 cm inner diameter), the
+      spine curves 120\xB0 over 10.9 cm, the blade is 5 mm thick. For comparison,
+      Met Museum karambit 36.25.823ab is 14.6 cm. Not measured from a specimen."
+  markerCode: 50710
+  isPlaceholder: 1
+  placeholderNote:
+    id: 'Model Blender dari foto acuan: ukiran, motif kaluak paku, dan serat kayu
+      adalah penyederhanaan. Akan diganti aset dari spesimen asli yang divalidasi
+      kurator.'
+    en: 'Blender model from reference photos: the carving, kaluak paku motif and
+      wood grain are simplified. It will be replaced by an asset from a curator-validated
+      specimen.'
+  hotspots:
+  - hotspotId: lubang
+    partName: Hulu
+    localPosition: {x: -0.033199996, y: 0.09640001, z: -0.009277987}
+    visibleFrom: 0
+    title:
+      id: Lubang
+      en: Finger ring (lubang)
+    regionalTerm: 'Minangkabau: lubang, lobang (lubang gagang)'
+    material:
+      id: 'Pada model: kayu kemuning, menyatu dengan hulu (perlu dikonfirmasi)'
+      en: 'On the model: kemuning wood, one piece with the hilt (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Lubang di ujung atas gagang tempat jari telunjuk dimasukkan, sehingga lengkung
+        bilah keluar dari bawah kepalan tangan. Ukurannya disesuaikan dengan jari
+        pemiliknya. Karena jari terkait di lubang, karambit sulit dirampas lawan
+        dan tidak mudah lepas dari genggaman.
+      en: The ring at the top of the grip, where the index finger goes, so the curved
+        blade emerges from the bottom of the fist. It is sized to its owner's finger.
+        With the finger hooked through it, the karambit is hard to wrest away and
+        does not slip from the grip.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Lubang di ujung atas gagang tempat jari telunjuk dimasukkan, sehingga lengkung
+        bilah keluar dari bawah kepalan tangan. Ukurannya disesuaikan dengan jari
+        pemiliknya. Karena jari terkait di lubang, karambit sulit dirampas lawan
+        dan tidak mudah lepas dari genggaman.
+      en: The ring at the top of the grip, where the index finger goes, so the curved
+        blade emerges from the bottom of the fist. It is sized to its owner's finger.
+        With the finger hooked through it, the karambit is hard to wrest away and
+        does not slip from the grip.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Met 36.25.823ab, Kurambiak Minang -
+      Wikimedia) & data bersumber'
+    - 'Wiraseptya & Afdhal (2019) - Kajian Ikonografis Senjata Tradisional Kurambiak
+      Minangkabau Cakar Harimau Sumatera, Majalah Ilmiah UPI YPTK 26(2): 100-108'
+    - Wikipedia Indonesia - Kerambit (id.wikipedia.org/wiki/Kerambit)
+    - Berita Minang (16-06-2025) - Mengenal Karambit, Senjata Rahasia Minangkabau
+      yang Mendunia (beritaminang.com/berita/26346)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (02-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: hulu
+    partName: Hulu
+    localPosition: {x: -0.0034999996, y: 0.045, z: -0.011540699}
+    visibleFrom: 0
+    title:
+      id: Hulu (Gagang)
+      en: Hilt (hulu)
+    regionalTerm: 'Minangkabau: gagang, hulu'
+    material:
+      id: 'Pada model: kayu kemuning berukir dengan pita hitam (perlu dikonfirmasi)'
+      en: 'On the model: carved kemuning wood with black bands (to be confirmed)'
+    philosophy:
+      id: Kayu kemuning sering dipilih karena dipercaya bertuah. Sebagian pemilik
+        mengukir gagangnya dengan motif-motif Minangkabau yang memuat falsafah adat.
+      en: Kemuning wood is often chosen because it is believed to carry tuah (spiritual
+        power). Some owners carve the grip with Minangkabau motifs that carry customary
+        philosophy.
+    craft:
+      id: 'Gagang dibuat dari kayu, tanduk kerbau, atau gading. Menurut pedoman turun-temurun
+        perajin di Sungai Pua (Agam), gagang idealnya selebar empat buku jari dan
+        sepanjang tiga sampai empat ruas jari telunjuk, lalu disesuaikan dengan pemesan.
+        Kurambiak Minang hanya berwarna di gagangnya, dan hanya dua warna: warna
+        asli kayu dan hitam.'
+      en: 'The grip is made of wood, water-buffalo horn or ivory. By a guideline
+        handed down among the makers of Sungai Pua (Agam), it should ideally be four
+        knuckles wide and three to four index-finger joints long, then adjusted to
+        the customer. A Minang kurambiak is coloured only on its grip, and in just
+        two colours: natural wood and black.'
+    history:
+      id: Dahulu permainan kurambiak hanya diwariskan kepada para datuk atau kalangan
+        raja; tidak sembarang orang boleh menguasainya.
+      en: In the past, the art of the kurambiak was passed down only to datuk (clan
+        leaders) and royalty; not just anyone could master it.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: 'Gagang dibuat dari kayu, tanduk kerbau, atau gading. Menurut pedoman turun-temurun
+        perajin di Sungai Pua (Agam), gagang idealnya selebar empat buku jari dan
+        sepanjang tiga sampai empat ruas jari telunjuk, lalu disesuaikan dengan pemesan.
+        Kurambiak Minang hanya berwarna di gagangnya, dan hanya dua warna: warna
+        asli kayu dan hitam.'
+      en: 'The grip is made of wood, water-buffalo horn or ivory. By a guideline
+        handed down among the makers of Sungai Pua (Agam), it should ideally be four
+        knuckles wide and three to four index-finger joints long, then adjusted to
+        the customer. A Minang kurambiak is coloured only on its grip, and in just
+        two colours: natural wood and black.'
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Met 36.25.823ab, Kurambiak Minang -
+      Wikimedia) & data bersumber'
+    - Berita Minang (16-06-2025) - Mengenal Karambit, Senjata Rahasia Minangkabau
+      yang Mendunia (beritaminang.com/berita/26346)
+    - 'Wiraseptya & Afdhal (2019) - Kajian Ikonografis Senjata Tradisional Kurambiak
+      Minangkabau Cakar Harimau Sumatera, Majalah Ilmiah UPI YPTK 26(2): 100-108'
+    - Wikipedia - Karambit (en.wikipedia.org/wiki/Karambit)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (02-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: cincin
+    partName: Cincin
+    localPosition: {x: 0, y: 0.0034999996, z: -0.011075187}
+    visibleFrom: 0
+    title:
+      id: Cincin
+      en: Ferrule (cincin)
+    regionalTerm: 
+    material:
+      id: 'Pada model: kuningan dengan dua lis timbul (perlu dikonfirmasi)'
+      en: 'On the model: brass with two raised rims (to be confirmed)'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Selongsong logam di pangkal gagang, tempat bilah keluar. Cincin mengikat
+        gagang di sekeliling puting agar kayunya tidak pecah. Pada model dibuat dari
+        kuningan, seperti kurambiak berpangkal logam pada foto acuan.
+      en: The metal collar at the base of the grip, where the blade emerges. It binds
+        the grip around the tang so the wood does not split. On the model it is brass,
+        like the metal-collared kurambiak in the reference photos.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Selongsong logam di pangkal gagang, tempat bilah keluar. Cincin mengikat
+        gagang di sekeliling puting agar kayunya tidak pecah. Pada model dibuat dari
+        kuningan, seperti kurambiak berpangkal logam pada foto acuan.
+      en: The metal collar at the base of the grip, where the blade emerges. It binds
+        the grip around the tang so the wood does not split. On the model it is brass,
+        like the metal-collared kurambiak in the reference photos.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Met 36.25.823ab, Kurambiak Minang -
+      Wikimedia) & data bersumber'
+    - 'Wiraseptya & Afdhal (2019) - Kajian Ikonografis Senjata Tradisional Kurambiak
+      Minangkabau Cakar Harimau Sumatera, Majalah Ilmiah UPI YPTK 26(2): 100-108'
+    - The Met - Knife (Korambi) with Sheath, 36.25.823a,b (metmuseum.org/art/collection/search/31623)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (02-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: sarung
+    partName: Sarung
+    localPosition: {x: -0.022000002, y: -0.038, z: -0.0076115606}
+    visibleFrom: 0
+    title:
+      id: Sarung
+      en: Sheath (sarung)
+    regionalTerm: 'Minangkabau: sarung, sarang'
+    material:
+      id: 'Pada model: kayu berukir bergaris tinta emas, dua pengikat kuningan (perlu
+        dikonfirmasi)'
+      en: 'On the model: carved wood with gold-ink lines and two brass bands (to
+        be confirmed)'
+    philosophy:
+      id: Ornamen klasik adat pada sarung disebut pola pituah adat - hiasan yang
+        membawa petuah (nasihat) adat Minangkabau.
+      en: The classic customary ornament on the sheath is called pola pituah adat
+        - decoration carrying the counsel (petuah) of Minangkabau custom.
+    craft:
+      id: 'Sarung dari kayu atau tanduk kerbau, melengkung mengikuti bilah. Karena
+        bilahnya melengkung, karambit tidak dicabut lurus: sarung dilepas menyusuri
+        lengkung bilah, seperti pada tahap 1. Pada sarung kurambiak Minang terdapat
+        ukiran dari tinta emas.'
+      en: 'The sheath is made of wood or water-buffalo horn and curves with the blade.
+        Because the blade is curved, the karambit is not drawn straight: the sheath
+        slides off along the blade''s curve, as in step 1. Minang kurambiak sheaths
+        bear carvings in gold ink.'
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: 'Sarung dari kayu atau tanduk kerbau, melengkung mengikuti bilah. Karena
+        bilahnya melengkung, karambit tidak dicabut lurus: sarung dilepas menyusuri
+        lengkung bilah, seperti pada tahap 1. Pada sarung kurambiak Minang terdapat
+        ukiran dari tinta emas.'
+      en: 'The sheath is made of wood or water-buffalo horn and curves with the blade.
+        Because the blade is curved, the karambit is not drawn straight: the sheath
+        slides off along the blade''s curve, as in step 1. Minang kurambiak sheaths
+        bear carvings in gold ink.'
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Met 36.25.823ab, Kurambiak Minang -
+      Wikimedia) & data bersumber'
+    - 'Wiraseptya & Afdhal (2019) - Kajian Ikonografis Senjata Tradisional Kurambiak
+      Minangkabau Cakar Harimau Sumatera, Majalah Ilmiah UPI YPTK 26(2): 100-108'
+    - Wikipedia - Karambit (en.wikipedia.org/wiki/Karambit)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (02-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: mata
+    partName: Mata
+    localPosition: {x: 0.0196, y: -0.0371, z: -0.0041018007}
+    visibleFrom: 1
+    title:
+      id: Mata (Bilah Cakar)
+      en: Blade (mata)
+    regionalTerm: 'Minangkabau: kurambiak, karambiak, kurambik'
+    material:
+      id: Besi/baja tempa; ada pula yang memakai batu meteor (perlu dikonfirmasi)
+      en: Forged iron/steel; some use meteoric iron (to be confirmed)
+    philosophy:
+      id: 'Menurut cerita rakyat, bentuknya meniru cakar harimau Sumatra yang dahulu
+        banyak berkeliaran di hutan - sejalan dengan falsafah Minangkabau alam takambang
+        jadi guru: alam terkembang menjadi guru.'
+      en: 'According to folklore, its shape imitates the claws of the Sumatran tiger
+        that once roamed the forests - in line with the Minangkabau philosophy alam
+        takambang jadi guru: nature unfolded is our teacher.'
+    craft:
+      id: "Bilah bermata satu yang melengkung seperti kuku harimau, dengan sisi tajam
+        di bagian dalam lengkungan. Lengkungnya hampir sembilan puluh derajat; tebalnya
+        sekitar setengah sentimeter di punggung lalu menipis sampai tajam. Pada model,
+        punggung bilah melengkung 120\xB0 dengan panjang busur 10,9 cm."
+      en: "A single-edged blade curved like a tiger's claw, sharp on the inside of
+        the curve. It bends through almost ninety degrees and is about half a centimetre
+        thick at the spine, thinning to the edge. On the model the spine curves 120\xB0
+        over 10.9 cm."
+    history:
+      id: Awalnya karambit adalah alat tani untuk menggaruk akar, mengumpulkan hasil
+        irikan, dan menanam padi, lalu berkembang menjadi senjata silek (silat) Minangkabau,
+        terutama aliran silek harimau.
+      en: The karambit began as a farming tool for raking roots, gathering threshed
+        grain and planting rice, and later became a weapon of Minangkabau silek (silat),
+        especially the tiger style, silek harimau.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: "Bilah bermata satu yang melengkung seperti kuku harimau, dengan sisi tajam
+        di bagian dalam lengkungan. Lengkungnya hampir sembilan puluh derajat; tebalnya
+        sekitar setengah sentimeter di punggung lalu menipis sampai tajam. Pada model,
+        punggung bilah melengkung 120\xB0 dengan panjang busur 10,9 cm."
+      en: "A single-edged blade curved like a tiger's claw, sharp on the inside of
+        the curve. It bends through almost ninety degrees and is about half a centimetre
+        thick at the spine, thinning to the edge. On the model the spine curves 120\xB0
+        over 10.9 cm."
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Met 36.25.823ab, Kurambiak Minang -
+      Wikimedia) & data bersumber'
+    - Wikipedia - Karambit (en.wikipedia.org/wiki/Karambit)
+    - Wikipedia Indonesia - Kerambit (id.wikipedia.org/wiki/Kerambit)
+    - 'Wiraseptya & Afdhal (2019) - Kajian Ikonografis Senjata Tradisional Kurambiak
+      Minangkabau Cakar Harimau Sumatera, Majalah Ilmiah UPI YPTK 26(2): 100-108'
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (02-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: gerigi
+    partName: Mata
+    localPosition: {x: -0.0025999993, y: -0.025200002, z: -0.004587221}
+    visibleFrom: 1
+    title:
+      id: Gerigi (Jantan)
+      en: Serrations (male type)
+    regionalTerm: 
+    material:
+      id: Besi/baja tempa (perlu dikonfirmasi)
+      en: Forged iron/steel (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: 'Kerambit Minangkabau dikenal dalam dua jenis: jantan dan betina. Kerambit
+        jantan punya tujuh gerigi di punggung bawah bilah, sedangkan betina lima.
+        Model ini kerambit jantan.'
+      en: 'Minangkabau karambits come in two types: male (jantan) and female (betina).
+        The male has seven serrations on the lower spine of the blade, the female
+        five. This model is a male karambit.'
+    history:
+      id: Seorang pandai besi di Pudak, Kabupaten Sijunjung, membuat bilah dari baja
+        bekas bar gergaji mesin; bakal bilahnya sepanjang 20 cm dan selebar 3 cm,
+        lalu punggung bawahnya diberi gerigi.
+      en: A blacksmith in Pudak, Sijunjung Regency, makes blades from the steel of
+        used chainsaw bars; the blank is 20 cm long and 3 cm wide, and serrations
+        are then cut into its lower spine.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: 'Kerambit Minangkabau dikenal dalam dua jenis: jantan dan betina. Kerambit
+        jantan punya tujuh gerigi di punggung bawah bilah, sedangkan betina lima.
+        Model ini kerambit jantan.'
+      en: 'Minangkabau karambits come in two types: male (jantan) and female (betina).
+        The male has seven serrations on the lower spine of the blade, the female
+        five. This model is a male karambit.'
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Met 36.25.823ab, Kurambiak Minang -
+      Wikimedia) & data bersumber'
+    - ANTARA News (11-03-2017) - Pisau kerambit senjata tradisional dari Minangkabau
+      (antaranews.com/berita/617397)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (02-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: ujung
+    partName: Mata
+    localPosition: {x: 0.0562, y: -0.0468, z: -0.0037000654}
+    visibleFrom: 1
+    title:
+      id: Ujung
+      en: Point (ujung)
+    regionalTerm: 
+    material:
+      id: Besi/baja tempa (perlu dikonfirmasi)
+      en: Forged iron/steel (to be confirmed)
+    philosophy:
+      id: 'Dalam tafsir budaya Minangkabau, lengkung kerambit diibaratkan tulang
+        rusuk yang melindungi organ dalam: senjata yang ampuh berasal dari dalam
+        diri manusia sendiri, seperti tanduk kerbau dan kuku harimau.'
+      en: 'In a Minangkabau cultural reading, the karambit''s curve is likened to
+        a rib protecting the inner organs: the mightiest weapon comes from within
+        a person, like the buffalo''s horn and the tiger''s claw.'
+    craft:
+      id: Ujung runcing yang melengkung ke depan. Karena bilahnya melengkung, karambit
+        bekerja dengan gerakan mengait dan menyayat, bukan menusuk lurus, sehingga
+        dimainkan dalam jarak sangat dekat - idealnya sepasang, di tangan kanan dan
+        kiri.
+      en: The sharp point curving forward. Because the blade is curved, the karambit
+        works with hooking and slicing motions rather than straight thrusts, so it
+        is used at very close range - ideally as a pair, in the right and left hands.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Ujung runcing yang melengkung ke depan. Karena bilahnya melengkung, karambit
+        bekerja dengan gerakan mengait dan menyayat, bukan menusuk lurus, sehingga
+        dimainkan dalam jarak sangat dekat - idealnya sepasang, di tangan kanan dan
+        kiri.
+      en: The sharp point curving forward. Because the blade is curved, the karambit
+        works with hooking and slicing motions rather than straight thrusts, so it
+        is used at very close range - ideally as a pair, in the right and left hands.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Met 36.25.823ab, Kurambiak Minang -
+      Wikimedia) & data bersumber'
+    - 'Wiraseptya & Afdhal (2019) - Kajian Ikonografis Senjata Tradisional Kurambiak
+      Minangkabau Cakar Harimau Sumatera, Majalah Ilmiah UPI YPTK 26(2): 100-108'
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (02-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: kaluak
+    partName: Mata
+    localPosition: {x: 0.00090000033, y: -0.013999999, z: -0.0045727966}
+    visibleFrom: 1
+    title:
+      id: Motif Kaluak Paku
+      en: Kaluak paku motif
+    regionalTerm: 'Minangkabau: kaluak paku (gelung pucuk pakis)'
+    material:
+      id: Ukiran pada baja (pada model berupa tekstur prosedural)
+      en: Engraved into the steel (a procedural texture on the model)
+    philosophy:
+      id: Kaluak paku mengisyaratkan kehidupan yang harus diperjuangkan tanpa henti,
+        sambil selalu mengingat yang benar.
+      en: The kaluak paku signifies a life that must be striven for without rest,
+        while always remembering what is right.
+    craft:
+      id: 'Ornamen pada bilah kurambiak berupa kaluak paku: pucuk pakis yang bergelung,
+        salah satu motif ukir Minangkabau. Pada model diukir sepasang pilin berhadapan
+        di dekat pangkal bilah.'
+      en: 'The ornament on a kurambiak blade is the kaluak paku: the curled tip of
+        a young fern, one of the Minangkabau carving motifs. On the model a facing
+        pair of spirals is engraved near the base of the blade.'
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: 'Ornamen pada bilah kurambiak berupa kaluak paku: pucuk pakis yang bergelung,
+        salah satu motif ukir Minangkabau. Pada model diukir sepasang pilin berhadapan
+        di dekat pangkal bilah.'
+      en: 'The ornament on a kurambiak blade is the kaluak paku: the curled tip of
+        a young fern, one of the Minangkabau carving motifs. On the model a facing
+        pair of spirals is engraved near the base of the blade.'
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Met 36.25.823ab, Kurambiak Minang -
+      Wikimedia) & data bersumber'
+    - 'Wiraseptya & Afdhal (2019) - Kajian Ikonografis Senjata Tradisional Kurambiak
+      Minangkabau Cakar Harimau Sumatera, Majalah Ilmiah UPI YPTK 26(2): 100-108'
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (02-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: puting
+    partName: Mata
+    localPosition: {x: 0, y: 0.030000001, z: -0.0045999764}
+    visibleFrom: 1
+    title:
+      id: Puting
+      en: Tang (puting)
+    regionalTerm: 
+    material:
+      id: Besi/baja tempa (perlu dikonfirmasi)
+      en: Forged iron/steel (to be confirmed)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: 'Tangkai bilah yang masuk ke dalam gagang. Karambit Minangkabau memakai
+        puting separuh (half tang): bilah hanya tertanam sebagian di gagang. Pada
+        model puting sepanjang 4,5 cm dan baru terlihat setelah hulu dilepas pada
+        tahap 3.'
+      en: 'The tang that goes into the grip. The Minangkabau karambit uses a half
+        tang: the blade is only partly embedded in the grip. On the model the tang
+        is 4.5 cm long and only shows once the hilt is removed in step 3.'
+    history:
+      id: Bilah kurambiak dibuat dari besi berkualitas yang ditempa dengan tangan.
+      en: Kurambiak blades are made of good-quality iron forged by hand.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: 'Tangkai bilah yang masuk ke dalam gagang. Karambit Minangkabau memakai
+        puting separuh (half tang): bilah hanya tertanam sebagian di gagang. Pada
+        model puting sepanjang 4,5 cm dan baru terlihat setelah hulu dilepas pada
+        tahap 3.'
+      en: 'The tang that goes into the grip. The Minangkabau karambit uses a half
+        tang: the blade is only partly embedded in the grip. On the model the tang
+        is 4.5 cm long and only shows once the hilt is removed in step 3.'
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Met 36.25.823ab, Kurambiak Minang -
+      Wikimedia) & data bersumber'
+    - Berita Minang (16-06-2025) - Mengenal Karambit, Senjata Rahasia Minangkabau
+      yang Mendunia (beritaminang.com/berita/26346)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (02-10-2026); menunggu validasi
+      kurator.
+  story: {fileID: 11400000, guid: fc7500503ca03f44a8f5b2bd5619fb9b, type: 2}
+  backgroundMusic: {fileID: 0}
+  musicCredit: 

@@ -21,7 +21,13 @@
     "Wikipedia - Borobudur (diperiksa 01-10-2026): https://en.wikipedia.org/wiki/Borobudur",
     "Wikipedia Indonesia - Borobudur: https://id.wikipedia.org/wiki/Borobudur",
     "Kompas (13-11-2024) - Arca Candi Borobudur: Jumlah, Jenis, Letak, dan Mitos Kunto Bimo: https://regional.kompas.com/read/2024/11/13/222228878/arca-candi-borobudur-jumlah-jenis-letak-dan-mitos-kunto-bimo",
-    "Our Buddhism World - How Many Buddha Statues Are There In Borobudur Temple (mudra per arah): https://www.ourbuddhismworld.com/archives/3317"
+    "Our Buddhism World - How Many Buddha Statues Are There In Borobudur Temple (mudra per arah): https://www.ourbuddhismworld.com/archives/3317",
+    "Wikipedia - Karambit (diperiksa 02-10-2026): https://en.wikipedia.org/wiki/Karambit",
+    "Wikipedia Indonesia - Kerambit: https://id.wikipedia.org/wiki/Kerambit",
+    "Wiraseptya & Afdhal (2019) - Kajian Ikonografis Senjata Tradisional Kurambiak Minangkabau Cakar Harimau Sumatera, Majalah Ilmiah UPI YPTK 26(2): https://jmi-upiyptk.org/ojs/index.php/jmi/article/download/74/76/170",
+    "ANTARA News (11-03-2017) - Pisau kerambit senjata tradisional dari Minangkabau: https://www.antaranews.com/berita/617397/pisau-kerambit-senjata-tradisional-dari-minangkabau",
+    "Berita Minang (16-06-2025) - Mengenal Karambit, Senjata Rahasia Minangkabau yang Mendunia: https://www.beritaminang.com/berita/26346/mengenal-karambit-senjata-rahasia-minangkabau-yang-mendunia",
+    "Validnews (23-01-2020) - Kerambit, Senjata Mematikan dari Minangkabau: https://validnews.id/kultura/Kerambit--Senjata-Mematikan-dari-Minangkabau-hzb"
   ],
   "voiceID": "id-ID-GadisNeural",
   "voiceEN": "en-US-AvaNeural",
@@ -201,6 +207,65 @@
           "titleID": "Sampai jumpa", "titleEN": "See you",
           "id": "Kita rakit kembali candinya. Pada tahun 1814, Thomas Stamford Raffles mengutus H.C. Cornelius untuk membersihkan Borobudur dari semak belukar. Pemugaran besar tahun 1975 sampai 1982 membongkar dan menyusun kembali lebih dari satu juta batu, dan pada tahun 1991 Borobudur ditetapkan sebagai Warisan Dunia UNESCO. Hingga kini, setiap Waisak umat Buddha berjalan mengelilingi candi searah jarum jam. Ketuk label emas di setiap tingkat untuk menjelajah lebih jauh, ya. Sampai jumpa!",
           "en": "Let's put the temple back together. In 1814, Thomas Stamford Raffles sent H.C. Cornelius to clear Borobudur of its overgrowth. The major restoration of 1975 to 1982 dismantled and rebuilt more than one million stones, and in 1991 Borobudur was inscribed as a UNESCO World Heritage Site. To this day, at every Vesak, Buddhists walk clockwise around the temple. Tap the gold labels on each level to explore further. See you!"
+        }
+      ]
+    },
+    {
+      "artifactId": "KARAMBIT_01",
+      "chapters": [
+        {
+          "key": "sapa", "stage": 0, "focus": "",
+          "titleID": "Kenalan dulu", "titleEN": "Say hello",
+          "id": "Halo! Kali ini kita berkenalan dengan senjata kecil dari Minangkabau, Sumatra Barat. Orang Minang menyebutnya kurambiak atau karambiak, dan dalam bahasa Indonesia kita mengenalnya sebagai kerambit atau karambit. Ukurannya hanya segenggam tangan, tetapi ceritanya panjang.",
+          "en": "Hi! This time we'll meet a small weapon from Minangkabau, in West Sumatra. The Minang people call it kurambiak or karambiak, and in Indonesian it is known as kerambit or karambit. It is only as big as a hand, but its story is a long one."
+        },
+        {
+          "key": "cakar", "stage": 1, "focus": "mata",
+          "titleID": "Cakar harimau", "titleEN": "A tiger's claw",
+          "id": "Lihat, sarungnya meluncur lepas mengikuti lengkung bilah. Bilah ini melengkung seperti kuku harimau. Menurut cerita rakyat, bentuknya terinspirasi cakar harimau Sumatra yang dahulu banyak berkeliaran di hutan. Ini sejalan dengan falsafah Minangkabau, alam takambang jadi guru: alam yang terbentang adalah guru kita.",
+          "en": "Look, the sheath slides off along the curve of the blade. The blade curves like a tiger's claw. According to folklore, its shape was inspired by the claws of the Sumatran tiger, which once roamed the forests in great numbers. This fits the Minangkabau philosophy alam takambang jadi guru: nature unfolded is our teacher."
+        },
+        {
+          "key": "sejarah", "stage": 1, "focus": "",
+          "titleID": "Dari sawah ke silek", "titleEN": "From the fields to silek",
+          "id": "Awalnya karambit adalah alat tani, dipakai untuk menggaruk akar dan menanam padi. Lama-kelamaan ia menjadi senjata dalam silek, silat Minangkabau, terutama aliran silek harimau. Catatan tertulis tertua tentang kurambiak yang dikutip para penulis berasal dari sebuah jurnal Inggris tahun 1827. Lewat para perantau Minang dan jaringan dagang, karambit menyebar ke Jawa, Semenanjung Melayu, Filipina, hingga Thailand.",
+          "en": "The karambit began as a farming tool, used to rake roots and plant rice. Over time it became a weapon of silek, Minangkabau silat, especially the tiger style called silek harimau. The oldest written record of the kurambiak that writers cite comes from a British journal of 1827. Through Minang migrants and trade networks, the karambit spread to Java, the Malay Peninsula, the Philippines and Thailand."
+        },
+        {
+          "key": "lubang", "stage": 1, "focus": "lubang",
+          "titleID": "Lubang di gagang", "titleEN": "The finger ring",
+          "id": "Perhatikan lubang di ujung gagang. Karambit dipegang dengan jari telunjuk masuk ke lubang ini, sehingga bilahnya keluar dari bawah kepalan tangan. Karena itu karambit sulit dirampas. Perajin di Sungai Pua, Agam, punya pedoman turun-temurun: gagang idealnya selebar empat buku jari. Gagang ini dibuat dari kayu kemuning, kayu yang dipercaya bertuah.",
+          "en": "Notice the ring at the end of the grip. The karambit is held with the index finger through this ring, so the blade comes out from below the fist. That makes it hard to take away. The makers of Sungai Pua, in Agam, follow a guideline handed down for generations: the grip should ideally be four knuckles wide. This grip is made of kemuning wood, believed to carry spiritual power."
+        },
+        {
+          "key": "gerigi", "stage": 1, "focus": "gerigi",
+          "titleID": "Jantan atau betina", "titleEN": "Male or female",
+          "id": "Sekarang lihat punggung bilahnya. Ada tujuh gerigi kecil di bagian bawah. Kerambit Minangkabau punya dua jenis: jantan dengan tujuh gerigi, dan betina dengan lima. Jadi, karambit di depanmu ini jantan. Seorang pandai besi di Sijunjung bercerita bahwa ia menempa bilahnya dari baja bekas bar gergaji mesin.",
+          "en": "Now look at the spine of the blade. There are seven small serrations near its base. Minangkabau karambits come in two types: the male, with seven serrations, and the female, with five. So the karambit in front of you is a male. A blacksmith in Sijunjung explains that he forges his blades from the steel of old chainsaw bars."
+        },
+        {
+          "key": "kaluak", "stage": 1, "focus": "kaluak",
+          "titleID": "Kaluak paku", "titleEN": "The fern spiral",
+          "id": "Di dekat pangkal bilah ada ukiran kaluak paku, pucuk pakis yang bergelung. Motif ini mengingatkan bahwa hidup harus diperjuangkan tanpa henti, sambil selalu mengingat yang benar. Sarungnya pun berukir, dengan garis tinta emas dan ornamen adat yang disebut pola pituah adat, hiasan yang membawa nasihat.",
+          "en": "Near the base of the blade is a kaluak paku carving, the curled tip of a young fern. This motif is a reminder that life must be striven for without rest, while always remembering what is right. The sheath is carved too, with gold-ink lines and customary ornament called pola pituah adat, decoration that carries good counsel."
+        },
+        {
+          "key": "makna", "stage": 1, "focus": "ujung",
+          "titleID": "Harimau tanpa kuku", "titleEN": "A tiger without claws",
+          "id": "Dulu, permainan kurambiak hanya diwariskan kepada para datuk dan kalangan raja. Ada pepatah: pendekar yang belum menguasai kurambiak ibarat harimau tanpa kuku, ayam tanpa taji, burung tanpa paruh. Lengkungnya juga diibaratkan tulang rusuk yang melindungi tubuh, pengingat bahwa kekuatan sejati berasal dari dalam diri.",
+          "en": "In the past, the art of the kurambiak was passed down only to datuk, the clan leaders, and to royalty. A saying goes that a fighter who has not mastered the kurambiak is like a tiger without claws, a rooster without spurs, a bird without a beak. Its curve is also likened to a rib protecting the body, a reminder that true strength comes from within."
+        },
+        {
+          "key": "bongkar", "stage": 4, "focus": "puting",
+          "titleID": "Dibongkar", "titleEN": "Taken apart",
+          "id": "Sekarang kita bongkar. Karambit diangkat dari dudukannya, hulu dilepas, lalu cincin kuningan. Tampaklah puting, tangkai bilah yang masuk ke gagang. Karambit Minangkabau memakai puting separuh: bilahnya hanya tertanam sebagian di dalam gagang.",
+          "en": "Now let's take it apart. The karambit is lifted from its stand, the hilt comes off, and then the brass ferrule. Now you can see the tang, the part of the blade that goes into the grip. The Minangkabau karambit uses a half tang: the blade is only partly set into the grip."
+        },
+        {
+          "key": "penutup", "stage": 0, "focus": "",
+          "titleID": "Kembali utuh", "titleEN": "Whole again",
+          "id": "Kini karambit kembali utuh di sarungnya. Dari alat tani di sawah, kurambiak menjadi bagian dari silek Minangkabau dan kini dikenal di seluruh dunia. Perlu diingat, model ini dibuat dari foto dan catatan, bukan dari spesimen asli, dan isinya masih menunggu pemeriksaan kurator. Terima kasih sudah mendengarkan!",
+          "en": "Now the karambit is whole again in its sheath. From a farming tool in the rice fields, the kurambiak became part of Minangkabau silek and is now known around the world. Keep in mind that this model was made from photos and records, not from a real specimen, and its content is still awaiting a curator's review. Thanks for listening!"
         }
       ]
     }
