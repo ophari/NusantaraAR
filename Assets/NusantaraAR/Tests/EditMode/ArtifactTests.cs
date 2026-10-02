@@ -4,17 +4,15 @@ using UnityEngine;
 
 namespace NusantaraAR.Tests
 {
-    /// <summary>Uji konten & struktur setiap artefak di katalog (kriteria FR-04, FR-07, FR-08, FR-11).</summary>
-    [TestFixture("KERIS_BALI_01")]
-    [TestFixture("KERIS_SUMATRA_01")]
-    public class ArtifactTests
+    /// <summary>Memuat satu artefak dari katalog dan membuat instance prefab-nya untuk tiap tes.</summary>
+    public abstract class ArtifactFixture
     {
-        readonly string id;
-        ContentCatalog catalog;
-        GameObject go;
-        ArtifactInstance instance;
+        protected readonly string id;
+        protected ContentCatalog catalog;
+        protected GameObject go;
+        protected ArtifactInstance instance;
 
-        public ArtifactTests(string id) => this.id = id;
+        protected ArtifactFixture(string id) => this.id = id;
 
         [SetUp]
         public void SetUp()
@@ -31,13 +29,30 @@ namespace NusantaraAR.Tests
         [TearDown]
         public void TearDown() => Object.DestroyImmediate(go);
 
+        internal static Bounds GlbBounds(ArtifactPart part)
+        {
+            var b = part.renderers[0].bounds;
+            foreach (var r in part.renderers) b.Encapsulate(r.bounds);
+            return b;
+        }
+    }
+
+    /// <summary>Uji konten & struktur setiap artefak di katalog (kriteria FR-04, FR-07, FR-08, FR-11).</summary>
+    [TestFixture("KERIS_BALI_01")]
+    [TestFixture("KERIS_SUMATRA_01")]
+    [TestFixture("BOROBUDUR_01")]
+    public class ArtifactTests : ArtifactFixture
+    {
+        public ArtifactTests(string id) : base(id) { }
+
         [Test]
-        public void Catalog_HoldsOnlyTheBlenderKerises()
+        public void Catalog_HoldsTheBlenderArtifacts()
         {
             var ids = catalog.artifacts.Where(a => a != null).Select(a => a.artifactId).ToList();
-            CollectionAssert.AreEquivalent(new[] { "KERIS_BALI_01", "KERIS_SUMATRA_01" }, ids);
+            CollectionAssert.AreEquivalent(new[] { "KERIS_BALI_01", "KERIS_SUMATRA_01", "BOROBUDUR_01" }, ids);
             var cats = catalog.NonEmptyCategories();
             Assert.IsTrue(cats.Contains(ArtifactCategory.KerisSenjata));
+            Assert.IsTrue(cats.Contains(ArtifactCategory.Candi));
             Assert.IsFalse(cats.Contains(ArtifactCategory.Arca));
         }
 
@@ -101,23 +116,21 @@ namespace NusantaraAR.Tests
         }
 
         [Test]
-        public void Assembled_HidesBlade_AndBladeHotspots()
+        public void Assembled_ShowsUtuhHotspots_AndHidesBilahHotspots()
         {
             instance.exploded.SnapTo(0);
-            Assert.IsFalse(instance.GetPart("Wilah").IsVisible, "Bilah harus tersembunyi di dalam sarung");
             foreach (var h in instance.Data.hotspots.Where(h => h.visibleFrom == HotspotStage.Bilah))
-                Assert.IsFalse(instance.IsHotspotAvailable(h), h.hotspotId + " tidak boleh tampil saat keris utuh");
+                Assert.IsFalse(instance.IsHotspotAvailable(h), h.hotspotId + " tidak boleh tampil saat artefak utuh");
             foreach (var h in instance.Data.hotspots.Where(h => h.visibleFrom == HotspotStage.Utuh))
-                Assert.IsTrue(instance.IsHotspotAvailable(h), h.hotspotId + " harus tampil saat keris utuh");
+                Assert.IsTrue(instance.IsHotspotAvailable(h), h.hotspotId + " harus tampil saat artefak utuh");
         }
 
         [Test]
-        public void Drawn_ShowsAllHotspots()
+        public void Stage1_ShowsAllHotspots()
         {
             instance.exploded.SnapTo(1);
-            Assert.IsTrue(instance.GetPart("Wilah").IsVisible);
             foreach (var h in instance.Data.hotspots)
-                Assert.IsTrue(instance.IsHotspotAvailable(h), h.hotspotId + " harus tampil setelah dihunus");
+                Assert.IsTrue(instance.IsHotspotAvailable(h), h.hotspotId + " harus tampil di tahap 1");
         }
 
         [Test]
@@ -148,35 +161,6 @@ namespace NusantaraAR.Tests
                 Assert.IsTrue(now.Zip(prev, (a, b) => (a - b).magnitude).Any(d => d > 0.05f), "Tahap " + s + " tidak menggerakkan bagian mana pun");
                 prev = now;
             }
-        }
-
-        [Test]
-        public void Draw_BladeLeavesSheathWithoutPassingThroughIt()
-        {
-            var ex = instance.exploded;
-            Assert.IsTrue(ex.CanDraw, "Tahap 1 harus punya jalur cabut (drawOut)");
-            var blade = instance.GetPart("Wilah");
-            var sheath = new[] { instance.GetPart("Warangka"), instance.GetPart("Gandar") };
-            Vector3 PoseOf(int stage) => ex.stages[stage].poses.First(p => p.part == blade.transform).localPosition;
-            var sheathed = PoseOf(0);
-            var drawn = PoseOf(1);
-            var draw = ex.stages[1].drawOut;
-            ex.SnapTo(0);
-            foreach (var r in blade.renderers) r.enabled = true;
-
-            for (int i = 0; i <= 200; i++)
-            {
-                var p = ExplodedViewController.DrawPath(sheathed, drawn, draw, i / 200f);
-                blade.transform.localPosition = p;
-                // Selama tarikan lurus sepanjang sumbu sarung, bilah memang masih di dalam sarung.
-                var d = p - sheathed;
-                if ((d - Vector3.Project(d, draw)).magnitude < 1e-4f) continue;
-                var bb = GlbBounds(blade);
-                foreach (var s in sheath)
-                    Assert.IsFalse(bb.Intersects(GlbBounds(s)),
-                        $"Bilah menembus {s.partName} pada u = {i / 200f:0.00} (tarikan lurus kurang jauh?)");
-            }
-            Assert.That((ExplodedViewController.DrawPath(sheathed, drawn, draw, 1f) - drawn).magnitude, Is.LessThan(1e-5f));
         }
 
         [Test]
@@ -213,12 +197,56 @@ namespace NusantaraAR.Tests
                 Locale.Current = prev;
             }
         }
+    }
 
-        internal static Bounds GlbBounds(ArtifactPart part)
+    /// <summary>Uji khusus keris: bilah di dalam sarung dan animasi hunus.</summary>
+    [TestFixture("KERIS_BALI_01")]
+    [TestFixture("KERIS_SUMATRA_01")]
+    public class KerisDrawTests : ArtifactFixture
+    {
+        public KerisDrawTests(string id) : base(id) { }
+
+        [Test]
+        public void Assembled_HidesBlade()
         {
-            var b = part.renderers[0].bounds;
-            foreach (var r in part.renderers) b.Encapsulate(r.bounds);
-            return b;
+            instance.exploded.SnapTo(0);
+            Assert.IsFalse(instance.GetPart("Wilah").IsVisible, "Bilah harus tersembunyi di dalam sarung");
+        }
+
+        [Test]
+        public void Drawn_ShowsBlade()
+        {
+            instance.exploded.SnapTo(1);
+            Assert.IsTrue(instance.GetPart("Wilah").IsVisible);
+        }
+
+        [Test]
+        public void Draw_BladeLeavesSheathWithoutPassingThroughIt()
+        {
+            var ex = instance.exploded;
+            Assert.IsTrue(ex.CanDraw, "Tahap 1 harus punya jalur cabut (drawOut)");
+            var blade = instance.GetPart("Wilah");
+            var sheath = new[] { instance.GetPart("Warangka"), instance.GetPart("Gandar") };
+            Vector3 PoseOf(int stage) => ex.stages[stage].poses.First(p => p.part == blade.transform).localPosition;
+            var sheathed = PoseOf(0);
+            var drawn = PoseOf(1);
+            var draw = ex.stages[1].drawOut;
+            ex.SnapTo(0);
+            foreach (var r in blade.renderers) r.enabled = true;
+
+            for (int i = 0; i <= 200; i++)
+            {
+                var p = ExplodedViewController.DrawPath(sheathed, drawn, draw, i / 200f);
+                blade.transform.localPosition = p;
+                // Selama tarikan lurus sepanjang sumbu sarung, bilah memang masih di dalam sarung.
+                var d = p - sheathed;
+                if ((d - Vector3.Project(d, draw)).magnitude < 1e-4f) continue;
+                var bb = GlbBounds(blade);
+                foreach (var s in sheath)
+                    Assert.IsFalse(bb.Intersects(GlbBounds(s)),
+                        $"Bilah menembus {s.partName} pada u = {i / 200f:0.00} (tarikan lurus kurang jauh?)");
+            }
+            Assert.That((ExplodedViewController.DrawPath(sheathed, drawn, draw, 1f) - drawn).magnitude, Is.LessThan(1e-5f));
         }
     }
 }

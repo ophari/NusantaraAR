@@ -36,7 +36,8 @@ namespace NusantaraAR.EditorTools
 
         /// <param name="partOf">Nama objek Blender (node GLB) -> nama bagian.</param>
         /// <param name="pivots">Nama bagian -> pivot di ruang Model (lihat <see cref="B"/>).</param>
-        /// <param name="rightPart">Bagian yang pusatnya harus berada di sisi +X (pemeriksa arah sumbu).</param>
+        /// <param name="rightPart">Bagian yang pusatnya harus berada di sisi +X (pemeriksa arah sumbu). Null = lewati
+        /// pemeriksaan, untuk model simetris (mis. candi) yang arahnya tidak bisa dibedakan.</param>
         /// <param name="basePart">Bagian alas (dudukan/jagrak): pusat XZ-nya menjadi pivot root.</param>
         public static Built Load(string id, string glbPath, Dictionary<string, string> partOf,
             Dictionary<string, Vector3> pivots, string rightPart, string basePart)
@@ -70,9 +71,12 @@ namespace NusantaraAR.EditorTools
             var unknown = renderers.Where(r => PartFor(r.transform) == null).Select(r => r.name).ToList();
             if (unknown.Count > 0) throw new InvalidOperationException("Objek GLB tanpa bagian: " + string.Join(", ", unknown));
 
-            var right = Encapsulate(renderers.Where(r => PartFor(r.transform) == rightPart));
-            if (b.model.InverseTransformPoint(right.center).x < 0f)
-                src.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            if (rightPart != null)
+            {
+                var right = Encapsulate(renderers.Where(r => PartFor(r.transform) == rightPart));
+                if (b.model.InverseTransformPoint(right.center).x < 0f)
+                    src.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            }
 
             foreach (var name in pivots.Keys)
             {
@@ -251,18 +255,20 @@ namespace NusantaraAR.EditorTools
         }
 
         /// <summary>
-        /// Titik 3 mm di depan permukaan terdepan (-Z) bagian pada koordinat xy ruang Model (raycast dari depan ke
-        /// collider bagian), dikembalikan dalam ruang lokal bagian.
+        /// Titik <paramref name="gap"/> (bawaan 3 mm) di depan permukaan terdepan (-Z) bagian pada koordinat xy ruang
+        /// Model (raycast dari z = -<paramref name="reach"/> ke collider bagian), dikembalikan dalam ruang lokal bagian.
+        /// Artefak besar (candi) memakai reach lebih jauh dari tepi depannya dan gap setara 3 mm setelah diskalakan.
         /// </summary>
-        public static (string part, Vector3 local) Front(Built b, string partName, float x, float y)
+        public static (string part, Vector3 local) Front(Built b, string partName, float x, float y,
+            float reach = 2f, float gap = 0.003f)
         {
             var part = b.parts[partName];
             Physics.SyncTransforms();
             var dir = b.model.TransformDirection(Vector3.forward);
-            var ray = new Ray(b.model.TransformPoint(new Vector3(x, y, -2f)), dir);
+            var ray = new Ray(b.model.TransformPoint(new Vector3(x, y, -reach)), dir);
             float best = float.MaxValue;
             foreach (var r in part.renderers)
-                if (r.TryGetComponent<Collider>(out var c) && c.Raycast(ray, out var hit, 4f) && hit.distance < best)
+                if (r.TryGetComponent<Collider>(out var c) && c.Raycast(ray, out var hit, reach * 2f) && hit.distance < best)
                     best = hit.distance;
             if (best == float.MaxValue)
             {
@@ -270,7 +276,7 @@ namespace NusantaraAR.EditorTools
                 var lo = b.model.InverseTransformPoint(bb.min); var hi = b.model.InverseTransformPoint(bb.max);
                 throw new InvalidOperationException($"Hotspot di luar bagian {partName}: ({x:F3}, {y:F3}); bagian x {lo.x:F3}..{hi.x:F3}, y {lo.y:F3}..{hi.y:F3}");
             }
-            var p = ray.GetPoint(best - 0.003f);
+            var p = ray.GetPoint(best - gap);
             return (partName, part.transform.InverseTransformPoint(p));
         }
 

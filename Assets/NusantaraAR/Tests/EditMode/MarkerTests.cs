@@ -195,6 +195,7 @@ namespace NusantaraAR.Tests
 
         [TestCase(MarkerPattern.KerisBaliCode)]
         [TestCase(MarkerPattern.KerisSumatraCode)]
+        [TestCase(MarkerPattern.BorobudurCode)]
         public void MarkerCode_RotationsAreDistinct(int code)
         {
             var grids = Rotations(code);
@@ -216,7 +217,7 @@ namespace NusantaraAR.Tests
             }
         }
 
-        static readonly int[] AllCodes = { MarkerPattern.KerisBaliCode, MarkerPattern.KerisSumatraCode };
+        static readonly int[] AllCodes = { MarkerPattern.KerisBaliCode, MarkerPattern.KerisSumatraCode, MarkerPattern.BorobudurCode };
 
         [Test]
         public void Detects_TheRightArtifact_WhenAllCodesAreKnown()
@@ -232,6 +233,7 @@ namespace NusantaraAR.Tests
 
         [TestCase("Docs/KartuPenanda_KerisBali_A5.png", MarkerPattern.KerisBaliCode)]
         [TestCase("Docs/KartuPenanda_KerisSumatra_A5.png", MarkerPattern.KerisSumatraCode)]
+        [TestCase("Docs/KartuPenanda_CandiBorobudur_A5.png", MarkerPattern.BorobudurCode)]
         public void Detects_PrintableCard_AndIsFastEnough(string path, int code)
         {
             var codes = AllCodes;

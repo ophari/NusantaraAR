@@ -26,7 +26,7 @@ namespace NusantaraAR.Tests
             if (go != null) Object.DestroyImmediate(go);
         }
 
-        static Bounds Of(ArtifactInstance i, string part) => ArtifactTests.GlbBounds(i.GetPart(part));
+        static Bounds Of(ArtifactInstance i, string part) => ArtifactFixture.GlbBounds(i.GetPart(part));
 
         [Test]
         public void Bali_StandsOnItsJagrak_WithKerisLyingAlongX()

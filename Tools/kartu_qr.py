@@ -1,4 +1,4 @@
-# Membuat kartu kode QR cetak (A5, 300 dpi) untuk setiap keris di aplikasi (mode Scan QR).
+# Membuat kartu kode QR cetak (A5, 300 dpi) untuk setiap artefak di aplikasi (mode Scan QR).
 # Isi QR = "NUSANTARA:" + artifactId, harus sama dengan ContentCatalog.QrPrefix / ArtifactData.QrText.
 # Jalankan dari mana saja: python Tools/kartu_qr.py  (butuh: pip install pillow qrcode)
 # Kartu penanda lama (pola 6x6, cadangan) tetap dibuat oleh Tools/kartu_penanda.py.
@@ -15,7 +15,8 @@ F = lambda n, s: ImageFont.truetype('C:/Windows/Fonts/' + n, s)
 title, sub, body, small = F('georgiab.ttf', 110), F('georgia.ttf', 60), F('arial.ttf', 44), F('arial.ttf', 36)
 
 QR_PREFIX = 'NUSANTARA:'
-KARTU = [('Keris Bali', 'KerisBali', 'KERIS_BALI_01'), ('Keris Sumatra', 'KerisSumatra', 'KERIS_SUMATRA_01')]
+KARTU = [('Keris Bali', 'KerisBali', 'KERIS_BALI_01'), ('Keris Sumatra', 'KerisSumatra', 'KERIS_SUMATRA_01'),
+         ('Candi Borobudur', 'CandiBorobudur', 'BOROBUDUR_01')]
 
 
 def kartu(nama, berkas, artifact_id):

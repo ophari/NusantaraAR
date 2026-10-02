@@ -17,7 +17,11 @@
     "Harta Langit - Tata Cara Mewarangi Keris: https://www.hartalangit.com/2017/12/tata-cara-mewarangi-keris.html",
     "RRI Palembang - Pernak-pernik Keris Palembang: https://rri.co.id/palembang/budaya/2458150/pernak-pernik-keris-palembang-yang-sarat-filosofi-dan-nilai-seni",
     "Bagian Struktur Keris Melayu: https://kerisnusantara.wordpress.com/2012/06/27/bagian-struktur-keris-melayu/",
-    "detikSumut - Pakaian Adat Penghulu Minangkabau: https://www.detik.com/sumut/budaya/d-7618481/pakaian-adat-penghulu-minangkabau-komponen-dan-makna-filosofis"
+    "detikSumut - Pakaian Adat Penghulu Minangkabau: https://www.detik.com/sumut/budaya/d-7618481/pakaian-adat-penghulu-minangkabau-komponen-dan-makna-filosofis",
+    "Wikipedia - Borobudur (diperiksa 01-10-2026): https://en.wikipedia.org/wiki/Borobudur",
+    "Wikipedia Indonesia - Borobudur: https://id.wikipedia.org/wiki/Borobudur",
+    "Kompas (13-11-2024) - Arca Candi Borobudur: Jumlah, Jenis, Letak, dan Mitos Kunto Bimo: https://regional.kompas.com/read/2024/11/13/222228878/arca-candi-borobudur-jumlah-jenis-letak-dan-mitos-kunto-bimo",
+    "Our Buddhism World - How Many Buddha Statues Are There In Borobudur Temple (mudra per arah): https://www.ourbuddhismworld.com/archives/3317"
   ],
   "voiceID": "id-ID-GadisNeural",
   "voiceEN": "en-US-AvaNeural",
@@ -138,6 +142,65 @@
           "titleID": "Sampai jumpa", "titleEN": "See you",
           "id": "Kita rakit kembali kerisnya. Nah, sekarang kamu sudah tahu kisah di balik keris Sumatra ini. Ketuk label emas di setiap bagian untuk menjelajah lebih jauh, ya. Sampai jumpa!",
           "en": "Let's put the keris back together. And now you know the story behind this Sumatran keris. Tap the gold labels on each part to explore further. See you!"
+        }
+      ]
+    },
+    {
+      "artifactId": "BOROBUDUR_01",
+      "chapters": [
+        {
+          "key": "sapa", "stage": 0, "focus": "",
+          "titleID": "Selamat datang", "titleEN": "Welcome",
+          "id": "Halo! Selamat datang di Candi Borobudur, candi Buddha terbesar di dunia. Model di depanmu dibuat dengan skala satu banding dua ratus. Aslinya, kaki candi berukuran seratus dua puluh tiga kali seratus dua puluh tiga meter, dan puncaknya menjulang tiga puluh lima meter dari tanah. Yuk, kita jelajahi bersama!",
+          "en": "Hi there! Welcome to Borobudur, the largest Buddhist temple in the world. The model in front of you is built at a scale of one to two hundred. The real base measures one hundred and twenty-three by one hundred and twenty-three metres, and its summit rises thirty-five metres above the ground. Let's explore it together!"
+        },
+        {
+          "key": "sejarah", "stage": 0, "focus": "andesit",
+          "titleID": "Jejak sejarah", "titleEN": "Traces of history",
+          "id": "Borobudur dibangun pada abad kesembilan, di masa Wangsa Syailendra, di Magelang, Jawa Tengah. Prasasti Karangtengah dari tahun 824 menyebut sebuah bangunan suci bernama Jinalaya yang diresmikan oleh Pramodhawardhani, putri Raja Samaratungga. Menurut cerita rakyat, arsiteknya bernama Gunadharma, meski namanya tidak tercatat di prasasti mana pun. Candi ini disusun dari sekitar lima puluh lima ribu meter kubik batu andesit tanpa semen sama sekali. Batu-batunya saling mengunci dengan tonjolan, lekukan, dan sambungan ekor burung.",
+          "en": "Borobudur was built in the ninth century, in the time of the Sailendra dynasty, in Magelang, Central Java. The Karangtengah inscription of 824 mentions a sacred building called Jinalaya, inaugurated by Pramodhawardhani, daughter of King Samaratungga. According to folk tales its architect was Gunadharma, although his name is not recorded in any inscription. The temple is built from about fifty-five thousand cubic metres of andesite stone, with no mortar at all. The stones lock together with knobs, indentations and dovetail joints."
+        },
+        {
+          "key": "kamadhatu", "stage": 0, "focus": "kaki",
+          "titleID": "Alam keinginan", "titleEN": "The realm of desire",
+          "id": "Borobudur tersusun dalam tiga tingkatan alam menurut kosmologi Buddha. Yang paling bawah adalah Kamadhatu, alam keinginan, yaitu kaki candi ini. Di balik kaki yang kamu lihat, tersembunyi kaki asli dengan seratus enam puluh panel relief Karmawibhangga tentang hukum sebab-akibat. Kaki asli itu ditutup karena cacat struktur saat candi masih dibangun, dan reliefnya baru ditemukan secara tidak sengaja oleh insinyur Belanda Jan Willem IJzerman pada tahun 1885.",
+          "en": "Borobudur is arranged in three realms of Buddhist cosmology. The lowest is Kamadhatu, the realm of desire, which is this base. Behind the base you can see lies the original base, with one hundred and sixty Karmavibhangga relief panels about the law of cause and effect. It was covered because of structural defects while the temple was being built, and its reliefs were only discovered by chance by the Dutch engineer Jan Willem IJzerman in 1885."
+        },
+        {
+          "key": "relief", "stage": 0, "focus": "relief",
+          "titleID": "Galeri relief", "titleEN": "A gallery of reliefs",
+          "id": "Di atasnya berdiri lima teras persegi. Inilah Rupadhatu, alam berbentuk. Dinding lorongnya penuh relief, seluruhnya sekitar dua ribu enam ratus tujuh puluh dua panel. Relief dibaca sambil berjalan searah jarum jam, yang disebut pradaksina. Ada kisah hidup Sang Buddha dalam Lalitavistara, kisah kehidupan-kehidupan sebelumnya dalam Jataka dan Avadana, serta pengembaraan Sudhana mencari Kebijaksanaan Sempurna dalam Gandavyuha. Relief naratifnya terbentang sepanjang kira-kira tiga kilometer. Pada model ini reliefnya dibuat bergaya, bukan salinan relief asli.",
+          "en": "Above it stand five square terraces. This is Rupadhatu, the world of forms. The gallery walls are covered in reliefs, about two thousand six hundred and seventy-two panels in all. They are read while walking clockwise, which is called pradakshina. There is the life of the Buddha in the Lalitavistara, his former lives in the Jataka and Avadana, and Sudhana's search for Perfect Wisdom in the Gandavyuha. The narrative reliefs stretch for about three kilometres. On this model the reliefs are stylised, not copies of the real ones."
+        },
+        {
+          "key": "relung", "stage": 0, "focus": "langkan",
+          "titleID": "Arca di relung", "titleEN": "Buddhas in the niches",
+          "id": "Lihat deretan relung di atas pagar langkan. Ada empat ratus tiga puluh dua relung, masing-masing berisi arca Buddha duduk. Sikap tangannya berbeda menurut arah mata angin: memanggil bumi sebagai saksi di sisi timur, memberi sedekah di selatan, bermeditasi di barat, dan keberanian tanpa rasa takut di utara. Di langkan kelima, semua arca bersikap witarka mudra, lambang nalar dan kebajikan.",
+          "en": "Look at the rows of niches along the balustrades. There are four hundred and thirty-two of them, each holding a seated Buddha. Their hand gestures change with the compass: calling the earth to witness on the east side, giving alms on the south, meditation on the west, and fearlessness on the north. On the fifth balustrade, every statue shows the vitarka mudra, the gesture of reasoning and virtue."
+        },
+        {
+          "key": "stupa_induk", "stage": 1, "focus": "stupa_induk",
+          "titleID": "Stupa induk", "titleEN": "The main stupa",
+          "id": "Sekarang kita bongkar dari puncak. Stupa induk diangkat. Inilah stupa terbesar sekaligus titik tertinggi candi, dan bagian dalamnya kosong. Dahulu puncaknya pernah dimahkotai chattra, payung batu bersusun tiga. Theodoor van Erp menyusunnya kembali saat pemugaran tahun 1907 sampai 1911, lalu membongkarnya lagi karena batu aslinya tidak cukup.",
+          "en": "Now let's take it apart from the top. The main stupa is lifted. This is the largest stupa and the highest point of the temple, and its interior is empty. Its summit was once crowned by a chattra, a three-tiered stone parasol. Theodoor van Erp rebuilt it during the restoration of 1907 to 1911, then dismantled it again because there were not enough original stones."
+        },
+        {
+          "key": "arupadhatu", "stage": 2, "focus": "stupa_terawang",
+          "titleID": "Alam tanpa bentuk", "titleEN": "The formless realm",
+          "id": "Tiga teras melingkar kini terpisah. Inilah Arupadhatu, alam tanpa bentuk. Perhatikan, dindingnya polos tanpa relief. Di sini berdiri tujuh puluh dua stupa terawang: tiga puluh dua, dua puluh empat, dan enam belas di tiap lingkaran. Lubangnya berbentuk belah ketupat di dua teras bawah dan persegi di teras teratas. Di dalam setiap stupa duduk arca Buddha dengan sikap tangan memutar roda dharma. Dulu orang percaya menyentuh arca di dalam stupa membawa keberuntungan, tetapi kebiasaan itu sudah lama dilarang demi menjaga candi.",
+          "en": "The three circular terraces are now apart. This is Arupadhatu, the formless world. Notice how plain the walls are, with no reliefs. Here stand seventy-two perforated stupas: thirty-two, twenty-four and sixteen on each ring. Their openings are diamond-shaped on the two lower terraces and square on the top one. Inside every stupa sits a Buddha turning the wheel of the dharma. People once believed that touching a statue inside a stupa brought good luck, but the practice has long been banned to protect the temple."
+        },
+        {
+          "key": "bongkar", "stage": 4, "focus": "",
+          "titleID": "Sembilan tingkat", "titleEN": "Nine levels",
+          "id": "Sekarang semua tingkat terpisah. Dari bawah: kaki candi sebagai Kamadhatu, lima teras persegi sebagai Rupadhatu, lalu tiga teras melingkar dan stupa induk sebagai Arupadhatu. Seluruhnya sembilan tingkat, enam persegi dan tiga melingkar, dimahkotai stupa induk. Tinggi tiap teras pada model ini adalah perkiraan, karena kami belum menemukan data ukur resminya.",
+          "en": "Now every level is apart. From the bottom: the base as Kamadhatu, five square terraces as Rupadhatu, then three circular terraces and the main stupa as Arupadhatu. Nine levels in all, six square and three circular, crowned by the main stupa. The height of each terrace on this model is an estimate, because we have not yet found official survey data."
+        },
+        {
+          "key": "penutup", "stage": 0, "focus": "pemugaran",
+          "titleID": "Sampai jumpa", "titleEN": "See you",
+          "id": "Kita rakit kembali candinya. Pada tahun 1814, Thomas Stamford Raffles mengutus H.C. Cornelius untuk membersihkan Borobudur dari semak belukar. Pemugaran besar tahun 1975 sampai 1982 membongkar dan menyusun kembali lebih dari satu juta batu, dan pada tahun 1991 Borobudur ditetapkan sebagai Warisan Dunia UNESCO. Hingga kini, setiap Waisak umat Buddha berjalan mengelilingi candi searah jarum jam. Ketuk label emas di setiap tingkat untuk menjelajah lebih jauh, ya. Sampai jumpa!",
+          "en": "Let's put the temple back together. In 1814, Thomas Stamford Raffles sent H.C. Cornelius to clear Borobudur of its overgrowth. The major restoration of 1975 to 1982 dismantled and rebuilt more than one million stones, and in 1991 Borobudur was inscribed as a UNESCO World Heritage Site. To this day, at every Vesak, Buddhists walk clockwise around the temple. Tap the gold labels on each level to explore further. See you!"
         }
       ]
     }

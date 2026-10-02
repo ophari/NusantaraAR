@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace NusantaraAR
 {
-    public enum ArtifactCategory { KerisSenjata, Arca, KriaLogam }
+    /// <summary>Disimpan sebagai angka di aset: nilai baru selalu ditambahkan di akhir.</summary>
+    public enum ArtifactCategory { KerisSenjata, Arca, KriaLogam, Candi }
 
     /// <summary>Kapan hotspot boleh tampil (PRD §6.3).</summary>
     public enum HotspotStage

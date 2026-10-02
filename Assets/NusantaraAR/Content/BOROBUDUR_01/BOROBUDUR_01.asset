@@ -1,0 +1,556 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaae056f5a3ccf4d8025ecf14452651, type: 3}
+  m_Name: BOROBUDUR_01
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactData
+  artifactId: BOROBUDUR_01
+  displayName:
+    id: Candi Borobudur
+    en: Borobudur Temple
+  localName: Borobudur
+  category: 3
+  region:
+    id: Magelang, Jawa Tengah
+    en: Magelang, Central Java
+  era:
+    id: Abad ke-9, Wangsa Syailendra
+    en: 9th century, Sailendra dynasty
+  summary:
+    id: "Candi Buddha terbesar di dunia: sembilan tingkat (enam persegi dan tiga
+      melingkar) yang dimahkotai stupa induk, disusun dari sekitar 55.000 m\xB3 batu
+      andesit tanpa semen. Dindingnya memuat sekitar 2.672 panel relief, dengan 504
+      arca Buddha di relung langkan dan di dalam 72 stupa terawang. Model dibuat
+      di Blender dari data ukuran bersumber; ukuran yang tidak ditemukan sumbernya
+      adalah perkiraan."
+    en: "The world's largest Buddhist temple: nine levels (six square and three circular)
+      crowned by a main stupa, built from about 55,000 m\xB3 of andesite stone without
+      mortar. Its walls carry some 2,672 relief panels, with 504 Buddha statues in
+      the balustrade niches and inside 72 perforated stupas. The model was made in
+      Blender from sourced dimensions; dimensions without a source are estimates."
+  thumbnail: {fileID: 2800000, guid: a4948abd0e7f2054daa9b1c741289e94, type: 3}
+  prefab: {fileID: 6392355719623272695, guid: 2df392306c46e0e4383ed8769143e2a8, type: 3}
+  specimenOwner: 
+  collectionNumber: 
+  license: Model Blender milik proyek (dibuat dari data ukuran bersumber)
+  measurementNote:
+    id: Skala 1:200. Denah 123 x 123 m dan tinggi 35 m sampai puncak stupa induk
+      (tanpa chattra) bersumber; tinggi tiap teras, diameter teras melingkar, dan
+      ukuran stupa adalah perkiraan (lihat Docs/Borobudur_Data.md).
+    en: 1:200 scale. The 123 x 123 m plan and the 35 m height to the top of the main
+      stupa (without the chattra) are sourced; terrace heights, circular terrace
+      diameters and stupa sizes are estimates (see Docs/Borobudur_Data.md).
+  markerCode: 58289
+  isPlaceholder: 1
+  placeholderNote:
+    id: 'Model Blender rekonstruksi: relief memakai tekstur bergaya (bukan relief
+      asli), arca disederhanakan tanpa mudra, jaladwara dan arca singa belum dimodelkan.
+      Akan divalidasi kurator.'
+    en: 'Reconstructed Blender model: the reliefs are a stylised texture (not the
+      real reliefs), the statues are simplified without mudras, and the water spouts
+      and lion statues are not modelled yet. To be validated by a curator.'
+  hotspots:
+  - hotspotId: kaki
+    partName: Kaki
+    localPosition: {x: -30, y: 2, z: -60.599995}
+    visibleFrom: 0
+    title:
+      id: Kaki Candi
+      en: Temple Base
+    regionalTerm: Kamadhatu - alam keinginan
+    material:
+      id: "Batu andesit (seluruh candi \xB155.000 m\xB3)"
+      en: "Andesite stone (\xB155,000 m\xB3 for the whole temple)"
+    philosophy:
+      id: Kaki candi melambangkan Kamadhatu, alam keinginan - tingkat terbawah dari
+        tiga alam dalam kosmologi Buddha yang dilalui peziarah menuju puncak.
+      en: The base stands for Kamadhatu, the realm of desire - the lowest of the
+        three realms of Buddhist cosmology that pilgrims pass through on their way
+        to the top.
+    craft:
+      id: 'Kaki candi berdenah 123 x 123 m. Kaki yang tampak sekarang adalah kaki
+        tambahan: di baliknya tersembunyi kaki asli berhias 160 panel relief Karmawibhangga
+        tentang hukum sebab-akibat (karma).'
+      en: 'The base measures 123 x 123 m. The base seen today is an added one: behind
+        it lies the original base, decorated with 160 Karmavibhangga relief panels
+        on the law of cause and effect (karma).'
+    history:
+      id: Kaki asli ditutup karena cacat struktur yang muncul saat candi masih dibangun.
+        Relief tersembunyi itu ditemukan tidak sengaja pada 1885 oleh insinyur Belanda
+        Jan Willem IJzerman.
+      en: The original base was covered because of structural defects that appeared
+        while the temple was being built. The hidden reliefs were discovered by chance
+        in 1885 by the Dutch engineer Jan Willem IJzerman.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: 'Kaki candi berdenah 123 x 123 m. Kaki yang tampak sekarang adalah kaki
+        tambahan: di baliknya tersembunyi kaki asli berhias 160 panel relief Karmawibhangga
+        tentang hukum sebab-akibat (karma).'
+      en: 'The base measures 123 x 123 m. The base seen today is an added one: behind
+        it lies the original base, decorated with 160 Karmavibhangga relief panels
+        on the law of cause and effect (karma).'
+    sources:
+    - 'Model: Blender dari data ukuran bersumber + perkiraan (Tools/blender/candi_borobudur.py,
+      Docs/Borobudur_Data.md)'
+    - Wikipedia - Borobudur (en.wikipedia.org/wiki/Borobudur)
+    - Wikipedia Indonesia - Borobudur (id.wikipedia.org/wiki/Borobudur)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (01-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: langkan
+    partName: Kaki
+    localPosition: {x: 32, y: 4.5, z: -60.55}
+    visibleFrom: 0
+    title:
+      id: Langkan & Relung Arca
+      en: Balustrades & Buddha Niches
+    regionalTerm: Relung arca Dhyani Buddha
+    material:
+      id: Batu andesit; arca Buddha dipahat dari batu yang sama
+      en: Andesite; the Buddha statues are carved from the same stone
+    philosophy:
+      id: 'Sikap tangan (mudra) arca mengikuti arah mata angin: timur bhumisparsa
+        mudra (Aksobya), selatan wara mudra (Ratnasambhawa), barat dhyana mudra (Amitabha),
+        utara abhaya mudra (Amoghasiddhi). Di langkan kelima semua arca bersikap
+        witarka mudra (Wairocana).'
+      en: 'The statues'' hand gestures (mudras) follow the compass: east bhumisparsa
+        mudra (Akshobhya), south vara mudra (Ratnasambhava), west dhyana mudra (Amitabha),
+        north abhaya mudra (Amoghasiddhi). On the fifth balustrade all statues show
+        vitarka mudra (Vairocana).'
+    craft:
+      id: 'Di atas lima tingkat langkan berderet 432 relung, masing-masing berisi
+        arca Buddha duduk: 104, 104, 88, 72, dan 64 relung dari langkan pertama sampai
+        kelima. Pada model, relung dan arca disederhanakan.'
+      en: 'Along the tops of the five balustrade levels stand 432 niches, each holding
+        a seated Buddha: 104, 104, 88, 72 and 64 niches from the first to the fifth
+        balustrade. On the model the niches and statues are simplified.'
+    history:
+      id: Bersama 72 arca di dalam stupa terawang, Borobudur semula memiliki 504
+        arca Buddha.
+      en: Together with the 72 statues inside the perforated stupas, Borobudur originally
+        had 504 Buddha statues.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: 'Di atas lima tingkat langkan berderet 432 relung, masing-masing berisi
+        arca Buddha duduk: 104, 104, 88, 72, dan 64 relung dari langkan pertama sampai
+        kelima. Pada model, relung dan arca disederhanakan.'
+      en: 'Along the tops of the five balustrade levels stand 432 niches, each holding
+        a seated Buddha: 104, 104, 88, 72 and 64 niches from the first to the fifth
+        balustrade. On the model the niches and statues are simplified.'
+    sources:
+    - 'Model: Blender dari data ukuran bersumber + perkiraan (Tools/blender/candi_borobudur.py,
+      Docs/Borobudur_Data.md)'
+    - 'Kompas (13-11-2024) - Arca Candi Borobudur: Jumlah, Jenis, Letak, dan Mitos
+      Kunto Bimo (regional.kompas.com)'
+    - Wikipedia - Borobudur (en.wikipedia.org/wiki/Borobudur)
+    - Britannica - Borobudur (britannica.com/topic/Borobudur)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (01-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: gapura
+    partName: Kaki
+    localPosition: {x: -1.65, y: 6, z: -61.55}
+    visibleFrom: 0
+    title:
+      id: Tangga & Gapura
+      en: Stairways & Gateways
+    regionalTerm: Pintu utama di sisi timur
+    material:
+      id: "Batu andesit (seluruh candi \xB155.000 m\xB3)"
+      en: "Andesite stone (\xB155,000 m\xB3 for the whole temple)"
+    philosophy:
+      id: Peziarah naik dari timur lalu berjalan searah jarum jam (pradaksina) mengelilingi
+        setiap tingkat sebelum naik ke tingkat berikutnya - perjalanan simbolis dari
+        alam keinginan menuju alam tanpa bentuk.
+      en: Pilgrims climb from the east and walk clockwise (pradakshina) around each
+        level before going up to the next - a symbolic journey from the realm of
+        desire to the formless realm.
+    craft:
+      id: Tangga naik tepat di tengah keempat sisi candi dan melewati gapura di setiap
+        tingkat. Pintu masuk utama berada di sisi timur. Pada model, gapura disederhanakan
+        tanpa ukiran kepala kala.
+      en: Stairways rise at the centre of all four sides and pass through a gateway
+        at every level. The main entrance is on the east side. On the model the gateways
+        are simplified, without the carved kala heads.
+    history:
+      id: Candi ini juga dihiasi 32 arca singa dan 100 jaladwara (pancuran air di
+        sudut-sudut), masing-masing jaladwara berukiran unik. Keduanya belum dimodelkan.
+      en: The temple is also adorned with 32 lion statues and 100 water spouts at
+        the corners, each spout with a unique carving. Neither is modelled yet.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Tangga naik tepat di tengah keempat sisi candi dan melewati gapura di setiap
+        tingkat. Pintu masuk utama berada di sisi timur. Pada model, gapura disederhanakan
+        tanpa ukiran kepala kala.
+      en: Stairways rise at the centre of all four sides and pass through a gateway
+        at every level. The main entrance is on the east side. On the model the gateways
+        are simplified, without the carved kala heads.
+    sources:
+    - 'Model: Blender dari data ukuran bersumber + perkiraan (Tools/blender/candi_borobudur.py,
+      Docs/Borobudur_Data.md)'
+    - Wikipedia - Borobudur (en.wikipedia.org/wiki/Borobudur)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (01-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: relief
+    partName: Teras1
+    localPosition: {x: -20, y: 2.1999998, z: -53.749996}
+    visibleFrom: 0
+    title:
+      id: Relief Lorong
+      en: Gallery Reliefs
+    regionalTerm: 2.672 panel relief
+    material:
+      id: Pahatan relief pada batu andesit (tekstur model bergaya, bukan relief asli)
+      en: Reliefs carved in andesite (the model uses a stylised texture, not the
+        real reliefs)
+    philosophy:
+      id: Relief dibaca sambil berjalan searah jarum jam. Seri Lalitavistara (120
+        panel) mengisahkan hidup Sang Buddha; Jataka dan Avadana mengisahkan kehidupan-kehidupan
+        sebelumnya; Gandavyuha (372 panel di lorong 2-4) mengisahkan pengembaraan
+        Sudhana mencari kebijaksanaan sampai ia mencapai Kebijaksanaan Sempurna.
+      en: The reliefs are read while walking clockwise. The Lalitavistara series
+        (120 panels) tells the life of the Buddha; the Jataka and Avadana tell his
+        former lives; the Gandavyuha (372 panels in galleries 2-4) follows Sudhana's
+        wandering search until he attains Perfect Wisdom.
+    craft:
+      id: "Borobudur memuat sekitar 2.672 panel relief - 1.460 naratif dan 1.212
+        dekoratif - seluas kira-kira 2.500 m\xB2. Relief naratif tersusun dalam 11
+        seri sepanjang sekitar 3.000 m di kaki tertutup dan empat lorong pertama."
+      en: "Borobudur carries about 2,672 relief panels - 1,460 narrative and 1,212
+        decorative - covering some 2,500 m\xB2. The narrative reliefs are arranged
+        in 11 series over about 3,000 m on the hidden base and the first four galleries."
+    history:
+      id: 'Seluruh relief naratif berjumlah 1.460 panel: 160 Karmawibhangga di kaki
+        tertutup, 120 Lalitavistara dan 120 Jataka/Avadana di dinding lorong pertama,
+        600 Jataka/Avadana di langkan lorong 1-2, dan 372 Gandavyuha.'
+      en: 'The narrative reliefs total 1,460 panels: 160 Karmavibhangga on the hidden
+        base, 120 Lalitavistara and 120 Jataka/Avadana on the first gallery wall,
+        600 Jataka/Avadana on the balustrades of galleries 1-2, and 372 Gandavyuha.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: "Borobudur memuat sekitar 2.672 panel relief - 1.460 naratif dan 1.212
+        dekoratif - seluas kira-kira 2.500 m\xB2. Relief naratif tersusun dalam 11
+        seri sepanjang sekitar 3.000 m di kaki tertutup dan empat lorong pertama."
+      en: "Borobudur carries about 2,672 relief panels - 1,460 narrative and 1,212
+        decorative - covering some 2,500 m\xB2. The narrative reliefs are arranged
+        in 11 series over about 3,000 m on the hidden base and the first four galleries."
+    sources:
+    - 'Model: Blender dari data ukuran bersumber + perkiraan (Tools/blender/candi_borobudur.py,
+      Docs/Borobudur_Data.md)'
+    - Wikipedia - Borobudur (en.wikipedia.org/wiki/Borobudur)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (01-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: andesit
+    partName: Teras2
+    localPosition: {x: 20, y: 2, z: -50.25}
+    visibleFrom: 0
+    title:
+      id: Batu Andesit Tanpa Semen
+      en: Mortarless Andesite
+    regionalTerm: 
+    material:
+      id: "Batu andesit (seluruh candi \xB155.000 m\xB3)"
+      en: "Andesite stone (\xB155,000 m\xB3 for the whole temple)"
+    philosophy:
+      id: 'Proporsi tinggi kaki, badan, dan kepala candi disebut mengikuti rasio
+        4 : 6 : 9.'
+      en: 'The heights of the base, body and head of the temple are said to follow
+        a 4 : 6 : 9 ratio.'
+    craft:
+      id: Batu andesit dipotong sesuai ukuran, diangkut ke lokasi, lalu disusun tanpa
+        semen. Sambungan antarbatu dikunci dengan tonjolan, lekukan, dan pasak ekor
+        burung.
+      en: The andesite was cut to size, carried to the site and laid without mortar.
+        The stones are locked together with knobs, indentations and dovetails.
+    history:
+      id: Menurut cerita rakyat Jawa, arsiteknya bernama Gunadharma; nama ini tidak
+        tercatat dalam prasasti.
+      en: According to Javanese folk tales its architect was Gunadharma; the name
+        is not recorded in any inscription.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Batu andesit dipotong sesuai ukuran, diangkut ke lokasi, lalu disusun tanpa
+        semen. Sambungan antarbatu dikunci dengan tonjolan, lekukan, dan pasak ekor
+        burung.
+      en: The andesite was cut to size, carried to the site and laid without mortar.
+        The stones are locked together with knobs, indentations and dovetails.
+    sources:
+    - 'Model: Blender dari data ukuran bersumber + perkiraan (Tools/blender/candi_borobudur.py,
+      Docs/Borobudur_Data.md)'
+    - Wikipedia - Borobudur (en.wikipedia.org/wiki/Borobudur)
+    - 'F. Musacchio (2025) - Borobudur: A Buddhist mandala in stone (fabriziomusacchio.com)'
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (01-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: rupadhatu
+    partName: Teras3
+    localPosition: {x: -20, y: 1.9000006, z: -46.75}
+    visibleFrom: 0
+    title:
+      id: Teras Persegi (Rupadhatu)
+      en: Square Terraces (Rupadhatu)
+    regionalTerm: Rupadhatu - alam berbentuk
+    material:
+      id: "Batu andesit (seluruh candi \xB155.000 m\xB3)"
+      en: "Andesite stone (\xB155,000 m\xB3 for the whole temple)"
+    philosophy:
+      id: Lima teras persegi (badan candi) melambangkan Rupadhatu, alam berbentuk
+        - tingkat tengah di antara alam keinginan (kaki) dan alam tanpa bentuk (puncak).
+      en: The five square terraces (the body) stand for Rupadhatu, the world of forms
+        - the middle level between the realm of desire (the base) and the formless
+        world (the top).
+    craft:
+      id: Di atas kaki berdiri lima teras persegi yang makin ke atas makin kecil.
+        Teras pertama mundur 7 m dari tepi kaki; di antara dinding dan langkan terbentuk
+        lorong sempit tempat relief dipahat. Denah sisinya berlekuk-lekuk di sudut.
+      en: Above the base stand five square terraces, each smaller than the one below.
+        The first terrace is set back 7 m from the edge of the base; between the
+        walls and the balustrades run narrow galleries lined with reliefs. The corners
+        of the plan are stepped.
+    history:
+      id: Prasasti Karangtengah (824) menyebut bangunan suci bernama Jinalaya yang
+        diresmikan Pramodhawardhani, putri Samaratungga; bangunan ini sering dikaitkan
+        dengan Borobudur. Tahap pembangunan kelima diperkirakan selesai sekitar 833.
+      en: The Karangtengah inscription (824) mentions a sacred building named Jinalaya
+        inaugurated by Pramodhawardhani, daughter of Samaratungga; it is often linked
+        to Borobudur. The fifth construction stage is estimated to have been completed
+        around 833.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Di atas kaki berdiri lima teras persegi yang makin ke atas makin kecil.
+        Teras pertama mundur 7 m dari tepi kaki; di antara dinding dan langkan terbentuk
+        lorong sempit tempat relief dipahat. Denah sisinya berlekuk-lekuk di sudut.
+      en: Above the base stand five square terraces, each smaller than the one below.
+        The first terrace is set back 7 m from the edge of the base; between the
+        walls and the balustrades run narrow galleries lined with reliefs. The corners
+        of the plan are stepped.
+    sources:
+    - 'Model: Blender dari data ukuran bersumber + perkiraan (Tools/blender/candi_borobudur.py,
+      Docs/Borobudur_Data.md)'
+    - Wikipedia - Borobudur (en.wikipedia.org/wiki/Borobudur)
+    - 'Facts and Details - Borobudur: History, Architecture, Components (factsanddetails.com)'
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (01-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: pemugaran
+    partName: Teras4
+    localPosition: {x: 20, y: 1.7999992, z: -43.249996}
+    visibleFrom: 0
+    title:
+      id: Penemuan & Pemugaran
+      en: Rediscovery & Restoration
+    regionalTerm: 
+    material:
+      id: "Batu andesit (seluruh candi \xB155.000 m\xB3)"
+      en: "Andesite stone (\xB155,000 m\xB3 for the whole temple)"
+    philosophy:
+      id: 'Borobudur tetap menjadi tempat ibadah yang hidup: setiap tahun saat Waisak
+        (purnama Mei atau Juni), umat Buddha Indonesia berjalan mengelilingi candi
+        searah jarum jam (pradaksina) dan bermeditasi.'
+      en: 'Borobudur remains a living place of worship: every year at Vesak (the
+        full moon in May or June), Indonesian Buddhists walk clockwise around the
+        temple (pradakshina) and meditate.'
+    craft:
+      id: Pemugaran pertama dipimpin Theodoor van Erp pada 1907-1911. Pada pemugaran
+        besar 1975-1982 (biaya US$6.901.243), lebih dari satu juta batu dibongkar
+        lalu diidentifikasi, dicatat, dan dibersihkan satu per satu seperti kepingan
+        puzzle raksasa; fondasi distabilkan dan saluran air ditanam di dalam candi.
+      en: The first restoration was led by Theodoor van Erp in 1907-1911. In the
+        major 1975-1982 restoration (cost US$6,901,243), over one million stones
+        were dismantled, then individually identified, catalogued and cleaned like
+        pieces of a giant jigsaw puzzle; the foundation was stabilised and drainage
+        channels were embedded in the monument.
+    history:
+      id: Pada 1814 Thomas Stamford Raffles mengutus insinyur H.C. Cornelius, yang
+        bersama 200 orang membersihkan candi dari semak selama dua bulan. Borobudur
+        ditetapkan sebagai Warisan Dunia UNESCO pada 1991. Pada 21 Januari 1985 sembilan
+        stupa rusak parah akibat bom.
+      en: In 1814 Thomas Stamford Raffles sent the engineer H.C. Cornelius, who with
+        200 men cleared the temple of vegetation over two months. Borobudur was inscribed
+        as a UNESCO World Heritage Site in 1991. On 21 January 1985 nine stupas were
+        badly damaged by bombs.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Pemugaran pertama dipimpin Theodoor van Erp pada 1907-1911. Pada pemugaran
+        besar 1975-1982 (biaya US$6.901.243), lebih dari satu juta batu dibongkar
+        lalu diidentifikasi, dicatat, dan dibersihkan satu per satu seperti kepingan
+        puzzle raksasa; fondasi distabilkan dan saluran air ditanam di dalam candi.
+      en: The first restoration was led by Theodoor van Erp in 1907-1911. In the
+        major 1975-1982 restoration (cost US$6,901,243), over one million stones
+        were dismantled, then individually identified, catalogued and cleaned like
+        pieces of a giant jigsaw puzzle; the foundation was stabilised and drainage
+        channels were embedded in the monument.
+    sources:
+    - 'Model: Blender dari data ukuran bersumber + perkiraan (Tools/blender/candi_borobudur.py,
+      Docs/Borobudur_Data.md)'
+    - Wikipedia - Borobudur (en.wikipedia.org/wiki/Borobudur)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (01-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: arupadhatu
+    partName: Lingkar1
+    localPosition: {x: -12, y: 0.70000076, z: -23.658974}
+    visibleFrom: 0
+    title:
+      id: Teras Melingkar (Arupadhatu)
+      en: Circular Terraces (Arupadhatu)
+    regionalTerm: Arupadhatu - alam tanpa bentuk
+    material:
+      id: "Batu andesit (seluruh candi \xB155.000 m\xB3)"
+      en: "Andesite stone (\xB155,000 m\xB3 for the whole temple)"
+    philosophy:
+      id: 'Tiga teras melingkar dan stupa induk melambangkan Arupadhatu, alam tanpa
+        bentuk. Karena itu arsitekturnya berubah: dari dinding penuh relief di teras
+        persegi menjadi polos di teras melingkar.'
+      en: 'The three circular terraces and the main stupa stand for Arupadhatu, the
+        formless world. The architecture changes accordingly: from walls full of
+        reliefs on the square terraces to plain surfaces on the circular ones.'
+    craft:
+      id: 'Tiga teras melingkar tanpa relief berdiri di atas teras persegi, masing-masing
+        dikelilingi satu lingkar stupa terawang: 32, 24, dan 16 stupa.'
+      en: 'Three circular terraces without reliefs rise above the square terraces,
+        each ringed by perforated stupas: 32, 24 and 16 stupas.'
+    history:
+      id: Sembilan tingkat Borobudur terdiri atas enam persegi dan tiga melingkar.
+        Tinggi dan diameter teras melingkar pada model adalah perkiraan.
+      en: Borobudur's nine levels are six square and three circular. The heights
+        and diameters of the circular terraces on the model are estimates.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: 'Tiga teras melingkar tanpa relief berdiri di atas teras persegi, masing-masing
+        dikelilingi satu lingkar stupa terawang: 32, 24, dan 16 stupa.'
+      en: 'Three circular terraces without reliefs rise above the square terraces,
+        each ringed by perforated stupas: 32, 24 and 16 stupas.'
+    sources:
+    - 'Model: Blender dari data ukuran bersumber + perkiraan (Tools/blender/candi_borobudur.py,
+      Docs/Borobudur_Data.md)'
+    - Wikipedia - Borobudur (en.wikipedia.org/wiki/Borobudur)
+    - Wikipedia Indonesia - Borobudur (id.wikipedia.org/wiki/Borobudur)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (01-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: stupa_terawang
+    partName: Lingkar1
+    localPosition: {x: -2.372, y: 4, z: -25.311653}
+    visibleFrom: 0
+    title:
+      id: Stupa Terawang
+      en: Perforated Stupas
+    regionalTerm: 72 stupa berlubang
+    material:
+      id: "Batu andesit (seluruh candi \xB155.000 m\xB3)"
+      en: "Andesite stone (\xB155,000 m\xB3 for the whole temple)"
+    philosophy:
+      id: Ke-72 arca di dalam stupa adalah Dhyani Buddha Vajrasattva dengan sikap
+        tangan dharmacakra mudra (memutar roda dharma).
+      en: The 72 statues inside the stupas are Dhyani Buddha Vajrasattva with the
+        dharmachakra mudra (turning the wheel of the dharma).
+    craft:
+      id: Stupa berbentuk genta dengan lubang-lubang terawang. Lubangnya berbentuk
+        belah ketupat di dua teras bawah dan persegi di teras teratas. Di dalam setiap
+        stupa duduk arca Buddha.
+      en: 'Bell-shaped stupas pierced with openings: diamond-shaped on the two lower
+        terraces and square on the top terrace. A Buddha statue sits inside each
+        stupa.'
+    history:
+      id: Dulu banyak pengunjung percaya menyentuh arca di dalam stupa membawa keberuntungan
+        (mitos Kunto Bimo). Kebiasaan ini sudah lama dilarang demi pelestarian candi.
+      en: Visitors once believed that touching a statue inside a stupa brings luck
+        (the Kunto Bimo myth). The practice has long been banned to protect the temple.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Stupa berbentuk genta dengan lubang-lubang terawang. Lubangnya berbentuk
+        belah ketupat di dua teras bawah dan persegi di teras teratas. Di dalam setiap
+        stupa duduk arca Buddha.
+      en: 'Bell-shaped stupas pierced with openings: diamond-shaped on the two lower
+        terraces and square on the top terrace. A Buddha statue sits inside each
+        stupa.'
+    sources:
+    - 'Model: Blender dari data ukuran bersumber + perkiraan (Tools/blender/candi_borobudur.py,
+      Docs/Borobudur_Data.md)'
+    - Wikipedia Indonesia - Borobudur (id.wikipedia.org/wiki/Borobudur)
+    - 'Kompas (13-11-2024) - Arca Candi Borobudur: Jumlah, Jenis, Letak, dan Mitos
+      Kunto Bimo (regional.kompas.com)'
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (01-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: stupa_induk
+    partName: StupaInduk
+    localPosition: {x: 0, y: 4, z: -5.291771}
+    visibleFrom: 0
+    title:
+      id: Stupa Induk
+      en: Main Stupa
+    regionalTerm: 
+    material:
+      id: Batu andesit
+      en: Andesite stone
+    philosophy:
+      id: Stupa induk adalah puncak perjalanan dari alam keinginan menuju alam tanpa
+        bentuk. Bagian dalamnya kosong.
+      en: The main stupa is the culmination of the journey from the realm of desire
+        to the formless realm. Its interior is empty.
+    craft:
+      id: Stupa terbesar di puncak candi; titik tertingginya 35 m di atas tanah.
+        Dengan chattra (payung bersusun tiga), tinggi candi dahulu mencapai 42 m.
+        Pada model, diameter dan profil stupa adalah perkiraan.
+      en: The largest stupa, at the summit; its top is 35 m above the ground. With
+        the chattra (three-tiered parasol) the temple once reached 42 m. On the model
+        the stupa's diameter and profile are estimates.
+    history:
+      id: Van Erp sempat menyusun kembali chattra di puncak stupa, lalu membongkarnya
+        karena batu aslinya tidak cukup. Chattra itu kini disimpan di museum bersama
+        arca Buddha yang belum selesai.
+      en: Van Erp rebuilt the chattra on top of the stupa, then dismantled it because
+        there were not enough original stones. The chattra is now kept in a museum
+        together with the Unfinished Buddha.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Stupa terbesar di puncak candi; titik tertingginya 35 m di atas tanah.
+        Dengan chattra (payung bersusun tiga), tinggi candi dahulu mencapai 42 m.
+        Pada model, diameter dan profil stupa adalah perkiraan.
+      en: The largest stupa, at the summit; its top is 35 m above the ground. With
+        the chattra (three-tiered parasol) the temple once reached 42 m. On the model
+        the stupa's diameter and profile are estimates.
+    sources:
+    - 'Model: Blender dari data ukuran bersumber + perkiraan (Tools/blender/candi_borobudur.py,
+      Docs/Borobudur_Data.md)'
+    - Wikipedia - Borobudur (en.wikipedia.org/wiki/Borobudur)
+    - Wikipedia Indonesia - Borobudur (id.wikipedia.org/wiki/Borobudur)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (01-10-2026); menunggu validasi
+      kurator.
+  story: {fileID: 11400000, guid: 667fef834e807fb439d25c3f2acd9f3a, type: 2}
+  backgroundMusic: {fileID: 8300000, guid: cf7f48a3b8c6df34c83cc897de6339f3, type: 3}
+  musicCredit: '"Beautiful Ambient Gamelan Music" - fiikuri (Pixabay, Pixabay Content
+    License)'

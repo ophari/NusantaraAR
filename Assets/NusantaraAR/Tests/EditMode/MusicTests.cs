@@ -7,6 +7,7 @@ namespace NusantaraAR.Tests
     /// <summary>Uji musik latar setiap artefak: klip terpasang, berkredit, dan di-stream (tidak dimuat bersama katalog).</summary>
     [TestFixture("KERIS_BALI_01")]
     [TestFixture("KERIS_SUMATRA_01")]
+    [TestFixture("BOROBUDUR_01")]
     public class MusicTests
     {
         readonly string id;

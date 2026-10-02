@@ -1,0 +1,472 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25fd6c8569d03541b047df14ede99d2, type: 3}
+  m_Name: BOROBUDUR_01_Story
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactStory
+  chapters:
+  - key: sapa
+    title:
+      id: Selamat datang
+      en: Welcome
+    text:
+      id: Halo! Selamat datang di Candi Borobudur, candi Buddha terbesar di dunia.
+        Model di depanmu dibuat dengan skala satu banding dua ratus. Aslinya, kaki
+        candi berukuran seratus dua puluh tiga kali seratus dua puluh tiga meter,
+        dan puncaknya menjulang tiga puluh lima meter dari tanah. Yuk, kita jelajahi
+        bersama!
+      en: Hi there! Welcome to Borobudur, the largest Buddhist temple in the world.
+        The model in front of you is built at a scale of one to two hundred. The
+        real base measures one hundred and twenty-three by one hundred and twenty-three
+        metres, and its summit rises thirty-five metres above the ground. Let's explore
+        it together!
+    stage: 0
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: 0c87f09cf748ef44196c7865e59eac51, type: 3}
+    voiceEN: {fileID: 8300000, guid: dff4aa46ff479f44181d63fa680610f9, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Halo!
+    - time: 1.834
+      text: Selamat datang di Candi Borobudur, candi Buddha terbesar di dunia.
+    - time: 7.849
+      text: Model di depanmu dibuat dengan skala satu banding dua ratus.
+    - time: 13.162
+      text: Aslinya, kaki candi berukuran seratus dua puluh tiga kali seratus dua
+        puluh tiga meter, dan puncaknya menjulang tiga puluh lima meter dari tanah.
+    - time: 24.295
+      text: Yuk, kita jelajahi bersama!
+    cuesEN:
+    - time: 0.1
+      text: Hi there!
+    - time: 1.079
+      text: Welcome to Borobudur, the largest Buddhist temple in the world.
+    - time: 5.688
+      text: The model in front of you is built at a scale of one to two hundred.
+    - time: 9.855
+      text: The real base measures one hundred and twenty-three by one hundred and
+        twenty-three metres, and its summit rises thirty-five metres above the ground.
+    - time: 18.982
+      text: Let's explore it together!
+  - key: sejarah
+    title:
+      id: Jejak sejarah
+      en: Traces of history
+    text:
+      id: Borobudur dibangun pada abad kesembilan, di masa Wangsa Syailendra, di
+        Magelang, Jawa Tengah. Prasasti Karangtengah dari tahun 824 menyebut sebuah
+        bangunan suci bernama Jinalaya yang diresmikan oleh Pramodhawardhani, putri
+        Raja Samaratungga. Menurut cerita rakyat, arsiteknya bernama Gunadharma,
+        meski namanya tidak tercatat di prasasti mana pun. Candi ini disusun dari
+        sekitar lima puluh lima ribu meter kubik batu andesit tanpa semen sama sekali.
+        Batu-batunya saling mengunci dengan tonjolan, lekukan, dan sambungan ekor
+        burung.
+      en: Borobudur was built in the ninth century, in the time of the Sailendra
+        dynasty, in Magelang, Central Java. The Karangtengah inscription of 824 mentions
+        a sacred building called Jinalaya, inaugurated by Pramodhawardhani, daughter
+        of King Samaratungga. According to folk tales its architect was Gunadharma,
+        although his name is not recorded in any inscription. The temple is built
+        from about fifty-five thousand cubic metres of andesite stone, with no mortar
+        at all. The stones lock together with knobs, indentations and dovetail joints.
+    stage: 0
+    focusHotspot: andesit
+    voiceID: {fileID: 8300000, guid: f6cb2d440e3744548b4efa207565206e, type: 3}
+    voiceEN: {fileID: 8300000, guid: 79ef1d2aaf5956b4d8c09ad6de437bd3, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Borobudur dibangun pada abad kesembilan, di masa Wangsa Syailendra, di
+        Magelang, Jawa Tengah.
+    - time: 8.396
+      text: Prasasti Karangtengah dari tahun 824 menyebut sebuah bangunan suci bernama
+        Jinalaya yang diresmikan oleh Pramodhawardhani, putri Raja Samaratungga.
+    - time: 20.624
+      text: Menurut cerita rakyat, arsiteknya bernama Gunadharma, meski namanya tidak
+        tercatat di prasasti mana pun.
+    - time: 29.282
+      text: Candi ini disusun dari sekitar lima puluh lima ribu meter kubik batu
+        andesit tanpa semen sama sekali.
+    - time: 37.211
+      text: Batu-batunya saling mengunci dengan tonjolan, lekukan, dan sambungan
+        ekor burung.
+    cuesEN:
+    - time: 0.1
+      text: Borobudur was built in the ninth century, in the time of the Sailendra
+        dynasty, in Magelang, Central Java.
+    - time: 7.537
+      text: The Karangtengah inscription of 824 mentions a sacred building called
+        Jinalaya, inaugurated by Pramodhawardhani, daughter of King Samaratungga.
+    - time: 18.735
+      text: According to folk tales its architect was Gunadharma, although his name
+        is not recorded in any inscription.
+    - time: 25.506
+      text: The temple is built from about fifty-five thousand cubic metres of andesite
+        stone, with no mortar at all.
+    - time: 32.081
+      text: The stones lock together with knobs, indentations and dovetail joints.
+  - key: kamadhatu
+    title:
+      id: Alam keinginan
+      en: The realm of desire
+    text:
+      id: Borobudur tersusun dalam tiga tingkatan alam menurut kosmologi Buddha.
+        Yang paling bawah adalah Kamadhatu, alam keinginan, yaitu kaki candi ini.
+        Di balik kaki yang kamu lihat, tersembunyi kaki asli dengan seratus enam
+        puluh panel relief Karmawibhangga tentang hukum sebab-akibat. Kaki asli itu
+        ditutup karena cacat struktur saat candi masih dibangun, dan reliefnya baru
+        ditemukan secara tidak sengaja oleh insinyur Belanda Jan Willem IJzerman
+        pada tahun 1885.
+      en: Borobudur is arranged in three realms of Buddhist cosmology. The lowest
+        is Kamadhatu, the realm of desire, which is this base. Behind the base you
+        can see lies the original base, with one hundred and sixty Karmavibhangga
+        relief panels about the law of cause and effect. It was covered because of
+        structural defects while the temple was being built, and its reliefs were
+        only discovered by chance by the Dutch engineer Jan Willem IJzerman in 1885.
+    stage: 0
+    focusHotspot: kaki
+    voiceID: {fileID: 8300000, guid: 77db334a31a0e1e4e996180fac7357a7, type: 3}
+    voiceEN: {fileID: 8300000, guid: ed2694a6820b02b41872df27a0370a89, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Borobudur tersusun dalam tiga tingkatan alam menurut kosmologi Buddha.
+    - time: 6.001
+      text: Yang paling bawah adalah Kamadhatu, alam keinginan, yaitu kaki candi
+        ini.
+    - time: 13.11
+      text: Di balik kaki yang kamu lihat, tersembunyi kaki asli dengan seratus enam
+        puluh panel relief Karmawibhangga tentang hukum sebab-akibat.
+    - time: 22.667
+      text: Kaki asli itu ditutup karena cacat struktur saat candi masih dibangun,
+        dan reliefnya baru ditemukan secara tidak sengaja oleh insinyur Belanda Jan
+        Willem IJzerman pada tahun 1885.
+    cuesEN:
+    - time: 0.1
+      text: Borobudur is arranged in three realms of Buddhist cosmology.
+    - time: 4.425
+      text: The lowest is Kamadhatu, the realm of desire, which is this base.
+    - time: 9.204
+      text: Behind the base you can see lies the original base, with one hundred
+        and sixty Karmavibhangga relief panels about the law of cause and effect.
+    - time: 18.253
+      text: It was covered because of structural defects while the temple was being
+        built, and its reliefs were only discovered by chance by the Dutch engineer
+        Jan Willem IJzerman in 1885.
+  - key: relief
+    title:
+      id: Galeri relief
+      en: A gallery of reliefs
+    text:
+      id: Di atasnya berdiri lima teras persegi. Inilah Rupadhatu, alam berbentuk.
+        Dinding lorongnya penuh relief, seluruhnya sekitar dua ribu enam ratus tujuh
+        puluh dua panel. Relief dibaca sambil berjalan searah jarum jam, yang disebut
+        pradaksina. Ada kisah hidup Sang Buddha dalam Lalitavistara, kisah kehidupan-kehidupan
+        sebelumnya dalam Jataka dan Avadana, serta pengembaraan Sudhana mencari Kebijaksanaan
+        Sempurna dalam Gandavyuha. Relief naratifnya terbentang sepanjang kira-kira
+        tiga kilometer. Pada model ini reliefnya dibuat bergaya, bukan salinan relief
+        asli.
+      en: Above it stand five square terraces. This is Rupadhatu, the world of forms.
+        The gallery walls are covered in reliefs, about two thousand six hundred
+        and seventy-two panels in all. They are read while walking clockwise, which
+        is called pradakshina. There is the life of the Buddha in the Lalitavistara,
+        his former lives in the Jataka and Avadana, and Sudhana's search for Perfect
+        Wisdom in the Gandavyuha. The narrative reliefs stretch for about three kilometres.
+        On this model the reliefs are stylised, not copies of the real ones.
+    stage: 0
+    focusHotspot: relief
+    voiceID: {fileID: 8300000, guid: e00f219595822d540818971dddc45be9, type: 3}
+    voiceEN: {fileID: 8300000, guid: 0024ca20fdaec6c43991c8874645a482, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Di atasnya berdiri lima teras persegi.
+    - time: 3.995
+      text: Inilah Rupadhatu, alam berbentuk.
+    - time: 7.889
+      text: Dinding lorongnya penuh relief, seluruhnya sekitar dua ribu enam ratus
+        tujuh puluh dua panel.
+    - time: 15.467
+      text: Relief dibaca sambil berjalan searah jarum jam, yang disebut pradaksina.
+    - time: 21.873
+      text: Ada kisah hidup Sang Buddha dalam Lalitavistara, kisah kehidupan-kehidupan
+        sebelumnya dalam Jataka dan Avadana, serta pengembaraan Sudhana mencari Kebijaksanaan
+        Sempurna dalam Gandavyuha.
+    - time: 36.001
+      text: Relief naratifnya terbentang sepanjang kira-kira tiga kilometer.
+    - time: 41.352
+      text: Pada model ini reliefnya dibuat bergaya, bukan salinan relief asli.
+    cuesEN:
+    - time: 0.1
+      text: Above it stand five square terraces.
+    - time: 2.98
+      text: This is Rupadhatu, the world of forms.
+    - time: 5.988
+      text: The gallery walls are covered in reliefs, about two thousand six hundred
+        and seventy-two panels in all.
+    - time: 12.355
+      text: They are read while walking clockwise, which is called pradakshina.
+    - time: 16.417
+      text: There is the life of the Buddha in the Lalitavistara, his former lives
+        in the Jataka and Avadana, and Sudhana's search for Perfect Wisdom in the
+        Gandavyuha.
+    - time: 25.988
+      text: The narrative reliefs stretch for about three kilometres.
+    - time: 29.503
+      text: On this model the reliefs are stylised, not copies of the real ones.
+  - key: relung
+    title:
+      id: Arca di relung
+      en: Buddhas in the niches
+    text:
+      id: 'Lihat deretan relung di atas pagar langkan. Ada empat ratus tiga puluh
+        dua relung, masing-masing berisi arca Buddha duduk. Sikap tangannya berbeda
+        menurut arah mata angin: memanggil bumi sebagai saksi di sisi timur, memberi
+        sedekah di selatan, bermeditasi di barat, dan keberanian tanpa rasa takut
+        di utara. Di langkan kelima, semua arca bersikap witarka mudra, lambang nalar
+        dan kebajikan.'
+      en: 'Look at the rows of niches along the balustrades. There are four hundred
+        and thirty-two of them, each holding a seated Buddha. Their hand gestures
+        change with the compass: calling the earth to witness on the east side, giving
+        alms on the south, meditation on the west, and fearlessness on the north.
+        On the fifth balustrade, every statue shows the vitarka mudra, the gesture
+        of reasoning and virtue.'
+    stage: 0
+    focusHotspot: langkan
+    voiceID: {fileID: 8300000, guid: 6bab60db097121a4293dcf726d06a9be, type: 3}
+    voiceEN: {fileID: 8300000, guid: 0b88f0a0023c3d045abeefa8fc33cc10, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Lihat deretan relung di atas pagar langkan.
+    - time: 4.021
+      text: Ada empat ratus tiga puluh dua relung, masing-masing berisi arca Buddha
+        duduk.
+    - time: 10.519
+      text: 'Sikap tangannya berbeda menurut arah mata angin: memanggil bumi sebagai
+        saksi di sisi timur, memberi sedekah di selatan, bermeditasi di barat, dan
+        keberanian tanpa rasa takut di utara.'
+    - time: 24.764
+      text: Di langkan kelima, semua arca bersikap witarka mudra, lambang nalar dan
+        kebajikan.
+    cuesEN:
+    - time: 0.1
+      text: Look at the rows of niches along the balustrades.
+    - time: 3.084
+      text: There are four hundred and thirty-two of them, each holding a seated
+        Buddha.
+    - time: 7.524
+      text: 'Their hand gestures change with the compass: calling the earth to witness
+        on the east side, giving alms on the south, meditation on the west, and fearlessness
+        on the north.'
+    - time: 18.995
+      text: On the fifth balustrade, every statue shows the vitarka mudra, the gesture
+        of reasoning and virtue.
+  - key: stupa_induk
+    title:
+      id: Stupa induk
+      en: The main stupa
+    text:
+      id: Sekarang kita bongkar dari puncak. Stupa induk diangkat. Inilah stupa terbesar
+        sekaligus titik tertinggi candi, dan bagian dalamnya kosong. Dahulu puncaknya
+        pernah dimahkotai chattra, payung batu bersusun tiga. Theodoor van Erp menyusunnya
+        kembali saat pemugaran tahun 1907 sampai 1911, lalu membongkarnya lagi karena
+        batu aslinya tidak cukup.
+      en: Now let's take it apart from the top. The main stupa is lifted. This is
+        the largest stupa and the highest point of the temple, and its interior is
+        empty. Its summit was once crowned by a chattra, a three-tiered stone parasol.
+        Theodoor van Erp rebuilt it during the restoration of 1907 to 1911, then
+        dismantled it again because there were not enough original stones.
+    stage: 1
+    focusHotspot: stupa_induk
+    voiceID: {fileID: 8300000, guid: a24c15e57ec24da45992f06b60e7cf51, type: 3}
+    voiceEN: {fileID: 8300000, guid: d3dee504c685a694893b8fcc0365e689, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Sekarang kita bongkar dari puncak.
+    - time: 3.409
+      text: Stupa induk diangkat.
+    - time: 6.092
+      text: Inilah stupa terbesar sekaligus titik tertinggi candi, dan bagian dalamnya
+        kosong.
+    - time: 12.954
+      text: Dahulu puncaknya pernah dimahkotai chattra, payung batu bersusun tiga.
+    - time: 19.36
+      text: Theodoor van Erp menyusunnya kembali saat pemugaran tahun 1907 sampai
+        1911, lalu membongkarnya lagi karena batu aslinya tidak cukup.
+    cuesEN:
+    - time: 0.1
+      text: Now let's take it apart from the top.
+    - time: 2.42
+      text: The main stupa is lifted.
+    - time: 4.464
+      text: This is the largest stupa and the highest point of the temple, and its
+        interior is empty.
+    - time: 10.232
+      text: Its summit was once crowned by a chattra, a three-tiered stone parasol.
+    - time: 15.245
+      text: Theodoor van Erp rebuilt it during the restoration of 1907 to 1911, then
+        dismantled it again because there were not enough original stones.
+  - key: arupadhatu
+    title:
+      id: Alam tanpa bentuk
+      en: The formless realm
+    text:
+      id: 'Tiga teras melingkar kini terpisah. Inilah Arupadhatu, alam tanpa bentuk.
+        Perhatikan, dindingnya polos tanpa relief. Di sini berdiri tujuh puluh dua
+        stupa terawang: tiga puluh dua, dua puluh empat, dan enam belas di tiap lingkaran.
+        Lubangnya berbentuk belah ketupat di dua teras bawah dan persegi di teras
+        teratas. Di dalam setiap stupa duduk arca Buddha dengan sikap tangan memutar
+        roda dharma. Dulu orang percaya menyentuh arca di dalam stupa membawa keberuntungan,
+        tetapi kebiasaan itu sudah lama dilarang demi menjaga candi.'
+      en: 'The three circular terraces are now apart. This is Arupadhatu, the formless
+        world. Notice how plain the walls are, with no reliefs. Here stand seventy-two
+        perforated stupas: thirty-two, twenty-four and sixteen on each ring. Their
+        openings are diamond-shaped on the two lower terraces and square on the top
+        one. Inside every stupa sits a Buddha turning the wheel of the dharma. People
+        once believed that touching a statue inside a stupa brought good luck, but
+        the practice has long been banned to protect the temple.'
+    stage: 2
+    focusHotspot: stupa_terawang
+    voiceID: {fileID: 8300000, guid: 538c7d269e85aa7459aa15ac731ba8da, type: 3}
+    voiceEN: {fileID: 8300000, guid: 9e8dfe7a34c9d2a4c9a6346b54fc2427, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Tiga teras melingkar kini terpisah.
+    - time: 3.592
+      text: Inilah Arupadhatu, alam tanpa bentuk.
+    - time: 7.915
+      text: Perhatikan, dindingnya polos tanpa relief.
+    - time: 12.695
+      text: 'Di sini berdiri tujuh puluh dua stupa terawang: tiga puluh dua, dua
+        puluh empat, dan enam belas di tiap lingkaran.'
+    - time: 22.329
+      text: Lubangnya berbentuk belah ketupat di dua teras bawah dan persegi di teras
+        teratas.
+    - time: 28.787
+      text: Di dalam setiap stupa duduk arca Buddha dengan sikap tangan memutar roda
+        dharma.
+    - time: 35.024
+      text: Dulu orang percaya menyentuh arca di dalam stupa membawa keberuntungan,
+        tetapi kebiasaan itu sudah lama dilarang demi menjaga candi.
+    cuesEN:
+    - time: 0.1
+      text: The three circular terraces are now apart.
+    - time: 3.058
+      text: This is Arupadhatu, the formless world.
+    - time: 6.248
+      text: Notice how plain the walls are, with no reliefs.
+    - time: 9.842
+      text: 'Here stand seventy-two perforated stupas: thirty-two, twenty-four and
+        sixteen on each ring.'
+    - time: 17.068
+      text: Their openings are diamond-shaped on the two lower terraces and square
+        on the top one.
+    - time: 22.277
+      text: Inside every stupa sits a Buddha turning the wheel of the dharma.
+    - time: 26.573
+      text: People once believed that touching a statue inside a stupa brought good
+        luck, but the practice has long been banned to protect the temple.
+  - key: bongkar
+    title:
+      id: Sembilan tingkat
+      en: Nine levels
+    text:
+      id: 'Sekarang semua tingkat terpisah. Dari bawah: kaki candi sebagai Kamadhatu,
+        lima teras persegi sebagai Rupadhatu, lalu tiga teras melingkar dan stupa
+        induk sebagai Arupadhatu. Seluruhnya sembilan tingkat, enam persegi dan tiga
+        melingkar, dimahkotai stupa induk. Tinggi tiap teras pada model ini adalah
+        perkiraan, karena kami belum menemukan data ukur resminya.'
+      en: 'Now every level is apart. From the bottom: the base as Kamadhatu, five
+        square terraces as Rupadhatu, then three circular terraces and the main stupa
+        as Arupadhatu. Nine levels in all, six square and three circular, crowned
+        by the main stupa. The height of each terrace on this model is an estimate,
+        because we have not yet found official survey data.'
+    stage: 4
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: f83e5798911ede7469f45add4940b208, type: 3}
+    voiceEN: {fileID: 8300000, guid: 1c306daf36c9c2043a38c45b333b7e16, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Sekarang semua tingkat terpisah.
+    - time: 3.396
+      text: 'Dari bawah: kaki candi sebagai Kamadhatu, lima teras persegi sebagai
+        Rupadhatu, lalu tiga teras melingkar dan stupa induk sebagai Arupadhatu.'
+    - time: 15.753
+      text: Seluruhnya sembilan tingkat, enam persegi dan tiga melingkar, dimahkotai
+        stupa induk.
+    - time: 22.954
+      text: Tinggi tiap teras pada model ini adalah perkiraan, karena kami belum
+        menemukan data ukur resminya.
+    cuesEN:
+    - time: 0.1
+      text: Now every level is apart.
+    - time: 2.368
+      text: 'From the bottom: the base as Kamadhatu, five square terraces as Rupadhatu,
+        then three circular terraces and the main stupa as Arupadhatu.'
+    - time: 13.136
+      text: Nine levels in all, six square and three circular, crowned by the main
+        stupa.
+    - time: 18.631
+      text: The height of each terrace on this model is an estimate, because we have
+        not yet found official survey data.
+  - key: penutup
+    title:
+      id: Sampai jumpa
+      en: See you
+    text:
+      id: Kita rakit kembali candinya. Pada tahun 1814, Thomas Stamford Raffles mengutus
+        H.C. Cornelius untuk membersihkan Borobudur dari semak belukar. Pemugaran
+        besar tahun 1975 sampai 1982 membongkar dan menyusun kembali lebih dari satu
+        juta batu, dan pada tahun 1991 Borobudur ditetapkan sebagai Warisan Dunia
+        UNESCO. Hingga kini, setiap Waisak umat Buddha berjalan mengelilingi candi
+        searah jarum jam. Ketuk label emas di setiap tingkat untuk menjelajah lebih
+        jauh, ya. Sampai jumpa!
+      en: Let's put the temple back together. In 1814, Thomas Stamford Raffles sent
+        H.C. Cornelius to clear Borobudur of its overgrowth. The major restoration
+        of 1975 to 1982 dismantled and rebuilt more than one million stones, and
+        in 1991 Borobudur was inscribed as a UNESCO World Heritage Site. To this
+        day, at every Vesak, Buddhists walk clockwise around the temple. Tap the
+        gold labels on each level to explore further. See you!
+    stage: 0
+    focusHotspot: pemugaran
+    voiceID: {fileID: 8300000, guid: c9388448b3f4de8468597471648175f7, type: 3}
+    voiceEN: {fileID: 8300000, guid: 5319a1bc27ad88b47a55c63cccf0989b, type: 3}
+    cuesID:
+    - time: 0.1
+      text: Kita rakit kembali candinya.
+    - time: 3.188
+      text: Pada tahun 1814, Thomas Stamford Raffles mengutus H.C. Cornelius untuk
+        membersihkan Borobudur dari semak belukar.
+    - time: 13.632
+      text: Pemugaran besar tahun 1975 sampai 1982 membongkar dan menyusun kembali
+        lebih dari satu juta batu, dan pada tahun 1991 Borobudur ditetapkan sebagai
+        Warisan Dunia UNESCO.
+    - time: 31.419
+      text: Hingga kini, setiap Waisak umat Buddha berjalan mengelilingi candi searah
+        jarum jam.
+    - time: 38.488
+      text: Ketuk label emas di setiap tingkat untuk menjelajah lebih jauh, ya.
+    - time: 44.269
+      text: Sampai jumpa!
+    cuesEN:
+    - time: 0.1
+      text: Let's put the temple back together.
+    - time: 2.198
+      text: In 1814, Thomas Stamford Raffles sent H.C. Cornelius to clear Borobudur
+        of its overgrowth.
+    - time: 9.738
+      text: The major restoration of 1975 to 1982 dismantled and rebuilt more than
+        one million stones, and in 1991 Borobudur was inscribed as a UNESCO World
+        Heritage Site.
+    - time: 22.993
+      text: To this day, at every Vesak, Buddhists walk clockwise around the temple.
+    - time: 28.357
+      text: Tap the gold labels on each level to explore further.
+    - time: 31.99
+      text: See you!
+  voiceCredit: 'Microsoft Edge TTS: id-ID-GadisNeural / en-US-AvaNeural'
+  curatorValidated: 0

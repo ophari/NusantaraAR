@@ -20,6 +20,12 @@ namespace NusantaraAR.Marker
         /// </summary>
         public const int KerisSumatraCode = 0xF0E4;
 
+        /// <summary>
+        /// Kode marker untuk Candi Borobudur (pola ###. / ..## / #.## / ...#); keempat rotasinya berjarak >= 10,
+        /// jarak ke semua rotasi kedua kode keris >= 7, dan >= 6 dari kartu yang sudah ditarik (0xEEC1, 0xDA26).
+        /// </summary>
+        public const int BorobudurCode = 0xE3B1;
+
         /// <summary>True bila sel (kolom u, baris v; 0..5, dari kiri-atas) berwarna hitam.</summary>
         public static bool IsBlack(int code, int u, int v)
         {

@@ -1,4 +1,5 @@
-# Membuat kartu penanda cetak (A5, 300 dpi) untuk setiap keris di aplikasi: Keris Bali (B532) dan Keris Sumatra (F0E4).
+# Membuat kartu penanda cetak (A5, 300 dpi) untuk setiap artefak di aplikasi: Keris Bali (B532), Keris Sumatra (F0E4),
+# dan Candi Borobudur (E3B1).
 # Kode harus sama dengan MarkerPattern.cs. Jalankan dari mana saja: python Tools/kartu_penanda.py  (butuh: pip install pillow)
 from PIL import Image, ImageDraw, ImageFont
 import os
@@ -10,7 +11,8 @@ gold, teak, stone = (212, 175, 55), (30, 27, 24), (110, 100, 90)
 F = lambda n, s: ImageFont.truetype('C:/Windows/Fonts/' + n, s)
 title, sub, body, small = F('georgiab.ttf', 110), F('georgia.ttf', 60), F('arial.ttf', 44), F('arial.ttf', 36)
 
-KARTU = [('Keris Bali', 'KerisBali', 0xB532), ('Keris Sumatra', 'KerisSumatra', 0xF0E4)]
+KARTU = [('Keris Bali', 'KerisBali', 0xB532), ('Keris Sumatra', 'KerisSumatra', 0xF0E4),
+         ('Candi Borobudur', 'CandiBorobudur', 0xE3B1)]
 
 
 def kartu(nama, berkas, code):
