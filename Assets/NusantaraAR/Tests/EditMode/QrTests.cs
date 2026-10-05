@@ -16,6 +16,7 @@ namespace NusantaraAR.Tests
         const string Sumatra = "NUSANTARA:KERIS_SUMATRA_01";
         const string Borobudur = "NUSANTARA:BOROBUDUR_01";
         const string Karambit = "NUSANTARA:KARAMBIT_01";
+        const string Komodo = "NUSANTARA:KOMODO_01";
 
         static readonly Vector2[] BaseCorners = { new Vector2(80, 200), new Vector2(270, 188), new Vector2(292, 395), new Vector2(66, 380) };
 
@@ -192,7 +193,7 @@ namespace NusantaraAR.Tests
         [Test]
         public void Detects_PerspectiveQr_InAllOrientations_WithAccurateCorners()
         {
-            foreach (var text in new[] { Bali, Sumatra, Borobudur, Karambit })
+            foreach (var text in new[] { Bali, Sumatra, Borobudur, Karambit, Komodo })
             for (int rot = 0; rot < 4; rot++)
             {
                 var c = new Vector2[4];
@@ -265,7 +266,7 @@ namespace NusantaraAR.Tests
 
             regions.Analyze(Render(QrCode.Encode(Bali), BaseCorners, 6), W, H);
             Assert.AreEqual(1, new QrDetector().Detect(regions).Count);
-            Assert.AreEqual(0, new MarkerDetector().Detect(regions, new[] { MarkerPattern.KerisBaliCode, MarkerPattern.KerisSumatraCode, MarkerPattern.BorobudurCode, MarkerPattern.KarambitCode }).Count);
+            Assert.AreEqual(0, new MarkerDetector().Detect(regions, new[] { MarkerPattern.KerisBaliCode, MarkerPattern.KerisSumatraCode, MarkerPattern.BorobudurCode, MarkerPattern.KarambitCode, MarkerPattern.KomodoCode }).Count);
         }
 
         [Test]
@@ -296,6 +297,7 @@ namespace NusantaraAR.Tests
         [TestCase("Docs/KartuQR_KerisSumatra_A5.png", Sumatra)]
         [TestCase("Docs/KartuQR_CandiBorobudur_A5.png", Borobudur)]
         [TestCase("Docs/KartuQR_Karambit_A5.png", Karambit)]
+        [TestCase("Docs/KartuQR_Komodo_A5.png", Komodo)]
         public void Detects_PrintableQrCard_AndIsFastEnough(string path, string text)
         {
             if (!System.IO.File.Exists(path)) Assert.Ignore("Kartu QR belum dibuat (python Tools/kartu_qr.py)");
@@ -320,7 +322,7 @@ namespace NusantaraAR.Tests
             var regions = new DarkRegions();
             var qr = new QrDetector();
             var cards = new MarkerDetector();
-            var codes = new[] { MarkerPattern.KerisBaliCode, MarkerPattern.KerisSumatraCode, MarkerPattern.BorobudurCode, MarkerPattern.KarambitCode };
+            var codes = new[] { MarkerPattern.KerisBaliCode, MarkerPattern.KerisSumatraCode, MarkerPattern.BorobudurCode, MarkerPattern.KarambitCode, MarkerPattern.KomodoCode };
             List<QrDetection> found = null;
             regions.Analyze(gray, W, H);
             qr.Detect(regions); // pemanasan

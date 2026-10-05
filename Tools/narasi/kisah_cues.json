@@ -1847,6 +1847,434 @@
      "text": "Thanks for listening!"
     }
    ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_01_sapa_id.mp3",
+   "hash": "aac4b621eb03d6c911e8a02d385e0caad88aa104",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Halo!"
+    },
+    {
+     "time": 1.834,
+     "text": "Kali ini kita bertemu satwa, bukan benda."
+    },
+    {
+     "time": 6.235,
+     "text": "Inilah komodo, kadal terbesar di dunia, yang hanya hidup di alam liar di Nusa Tenggara Timur."
+    },
+    {
+     "time": 14.386,
+     "text": "Orang Pulau Komodo menyebutnya ora, dan ada juga yang menjulukinya buaya darat."
+    },
+    {
+     "time": 20.948,
+     "text": "Komodo jantan dewasa bisa sepanjang dua setengah meter lebih."
+    },
+    {
+     "time": 26.196,
+     "text": "Yang di depanmu ini komodo betina, sedang berjaga di depan sarangnya."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_01_sapa_en.mp3",
+   "hash": "788daa871f77c4811d4581a6951a814f78a5611f",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Hi!"
+    },
+    {
+     "time": 0.922,
+     "text": "This time we'll meet an animal, not an object."
+    },
+    {
+     "time": 4.008,
+     "text": "This is the Komodo dragon, the largest lizard in the world, which lives in the wild only in East Nusa Tenggara."
+    },
+    {
+     "time": 12.055,
+     "text": "The people of Komodo Island call it ora, and some call it the land crocodile."
+    },
+    {
+     "time": 17.211,
+     "text": "An adult male can grow to more than two and a half metres long."
+    },
+    {
+     "time": 21.534,
+     "text": "The one in front of you is a female, keeping watch in front of her nest."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_02_legenda_id.mp3",
+   "hash": "372710cd25752357778c882ac700ffa57b324f2a",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Orang Pulau Komodo punya legenda tentang Putri Naga."
+    },
+    {
+     "time": 4.685,
+     "text": "Ia melahirkan anak kembar: seorang bayi laki-laki bernama Gerong, dan seekor bayi komodo bernama Orah."
+    },
+    {
+     "time": 13.344,
+     "text": "Keduanya dibesarkan terpisah."
+    },
+    {
+     "time": 16.534,
+     "text": "Suatu hari Gerong yang sudah dewasa hampir menombak seekor komodo di hutan."
+    },
+    {
+     "time": 22.693,
+     "text": "Putri Naga muncul dan berkata, komodo itu saudara kembarmu."
+    },
+    {
+     "time": 28.579,
+     "text": "Karena itu orang Komodo menyebut komodo sebae, artinya kembar, dan menjaganya turun-temurun."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_02_legenda_en.mp3",
+   "hash": "c734d62b7599d015ed7f3d617fd2fc631629855b",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "The people of Komodo Island tell a legend about Princess Naga."
+    },
+    {
+     "time": 4.243,
+     "text": "She gave birth to twins: a baby boy named Gerong and a baby dragon named Orah."
+    },
+    {
+     "time": 9.724,
+     "text": "The two were raised apart."
+    },
+    {
+     "time": 11.691,
+     "text": "One day Gerong, now a grown man, was about to spear a dragon in the forest."
+    },
+    {
+     "time": 17.198,
+     "text": "Princess Naga appeared and said: that dragon is your twin."
+    },
+    {
+     "time": 21.378,
+     "text": "That is why the Komodo people call the dragons sebae, meaning twins, and have protected them for generations."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_03_pulau_id.mp3",
+   "hash": "b28e1a1991948fc922dbd32652d705078af9477d",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Komodo menyukai tempat yang panas dan kering: padang rumput terbuka atau sabana, dan hutan di lembah pesisir."
+    },
+    {
+     "time": 8.839,
+     "text": "Diorama ini menggambarkan sabana Pulau Rinca."
+    },
+    {
+     "time": 13.11,
+     "text": "Untuk melindungi komodo, Taman Nasional Komodo didirikan pada tahun 1980, dan pada tahun 1991 UNESCO menetapkannya sebagai Warisan Dunia."
+    },
+    {
+     "time": 27.355,
+     "text": "Komodo juga ditetapkan sebagai satwa nasional Indonesia."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_03_pulau_en.mp3",
+   "hash": "4e8fda641c19b0db4efb5102093c7c811f13a7de",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Komodo dragons like hot, dry places: open grassland or savanna, and forest in coastal valleys."
+    },
+    {
+     "time": 8.162,
+     "text": "This diorama shows the savanna of Rinca Island."
+    },
+    {
+     "time": 11.73,
+     "text": "To protect the dragons, Komodo National Park was founded in 1980, and in 1991 UNESCO inscribed it as a World Heritage Site."
+    },
+    {
+     "time": 21.573,
+     "text": "The Komodo dragon is also Indonesia's national animal."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_04_lidah_id.mp3",
+   "hash": "606b6f43ed526d3680c47d9b6b0feaaec3d9c721",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Lihat, mulutnya terbuka dan lidahnya yang kuning bercabang terjulur."
+    },
+    {
+     "time": 5.766,
+     "text": "Komodo mencium dengan lidah."
+    },
+    {
+     "time": 8.904,
+     "text": "Lidahnya menangkap partikel bau dari udara, lalu membawanya ke organ khusus di langit-langit mulut."
+    },
+    {
+     "time": 16.573,
+     "text": "Dengan bantuan angin, komodo bisa mengendus bangkai dari jarak empat sampai sembilan setengah kilometer."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_04_lidah_en.mp3",
+   "hash": "7f18b74e3fe6922b9c2fc741012c4177a98fba90",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Look, its mouth is open and its yellow, forked tongue is out."
+    },
+    {
+     "time": 4.672,
+     "text": "Komodo dragons smell with their tongues."
+    },
+    {
+     "time": 7.433,
+     "text": "The tongue picks up scent particles from the air and carries them to a special organ in the roof of the mouth."
+    },
+    {
+     "time": 13.93,
+     "text": "With a helpful wind, a Komodo dragon can sniff out carrion from four to nine and a half kilometres away."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_05_gigi_id.mp3",
+   "hash": "c68fcff6afa9f1e5a928923180e2a1a996507918",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Komodo punya sekitar enam puluh gigi bergerigi, mirip gigi hiu, yang terus berganti kira-kira setiap empat puluh hari."
+    },
+    {
+     "time": 9.816,
+     "text": "Pada tahun 2024, para peneliti menemukan sesuatu yang mengejutkan: ujung dan gerigi gigi komodo dilapisi zat kaya besi berwarna jingga."
+    },
+    {
+     "time": 21.523,
+     "text": "Lapisan inilah yang menjaga giginya tetap tajam untuk merobek mangsa besar seperti rusa dan babi hutan."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_05_gigi_en.mp3",
+   "hash": "72f4e8dc7dc7bc061eac4e7e31ad869a7e6b6d5a",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Komodo dragons have about sixty serrated teeth, like a shark's, replaced roughly every forty days."
+    },
+    {
+     "time": 7.264,
+     "text": "In 2024, researchers found something surprising: the tips and serrations of the teeth are coated with an orange, iron-rich layer."
+    },
+    {
+     "time": 16.665,
+     "text": "This coating keeps the teeth sharp for tearing large prey such as deer and wild boar."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_06_bisa_id.mp3",
+   "hash": "977e0278189ae86260c742db14a6ebec511053e6",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Dulu orang mengira mangsa komodo mati karena bakteri di air liurnya."
+    },
+    {
+     "time": 5.831,
+     "text": "Pada tahun 2009, para ilmuwan menemukan bahwa rahang bawah komodo menyimpan kelenjar bisa."
+    },
+    {
+     "time": 13.932,
+     "text": "Bisa itu membuat darah sulit membeku dan tekanan darah turun, sehingga mangsa yang tergigit cepat lemas."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_06_bisa_en.mp3",
+   "hash": "995b15664d4caef96b2c8ad4a11efeadd6461045",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "People once thought the Komodo dragon's prey died from bacteria in its saliva."
+    },
+    {
+     "time": 4.959,
+     "text": "In 2009, scientists found that the dragon's lower jaw holds venom glands."
+    },
+    {
+     "time": 10.961,
+     "text": "The venom stops the blood from clotting and lowers blood pressure, so a bitten animal quickly grows weak."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_07_sarang_id.mp3",
+   "hash": "e70149ffd0bb8c0dd0388f8349b88060916bc326",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Sekarang telur dikeluarkan dari sarangnya."
+    },
+    {
+     "time": 3.969,
+     "text": "Komodo betina sering bertelur di gundukan tanah buatan burung gosong yang sudah ditinggalkan."
+    },
+    {
+     "time": 11.027,
+     "text": "Di Pulau Komodo, kira-kira enam dari sepuluh sarang komodo berupa gundukan seperti ini."
+    },
+    {
+     "time": 18.448,
+     "text": "Satu sarang rata-rata berisi dua puluh telur."
+    },
+    {
+     "time": 22.563,
+     "text": "Telur diletakkan sekitar bulan September, lalu dihangatkan tanah selama tujuh sampai delapan bulan sebelum menetas."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_07_sarang_en.mp3",
+   "hash": "4987003175f9f4e41437c727db046f7e428f35fe",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Now the eggs are taken out of the nest."
+    },
+    {
+     "time": 2.511,
+     "text": "Female Komodo dragons often lay their eggs in abandoned earth mounds built by scrubfowl."
+    },
+    {
+     "time": 8.045,
+     "text": "On Komodo Island, about six in ten dragon nests are mounds like this one."
+    },
+    {
+     "time": 13.409,
+     "text": "A nest holds about twenty eggs."
+    },
+    {
+     "time": 15.649,
+     "text": "The eggs are laid around September and kept warm by the soil for seven to eight months before they hatch."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_08_anak_id.mp3",
+   "hash": "a2e0e5963d42e851c3e559bec6a3b522b9a2ef1f",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Anak komodo yang baru menetas panjangnya sekitar empat puluh enam sentimeter."
+    },
+    {
+     "time": 6.222,
+     "text": "Dengan cakarnya yang tajam, ia segera memanjat pohon dan menghabiskan hampir seluruh waktunya di sana, menjauhi komodo dewasa yang bisa memangsanya."
+    },
+    {
+     "time": 17.277,
+     "text": "Setelah besar, komodo terlalu berat untuk memanjat, dan cakarnya lebih banyak dipakai sebagai senjata."
+    },
+    {
+     "time": 25.844,
+     "text": "Kulitnya pun tumbuh berlapis keping tulang kecil, seperti baju zirah."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_08_anak_en.mp3",
+   "hash": "04d68449014da97a0abc34395c49b9995683794b",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "A newly hatched Komodo dragon is about forty-six centimetres long."
+    },
+    {
+     "time": 4.816,
+     "text": "With its sharp claws it soon climbs a tree and spends almost all its time there, away from adults that might eat it."
+    },
+    {
+     "time": 11.99,
+     "text": "Once grown, a dragon is too heavy to climb, and its claws serve mostly as weapons."
+    },
+    {
+     "time": 18.24,
+     "text": "Its skin also grows a layer of small bony plates, like chain mail."
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_09_lestari_id.mp3",
+   "hash": "03a55bd3d95adf95930f6e13824de3f01902a88c",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Kini diorama kembali utuh."
+    },
+    {
+     "time": 3.24,
+     "text": "Pada tahun 2024, jumlah komodo di Taman Nasional Komodo diperkirakan sekitar tiga ribu dua ratus tujuh puluh ekor, dan sejak 2021 komodo digolongkan sebagai satwa terancam punah."
+    },
+    {
+     "time": 18.619,
+     "text": "Menjaga habitatnya berarti menjaga sebae, saudara kembar orang Komodo."
+    },
+    {
+     "time": 25.18,
+     "text": "Perlu diingat, model ini dibuat dari foto dan catatan, bukan dari spesimen, dan isinya masih menunggu pemeriksaan ahli."
+    },
+    {
+     "time": 35.336,
+     "text": "Terima kasih sudah mendengarkan!"
+    }
+   ]
+  },
+  {
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Story/KOMODO_01_09_lestari_en.mp3",
+   "hash": "c8ad1d46effb3fad099c4f92baa4c749024c034e",
+   "cues": [
+    {
+     "time": 0.1,
+     "text": "Now the diorama is whole again."
+    },
+    {
+     "time": 2.745,
+     "text": "In 2024, the number of Komodo dragons in Komodo National Park was estimated at about three thousand two hundred and seventy, and since 2021 the species has been listed as endangered."
+    },
+    {
+     "time": 15.896,
+     "text": "Protecting its habitat means protecting the sebae, the twin of the Komodo people."
+    },
+    {
+     "time": 20.909,
+     "text": "Keep in mind that this model was made from photos and records, not from a specimen, and its content is still awaiting an expert's review."
+    },
+    {
+     "time": 29.386,
+     "text": "Thanks for listening!"
+    }
+   ]
   }
  ]
 }

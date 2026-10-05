@@ -16,7 +16,8 @@ title, sub, body, small = F('georgiab.ttf', 110), F('georgia.ttf', 60), F('arial
 
 QR_PREFIX = 'NUSANTARA:'
 KARTU = [('Keris Bali', 'KerisBali', 'KERIS_BALI_01'), ('Keris Sumatra', 'KerisSumatra', 'KERIS_SUMATRA_01'),
-         ('Candi Borobudur', 'CandiBorobudur', 'BOROBUDUR_01'), ('Karambit', 'Karambit', 'KARAMBIT_01')]
+         ('Candi Borobudur', 'CandiBorobudur', 'BOROBUDUR_01'), ('Karambit', 'Karambit', 'KARAMBIT_01'),
+         ('Komodo', 'Komodo', 'KOMODO_01')]
 
 
 def kartu(nama, berkas, artifact_id):

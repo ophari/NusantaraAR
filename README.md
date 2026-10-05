@@ -1,6 +1,6 @@
 # Nusantara AR
 
-Aplikasi mobile AR untuk edukasi benda budaya Indonesia, sesuai **PRD v1.1** (`prd_aplikasi_ar_benda_budaya_indonesia_v1.1.md`).
+Aplikasi mobile AR untuk edukasi benda budaya dan satwa khas Indonesia, sesuai **PRD v1.1** (`prd_aplikasi_ar_benda_budaya_indonesia_v1.1.md`).
 
 - **Engine:** Unity 6.3 LTS (6000.3.25f1), URP 17.3
 - **AR:** AR Foundation / ARCore XR Plugin / ARKit XR Plugin 6.3.5 (ARCore *Optional*)
@@ -32,7 +32,7 @@ adb install -r Builds/Android/NusantaraAR.apk
 
 Alat bantu lain:
 - **Nusantara AR → Render Stage Previews** → `Previews/<ID>_stage_N.png` (setiap tahap exploded view + titik hotspot, semua artefak).
-- **Nusantara AR → Build Keris Bali / Build Keris Sumatra / Build Candi Borobudur / Build Karambit** — impor ulang GLB Blender satu artefak (prefab, konten, thumbnail).
+- **Nusantara AR → Build Keris Bali / Build Keris Sumatra / Build Candi Borobudur / Build Karambit / Build Komodo** — impor ulang GLB Blender satu artefak (prefab, konten, thumbnail).
 - **Nusantara AR → Render Thumbnails** — render ulang thumbnail katalog saja (batch: `ProjectSetup.RenderThumbnailsBatch`, tanpa `-nographics`).
 - **Nusantara AR → Build AR Visuals** — aset tampilan saja, tanpa menyentuh scene: grid bidang AR, reticle terakota, glow
   bawah keris, material UI kaca, dan `GlassBlurFeature` di renderer URP (batch: `ProjectSetup.BuildVisualAssetsBatch`).
@@ -75,12 +75,13 @@ Kartu kode QR (cetak A5 tanpa diperkecil, sisi QR 8 cm) — satu kartu per artef
 | Keris Sumatra (model Blender) | `Docs/KartuQR_KerisSumatra_A5.pdf` | `NUSANTARA:KERIS_SUMATRA_01` |
 | Candi Borobudur (model Blender) | `Docs/KartuQR_CandiBorobudur_A5.pdf` | `NUSANTARA:BOROBUDUR_01` |
 | Karambit (model Blender) | `Docs/KartuQR_Karambit_A5.pdf` | `NUSANTARA:KARAMBIT_01` |
+| Komodo (model Blender) | `Docs/KartuQR_Komodo_A5.pdf` | `NUSANTARA:KOMODO_01` |
 
 Kartu QR dibuat ulang dengan `python Tools/kartu_qr.py` (butuh `pip install pillow qrcode`). Isi QR diturunkan dari
 `artifactId` (`ArtifactData.QrText`), jadi artefak baru otomatis punya QR. Atau tekan tombol **Tampilkan QR** di halaman
 detail untuk menampilkannya di layar HP/laptop lain.
 
-Kartu penanda 6x6 lama (`Docs/KartuPenanda_*_A5.pdf`, kode `B532` / `F0E4` / `E3B1` / `C616`, `python Tools/kartu_penanda.py`) kodenya
+Kartu penanda 6x6 lama (`Docs/KartuPenanda_*_A5.pdf`, kode `B532` / `F0E4` / `E3B1` / `C616` / `DC4E`, `python Tools/kartu_penanda.py`) kodenya
 tetap disimpan dan masih dikenali di mode Scan QR sebagai cadangan (`MarkerController.detectLegacyCards`), tetapi tidak
 lagi ditampilkan di UI. Kartu `EEC1` (keris sementara) dan `DA26` (Keris Jawa) sudah ditarik dan tidak dikenali lagi.
 
@@ -107,19 +108,21 @@ Assets/NusantaraAR/
     Marker/      MarkerController, QrDetector/QrCode, DarkRegions, CameraFeed, MarkerPose (+ kartu 6x6 lama)
   Scripts/Editor/ ProjectSetup, PreviewRenderer, BuildScript, BuildGuard (pengaman platform build),
                   GlbArtifact (GLB -> prefab artefak), KerisBaliBuilder, KerisSumatraBuilder, CandiBorobudurBuilder,
-                  KarambitBuilder
-                  (bagian, tahap, hotspot, konten), KerisRefs/CandiRefs/KarambitRefs (sumber rujukan), StoryBuilder (Kisah), MusicBuilder (musik latar)
+                  KarambitBuilder, KomodoBuilder
+                  (bagian, tahap, hotspot, konten), KerisRefs/CandiRefs/KarambitRefs/KomodoRefs (sumber rujukan), StoryBuilder (Kisah), MusicBuilder (musik latar)
   Content/KERIS_BALI_01/          prefab, ArtifactData, thumbnail (dibangkitkan KerisBaliBuilder), Story/ (Kisah), Music/
   Content/KERIS_SUMATRA_01/       prefab, ArtifactData, thumbnail (dibangkitkan KerisSumatraBuilder), Story/, Music/
   Content/BOROBUDUR_01/           prefab, ArtifactData, thumbnail (dibangkitkan CandiBorobudurBuilder), Story/, Music/
   Content/KARAMBIT_01/            prefab, ArtifactData, thumbnail (dibangkitkan KarambitBuilder), Story/, Music/
+  Content/KOMODO_01/              prefab, ArtifactData, thumbnail (dibangkitkan KomodoBuilder), Story/, Music/
   Art/KerisBali/                  keris_bali.glb (ekspor Blender) + Materials/ + Textures/ (ASTC, dari builder)
   Art/KerisSumatra/               keris_sumatra.glb (ekspor Blender) + Materials/ + Textures/
   Art/CandiBorobudur/             candi_borobudur.glb (ekspor Blender) + Materials/ + Textures/
   Art/Karambit/                   karambit.glb (ekspor Blender) + Materials/ + Textures/
+  Art/Komodo/                     komodo.glb (ekspor Blender) + Materials/ + Textures/
   Resources/ContentCatalog.asset, UIGlass.mat, GroundGlow.mat
   Scenes/Main.unity, AR.unity, Marker.unity (Scan QR)
-Tools/blender/keris_bali.py, keris_sumatra.py, candi_borobudur.py, karambit.py   skrip Blender pemodel artefak (+ .blend, *_textures/ hasilnya)
+Tools/blender/keris_bali.py, keris_sumatra.py, candi_borobudur.py, karambit.py, komodo.py   skrip Blender pemodel artefak (+ .blend, *_textures/ hasilnya)
 Tools/kartu_qr.py                 kartu kode QR cetak A5
 Tools/kartu_penanda.py            kartu penanda 6x6 lama (cadangan)
 Tools/narasi/                     naskah Kisah (kisah.json), waktu subtitle, kisah_tts.py (suara TTS)
@@ -141,6 +144,7 @@ dihapus dari proyek (masih ada di riwayat git).
 | **Keris Sumatra** `KERIS_SUMATRA_01` | `Tools/blender/keris_sumatra.py` | Bilah 36 cm luk 7 pamor wos wutah, hulu burl berukir, mendak, sampir bulan sabit, pendok kuningan, dudukan kayu. 9 hotspot | 4 tahap: hunus → hulu + mendak → ganja → warangka |
 | **Candi Borobudur** `BOROBUDUR_01` (kategori Candi) | `Tools/blender/candi_borobudur.py` (data & sumber: `Docs/Borobudur_Data.md`) | 123 × 123 × 35 m, **prefab 1:200** (61,5 × 17,5 cm): kaki, 5 teras persegi berelief, 5 langkan dengan 432 relung-arca, tangga & gapura, 3 teras melingkar dengan 72 stupa terawang + arca, stupa induk. ±308 ribu segitiga. 10 hotspot | 4 tahap, tingkat dipisah ke atas: stupa induk → teras melingkar (Arupadhatu) → teras 3-5 → teras 1-2 dari kaki (Kamadhatu) |
 | **Karambit** `KARAMBIT_01` | `Tools/blender/karambit.py` (data, sumber & foto acuan: `Docs/Karambit_Data.md`) | Kurambiak Minangkabau jantan, tinggi 15,9 cm: bilah cakar 7 gerigi (punggung = busur R 5,2 cm, 120°) bermotif kaluak paku, cincin kuningan, hulu kayu kemuning berukir dengan lubang telunjuk, sarung kayu berukir tinta emas, dudukan kayu. 9 hotspot | 4 tahap: sarung diputar pada pusat busur (meluncur lepas menyusuri lengkung) → pisau diangkat → hulu → cincin |
+| **Komodo** `KOMODO_01` (kategori Satwa Endemik) | `Tools/blender/komodo.py` (data, sumber & foto acuan: `Docs/Komodo_Data.md`) | Diorama **1:10**: komodo betina ±2,3 m (23 cm di aplikasi) melangkah di savana Pulau Rinca, di depan gundukan sarang burung gosong yang dipotong sehingga 7 telurnya terlihat. Kulit bersisik prosedural, 48 gigi bergerigi berujung jingga (lapisan besi), lidah kuning bercabang tersimpan di mulut. ±80 ribu segitiga. 10 hotspot | 4 tahap: rahang dibuka 24° di engsel + lidah dijulurkan → telur dikeluarkan dari sarang → komodo diangkat → rahang bawah dipisah |
 
 Mengubah model:
 
@@ -151,9 +155,10 @@ Mengubah model:
    "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" --background --factory-startup --python Tools/blender/keris_sumatra.py
    "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" --background --factory-startup --python Tools/blender/candi_borobudur.py -- --export
    "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" --background --factory-startup --python Tools/blender/karambit.py
+   "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" --background --factory-startup --python Tools/blender/komodo.py
    ```
    Skrip candi bawaannya hanya menyimpan `.blend`; `--export` menulis GLB, `--render` merender pratinjau Cycles (berat).
-2. Di Unity: **Nusantara AR → Build Keris Bali / Build Keris Sumatra / Build Candi Borobudur / Build Karambit** (atau Setup Everything).
+2. Di Unity: **Nusantara AR → Build Keris Bali / Build Keris Sumatra / Build Candi Borobudur / Build Karambit / Build Komodo** (atau Setup Everything).
 
 Catatan builder (`GlbArtifact`):
 - Setiap objek Blender dipetakan ke satu bagian (`ArtifactPart`); objek tanpa bagian menghentikan build.
@@ -162,11 +167,14 @@ Catatan builder (`GlbArtifact`):
   `Tools/blender/*_textures/`, dikompres ASTC (±10 MB/keris di HP).
 - Hotspot diletakkan dengan raycast ke muka depan bagiannya (`Front`; artefak besar memakai `reach`/`gap` lebih besar);
   animasi `Cabut_Keris` di GLB diabaikan (aplikasi memakai exploded view).
-- Artefak yang terlalu besar untuk meja (candi) diperkecil **di child `Model`**, bukan di root prefab: root harus tetap
+- Artefak yang terlalu besar untuk meja (candi 1:200, komodo 1:10) diperkecil **di child `Model`**, bukan di root prefab: root harus tetap
   skala 1 karena Scan QR menghitung skala dari ukuran dunia prefab, dan slider AR memakai skala root.
 - Model simetris (candi) memanggil `Load` dengan `rightPart = null` agar pemeriksaan arah +X dilewati.
 - Bagian yang harus bergerak menyusuri lengkung (sarung karambit) diberi pivot di pusat lengkung lalu diputar lewat
-  overload `SetStages(..., rotations)` + `Turn`; bergeser lurus akan membuat bilah cakar menembus sarungnya.
+  overload `SetStages(..., rotations)` + `Turn`; bergeser lurus akan membuat bilah cakar menembus sarungnya. Rahang komodo
+  memakai cara yang sama dengan pivot di engsel rahang.
+- Bagian yang tersembunyi saat utuh (bilah keris di sarang, lidah komodo di mulut) masuk `hiddenWhenAssembled`;
+  hotspot-nya bertahap `Bilah` agar baru tampil mulai tahap 1.
 
 ## Menambah artefak baru
 
@@ -186,7 +194,7 @@ Catatan builder (`GlbArtifact`):
 | FR-04 skala 1:1 | ukuran dari cetak biru (Bali 40 cm, Sumatra 36 cm), bukan spesimen |
 | FR-05 gestur (rotasi, pinch 0,5-3x, geser 2 jari) + disambiguasi, blokir sentuhan UI | |
 | FR-06 Reset Tampilan, Pindahkan | |
-| FR-07 exploded view berurutan, bisa dibalik | Bali 5 tahap (termasuk lepas pendok), Sumatra 4 tahap, Karambit 4 tahap (sarung diputar lepas) |
+| FR-07 exploded view berurutan, bisa dibalik | Bali 5 tahap (termasuk lepas pendok), Sumatra 4 tahap, Karambit 4 tahap (sarung diputar lepas), Komodo 4 tahap (rahang dibuka, telur keluar) |
 | Hunus / Sarungkan: animasi bilah dicabut dari warangka tanpa membongkar | jalur `drawOut` di builder; test `Draw_BladeLeavesSheathWithoutPassingThroughIt` memastikan bilah tidak menembus warangka/gandar |
 | FR-08 hotspot per state: titik + garis + label nama bagian langsung di AR (tidak saling tumpuk), redup saat tertutup, ketuk bagian model | |
 | FR-09/10 kartu info menempel di samping bagian (menggantikan bottom sheet), 3 tab, audio + pelafalan, sumber, navigasi antar bagian | isi diperiksa terhadap sumber daring (`KerisRefs`); audio per bagian belum ada; transkrip terpisah ditiadakan (teks tab = isi narasi) |

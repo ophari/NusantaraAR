@@ -26,7 +26,7 @@ namespace NusantaraAR.EditorTools
 {
     /// <summary>
     /// Setup proyek sekali jalan (idempoten): pengaturan Android/iOS, XR (ARCore/ARKit Optional),
-    /// URP (AR Background Renderer Feature + GlassBlurFeature untuk UI kaca), artefak dari model Blender (GLB via glTFast: Keris Bali, Keris Sumatra, Candi Borobudur, Karambit)
+    /// URP (AR Background Renderer Feature + GlassBlurFeature untuk UI kaca), artefak dari model Blender (GLB via glTFast: Keris Bali, Keris Sumatra, Candi Borobudur, Karambit, Komodo)
     /// beserta prefab modular + exploded view + hotspot draf, dan scene Main + AR + Marker.
     /// Menu: Nusantara AR / Setup Everything. Batch: -executeMethod NusantaraAR.EditorTools.ProjectSetup.RunBatch
     /// </summary>
@@ -59,6 +59,7 @@ namespace NusantaraAR.EditorTools
             KerisSumatraBuilder.Build();
             CandiBorobudurBuilder.Build();
             KarambitBuilder.Build();
+            KomodoBuilder.Build();
             StoryBuilder.Build();
             MusicBuilder.Build();
             PruneCatalog();
@@ -70,6 +71,7 @@ namespace NusantaraAR.EditorTools
             RenderThumbnail(KerisSumatraBuilder.DataPath, KerisSumatraBuilder.ThumbPath);
             RenderThumbnail(CandiBorobudurBuilder.DataPath, CandiBorobudurBuilder.ThumbPath);
             RenderThumbnail(KarambitBuilder.DataPath, KarambitBuilder.ThumbPath);
+            RenderThumbnail(KomodoBuilder.DataPath, KomodoBuilder.ThumbPath);
             EditorBuildSettings.scenes = new[]
             {
                 new EditorBuildSettingsScene(MainScenePath, true),
@@ -279,7 +281,7 @@ namespace NusantaraAR.EditorTools
         static void PruneCatalog()
         {
             var catalog = AssetDatabase.LoadAssetAtPath<ContentCatalog>(CatalogPath);
-            var keep = new[] { KerisBaliBuilder.Id, KerisSumatraBuilder.Id, CandiBorobudurBuilder.Id, KarambitBuilder.Id };
+            var keep = new[] { KerisBaliBuilder.Id, KerisSumatraBuilder.Id, CandiBorobudurBuilder.Id, KarambitBuilder.Id, KomodoBuilder.Id };
             catalog.artifacts.RemoveAll(a => a == null || Array.IndexOf(keep, a.artifactId) < 0);
             catalog.artifacts.Sort((x, y) => Array.IndexOf(keep, x.artifactId).CompareTo(Array.IndexOf(keep, y.artifactId)));
             EditorUtility.SetDirty(catalog);
@@ -664,6 +666,7 @@ namespace NusantaraAR.EditorTools
             RenderThumbnail(KerisSumatraBuilder.DataPath, KerisSumatraBuilder.ThumbPath);
             RenderThumbnail(CandiBorobudurBuilder.DataPath, CandiBorobudurBuilder.ThumbPath);
             RenderThumbnail(KarambitBuilder.DataPath, KarambitBuilder.ThumbPath);
+            RenderThumbnail(KomodoBuilder.DataPath, KomodoBuilder.ThumbPath);
             Debug.Log("[NusantaraAR] Thumbnail katalog diperbarui.");
         }
 

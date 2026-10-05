@@ -47,6 +47,18 @@
    "url": "https://pixabay.com/music/beats-traditional-249214/",
    "license": "Pixabay Content License",
    "aiGenerated": false
+  },
+  {
+   "artifactId": "KOMODO_01",
+   "raw": "Tools/musik/asli/nala_subrada-nusa-floating-city-2026-maritime-wellness-sasando-harp-454132.mp3",
+   "file": "Assets/NusantaraAR/Content/KOMODO_01/Music/KOMODO_01_music.mp3",
+   "maxSeconds": 180,
+   "title": "Nusa Floating City 2026 Maritime Wellness Sasando Harp",
+   "author": "Nala_Subrada",
+   "source": "Pixabay",
+   "url": "https://pixabay.com/music/meditationspiritual-nusa-floating-city-2026-maritime-wellness-sasando-harp-454132/",
+   "license": "Pixabay Content License",
+   "aiGenerated": true
   }
  ]
 }
