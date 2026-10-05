@@ -33,6 +33,13 @@ namespace NusantaraAR.Marker
         /// </summary>
         public const int KarambitCode = 0xC616;
 
+        /// <summary>
+        /// Kode marker untuk Komodo (pola ##.# / ##.. / .#.. / ###.); keempat rotasinya berjarak >= 10, jarak ke semua
+        /// rotasi empat kode di atas >= 6, dan >= 4 dari kartu yang sudah ditarik (0xEEC1, 0xDA26). Hasil pencarian
+        /// menyeluruh: tidak ada kode yang memenuhi >= 7 terhadap kode aktif sekaligus rotasi >= 10.
+        /// </summary>
+        public const int KomodoCode = 0xDC4E;
+
         /// <summary>True bila sel (kolom u, baris v; 0..5, dari kiri-atas) berwarna hitam.</summary>
         public static bool IsBlack(int code, int u, int v)
         {

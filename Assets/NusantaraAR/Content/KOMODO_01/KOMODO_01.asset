@@ -1,0 +1,572 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaae056f5a3ccf4d8025ecf14452651, type: 3}
+  m_Name: KOMODO_01
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactData
+  artifactId: KOMODO_01
+  displayName:
+    id: Komodo
+    en: Komodo Dragon
+  localName: Ora
+  category: 4
+  region:
+    id: Taman Nasional Komodo & pesisir Flores, Nusa Tenggara Timur
+    en: Komodo National Park & the Flores coast, East Nusa Tenggara
+  era:
+    id: Satwa hidup; dideskripsikan secara ilmiah tahun 1912
+    en: Living species; scientifically described in 1912
+  summary:
+    id: "Komodo (Varanus komodoensis), kadal terbesar di dunia, hanya hidup di alam
+      liar di Taman Nasional Komodo dan pesisir Pulau Flores, Nusa Tenggara Timur.
+      Diorama ini memperlihatkan komodo betina (\xB12,3 m) di savana Pulau Rinca,
+      di depan gundukan sarang berisi telur. Komodo adalah satwa nasional Indonesia
+      dan berstatus Terancam (Endangered) menurut IUCN. Model dibuat di Blender dari
+      foto acuan dan data bersumber pada skala 1:10, bukan dipindai dari spesimen."
+    en: The Komodo dragon (Varanus komodoensis), the world's largest lizard, lives
+      in the wild only in Komodo National Park and on the coast of Flores, East Nusa
+      Tenggara. This diorama shows a female (~2.3 m) on the Rinca Island savanna
+      in front of a mound nest holding eggs. The Komodo dragon is Indonesia's national
+      animal and is listed as Endangered by the IUCN. The model was made in Blender
+      from reference photos and sourced data at 1:10 scale, not scanned from a specimen.
+  thumbnail: {fileID: 2800000, guid: ce86579c1ffedb04ba80a260561fb63d, type: 3}
+  prefab: {fileID: 7166109541337882661, guid: 97a64f3fd15bb7b48b94bc764ac49cef, type: 3}
+  specimenOwner: 
+  collectionNumber: 
+  license: Model Blender milik proyek (dibuat dari foto acuan & data bersumber)
+  measurementNote:
+    id: "Skala 1:10. Panjang komodo pada model \xB12,3 m (betina dewasa rata-rata
+      \xB12,29 m dan 68-73 kg), moncong sampai panggul \xB11,13 m. Proporsi tubuh,
+      gundukan sarang (diperkecil menjadi \xD8 1 m, tinggi 42 cm), dan ukuran telur
+      (\xB19 x 6 cm) adalah rekaan. Bukan hasil pengukuran spesimen."
+    en: 1:10 scale. The komodo on the model is ~2.3 m long (adult females average
+      ~2.29 m and 68-73 kg), snout to hips ~1.13 m. Body proportions, the mound nest
+      (reduced to 1 m across and 42 cm tall) and the egg size (~9 x 6 cm) are estimates.
+      Not measured from a specimen.
+  markerCode: 56398
+  isPlaceholder: 1
+  placeholderNote:
+    id: 'Model Blender dari foto acuan: bentuk tubuh, sisik, dan sarang adalah penyederhanaan.
+      Akan diganti atau divalidasi ahli satwa dan kurator.'
+    en: 'Blender model from reference photos: the body shape, scales and nest are
+      simplified. It will be replaced or validated by a wildlife expert and curator.'
+  hotspots:
+  - hotspotId: kulit
+    partName: Tubuh
+    localPosition: {x: -0.3351, y: 0.3048, z: -0.25460184}
+    visibleFrom: 0
+    title:
+      id: Kulit & Osteoderm
+      en: Skin & osteoderms
+    regionalTerm: 'Nama lokal: ora (Komodo), buaya darat, biawak raksasa'
+    material:
+      id: Sisik di atas osteoderm (keping tulang); pada model berupa tekstur prosedural
+      en: Scales over osteoderms (small bony plates); a procedural texture on the
+        model
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Kulit komodo dewasa tertutup sisik kecil yang diperkuat osteoderm, keping-keping
+        tulang kecil di bawah kulit yang membentuk semacam baju zirah. Pemindaian
+        CT menunjukkan osteoderm komodo dewasa hampir menutupi seluruh kepala dan
+        punya empat bentuk berbeda. Anak komodo yang baru menetas belum punya osteoderm;
+        keping tulang ini baru tumbuh menjelang dewasa.
+      en: An adult Komodo dragon's skin is covered in small scales reinforced by
+        osteoderms, tiny bony plates under the skin that form a kind of chain mail.
+        CT scans show that in adults the osteoderms cover almost the whole head and
+        come in four distinct shapes. Hatchlings have none; the plates only grow
+        as the dragon approaches adulthood.
+    history:
+      id: Karena anak komodo hidup di pohon dan baru turun ke tanah setelah besar,
+        para peneliti menduga zirah ini terutama melindungi komodo dewasa dari sesamanya,
+        yang sering bertarung memperebutkan wilayah dan pasangan.
+      en: Because young dragons live in trees and only come down once they are large,
+        researchers suggest this armour mainly protects adults from each other, as
+        they often fight over territory and mates.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Kulit komodo dewasa tertutup sisik kecil yang diperkuat osteoderm, keping-keping
+        tulang kecil di bawah kulit yang membentuk semacam baju zirah. Pemindaian
+        CT menunjukkan osteoderm komodo dewasa hampir menutupi seluruh kepala dan
+        punya empat bentuk berbeda. Anak komodo yang baru menetas belum punya osteoderm;
+        keping tulang ini baru tumbuh menjelang dewasa.
+      en: An adult Komodo dragon's skin is covered in small scales reinforced by
+        osteoderms, tiny bony plates under the skin that form a kind of chain mail.
+        CT scans show that in adults the osteoderms cover almost the whole head and
+        come in four distinct shapes. Hatchlings have none; the plates only grow
+        as the dragon approaches adulthood.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Wikimedia Commons, C. J. Sharp, CC
+      BY-SA 4.0) & data bersumber'
+    - 'Maisano dkk. (2019) - The cephalic osteoderms of Varanus komodoensis as revealed
+      by high-resolution X-ray computed tomography, The Anatomical Record 302(10):
+      1675-1680'
+    - Wikipedia - Komodo dragon (en.wikipedia.org/wiki/Komodo_dragon)
+    - Wikipedia Indonesia - Komodo (id.wikipedia.org/wiki/Komodo)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (03-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: cakar
+    partName: Tubuh
+    localPosition: {x: -0.7745, y: 0.012000002, z: -0.4045385}
+    visibleFrom: 0
+    title:
+      id: Kaki & Cakar
+      en: Legs & claws
+    regionalTerm: 
+    material:
+      id: Cakar tanduk; pada model berwarna gelap
+      en: Horny claws; dark on the model
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: 'Kaki komodo kekar dan terentang ke samping, masing-masing berjari lima
+        dengan cakar tebal yang melengkung. Pada komodo dewasa, cakar terutama dipakai
+        sebagai senjata dan untuk makan, karena tubuhnya terlalu besar untuk memanjat.
+        Pada model, komodo melangkah diagonal: kaki depan kiri dan kaki belakang
+        kanan maju bersamaan.'
+      en: 'A Komodo dragon''s legs are stout and sprawl to the sides, each with five
+        toes ending in thick, curved claws. Adults use their claws mainly as weapons
+        and for feeding, since they are too big to climb. On the model the dragon
+        walks with a diagonal gait: front left and hind right legs forward together.'
+    history:
+      id: 'Anak komodo memakai cakarnya untuk memanjat: komodo yang baru menetas
+        menghabiskan sekitar 98% waktunya di pohon sampai berumur setidaknya satu
+        tahun, menjauhi komodo dewasa yang bisa memangsanya.'
+      en: 'Young dragons use their claws to climb: hatchlings spend about 98% of
+        their time in trees until they are at least a year old, keeping away from
+        adults that may eat them.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: 'Kaki komodo kekar dan terentang ke samping, masing-masing berjari lima
+        dengan cakar tebal yang melengkung. Pada komodo dewasa, cakar terutama dipakai
+        sebagai senjata dan untuk makan, karena tubuhnya terlalu besar untuk memanjat.
+        Pada model, komodo melangkah diagonal: kaki depan kiri dan kaki belakang
+        kanan maju bersamaan.'
+      en: 'A Komodo dragon''s legs are stout and sprawl to the sides, each with five
+        toes ending in thick, curved claws. Adults use their claws mainly as weapons
+        and for feeding, since they are too big to climb. On the model the dragon
+        walks with a diagonal gait: front left and hind right legs forward together.'
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Wikimedia Commons, C. J. Sharp, CC
+      BY-SA 4.0) & data bersumber'
+    - Wikipedia Indonesia - Komodo (id.wikipedia.org/wiki/Komodo)
+    - Ditjen KSDAE Kementerian Kehutanan - Conservation Strategy and Action Plan
+      Komodo Dragon (SRAK, turunan IBSAP 2025-2045; ksdae.kehutanan.go.id)
+    - Wikipedia - Komodo dragon (en.wikipedia.org/wiki/Komodo_dragon)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (03-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: ekor
+    partName: Tubuh
+    localPosition: {x: 0.4978, y: 0.10159999, z: -0.3550533}
+    visibleFrom: 0
+    title:
+      id: Ekor
+      en: Tail
+    regionalTerm: 
+    material:
+      id: "Berotot dan bersisik; pada model \xB11,2 m dari panggul (rekaan)"
+      en: Muscular and scaly; ~1.2 m from the hips on the model (estimate)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Ekor komodo berotot dan kira-kira sepanjang tubuhnya. Untuk meraih mangsa
+        yang lebih tinggi, komodo dapat berdiri dengan kaki belakang dan memakai
+        ekornya sebagai penopang.
+      en: The Komodo dragon's tail is muscular and about as long as its body. To
+        reach prey higher up, the dragon can stand on its hind legs and use its tail
+        as a prop.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Ekor komodo berotot dan kira-kira sepanjang tubuhnya. Untuk meraih mangsa
+        yang lebih tinggi, komodo dapat berdiri dengan kaki belakang dan memakai
+        ekornya sebagai penopang.
+      en: The Komodo dragon's tail is muscular and about as long as its body. To
+        reach prey higher up, the dragon can stand on its hind legs and use its tail
+        as a prop.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Wikimedia Commons, C. J. Sharp, CC
+      BY-SA 4.0) & data bersumber'
+    - Wikipedia Indonesia - Komodo (id.wikipedia.org/wiki/Komodo)
+    - Wikipedia - Komodo dragon (en.wikipedia.org/wiki/Komodo_dragon)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (03-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: mata
+    partName: Kepala
+    localPosition: {x: -1.0669, y: 0.2412, z: -0.13691795}
+    visibleFrom: 0
+    title:
+      id: Mata & Kepala
+      en: Eyes & head
+    regionalTerm: 
+    material:
+      id: 'Pada model: mata hitam mengilap, lubang hidung di dekat ujung moncong'
+      en: 'On the model: glossy black eyes, nostrils near the snout tip'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Komodo mampu melihat hingga sejauh sekitar 300 m. Namun untuk menemukan
+        mangsa dan bangkai, komodo lebih mengandalkan penciuman lewat lidahnya (lihat
+        Lidah, setelah mulut dibuka).
+      en: Komodo dragons can see as far as about 300 m. To find prey and carrion,
+        however, they rely more on smell through the tongue (see Tongue, once the
+        mouth is open).
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Komodo mampu melihat hingga sejauh sekitar 300 m. Namun untuk menemukan
+        mangsa dan bangkai, komodo lebih mengandalkan penciuman lewat lidahnya (lihat
+        Lidah, setelah mulut dibuka).
+      en: Komodo dragons can see as far as about 300 m. To find prey and carrion,
+        however, they rely more on smell through the tongue (see Tongue, once the
+        mouth is open).
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Wikimedia Commons, C. J. Sharp, CC
+      BY-SA 4.0) & data bersumber'
+    - Wikipedia Indonesia - Komodo (id.wikipedia.org/wiki/Komodo)
+    - Wikipedia - Komodo dragon (en.wikipedia.org/wiki/Komodo_dragon)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (03-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: sarang
+    partName: Sarang
+    localPosition: {x: 0.2800001, y: 0.25, z: -0.22882679}
+    visibleFrom: 0
+    title:
+      id: Sarang Gundukan
+      en: Mound nest
+    regionalTerm: 
+    material:
+      id: Gundukan tanah & serasah buatan burung gosong kaki-jingga (Megapodius reinwardt);
+        pada model dipotong dan diperkecil
+      en: A soil-and-litter mound built by the orange-footed scrubfowl (Megapodius
+        reinwardt); cut away and reduced on the model
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Komodo betina meletakkan telurnya di lubang tanah, cekungan di lereng bukit,
+        atau gundukan sarang burung gosong kaki-jingga yang telah ditinggalkan. Di
+        Pulau Komodo, sekitar 62% sarang komodo adalah gundukan sarang burung gosong.
+        Pada model, muka depan gundukan dipotong agar telur di dalamnya terlihat.
+      en: Female Komodo dragons lay their eggs in holes in the ground, hollows in
+        hillsides, or abandoned mounds built by the orange-footed scrubfowl. On Komodo
+        Island about 62% of dragon nests are scrubfowl mounds. On the model the front
+        of the mound is cut away so the eggs inside can be seen.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Komodo betina meletakkan telurnya di lubang tanah, cekungan di lereng bukit,
+        atau gundukan sarang burung gosong kaki-jingga yang telah ditinggalkan. Di
+        Pulau Komodo, sekitar 62% sarang komodo adalah gundukan sarang burung gosong.
+        Pada model, muka depan gundukan dipotong agar telur di dalamnya terlihat.
+      en: Female Komodo dragons lay their eggs in holes in the ground, hollows in
+        hillsides, or abandoned mounds built by the orange-footed scrubfowl. On Komodo
+        Island about 62% of dragon nests are scrubfowl mounds. On the model the front
+        of the mound is cut away so the eggs inside can be seen.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Wikimedia Commons, C. J. Sharp, CC
+      BY-SA 4.0) & data bersumber'
+    - 'Jessop dkk. (2004) - Distribution, use and selection of nest type by Komodo
+      dragons, Biological Conservation 117: 463-470'
+    - Wikipedia Indonesia - Komodo (id.wikipedia.org/wiki/Komodo)
+    - Wikipedia - Komodo dragon (en.wikipedia.org/wiki/Komodo_dragon)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (03-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: telur
+    partName: Telur
+    localPosition: {x: 0, y: 0.029, z: -0.068803936}
+    visibleFrom: 0
+    title:
+      id: Telur
+      en: Eggs
+    regionalTerm: 
+    material:
+      id: "Bercangkang liat; pada model \xB19 x 6 cm (rekaan), 7 butir tampak"
+      en: Leathery shells; ~9 x 6 cm on the model (estimate), 7 shown
+    philosophy:
+      id: 'Menurut legenda Ata Modo (orang Pulau Komodo), Putri Naga melahirkan anak
+        kembar: bayi laki-laki bernama Gerong dan bayi komodo bernama Orah, yang
+        dibesarkan terpisah. Ketika dewasa, Gerong hampir menombak seekor komodo
+        di hutan, tetapi Putri Naga muncul dan berkata bahwa komodo itu saudara kembarnya.
+        Karena itu orang Komodo menyebut komodo sebae (kembar) dan turun-temurun
+        ikut menjaganya.'
+      en: 'According to a legend of the Ata Modo (the people of Komodo Island), Princess
+        Naga gave birth to twins: a boy named Gerong and a baby dragon named Orah,
+        raised apart. As a grown man, Gerong was about to spear a dragon in the forest
+        when Princess Naga appeared and told him the dragon was his twin. That is
+        why the Komodo people call the dragons sebae (twins) and have protected them
+        for generations.'
+    craft:
+      id: Sarang komodo rata-rata berisi 20 telur. Telur diletakkan sekitar bulan
+        September dan menetas setelah 7-8 bulan, sekitar bulan April. Anak yang baru
+        menetas panjangnya sekitar 46 cm.
+      en: A Komodo nest holds about 20 eggs on average. They are laid around September
+        and hatch after 7-8 months, around April. Hatchlings are about 46 cm long.
+    history:
+      id: Komodo betina juga dapat bertelur tanpa kawin (partenogenesis). Hal ini
+        tercatat pada dua komodo betina di kebun binatang Inggris, London dan Chester;
+        semua anaknya jantan.
+      en: Female Komodo dragons can also lay eggs without mating (parthenogenesis).
+        This was recorded in two females at British zoos, London and Chester; all
+        their offspring were male.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Sarang komodo rata-rata berisi 20 telur. Telur diletakkan sekitar bulan
+        September dan menetas setelah 7-8 bulan, sekitar bulan April. Anak yang baru
+        menetas panjangnya sekitar 46 cm.
+      en: A Komodo nest holds about 20 eggs on average. They are laid around September
+        and hatch after 7-8 months, around April. Hatchlings are about 46 cm long.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Wikimedia Commons, C. J. Sharp, CC
+      BY-SA 4.0) & data bersumber'
+    - Wikipedia - Komodo dragon (en.wikipedia.org/wiki/Komodo_dragon)
+    - Wikipedia Indonesia - Komodo (id.wikipedia.org/wiki/Komodo)
+    - Kompas.com (02-08-2022) - Komodo, Legenda Putri Naga di Labuan Bajo (regional.kompas.com)
+    - Floresa (03-02-2026) - Menjaga 'Saudara Kembar' ala Perempuan Adat Pulau Komodo
+      (floresa.co)
+    - 'Watts dkk. (2006) - Parthenogenesis in Komodo dragons, Nature 444: 1021-1022'
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (03-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: alas
+    partName: Alas
+    localPosition: {x: -1.28, y: 0.030000001, z: -0.6289815}
+    visibleFrom: 0
+    title:
+      id: Savana Pulau Rinca
+      en: Rinca Island savanna
+    regionalTerm: 
+    material:
+      id: 'Pada model: tanah kering, batu, dan rumput savana'
+      en: 'On the model: dry soil, rocks and savanna grass'
+    philosophy:
+      id: Komodo ditetapkan sebagai satwa nasional Indonesia melalui Keputusan Presiden
+        Nomor 4 Tahun 1993, bersama ikan siluk merah (satwa pesona) dan elang jawa
+        (satwa langka).
+      en: The Komodo dragon was named Indonesia's national animal by Presidential
+        Decree No. 4 of 1993, alongside the red arowana (charm animal) and the Javan
+        hawk-eagle (rare animal).
+    craft:
+      id: "Komodo hidup di padang rumput terbuka (sabana) dan hutan musim di lembah
+        pesisir. Di Taman Nasional Komodo, yang sebagian besar berupa sabana, komodo
+        tersebar di beberapa pulau, terutama Pulau Komodo dan Rinca; populasinya
+        pada 2024 diperkirakan 3.270 \xB1 371 ekor. Di pesisir Flores hidup sekitar
+        701 \xB1 131 ekor lagi."
+      en: "Komodo dragons live in open grassland (savanna) and monsoon forest in
+        coastal valleys. In Komodo National Park, which is mostly savanna, they live
+        on several islands, chiefly Komodo and Rinca; the 2024 population was estimated
+        at 3,270 \xB1 371. About 701 \xB1 131 more live on the coast of Flores."
+    history:
+      id: Taman Nasional Komodo didirikan tahun 1980 untuk melindungi komodo dan
+        habitatnya, lalu ditetapkan UNESCO sebagai Situs Warisan Dunia tahun 1991.
+        Sejak 2021 IUCN menggolongkan komodo sebagai Terancam (Endangered), antara
+        lain karena habitatnya diperkirakan menyusut akibat perubahan iklim.
+      en: Komodo National Park was founded in 1980 to protect the dragons and their
+        habitat, and was inscribed by UNESCO as a World Heritage Site in 1991. Since
+        2021 the IUCN has listed the Komodo dragon as Endangered, partly because
+        climate change is projected to shrink its habitat.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: "Komodo hidup di padang rumput terbuka (sabana) dan hutan musim di lembah
+        pesisir. Di Taman Nasional Komodo, yang sebagian besar berupa sabana, komodo
+        tersebar di beberapa pulau, terutama Pulau Komodo dan Rinca; populasinya
+        pada 2024 diperkirakan 3.270 \xB1 371 ekor. Di pesisir Flores hidup sekitar
+        701 \xB1 131 ekor lagi."
+      en: "Komodo dragons live in open grassland (savanna) and monsoon forest in
+        coastal valleys. In Komodo National Park, which is mostly savanna, they live
+        on several islands, chiefly Komodo and Rinca; the 2024 population was estimated
+        at 3,270 \xB1 371. About 701 \xB1 131 more live on the coast of Flores."
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Wikimedia Commons, C. J. Sharp, CC
+      BY-SA 4.0) & data bersumber'
+    - Ditjen KSDAE Kementerian Kehutanan - Conservation Strategy and Action Plan
+      Komodo Dragon (SRAK, turunan IBSAP 2025-2045; ksdae.kehutanan.go.id)
+    - Keputusan Presiden RI Nomor 4 Tahun 1993 tentang Satwa dan Bunga Nasional (id.wikisource.org)
+    - Wikipedia - Komodo National Park (en.wikipedia.org/wiki/Komodo_National_Park)
+    - UNESCO World Heritage Centre - Komodo National Park (whc.unesco.org/en/list/609)
+    - IUCN Red List - Varanus komodoensis, Endangered (Jessop dkk. 2021, iucnredlist.org)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (03-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: lidah
+    partName: Lidah
+    localPosition: {x: -0.28886712, y: -0.08091399, z: -0.045944534}
+    visibleFrom: 1
+    title:
+      id: Lidah Bercabang
+      en: Forked tongue
+    regionalTerm: 
+    material:
+      id: "Pada model: kuning, dijulurkan \xB128 cm pada tahap 1"
+      en: 'On the model: yellow, extended ~28 cm in step 1'
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Lidah komodo panjang, kuning, dan bercabang. Komodo menjulurkan lidahnya
+        untuk menangkap partikel bau dari udara, lalu membawanya ke organ Jacobson
+        di langit-langit mulut. Dengan cara ini komodo dapat mendeteksi bangkai dari
+        jarak 4-9,5 km.
+      en: The Komodo dragon's tongue is long, yellow and forked. The dragon flicks
+        it out to pick up scent particles from the air and carries them to the Jacobson's
+        organ in the roof of its mouth. This way it can detect carrion 4-9.5 km away.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Lidah komodo panjang, kuning, dan bercabang. Komodo menjulurkan lidahnya
+        untuk menangkap partikel bau dari udara, lalu membawanya ke organ Jacobson
+        di langit-langit mulut. Dengan cara ini komodo dapat mendeteksi bangkai dari
+        jarak 4-9,5 km.
+      en: The Komodo dragon's tongue is long, yellow and forked. The dragon flicks
+        it out to pick up scent particles from the air and carries them to the Jacobson's
+        organ in the roof of its mouth. This way it can detect carrion 4-9.5 km away.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Wikimedia Commons, C. J. Sharp, CC
+      BY-SA 4.0) & data bersumber'
+    - Wikipedia Indonesia - Komodo (id.wikipedia.org/wiki/Komodo)
+    - Wikipedia - Komodo dragon (en.wikipedia.org/wiki/Komodo_dragon)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (03-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: gigi
+    partName: Rahang
+    localPosition: {x: -0.11829242, y: -0.02253433, z: -0.08184914}
+    visibleFrom: 1
+    title:
+      id: Gigi Berlapis Besi
+      en: Iron-coated teeth
+    regionalTerm: 
+    material:
+      id: Gigi bergerigi berujung jingga (lapisan kaya besi); pada model 48 gigi
+        tampak
+      en: Serrated teeth with orange, iron-rich tips; 48 teeth shown on the model
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Komodo punya sekitar 60 gigi bergerigi seperti gigi hiu, panjangnya sampai
+        2,5 cm, yang diganti kira-kira setiap 40 hari. Penelitian tahun 2024 menemukan
+        lapisan kaya besi berwarna jingga di ujung dan gerigi giginya. Lapisan ini
+        menjaga gigi tetap tajam untuk merobek mangsa besar seperti rusa timor, babi
+        hutan, dan kerbau.
+      en: Komodo dragons have about 60 serrated, shark-like teeth up to 2.5 cm long,
+        replaced roughly every 40 days. A 2024 study found an orange, iron-rich coating
+        on the tips and serrations of the teeth. It keeps them sharp for tearing
+        large prey such as Timor deer, wild boar and water buffalo.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Komodo punya sekitar 60 gigi bergerigi seperti gigi hiu, panjangnya sampai
+        2,5 cm, yang diganti kira-kira setiap 40 hari. Penelitian tahun 2024 menemukan
+        lapisan kaya besi berwarna jingga di ujung dan gerigi giginya. Lapisan ini
+        menjaga gigi tetap tajam untuk merobek mangsa besar seperti rusa timor, babi
+        hutan, dan kerbau.
+      en: Komodo dragons have about 60 serrated, shark-like teeth up to 2.5 cm long,
+        replaced roughly every 40 days. A 2024 study found an orange, iron-rich coating
+        on the tips and serrations of the teeth. It keeps them sharp for tearing
+        large prey such as Timor deer, wild boar and water buffalo.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Wikimedia Commons, C. J. Sharp, CC
+      BY-SA 4.0) & data bersumber'
+    - 'LeBlanc dkk. (2024) - Iron-coated Komodo dragon teeth and the complex dental
+      enamel of carnivorous reptiles, Nature Ecology & Evolution 8: 1711-1722 (doi:10.1038/s41559-024-02477-7)'
+    - Wikipedia - Komodo dragon (en.wikipedia.org/wiki/Komodo_dragon)
+    - Ditjen KSDAE Kementerian Kehutanan - Conservation Strategy and Action Plan
+      Komodo Dragon (SRAK, turunan IBSAP 2025-2045; ksdae.kehutanan.go.id)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (03-10-2026); menunggu validasi
+      kurator.
+  - hotspotId: bisa
+    partName: Rahang
+    localPosition: {x: -0.11691573, y: -0.04427375, z: -0.0926867}
+    visibleFrom: 1
+    title:
+      id: Kelenjar Bisa
+      en: Venom glands
+    regionalTerm: 
+    material:
+      id: Kelenjar di dalam rahang bawah (tidak dimodelkan; titik menandai letaknya)
+      en: Glands inside the lower jaw (not modelled; the point marks their position)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Di rahang bawah komodo terdapat kelenjar bisa. Bisanya menghambat pembekuan
+        darah, menurunkan tekanan darah, dan dapat melumpuhkan otot, sehingga mangsa
+        yang tergigit cepat lemas karena kehilangan darah.
+      en: The Komodo dragon's lower jaw holds venom glands. The venom stops blood
+        from clotting, lowers blood pressure and can paralyse muscles, so a bitten
+        animal quickly weakens from blood loss.
+    history:
+      id: Temuan kelenjar bisa ini (2009) menggantikan anggapan lama bahwa mangsa
+        komodo mati karena bakteri berbahaya di air liurnya.
+      en: This discovery of venom glands (2009) replaced the old idea that the dragon's
+        prey died from dangerous bacteria in its saliva.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Di rahang bawah komodo terdapat kelenjar bisa. Bisanya menghambat pembekuan
+        darah, menurunkan tekanan darah, dan dapat melumpuhkan otot, sehingga mangsa
+        yang tergigit cepat lemas karena kehilangan darah.
+      en: The Komodo dragon's lower jaw holds venom glands. The venom stops blood
+        from clotting, lowers blood pressure and can paralyse muscles, so a bitten
+        animal quickly weakens from blood loss.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan (Wikimedia Commons, C. J. Sharp, CC
+      BY-SA 4.0) & data bersumber'
+    - 'Fry dkk. (2009) - A central role for venom in predation by Varanus komodoensis
+      (Komodo Dragon) and the extinct giant Varanus (Megalania) priscus, PNAS 106(22):
+      8969-8974'
+    - Wikipedia - Komodo dragon (en.wikipedia.org/wiki/Komodo_dragon)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (03-10-2026); menunggu validasi
+      kurator.
+  story: {fileID: 11400000, guid: 89d3936000523f04faacdf85a26c68d4, type: 2}
+  backgroundMusic: {fileID: 0}
+  musicCredit: 

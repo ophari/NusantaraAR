@@ -42,6 +42,7 @@ namespace NusantaraAR.Tests
     [TestFixture("KERIS_SUMATRA_01")]
     [TestFixture("BOROBUDUR_01")]
     [TestFixture("KARAMBIT_01")]
+    [TestFixture("KOMODO_01")]
     public class ArtifactTests : ArtifactFixture
     {
         public ArtifactTests(string id) : base(id) { }
@@ -50,10 +51,11 @@ namespace NusantaraAR.Tests
         public void Catalog_HoldsTheBlenderArtifacts()
         {
             var ids = catalog.artifacts.Where(a => a != null).Select(a => a.artifactId).ToList();
-            CollectionAssert.AreEquivalent(new[] { "KERIS_BALI_01", "KERIS_SUMATRA_01", "BOROBUDUR_01", "KARAMBIT_01" }, ids);
+            CollectionAssert.AreEquivalent(new[] { "KERIS_BALI_01", "KERIS_SUMATRA_01", "BOROBUDUR_01", "KARAMBIT_01", "KOMODO_01" }, ids);
             var cats = catalog.NonEmptyCategories();
             Assert.IsTrue(cats.Contains(ArtifactCategory.KerisSenjata));
             Assert.IsTrue(cats.Contains(ArtifactCategory.Candi));
+            Assert.IsTrue(cats.Contains(ArtifactCategory.Satwa));
             Assert.IsFalse(cats.Contains(ArtifactCategory.Arca));
         }
 
