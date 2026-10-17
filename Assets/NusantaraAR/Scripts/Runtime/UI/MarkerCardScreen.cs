@@ -11,6 +11,8 @@ namespace NusantaraAR.UI
         RawImage image;
         TextMeshProUGUI title;
         string shownText;
+        float prevBrightness = -1f;
+        bool brightnessOverridden;
 
         public static MarkerCardScreen Create(RectTransform fullRoot)
         {
@@ -55,11 +57,63 @@ namespace NusantaraAR.UI
                 shownText = text;
             }
             title.text = Locale.T("marker.cardTitle") + "\n<size=40><color=" + Theme.HexOf(Theme.AccentText) + ">" + data.displayName.Get() + "</color></size>";
+            if (!brightnessOverridden)
+            {
+                prevBrightness = Screen.brightness;
+                brightnessOverridden = true;
+            }
             gameObject.SetActive(true);
             transform.SetAsLastSibling();
             Screen.brightness = 1f;
         }
 
-        public void Hide() => gameObject.SetActive(false);
+        public void Hide()
+        {
+            RestoreBrightness();
+            gameObject.SetActive(false);
+        }
+
+        void OnDisable() => RestoreBrightness();
+
+        void RestoreBrightness()
+        {
+            if (!brightnessOverridden) return;
+            brightnessOverridden = false;
+            if (prevBrightness >= 0f) Screen.brightness = prevBrightness;
+#if UNITY_ANDROID && !UNITY_EDITOR
+            try
+            {
+                using (var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+                using (var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+                {
+                    activity?.Call("runOnUiThread", new AndroidJavaRunnable(() =>
+                    {
+                        try
+                        {
+                            using (var up = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+                            using (var act = up.GetStatic<AndroidJavaObject>("currentActivity"))
+                            using (var window = act?.Call<AndroidJavaObject>("getWindow"))
+                            using (var lp = window?.Call<AndroidJavaObject>("getAttributes"))
+                            {
+                                if (lp != null)
+                                {
+                                    lp.Set("screenBrightness", -1f); // BRIGHTNESS_OVERRIDE_NONE: kembali ke kecerahan sistem HP
+                                    window.Call("setAttributes", lp);
+                                }
+                            }
+                        }
+                        catch (System.Exception e)
+                        {
+                            Debug.LogWarning("[NusantaraAR] Gagal mereset screenBrightness Android: " + e.Message);
+                        }
+                    }));
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning("[NusantaraAR] Gagal memulihkan kecerahan layar: " + e.Message);
+            }
+#endif
+        }
     }
 }
