@@ -123,5 +123,31 @@ namespace NusantaraAR.Tests
                 Assert.IsTrue(feature.isActive, path + ": GlassBlurFeature nonaktif");
             }
         }
+
+        [Test]
+        public void MarkerCardScreen_RestoresBrightness_OnHide()
+        {
+            var canvas = UIKit.CreateCanvas("TestUI");
+            try
+            {
+                var root = UIKit.Stretch(UIKit.Rect("Full", canvas.transform));
+                var card = MarkerCardScreen.Create(root);
+                var artifact = AppSession.Catalog.artifacts.First(a => a != null);
+
+                Screen.brightness = 0.35f;
+                float before = Screen.brightness;
+
+                card.Show(artifact);
+                Assert.IsTrue(card.gameObject.activeSelf, "MarkerCard harus aktif saat Show");
+
+                card.Hide();
+                Assert.IsFalse(card.gameObject.activeSelf, "MarkerCard harus nonaktif setelah Hide");
+                Assert.AreEqual(before, Screen.brightness, 1e-3f, "Kecerahan layar harus kembali ke nilai semula setelah ditutup");
+            }
+            finally
+            {
+                Object.DestroyImmediate(canvas.gameObject);
+            }
+        }
     }
 }

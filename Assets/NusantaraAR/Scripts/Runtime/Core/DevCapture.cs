@@ -16,7 +16,7 @@ namespace NusantaraAR
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Boot()
         {
-            if (Object.FindAnyObjectByType<MainController>() == null) return;
+            if (Object.FindAnyObjectByType<MainController>() == null || DevBlackBox.Requested(out _)) return;
             // QA memakai profil kualitas yang sama dengan Android (Mobile_RPAsset), bukan "PC".
             int mobile = System.Array.IndexOf(QualitySettings.names, "Mobile");
             if (mobile >= 0) QualitySettings.SetQualityLevel(mobile, true);
