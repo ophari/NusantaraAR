@@ -15,6 +15,7 @@ namespace NusantaraAR.Marker
         public static bool TryEstimate(Vector2[] cornersPx, float size, float f, float cx, float cy, out Vector3[] cornersCamera)
         {
             cornersCamera = null;
+            if (cornersPx == null || cornersPx.Length < 4 || size <= 0f || f <= 1e-6f) return false;
             float s = size * 0.5f;
             var model = new[] { new Vector2(-s, -s), new Vector2(s, -s), new Vector2(s, s), new Vector2(-s, s) };
             if (!Homography.FromPoints(model, cornersPx, out var H)) return false;
@@ -31,7 +32,7 @@ namespace NusantaraAR.Marker
             var h2 = new Vector3((float)B[1], (float)B[4], (float)B[7]);
             var h3 = new Vector3((float)B[2], (float)B[5], (float)B[8]);
             float norm = (h1.magnitude + h2.magnitude) * 0.5f;
-            if (norm < 1e-9f) return false;
+            if (!(norm > 1e-9f) || float.IsInfinity(norm)) return false;
             float lambda = 1f / norm;
             if (h3.z * lambda < 0f) lambda = -lambda; // marker harus di depan kamera
             var r1 = h1 * lambda;

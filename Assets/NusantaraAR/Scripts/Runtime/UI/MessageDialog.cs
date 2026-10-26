@@ -24,10 +24,10 @@ namespace NusantaraAR.UI
             card.GetComponent<Surface>().fill.GetComponent<GlassSurface>().Strength = 0.88f;
             UIKit.Place(card.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(940f, 760f));
             d.title = UIKit.Text(card.transform, "Title", "", Theme.Heading, Theme.Ink, TextAlignmentOptions.TopLeft, FontStyles.Bold);
-            UIKit.Stretch(d.title.rectTransform, 56, 56, 56, 620);
+            UIKit.Stretch(d.title.rectTransform, 56, 56, 56, 590);
             d.body = UIKit.Text(card.transform, "Body", "", Theme.Body, Theme.Ink);
             d.body.lineSpacing = 8f;
-            UIKit.Stretch(d.body.rectTransform, 56, 56, 146, 290);
+            UIKit.Stretch(d.body.rectTransform, 56, 56, 172, 290);
             d.primary = UIKit.Button(card.transform, "Primary", "", ButtonStyle.Primary, null, out d.primaryLabel);
             UIKit.Place((RectTransform)d.primary.transform, new Vector2(0.5f, 0f), new Vector2(0f, 156f), new Vector2(620f, 104f));
             d.secondary = UIKit.Button(card.transform, "Secondary", Locale.T(secondaryKey), ButtonStyle.Chip, onSecondary, out var sl);

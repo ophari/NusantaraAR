@@ -21,6 +21,7 @@ namespace NusantaraAR.Marker
         WebCamTexture texture;
         Color32[] pixels;
         int step = 1;
+        bool running;
 
         public byte[] Gray { get; private set; }
         public int Width { get; private set; }
@@ -48,6 +49,7 @@ namespace NusantaraAR.Marker
                     if (!d.isFrontFacing) { device = d; break; }
                 texture = new WebCamTexture(device.name, requestedWidth, requestedHeight, 30);
                 texture.Play();
+                running = true;
                 // Fokus ke tengah layar (tempat kode QR biasanya diarahkan) bila perangkat mendukung.
                 if (device.isAutoFocusPointSupported) texture.autoFocusPoint = new Vector2(0.5f, 0.5f);
                 return true;
@@ -61,11 +63,13 @@ namespace NusantaraAR.Marker
 
         public void StopFeed()
         {
+            running = false;
             if (texture != null && texture.isPlaying) texture.Stop();
         }
 
         void ReleaseTexture()
         {
+            running = false;
             if (texture == null) return;
             texture.Stop();
             Destroy(texture);
@@ -76,20 +80,29 @@ namespace NusantaraAR.Marker
 
         void OnApplicationPause(bool paused)
         {
-            if (texture == null) return;
+            if (texture == null || !running) return;
             if (paused) texture.Pause();
             else texture.Play();
         }
 
         /// <summary>Ambil frame baru ke buffer grayscale. False bila belum ada frame baru.</summary>
-        public bool Grab()
+        public bool Grab(bool decodeGray = true)
         {
-            if (texture == null || !texture.isPlaying || !texture.didUpdateThisFrame || texture.width <= 16) return false;
+            if (texture == null || !texture.isPlaying || !texture.didUpdateThisFrame || texture.width <= 16 || texture.height <= 16) return false;
             int tw = texture.width, th = texture.height;
-            if (pixels == null || pixels.Length != tw * th) pixels = new Color32[tw * th];
-            texture.GetPixels32(pixels);
             Angle = ((texture.videoRotationAngle % 360) + 360) % 360;
             Mirrored = texture.videoVerticallyMirrored;
+            if (!decodeGray)
+            {
+                bool swap = Angle == 90 || Angle == 270;
+                int uw = swap ? th : tw, uh = swap ? tw : th;
+                step = Mathf.Max(1, Mathf.Min(uw, uh) / Mathf.Max(64, targetShortSide));
+                Width = uw / step;
+                Height = uh / step;
+                return true;
+            }
+            if (pixels == null || pixels.Length != tw * th) pixels = new Color32[tw * th];
+            texture.GetPixels32(pixels);
             FillGray(pixels, tw, th, Angle, Mirrored);
             return true;
         }
@@ -137,7 +150,7 @@ namespace NusantaraAR.Marker
         /// </summary>
         public void ConfigureDisplay(RawImage image, RectTransform canvasRect, Camera cam)
         {
-            if (texture == null || texture.width <= 16) return;
+            if (texture == null || texture.width <= 16 || texture.height <= 16) return;
             int tw = texture.width, th = texture.height;
             bool swap = Angle == 90 || Angle == 270;
             float uw = swap ? th : tw, uh = swap ? tw : th;
@@ -156,7 +169,8 @@ namespace NusantaraAR.Marker
 
             // Tinggi gambar tegak yang terlihat (dalam piksel buffer deteksi).
             float visibleHeight = size.y / s / step;
-            cam.fieldOfView = 2f * Mathf.Atan(visibleHeight * 0.5f / FocalPixels) * Mathf.Rad2Deg;
+            float f = FocalPixels;
+            if (f > 1e-3f) cam.fieldOfView = 2f * Mathf.Atan(visibleHeight * 0.5f / f) * Mathf.Rad2Deg;
         }
     }
 }

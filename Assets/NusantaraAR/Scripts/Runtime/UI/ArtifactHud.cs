@@ -40,6 +40,7 @@ namespace NusantaraAR.UI
             public Button button;
             public Image fill, icon;
             public TextMeshProUGUI label;
+            public LocalizedLabel localized;
         }
 
         HudOptions options;
@@ -82,7 +83,7 @@ namespace NusantaraAR.UI
             UIKit.Place(rail, new Vector2(1f, 1f), new Vector2(-Margin, -options.topInset), new Vector2(RailWidth, 900f));
             var col = UIKit.VColumn(rail, 14f);
             col.childAlignment = TextAnchor.UpperRight;
-            story = AddRail("Story", Icon.Book, "dock.story", PlayStory);
+            story = AddRail("Story", Icon.Book, "dock.story", ToggleStory);
             explode = AddRail("Explode", Icon.Layers, "dock.explode", ToggleExplode);
             draw = AddRail("Draw", Icon.Blade, "dock.draw", ToggleDraw);
             labels = AddRail("Labels", Icon.Tag, "dock.labels", ToggleLabels);
@@ -111,6 +112,7 @@ namespace NusantaraAR.UI
             item.fill = item.button.GetComponent<Surface>().fill;
             UIKit.Layout(item.button, 128f, RailWidth);
             LocalizedLabel.Attach(item.label, key);
+            item.localized = item.label.GetComponent<LocalizedLabel>();
             railItems.Add(item);
             return item;
         }
@@ -158,7 +160,12 @@ namespace NusantaraAR.UI
             hold.Pressed += StopAutoRotate;
         }
 
-        void OnDestroy() => Locale.Changed -= RefreshLabels;
+        void OnDestroy()
+        {
+            Locale.Changed -= RefreshLabels;
+            if (artifact != null && artifact.exploded != null) artifact.exploded.StageChanged -= OnStageChanged;
+            if (artifact != null && artifact.autoRotate != null) artifact.autoRotate.ActiveChanged -= OnAutoRotateChanged;
+        }
 
         /// <param name="nudgeHandler">Putar (derajat, + = muka objek bergeser ke kiri layar) dan miring (+ = sisi atas menjauh).</param>
         public void Bind(ArtifactInstance instance, Camera cam, Action reset, Action<float, float> nudgeHandler)
@@ -186,6 +193,7 @@ namespace NusantaraAR.UI
             if (!visible) overlay.Card.Close();
             // Kisah dijeda (bukan dihentikan) selama kontrol tersembunyi, mis. kode QR sesaat hilang dari kamera.
             storyPanel.SetSuspended(!visible);
+            if (visible) RefreshLabels();
             UpdateLayout();
         }
 
@@ -238,6 +246,13 @@ namespace NusantaraAR.UI
             storyPanel.Play();
         }
 
+        void ToggleStory()
+        {
+            if (!controlsVisible || !storyPanel.HasStory) return;
+            if (storyPanel.IsActive) storyPanel.Stop();
+            else storyPanel.Play();
+        }
+
         /// <summary>Membuka kartu info bagian tertentu (dipakai juga oleh build QA).</summary>
         public void OpenHotspot(string hotspotId)
         {
@@ -276,12 +291,17 @@ namespace NusantaraAR.UI
             var ex = artifact != null ? artifact.exploded : null;
             UIKit.SetVisible(story.button, storyPanel.HasStory);
             SetRailLook(story, true); // selalu terakota: pintu masuk mode Kisah
+            UIKit.SetVisible(explode.button, ex != null && ex.StageCount > 1);
             bool exploded = ex != null && ex.IsExplodedOrExploding;
-            explode.label.text = Locale.T(exploded ? "dock.assemble" : "dock.explode");
+            string explodeKey = exploded ? "dock.assemble" : "dock.explode";
+            if (explode.localized != null) explode.localized.key = explodeKey;
+            explode.label.text = Locale.T(explodeKey);
             SetRailLook(explode, exploded);
             UIKit.SetVisible(draw.button, ex != null && ex.CanDraw);
             bool drawn = ex != null && ex.TargetStage == 1;
-            draw.label.text = Locale.T(drawn ? "dock.sheathe" : "dock.draw");
+            string drawKey = drawn ? "dock.sheathe" : "dock.draw";
+            if (draw.localized != null) draw.localized.key = drawKey;
+            draw.label.text = Locale.T(drawKey);
             SetRailLook(draw, drawn);
             SetRailLook(labels, overlay.LabelsVisible);
             SetRailLook(rotate, artifact != null && artifact.autoRotate != null && artifact.autoRotate.Active);
@@ -317,6 +337,7 @@ namespace NusantaraAR.UI
         void ToggleExplode()
         {
             if (artifact == null || artifact.exploded == null) return;
+            if (storyPanel.IsActive) storyPanel.Stop();
             artifact.exploded.Toggle();
             Analytics.Log("explode_toggle", ("artifact", artifact.Data != null ? artifact.Data.artifactId : ""),
                 ("exploded", artifact.exploded.IsExplodedOrExploding));
@@ -327,6 +348,7 @@ namespace NusantaraAR.UI
         void ToggleDraw()
         {
             if (artifact == null || artifact.exploded == null) return;
+            if (storyPanel.IsActive) storyPanel.Stop();
             artifact.exploded.ToggleDraw();
             Analytics.Log("draw_toggle", ("artifact", artifact.Data != null ? artifact.Data.artifactId : ""),
                 ("drawn", artifact.exploded.TargetStage == 1));

@@ -121,8 +121,10 @@ namespace NusantaraAR.UI
         public void Close()
         {
             if (hotspot == null) return;
+            var old = hotspot;
             hotspot = null;
-            AudioManager.Instance.StopNarration();
+            if (AudioManager.Exists && AudioManager.Instance.CurrentNarration == old.Narration)
+                AudioManager.Instance.StopNarration();
             UIKit.SetVisible(rt, false);
             Closed?.Invoke();
         }
@@ -161,6 +163,7 @@ namespace NusantaraAR.UI
             UIKit.SetVisible(listenButton, h.Narration != null);
             UIKit.SetVisible(pronounceButton, h.pronunciation != null);
             listenDirty = true; // label Putar/Jeda disegarkan di Update (mis. setelah ganti bahasa)
+            if (rt.gameObject.activeInHierarchy) LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
         }
 
         static LocalizedString Tab(HotspotData h, int i) => i == 0 ? h.craft : i == 1 ? h.philosophy : h.history;

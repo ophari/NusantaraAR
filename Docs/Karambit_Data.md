@@ -98,8 +98,7 @@ Builder: `Assets/NusantaraAR/Scripts/Editor/KarambitBuilder.cs`. ID artefak `KAR
 
   Rujukannya ada di `KarambitRefs.cs`.
 - **Mode Kisah:** 9 bab ID+EN di `Tools/narasi/kisah.json`.
-- **Musik:** "Traditional" oleh agerabeatz (Pixabay, bertag Minangkabau) di `Tools/musik/musik.json`. Unduh dulu ke
-  `Tools/musik/asli/`, dengarkan, lalu jalankan `siapkan_musik.py`.
+- **Musik:** "Jejak Marwas" oleh LunarBoomMusic (Pixabay, ditandai AI) di `Tools/musik/musik.json`.
 - **Kartu:** kartu QR berisi `NUSANTARA:KARAMBIT_01`; kode kartu penanda lama `0xC616`.
 - **Tes:** `KarambitTests` memeriksa bagian, ukuran, dudukan, pivot sarung di pusat busur, dan sarung yang tidak ditembus bilah
   selama meluncur.

@@ -73,6 +73,7 @@ namespace NusantaraAR
         public void BeginReposition()
         {
             if (Placed == null) return;
+            dragging = false;
             Detach();
             Placed.gameObject.SetActive(false);
         }
@@ -98,7 +99,7 @@ namespace NusantaraAR
 
         void AttachAnchor()
         {
-            if (Placed == null) return;
+            if (Placed == null || !Placed.gameObject.activeSelf) return;
             var go = new GameObject("ArtifactAnchor");
             go.transform.SetPositionAndRotation(Placed.transform.position, Quaternion.identity);
             // Menambahkan komponen ARAnchor membuat anchor baru di subsistem AR.

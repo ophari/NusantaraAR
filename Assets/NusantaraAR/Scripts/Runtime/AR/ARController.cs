@@ -105,6 +105,7 @@ namespace NusantaraAR
 
         void StartAR()
         {
+            if (session.enabled) return;
             session.enabled = true;
             placement.SetPlanesVisible(true);
             sessionStart = scanStart = Time.time;
@@ -116,6 +117,7 @@ namespace NusantaraAR
         {
             CameraPermission.Request(granted =>
             {
+                if (this == null) return;
                 if (granted) StartAR();
                 else SetState(State.PermissionDenied);
             });
@@ -138,10 +140,18 @@ namespace NusantaraAR
                     break;
                 }
                 case State.Placed:
-                    if (ARSession.state != ARSessionState.SessionTracking) SetState(State.TrackingLost);
+                    if (ARSession.state != ARSessionState.SessionTracking)
+                    {
+                        hud.SetControlsVisible(false);
+                        SetState(State.TrackingLost);
+                    }
                     break;
                 case State.TrackingLost:
-                    if (ARSession.state == ARSessionState.SessionTracking) SetState(State.Placed);
+                    if (ARSession.state == ARSessionState.SessionTracking)
+                    {
+                        hud.SetControlsVisible(true);
+                        SetState(State.Placed);
+                    }
                     break;
             }
 
@@ -212,7 +222,7 @@ namespace NusantaraAR
 
         void OnPan(Vector2 center)
         {
-            if (IsManipulable) placement.DragTo(center);
+            if (state == State.Placed && placement.Placed != null) placement.DragTo(center);
         }
 
         void OnPanEnded() => placement.EndDrag();

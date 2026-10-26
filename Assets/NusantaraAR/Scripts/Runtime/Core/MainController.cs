@@ -61,6 +61,8 @@ namespace NusantaraAR
         void OnDestroy()
         {
             Locale.Changed -= RefreshDetailTexts;
+            if (sheet != null) sheet.HeightChanged -= UpdateDetailLayout;
+            if (hud != null && hud.Story != null) hud.Story.ActiveChanged -= OnStoryActiveChanged;
             if (gestures == null) return;
             gestures.InteractionStarted -= OnInteractionStarted;
             gestures.Tapped -= hud.HandleTap;
@@ -80,7 +82,7 @@ namespace NusantaraAR
                 storyBottom = BottomNav.Height + BottomNav.Protrusion + 12f,
                 tiltButtons = true
             });
-            hud.Story.ActiveChanged += _ => UpdateDetailLayout();
+            hud.Story.ActiveChanged += OnStoryActiveChanged;
             topBar = TopBar.Create(safe, ShowCatalog, false);
             sheet = DetailSheet.Create(safe, OpenMarker, OpenAR, ShowCard);
             sheet.HeightChanged += UpdateDetailLayout;
@@ -101,6 +103,8 @@ namespace NusantaraAR
             glow = GroundGlow.Create(stageRoot);
             if (glow != null) glow.SetVisible(false);
         }
+
+        void OnStoryActiveChanged(bool _) => UpdateDetailLayout();
 
         void OpenDetail(ArtifactData data)
         {
@@ -129,6 +133,7 @@ namespace NusantaraAR
         void ShowCatalog()
         {
             ClearArtifact();
+            AppSession.SelectedArtifactId = null;
             AudioManager.Instance.StopMusic();
             SetDetailVisible(false);
             settings.Hide();
@@ -142,7 +147,11 @@ namespace NusantaraAR
         {
             hud.CloseInfo();
             drawFraming = false;
-            if (current != null) Destroy(current.gameObject);
+            if (current != null)
+            {
+                hud.Bind(null, viewerCamera, null, null);
+                Destroy(current.gameObject);
+            }
             current = null;
             if (glow != null) glow.SetVisible(false);
         }
@@ -164,8 +173,8 @@ namespace NusantaraAR
         /// <summary>Sheet dibuka/ditutup atau Kisah dimulai: HUD dan framing kamera mengikuti ruang yang tersisa.</summary>
         void UpdateDetailLayout()
         {
-            // current/settings bisa sudah dihancurkan saat scene ditutup (OnDisable sheet ikut memicu event ini).
-            if (current == null || settings == null || settings.gameObject.activeSelf) return;
+            // current/settings/hud bisa sudah dihancurkan saat scene ditutup (OnDisable sheet ikut memicu event ini).
+            if (current == null || settings == null || settings.gameObject.activeSelf || hud == null || sheet == null || full == null || orbit == null) return;
             bool storyActive = hud.Story.IsActive;
             UIKit.SetVisible(sheet, !storyActive);
             float sheetHeight = storyActive ? 0f : sheet.VisibleHeight;
@@ -241,6 +250,7 @@ namespace NusantaraAR
 
         void ResetView()
         {
+            drawFraming = false;
             if (current != null) current.ResetView();
             orbit.ResetView();
         }
@@ -254,6 +264,7 @@ namespace NusantaraAR
 
         void OnInteractionStarted()
         {
+            drawFraming = false;
             if (current != null && current.autoRotate != null) current.autoRotate.Active = false;
             if (glow != null && current != null) glow.Pulse();
         }
@@ -265,7 +276,9 @@ namespace NusantaraAR
 
         void ShowCard()
         {
-            if (current != null) markerCard.Show(current.Data);
+            if (current == null) return;
+            hud.CloseInfo();
+            markerCard.Show(current.Data);
         }
 
         void OpenAR()
@@ -295,13 +308,16 @@ namespace NusantaraAR
             bool drawing = ex != null && ex.IsDrawAnimating;
             if (drawing && !drawFraming)
             {
-                drawFraming = true;
-                preDrawTarget = orbit.target;
-                preDrawDistance = orbit.distance;
                 if (ex.TryGetDrawSweepBounds(out var sweep))
                 {
                     float fit = orbit.DistanceToFit(sweep);
-                    if (fit > orbit.distance) orbit.EaseTo(sweep.center, fit);
+                    if (fit > orbit.distance)
+                    {
+                        drawFraming = true;
+                        preDrawTarget = orbit.target;
+                        preDrawDistance = orbit.distance;
+                        orbit.EaseTo(sweep.center, fit);
+                    }
                 }
             }
             else if (!drawing && drawFraming)
@@ -318,9 +334,11 @@ namespace NusantaraAR
             // Tombol "back" Android dipetakan ke Escape oleh Input System.
             var kb = Keyboard.current;
             if (kb == null || !kb.escapeKey.wasPressedThisFrame) return;
-            if (hud.CloseInfo()) return;
-            if (markerCard.gameObject.activeSelf) markerCard.Hide();
+            if (onboarding.gameObject.activeSelf) onboarding.Close();
+            else if (markerCard.gameObject.activeSelf) markerCard.Hide();
             else if (settings.gameObject.activeSelf) settings.Hide();
+            else if (hud.CloseInfo()) { }
+            else if (sheet != null && sheet.gameObject.activeSelf && sheet.IsExpanded) sheet.Collapse();
             else if (current != null) ShowCatalog();
         }
     }

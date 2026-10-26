@@ -55,8 +55,19 @@ namespace NusantaraAR.Rendering
 
         internal static void Publish(RTHandle blurred) => Shader.SetGlobalTexture(TextureId, blurred.rt);
 
+        internal static void RestoreFallback()
+        {
+            if (fallback != null) Shader.SetGlobalTexture(TextureId, fallback);
+        }
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetStatics() => active = 0;
+        static void ResetStatics()
+        {
+            active = 0;
+            uiMaterialLoaded = false;
+            uiMaterial = null;
+            fallback = null;
+        }
     }
 
     /// <summary>
@@ -104,6 +115,7 @@ namespace NusantaraAR.Rendering
             public static readonly int OffsetId = Shader.PropertyToID("_BlurOffset");
             public static readonly int SaturationId = Shader.PropertyToID("_Saturation");
             const int PassDown = 0, PassUp = 1, PassFinal = 2;
+            static readonly string[] DownNames = { "GlassBlurDown0", "GlassBlurDown1", "GlassBlurDown2", "GlassBlurDown3", "GlassBlurDown4" };
 
             Material material;
             int downPasses;
@@ -126,6 +138,7 @@ namespace NusantaraAR.Rendering
             {
                 output?.Release();
                 output = null;
+                GlassBlur.RestoreFallback();
             }
 
             public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
@@ -159,7 +172,7 @@ namespace NusantaraAR.Rendering
                         format = GraphicsFormat.R8G8B8A8_SRGB,
                         filterMode = FilterMode.Bilinear,
                         wrapMode = TextureWrapMode.Clamp,
-                        name = "GlassBlurDown" + i
+                        name = DownNames[i]
                     };
                     var t = renderGraph.CreateTexture(desc);
                     renderGraph.AddBlitPass(new RenderGraphUtils.BlitMaterialParameters(cur, t, material, PassDown), "GlassBlur Down");

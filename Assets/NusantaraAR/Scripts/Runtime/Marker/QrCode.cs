@@ -434,7 +434,12 @@ namespace NusantaraAR.Marker
                 {
                     if (reader.Remaining < 8) return false;
                     int first = reader.Read(8);
-                    if ((first & 0x80) != 0) reader.Read((first & 0x40) == 0 ? 8 : 16);
+                    if ((first & 0x80) != 0)
+                    {
+                        int extra = (first & 0x40) == 0 ? 8 : 16;
+                        if (reader.Remaining < extra) return false;
+                        reader.Read(extra);
+                    }
                     continue;
                 }
                 int countBits = mode == 0b0001 ? (v < 10 ? 10 : 12)

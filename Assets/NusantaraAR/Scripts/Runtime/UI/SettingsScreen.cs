@@ -137,7 +137,11 @@ namespace NusantaraAR.UI
             if (language != null) RefreshLocalized();
         }
 
-        void OnDisable() => Locale.Changed -= RefreshLocalized;
+        void OnDisable()
+        {
+            Locale.Changed -= RefreshLocalized;
+            PlayerPrefs.Save();
+        }
 
         public void Show()
         {

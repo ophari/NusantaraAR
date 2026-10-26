@@ -2,15 +2,16 @@
  "tracks": [
   {
    "artifactId": "KERIS_BALI_01",
-   "raw": "Tools/musik/asli/lunarboommusic-gamelan-bali-yang-tenang-569697.mp3",
+   "raw": "Tools/musik/asli/fassounds-spirit-of-bali-indonesia-gamelan-music-593302.mp3",
    "file": "Assets/NusantaraAR/Content/KERIS_BALI_01/Music/KERIS_BALI_01_music.mp3",
-   "maxSeconds": 150,
-   "title": "Gamelan Bali Yang Tenang",
-   "author": "LunarBoomMusic",
+   "startSeconds": 30,
+   "maxSeconds": 95,
+   "title": "Spirit of Bali - Indonesia Gamelan Music",
+   "author": "FASSounds",
    "source": "Pixabay",
-   "url": "https://pixabay.com/music/world-gamelan-bali-yang-tenang-569697/",
+   "url": "https://pixabay.com/music/world-spirit-of-bali-indonesia-gamelan-music-593302/",
    "license": "Pixabay Content License",
-   "aiGenerated": true
+   "aiGenerated": false
   },
   {
    "artifactId": "KERIS_SUMATRA_01",
@@ -38,27 +39,27 @@
   },
   {
    "artifactId": "KARAMBIT_01",
-   "raw": "Tools/musik/asli/agerabeatz-traditional-249214.mp3",
+   "raw": "Tools/musik/asli/lunarboommusic-jejak-marwas-611454.mp3",
    "file": "Assets/NusantaraAR/Content/KARAMBIT_01/Music/KARAMBIT_01_music.mp3",
    "maxSeconds": 180,
-   "title": "Traditional",
-   "author": "agerabeatz",
+   "title": "Jejak Marwas",
+   "author": "LunarBoomMusic",
    "source": "Pixabay",
-   "url": "https://pixabay.com/music/beats-traditional-249214/",
+   "url": "https://pixabay.com/music/world-jejak-marwas-611454/",
    "license": "Pixabay Content License",
-   "aiGenerated": false
+   "aiGenerated": true
   },
   {
    "artifactId": "KOMODO_01",
-   "raw": "Tools/musik/asli/nala_subrada-nusa-floating-city-2026-maritime-wellness-sasando-harp-454132.mp3",
+   "raw": "Tools/musik/asli/pocketbeats-nusantara-epic-traditional-music-338865.mp3",
    "file": "Assets/NusantaraAR/Content/KOMODO_01/Music/KOMODO_01_music.mp3",
    "maxSeconds": 180,
-   "title": "Nusa Floating City 2026 Maritime Wellness Sasando Harp",
-   "author": "Nala_Subrada",
+   "title": "Nusantara - Epic traditional music",
+   "author": "Pocketbeats",
    "source": "Pixabay",
-   "url": "https://pixabay.com/music/meditationspiritual-nusa-floating-city-2026-maritime-wellness-sasando-harp-454132/",
+   "url": "https://pixabay.com/music/main-title-nusantara-epic-traditional-music-338865/",
    "license": "Pixabay Content License",
-   "aiGenerated": true
+   "aiGenerated": false
   }
  ]
 }

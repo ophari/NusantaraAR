@@ -445,7 +445,7 @@ Aset audio dibuat oleh skrip Python di `Tools/`, lalu dipasang ke konten oleh bu
 2. Pixabay memblokir unduhan otomatis, jadi unduh tiap trek manual ke `Tools/musik/asli/` (tidak di-commit). Lalu `python Tools/musik/siapkan_musik.py` (butuh `ffmpeg`/`ffprobe`) menyamakan kenyaringan ke -20 LUFS, memotong ke `maxSeconds` dengan fade-out 3 dtk, dan menulis `Content/<ID>/Music/<ID>_music.mp3`.
 3. Unity: **Pasang Musik Latar** (atau Setup Everything) mengisi `backgroundMusic` + `musicCredit`. Klip diimpor sebagai Vorbis ter-stream (dicek `MusicTests`).
 
-Trek saat ini: "Gamelan Bali Yang Tenang" (LunarBoomMusic) untuk Keris Bali dan "Self-Sacrifice" (Strainsofpoise, gambus Melayu) untuk Keris Sumatra. Keduanya dari Pixabay (Pixabay Content License) dan ditandai hasil AI oleh pengunggahnya. Trek Candi Borobudur, Karambit ("Traditional" - agerabeatz, bertag Minangkabau), dan Komodo ("Nusa Floating City 2026 Maritime Wellness Sasando Harp" - Nala_Subrada, sasando NTT, ditandai AI) tercatat di `Tools/musik/musik.json`.
+Trek saat ini: "Spirit of Bali - Indonesia Gamelan Music" (FASSounds) untuk Keris Bali, "Self-Sacrifice" (Strainsofpoise, gambus Melayu) untuk Keris Sumatra, "Beautiful Ambient Gamelan Music" (fiikuri) untuk Candi Borobudur, "Jejak Marwas" (LunarBoomMusic) untuk Karambit, dan "Nusantara - Epic traditional music" (Pocketbeats) untuk Komodo; semuanya dari Pixabay (Pixabay Content License) dan tercatat di `Tools/musik/musik.json`.
 
 ---
 

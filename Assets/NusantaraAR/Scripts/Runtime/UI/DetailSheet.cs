@@ -72,6 +72,7 @@ namespace NusantaraAR.UI
 
             summary = UIKit.Text(rt, "Summary", "", 28f, Theme.Ink);
             summary.lineSpacing = 6f;
+            summary.overflowMode = TextOverflowModes.Ellipsis;
             UIKit.Layout(summary, 10f);
 
             var gap = UIKit.Rect("Gap", rt);
@@ -124,6 +125,15 @@ namespace NusantaraAR.UI
             });
         }
 
+        public bool IsExpanded => expanded;
+
+        public void Collapse()
+        {
+            if (!expanded) return;
+            expanded = false;
+            Refresh();
+        }
+
         public void Bind(ArtifactData artifact)
         {
             data = artifact;
@@ -157,7 +167,7 @@ namespace NusantaraAR.UI
             {
                 summary.text = s;
                 float width = Mathf.Max(200f, rt.rect.width - 96f);
-                UIKit.Layout(summary, Mathf.Min(summary.GetPreferredValues(s, width, 0f).y + 8f, 420f));
+                UIKit.Layout(summary, Mathf.Min(summary.GetPreferredValues(s, width, 0f).y + 8f, 260f));
             }
             // Tinggi langsung benar (bukan di frame berikutnya) agar framing kamera 3D Viewer memakai nilai akhir.
             LayoutRebuilder.ForceRebuildLayoutImmediate(rt);

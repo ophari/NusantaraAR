@@ -97,6 +97,8 @@ namespace NusantaraAR.UI
             else Finish();
         }
 
+        public void Close() => Finish();
+
         void Finish()
         {
             AppSettings.OnboardingDone = true;

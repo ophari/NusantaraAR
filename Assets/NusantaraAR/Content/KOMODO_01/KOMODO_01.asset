@@ -568,5 +568,6 @@ MonoBehaviour:
     curatorNote: Diperiksa terhadap sumber daring (03-10-2026); menunggu validasi
       kurator.
   story: {fileID: 11400000, guid: 89d3936000523f04faacdf85a26c68d4, type: 2}
-  backgroundMusic: {fileID: 0}
-  musicCredit: 
+  backgroundMusic: {fileID: 8300000, guid: ccf00ab21b08cf843a7a59053b54c12f, type: 3}
+  musicCredit: '"Nusantara - Epic traditional music" - Pocketbeats (Pixabay, Pixabay
+    Content License)'

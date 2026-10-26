@@ -40,17 +40,19 @@ def main():
             print(f"  BELUM ADA: {t['raw']}\n    unduh \"{t['title']}\" - {t['author']}: {t['url']}")
             missing += 1
             continue
-        length = duration(raw)
+        start = float(t.get("startSeconds", 0))
+        length = duration(raw) - start
         filters = ["loudnorm=I=-20:TP=-2:LRA=11"]
-        args = []
+        in_args = ["-ss", f"{start:.2f}"] if start > 0 else []
+        out_args = []
         if length > t["maxSeconds"]:
             cut = float(t["maxSeconds"])
-            args = ["-t", f"{cut:.2f}"]
+            out_args = ["-t", f"{cut:.2f}"]
             filters.insert(0, f"afade=t=out:st={cut - FADE_OUT:.2f}:d={FADE_OUT:.2f}")
         os.makedirs(os.path.dirname(out), exist_ok=True)
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", raw, *args, "-af", ",".join(filters),
+        subprocess.run(["ffmpeg", "-v", "error", "-y", *in_args, "-i", raw, *out_args, "-af", ",".join(filters),
                         "-ar", "44100", "-c:a", "libmp3lame", "-q:a", "3", out], check=True)
-        print(f"  {t['file']}: {length:.0f} dtk -> {duration(out):.0f} dtk, {os.path.getsize(out) / 1e6:.1f} MB")
+        print(f"  {t['file']}: {duration(raw):.0f} dtk (mulai {start:.0f} dtk) -> {duration(out):.0f} dtk, {os.path.getsize(out) / 1e6:.1f} MB")
     if missing:
         sys.exit(f"{missing} trek belum diunduh.")
     print("Selesai. Lanjutkan dengan menu Unity \"Nusantara AR/Pasang Musik Latar\".")

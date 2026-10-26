@@ -105,8 +105,7 @@ Builder: `Assets/NusantaraAR/Scripts/Editor/KomodoBuilder.cs`. ID artefak `KOMOD
 
   Rujukannya ada di `KomodoRefs.cs`.
 - **Mode Kisah:** 9 bab ID+EN di `Tools/narasi/kisah.json`.
-- **Musik:** "Nusa Floating City 2026 Maritime Wellness Sasando Harp" oleh Nala_Subrada (Pixabay, sasando NTT, ditandai
-  AI). Unduh dulu ke `Tools/musik/asli/`, dengarkan, lalu jalankan `siapkan_musik.py`.
+- **Musik:** "Nusantara - Epic traditional music" oleh Pocketbeats (Pixabay) di `Tools/musik/musik.json`.
 - **Kartu:** kartu QR berisi `NUSANTARA:KOMODO_01`; kode kartu penanda lama `0xDC4E`.
 - **Tes:** `KomodoTests` memeriksa:
   - bagian, skala 1:10, dan ukuran;

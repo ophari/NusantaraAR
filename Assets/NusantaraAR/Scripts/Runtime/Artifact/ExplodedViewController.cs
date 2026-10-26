@@ -116,6 +116,11 @@ namespace NusantaraAR
             return true;
         }
 
+        void OnDisable()
+        {
+            if (running != null) SnapTo(target);
+        }
+
         /// <summary>Hunus / sarungkan: hanya tahap 0 &lt;-&gt; 1, tanpa membongkar bagian lain.</summary>
         public void ToggleDraw()
         {
@@ -127,13 +132,15 @@ namespace NusantaraAR
         {
             stage = Mathf.Clamp(stage, 0, Mathf.Max(0, stages.Count - 1));
             target = stage;
+            bool wasAnimating = running != null;
             if (running != null) StopCoroutine(running);
             running = null;
             if (!isActiveAndEnabled || stage == current)
             {
-                if (stage != current) SnapTo(stage);
+                if (wasAnimating || stage != current) SnapTo(stage);
                 return;
             }
+            if (wasAnimating) ApplyPose(current);
             running = StartCoroutine(Run(stage));
         }
 
@@ -144,6 +151,13 @@ namespace NusantaraAR
             stage = Mathf.Clamp(stage, 0, stages.Count - 1);
             if (running != null) StopCoroutine(running);
             running = null;
+            ApplyPose(stage);
+            current = target = stage;
+            StageChanged?.Invoke(current);
+        }
+
+        void ApplyPose(int stage)
+        {
             foreach (var p in stages[stage].poses)
             {
                 if (p.part == null) continue;
@@ -151,8 +165,6 @@ namespace NusantaraAR
                 p.part.localRotation = p.localRotation;
             }
             ApplyVisibility(stage);
-            current = target = stage;
-            StageChanged?.Invoke(current);
         }
 
         IEnumerator Run(int goal)

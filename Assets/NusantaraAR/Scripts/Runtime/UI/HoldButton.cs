@@ -52,7 +52,12 @@ namespace NusantaraAR.UI
 
         void SetLook(bool down)
         {
-            if (target != null) target.CrossFadeColor(down ? new Color(0.82f, 0.8f, 0.78f, 1f) : Color.white, 0.08f, true, true);
+            if (target != null)
+            {
+                var c = down ? new Color(0.82f, 0.8f, 0.78f, 1f) : Color.white;
+                target.CrossFadeColor(c, 0.08f, true, true);
+                if (!isActiveAndEnabled) target.canvasRenderer.SetColor(c);
+            }
             transform.localScale = Vector3.one * (down ? 0.94f : 1f);
         }
 

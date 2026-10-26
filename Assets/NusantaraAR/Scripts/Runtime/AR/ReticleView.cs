@@ -15,10 +15,18 @@ namespace NusantaraAR
         public float pulseAmount = 0.06f;
         public float pulseSpeed = 2.4f;
 
+        Mesh mesh;
+
         void Awake()
         {
-            GetComponent<MeshFilter>().sharedMesh = BuildMesh();
+            mesh = BuildMesh();
+            GetComponent<MeshFilter>().sharedMesh = mesh;
             Hide();
+        }
+
+        void OnDestroy()
+        {
+            if (mesh != null) Destroy(mesh);
         }
 
         public void Show(Pose pose)

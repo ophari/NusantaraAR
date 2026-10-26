@@ -500,5 +500,6 @@ MonoBehaviour:
     curatorNote: Diperiksa terhadap sumber daring (02-10-2026); menunggu validasi
       kurator.
   story: {fileID: 11400000, guid: fc7500503ca03f44a8f5b2bd5619fb9b, type: 2}
-  backgroundMusic: {fileID: 0}
-  musicCredit: 
+  backgroundMusic: {fileID: 8300000, guid: a95ab2e2303c6354eb613bd15d0fc70a, type: 3}
+  musicCredit: '"Jejak Marwas" - LunarBoomMusic (Pixabay, Pixabay Content License)
+    [AI]'

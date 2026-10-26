@@ -119,6 +119,7 @@ namespace NusantaraAR.Marker
         {
             CameraPermission.Request(granted =>
             {
+                if (this == null) return;
                 if (granted)
                 {
                     StartCamera();
@@ -143,9 +144,10 @@ namespace NusantaraAR.Marker
 
         IEnumerator InitAndStartCamera()
         {
+            bool preserveLocked = state == State.Locked;
             cameraStarting = true;
             background.enabled = false;
-            SetState(State.Starting);
+            if (!preserveLocked) SetState(State.Starting);
 
             // Beri jeda 1 frame agar Android activity & camera HAL terinisialisasi
             yield return null;
@@ -162,12 +164,12 @@ namespace NusantaraAR.Marker
             cameraStarting = false;
             if (!started)
             {
-                SetState(State.NoCamera);
+                if (!preserveLocked) SetState(State.NoCamera);
                 yield break;
             }
 
             lastFrame = Time.time;
-            SetState(State.Searching);
+            SetState(preserveLocked ? State.Locked : State.Searching);
             Analytics.Log("marker_session_start");
         }
 
@@ -175,6 +177,11 @@ namespace NusantaraAR.Marker
         {
             feedRestarts = 0;
             StartCamera(restart: true);
+        }
+
+        void OnApplicationPause(bool paused)
+        {
+            if (!paused) lastFrame = Time.time;
         }
 
         void OnApplicationFocus(bool focus)
@@ -198,7 +205,7 @@ namespace NusantaraAR.Marker
                 feedRestarts++;
                 StartCamera(restart: true);
             }
-            else
+            else if (state != State.Locked)
             {
                 feed.StopFeed();
                 SetState(State.CameraStalled);
@@ -210,7 +217,7 @@ namespace NusantaraAR.Marker
         void Update()
         {
             gravity.Update(Time.deltaTime);
-            if (feed.IsRunning && feed.Grab())
+            if (feed.IsRunning && feed.Grab(state != State.Locked))
             {
                 lastFrame = Time.time;
                 feedRestarts = 0;
@@ -314,6 +321,9 @@ namespace NusantaraAR.Marker
             if (currentData == data) return;
             if (current != null) Destroy(current.gameObject);
             currentData = data;
+            lastSeen = -10f;
+            hasPose = false;
+            smoother.Reset();
             AppSession.SelectedArtifactId = data.artifactId;
             var go = Instantiate(data.prefab);
             go.name = data.prefab.name;
@@ -404,7 +414,7 @@ namespace NusantaraAR.Marker
             if (state == State.Locked)
             {
                 lastSeen = Time.time; // beri jeda singkat sebelum dianggap hilang
-                SetState(State.Searching);
+                SetState(State.Tracking);
             }
             else if (current != null && current.gameObject.activeSelf)
             {
@@ -414,7 +424,7 @@ namespace NusantaraAR.Marker
 
         void Back()
         {
-            if (currentData != null) AppSession.OpenViewer();
+            if (currentData != null || !string.IsNullOrEmpty(AppSession.SelectedArtifactId)) AppSession.OpenViewer();
             else AppSession.OpenCatalog();
         }
 

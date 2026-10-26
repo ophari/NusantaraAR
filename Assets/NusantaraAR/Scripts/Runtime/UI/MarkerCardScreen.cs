@@ -10,6 +10,7 @@ namespace NusantaraAR.UI
     {
         RawImage image;
         TextMeshProUGUI title;
+        ArtifactData currentData;
         string shownText;
         float prevBrightness = -1f;
         bool brightnessOverridden;
@@ -42,11 +43,20 @@ namespace NusantaraAR.UI
             var close = UIKit.Button(area, "Close", Locale.T("common.close"), ButtonStyle.Primary, Hide, out var cl);
             LocalizedLabel.Attach(cl, "common.close");
             UIKit.Place((RectTransform)close.transform, new Vector2(0.5f, 0f), new Vector2(0f, 60f), new Vector2(400f, 104f));
+
+            Locale.Changed += RefreshTitle;
+        }
+
+        void OnDestroy()
+        {
+            Locale.Changed -= RefreshTitle;
+            if (image != null && image.texture != null) Destroy(image.texture);
         }
 
         public void Show(ArtifactData data)
         {
             if (data == null || string.IsNullOrEmpty(data.artifactId)) return;
+            currentData = data;
             var text = data.QrText;
             if (shownText != text)
             {
@@ -56,7 +66,7 @@ namespace NusantaraAR.UI
                 image.texture = QrCode.CreateTexture(modules, 16, 4);
                 shownText = text;
             }
-            title.text = Locale.T("marker.cardTitle") + "\n<size=40><color=" + Theme.HexOf(Theme.AccentText) + ">" + data.displayName.Get() + "</color></size>";
+            RefreshTitle();
             if (!brightnessOverridden)
             {
                 prevBrightness = Screen.brightness;
@@ -65,6 +75,12 @@ namespace NusantaraAR.UI
             gameObject.SetActive(true);
             transform.SetAsLastSibling();
             Screen.brightness = 1f;
+        }
+
+        void RefreshTitle()
+        {
+            if (currentData == null || title == null) return;
+            title.text = Locale.T("marker.cardTitle") + "\n<size=40><color=" + Theme.HexOf(Theme.AccentText) + ">" + currentData.displayName.Get() + "</color></size>";
         }
 
         public void Hide()

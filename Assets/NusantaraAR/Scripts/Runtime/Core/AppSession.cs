@@ -49,7 +49,7 @@ namespace NusantaraAR
         /// <summary>Mode "Scan QR" (kamera biasa, tanpa ARCore). artifact boleh null: artefak ditentukan oleh kode QR yang dipindai.</summary>
         public static void OpenMarker(ArtifactData artifact)
         {
-            if (artifact != null) SelectedArtifactId = artifact.artifactId;
+            SelectedArtifactId = artifact != null ? artifact.artifactId : null;
             SceneManager.LoadScene(MarkerScene);
         }
 
@@ -84,20 +84,20 @@ namespace NusantaraAR
         public static float NarrationVolume
         {
             get => narrationVolume ??= PlayerPrefs.GetFloat(NarrationKey, 1f);
-            set { narrationVolume = Mathf.Clamp01(value); PlayerPrefs.SetFloat(NarrationKey, narrationVolume.Value); PlayerPrefs.Save(); }
+            set { narrationVolume = Mathf.Clamp01(value); PlayerPrefs.SetFloat(NarrationKey, narrationVolume.Value); }
         }
 
         public static float SfxVolume
         {
             get => sfxVolume ??= PlayerPrefs.GetFloat(SfxKey, 0.7f);
-            set { sfxVolume = Mathf.Clamp01(value); PlayerPrefs.SetFloat(SfxKey, sfxVolume.Value); PlayerPrefs.Save(); }
+            set { sfxVolume = Mathf.Clamp01(value); PlayerPrefs.SetFloat(SfxKey, sfxVolume.Value); }
         }
 
         /// <summary>Musik latar artefak; 0 = mati.</summary>
         public static float MusicVolume
         {
             get => musicVolume ??= PlayerPrefs.GetFloat(MusicKey, 0.5f);
-            set { musicVolume = Mathf.Clamp01(value); PlayerPrefs.SetFloat(MusicKey, musicVolume.Value); PlayerPrefs.Save(); }
+            set { musicVolume = Mathf.Clamp01(value); PlayerPrefs.SetFloat(MusicKey, musicVolume.Value); }
         }
 
         /// <summary>Analitik hanya aktif dengan persetujuan eksplisit (default: nonaktif).</summary>

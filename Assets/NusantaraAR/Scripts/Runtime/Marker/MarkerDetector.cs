@@ -126,7 +126,7 @@ namespace NusantaraAR.Marker
                 int pivot = col;
                 for (int r = col + 1; r < 8; r++)
                     if (System.Math.Abs(A[r, col]) > System.Math.Abs(A[pivot, col])) pivot = r;
-                if (System.Math.Abs(A[pivot, col]) < 1e-12) return false;
+                if (!(System.Math.Abs(A[pivot, col]) >= 1e-12) || double.IsInfinity(A[pivot, col])) return false;
                 if (pivot != col)
                     for (int k = 0; k < 9; k++) { var tmp = A[col, k]; A[col, k] = A[pivot, k]; A[pivot, k] = tmp; }
                 for (int r = 0; r < 8; r++)
@@ -180,7 +180,7 @@ namespace NusantaraAR.Marker
             double[] Ts = { sx, 0, -sx * smx, 0, sx, -sx * smy, 0, 0, 1 };
             double[] TdInv = { 1 / dx, 0, dmx, 0, 1 / dx, dmy, 0, 0, 1 };
             var M = Multiply(TdInv, Multiply(Hn, Ts));
-            if (System.Math.Abs(M[8]) < 1e-12) return false;
+            if (!(System.Math.Abs(M[8]) >= 1e-12) || double.IsInfinity(M[8])) return false;
             H = new double[9];
             for (int i = 0; i < 9; i++) H[i] = M[i] / M[8];
             return true;
@@ -206,7 +206,7 @@ namespace NusantaraAR.Marker
                 int pivot = col;
                 for (int r = col + 1; r < 8; r++)
                     if (System.Math.Abs(A[r, col]) > System.Math.Abs(A[pivot, col])) pivot = r;
-                if (System.Math.Abs(A[pivot, col]) < 1e-12) return false;
+                if (!(System.Math.Abs(A[pivot, col]) >= 1e-12) || double.IsInfinity(A[pivot, col])) return false;
                 if (pivot != col)
                     for (int k = 0; k < 9; k++) { var tmp = A[col, k]; A[col, k] = A[pivot, k]; A[pivot, k] = tmp; }
                 for (int r = 0; r < 8; r++)
@@ -233,6 +233,7 @@ namespace NusantaraAR.Marker
         public static Vector2 Apply(double[] H, double x, double y)
         {
             double z = H[6] * x + H[7] * y + H[8];
+            if (System.Math.Abs(z) < 1e-12) z = 1e-12;
             return new Vector2((float)((H[0] * x + H[1] * y + H[2]) / z), (float)((H[3] * x + H[4] * y + H[5]) / z));
         }
     }
