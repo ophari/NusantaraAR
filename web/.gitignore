@@ -1,5 +1,9 @@
 node_modules/
 dist/
 .vite/
+.vercel/
+tsconfig.tsbuildinfo
 public/downloads/*.apk
 *.local
+
+.vercel
