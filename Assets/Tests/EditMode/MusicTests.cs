@@ -10,6 +10,7 @@ namespace NusantaraAR.Tests
     [TestFixture("BOROBUDUR_01")]
     [TestFixture("KARAMBIT_01")]
     [TestFixture("KOMODO_01")]
+    [TestFixture("GOLOK_BETAWI_01")]
     public class MusicTests
     {
         readonly string id;

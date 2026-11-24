@@ -32,7 +32,6 @@ namespace NusantaraAR
         State state;
         ArtifactData data;
         float scanStart;
-        float sessionStart;
 
         ArtifactHud hud;
         TopBar topBar;
@@ -116,9 +115,8 @@ namespace NusantaraAR
             if (session == null || session.enabled) return;
             session.enabled = true;
             placement.SetPlanesVisible(true);
-            sessionStart = scanStart = Time.time;
+            scanStart = Time.time;
             SetState(State.Scanning);
-            Analytics.Log("ar_session_start", ("artifact", data != null ? data.artifactId : ""));
         }
 
         void RequestPermission()
@@ -205,7 +203,6 @@ namespace NusantaraAR
                 var b = instance.GetWorldBounds();
                 glowRadius = Mathf.Max(b.extents.x, b.extents.z) / Mathf.Max(0.01f, instance.RelativeScale) * 1.5f + 0.03f;
                 hud.Bind(instance, arCamera, ResetView, Nudge);
-                Analytics.Log("ar_placed", ("artifact", data.artifactId), ("seconds", Mathf.RoundToInt(Time.time - sessionStart)));
             }
             placement.SetPlanesVisible(false);
             UIKit.SetVisible(tips, false);

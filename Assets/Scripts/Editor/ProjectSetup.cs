@@ -60,6 +60,7 @@ namespace NusantaraAR.EditorTools
             CandiBorobudurBuilder.Build();
             KarambitBuilder.Build();
             KomodoBuilder.Build();
+            GolokBetawiBuilder.Build();
             StoryBuilder.Build();
             MusicBuilder.Build();
             PruneCatalog();
@@ -72,6 +73,7 @@ namespace NusantaraAR.EditorTools
             RenderThumbnail(CandiBorobudurBuilder.DataPath, CandiBorobudurBuilder.ThumbPath);
             RenderThumbnail(KarambitBuilder.DataPath, KarambitBuilder.ThumbPath);
             RenderThumbnail(KomodoBuilder.DataPath, KomodoBuilder.ThumbPath);
+            RenderThumbnail(GolokBetawiBuilder.DataPath, GolokBetawiBuilder.ThumbPath);
             EditorBuildSettings.scenes = new[]
             {
                 new EditorBuildSettingsScene(MainScenePath, true),
@@ -289,7 +291,7 @@ namespace NusantaraAR.EditorTools
         static void PruneCatalog()
         {
             var catalog = AssetDatabase.LoadAssetAtPath<ContentCatalog>(CatalogPath);
-            var keep = new[] { KerisBaliBuilder.Id, KerisSumatraBuilder.Id, CandiBorobudurBuilder.Id, KarambitBuilder.Id, KomodoBuilder.Id };
+            var keep = new[] { KerisBaliBuilder.Id, KerisSumatraBuilder.Id, CandiBorobudurBuilder.Id, KarambitBuilder.Id, KomodoBuilder.Id, GolokBetawiBuilder.Id };
             catalog.artifacts.RemoveAll(a => a == null || Array.IndexOf(keep, a.artifactId) < 0);
             catalog.artifacts.Sort((x, y) => Array.IndexOf(keep, x.artifactId).CompareTo(Array.IndexOf(keep, y.artifactId)));
             EditorUtility.SetDirty(catalog);
@@ -675,6 +677,7 @@ namespace NusantaraAR.EditorTools
             RenderThumbnail(CandiBorobudurBuilder.DataPath, CandiBorobudurBuilder.ThumbPath);
             RenderThumbnail(KarambitBuilder.DataPath, KarambitBuilder.ThumbPath);
             RenderThumbnail(KomodoBuilder.DataPath, KomodoBuilder.ThumbPath);
+            RenderThumbnail(GolokBetawiBuilder.DataPath, GolokBetawiBuilder.ThumbPath);
             Debug.Log("[NusantaraAR] Thumbnail katalog diperbarui.");
         }
 

@@ -1,0 +1,554 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaae056f5a3ccf4d8025ecf14452651, type: 3}
+  m_Name: GOLOK_BETAWI_01
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactData
+  artifactId: GOLOK_BETAWI_01
+  displayName:
+    id: Golok Betawi
+    en: Betawi Golok
+  localName: Golok Sorenan
+  category: 0
+  region:
+    id: DKI Jakarta (Betawi)
+    en: Jakarta (Betawi)
+  era:
+    id: Tradisi Betawi; ditetapkan WBTb Indonesia 2021
+    en: Betawi tradition; Intangible Cultural Heritage 2021
+  summary:
+    id: Golok sorenan khas Betawi dengan bilah baja 30 cm berpunggung lurus dan mata
+      melengkung halus, salut pelindung kuningan, hulu jengkolan dari tanduk kerbau
+      hitam berpaku kuningan, serta sarung tanduk kerbau belang berlilit 14 simpay
+      dan sangkep kuningan. Model dibuat di Blender dari foto acuan dan data bersumber,
+      bukan dipindai dari spesimen.
+    en: A traditional Betawi sorenan golok with a 30 cm straight-spined steel blade
+      sweeping cleanly to the point, a flared brass guard, a curved black water-buffalo
+      horn hilt with a brass pin, and a striated buffalo-horn sheath bound with 14
+      brass simpay rings and a belt hook. Made in Blender from reference photos and
+      sourced data, not scanned from a specimen.
+  thumbnail: {fileID: 2800000, guid: 9b339aa7fa17349499b54301555697de, type: 3}
+  prefab: {fileID: 3209524272614228540, guid: 6d7905e8955e3c04ebc095e48e99428c, type: 3}
+  specimenOwner: 
+  collectionNumber: 
+  license: Model Blender milik proyek (dibuat dari foto acuan & data bersumber)
+  measurementNote:
+    id: "Skala 1:1 direka dari proporsi golok sorenan Betawi: bilah 30 cm (lebar
+      perut \xB14,1 cm, tebal punggung 4,4 mm), hulu 13,3 cm, total tersarung \xB145
+      cm. Bukan hasil pengukuran spesimen museum."
+    en: '1:1 scale estimated from Betawi sorenan golok proportions: 30 cm blade (~4.1
+      cm belly width, 4.4 mm spine thickness), 13.3 cm hilt, ~45 cm overall sheathed.
+      Not measured from a museum specimen.'
+  markerCode: 14826
+  isPlaceholder: 1
+  placeholderNote:
+    id: 'Model Blender dari foto acuan: corak tanduk belang, ukiran simpay, dan cap
+      pande dibuat prosedural. Akan diganti aset dari spesimen asli yang divalidasi
+      kurator.'
+    en: 'Blender model from reference photos: the striated horn grain, simpay engraving
+      and smith''s mark are procedural. It will be replaced by a curator-validated
+      specimen asset.'
+  hotspots:
+  - hotspotId: hulu
+    partName: Hulu
+    localPosition: {x: -0.003999993, y: 0.08500001, z: -0.011479855}
+    visibleFrom: 0
+    title:
+      id: Hulu (Gagang Jengkolan)
+      en: Curved Horn Hilt (Hulu)
+    regionalTerm: 'Betawi: hulu, ulu (gaya jengkolan / eluk)'
+    material:
+      id: Tanduk kerbau hitam dipoles mengkilap dengan cincin ukir geometris (pada
+        model)
+      en: Polished black water-buffalo horn with carved geometric collar (on the
+        model)
+    philosophy:
+      id: Ukuran gagang tradisional disesuaikan genggaman pemiliknya (lazim disebut
+        sejengkal tiga jari), melambangkan keserasian antara senjata, kendali diri,
+        dan karakter pemiliknya.
+      en: Traditional hilt dimensions are tailored to the owner's grip, symbolizing
+        harmony between the blade, self-control, and the bearer's character.
+    craft:
+      id: Gagang melengkung ergonomis dari tanduk kerbau hitam padat yang kuat dan
+        tahan lama. Bagian leher bersegi dihiasi pita ukir bergerigi, sementara ujung
+        bongkot melengkung ke sisi jari agar genggaman kokoh dan tidak mudah terlepas
+        saat beraktivitas maupun berlatih silat.
+      en: An ergonomic curved grip shaped from dense, durable black water-buffalo
+        horn. Its faceted neck bears a carved fluted collar band, while the curved
+        pommel hooks toward the fingers for a secure hold that resists slipping during
+        use or silat practice.
+    history:
+      id: 'Dalam sejarah masyarakat Betawi di Batavia, golok melekat erat dengan
+        keseharian warga dan para jawara. Fungsinya terbagi dua: golok gablong (bendo)
+        untuk kerja tani dan dapur, serta golok sorenan yang diselipkan di pinggang
+        untuk menjaga diri dan melengkapi pakaian adat, termasuk dalam tradisi Palang
+        Pintu. Pada tahun 2021, Kemendikbudristek menetapkan Golok Betawi sebagai
+        Warisan Budaya Takbenda (WBTb) Indonesia dari DKI Jakarta.'
+      en: 'In the history of Jakarta''s Betawi community, the golok was closely tied
+        to daily life and local martial artists (jawara). It serves two roles: the
+        gablong (bendo) for farming and household work, and the sorenan worn at the
+        waist for self-defense and traditional dress, notably in the Palang Pintu
+        wedding ritual. In 2021, Indonesia''s Ministry of Education and Culture designated
+        the Golok Betawi as an Intangible Cultural Heritage of DKI Jakarta.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Gagang melengkung ergonomis dari tanduk kerbau hitam padat yang kuat dan
+        tahan lama. Bagian leher bersegi dihiasi pita ukir bergerigi, sementara ujung
+        bongkot melengkung ke sisi jari agar genggaman kokoh dan tidak mudah terlepas
+        saat beraktivitas maupun berlatih silat.
+      en: An ergonomic curved grip shaped from dense, durable black water-buffalo
+        horn. Its faceted neck bears a carved fluted collar band, while the curved
+        pommel hooks toward the fingers for a secure hold that resists slipping during
+        use or silat practice.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan Golok Betawi tanduk kerbau & data bersumber'
+    - Kemendikbudristek (2021) - Penetapan Golok Betawi sebagai Warisan Budaya Takbenda
+      (WBTb) Indonesia, Provinsi DKI Jakarta
+    - 'Pemerintah Provinsi DKI Jakarta - Golok Betawi: Sejarah, Filosofi, dan Tradisi
+      Jawara (jakarta.go.id)'
+    - Abdul Chaer - Betawi Tempo Doeloe & Kamus Dialek Jakarta (rujukan tradisi golok
+      sorenan, gablong, dan budaya Betawi)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (25-11-2026); menunggu validasi
+      kurator.
+  - hotspotId: paku
+    partName: Paku
+    localPosition: {x: 0.00030000508, y: 0.02520001, z: -0.012439489}
+    visibleFrom: 0
+    title:
+      id: Paku Hulu
+      en: Hilt Pin (Paku)
+    regionalTerm: 'Betawi: paku / pasak gagang'
+    material:
+      id: Kuningan poles (pada model)
+      en: Polished brass (on the model)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Paku keling kuningan yang menembus leher hulu dan tangkai puting bilah
+        di dalamnya. Fungsinya mengunci gagang secara mekanis agar tidak melonggar
+        saat golok diayunkan.
+      en: A brass rivet passing through the horn neck and the internal blade tang.
+        It mechanically locks the hilt in place so the handle never loosens during
+        use.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Paku keling kuningan yang menembus leher hulu dan tangkai puting bilah
+        di dalamnya. Fungsinya mengunci gagang secara mekanis agar tidak melonggar
+        saat golok diayunkan.
+      en: A brass rivet passing through the horn neck and the internal blade tang.
+        It mechanically locks the hilt in place so the handle never loosens during
+        use.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan Golok Betawi tanduk kerbau & data bersumber'
+    - 'Pemerintah Provinsi DKI Jakarta - Golok Betawi: Sejarah, Filosofi, dan Tradisi
+      Jawara (jakarta.go.id)'
+    - Perkampungan Budaya Betawi Setu Babakan / Museum Betawi, Jagakarsa, Jakarta
+      Selatan - Koleksi Golok & Tradisi Palang Pintu
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (25-11-2026); menunggu validasi
+      kurator.
+  - hotspotId: salut
+    partName: Salut
+    localPosition: {x: -0.0059999973, y: 0.0045000017, z: -0.012706161}
+    visibleFrom: 0
+    title:
+      id: Salut (Pelindung Jari)
+      en: Brass Guard (Salut)
+    regionalTerm: 'Betawi/Sunda: salut, tadah'
+    material:
+      id: Kuningan muda poles ber-bevel (pada model)
+      en: Beveled polished pale brass (on the model)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Pelindung logam di antara bilah dan gagang yang melebar melengkung ke sisi
+        mata bilah. Salut memperkuat pangkal tanduk agar tidak pecah sekaligus menahan
+        jari agar tidak tergelincir ke sisi tajam.
+      en: A metal bolster between blade and hilt that flares gracefully toward the
+        cutting edge. It reinforces the base of the horn grip against cracking while
+        shielding the fingers from sliding onto the sharp edge.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Pelindung logam di antara bilah dan gagang yang melebar melengkung ke sisi
+        mata bilah. Salut memperkuat pangkal tanduk agar tidak pecah sekaligus menahan
+        jari agar tidak tergelincir ke sisi tajam.
+      en: A metal bolster between blade and hilt that flares gracefully toward the
+        cutting edge. It reinforces the base of the horn grip against cracking while
+        shielding the fingers from sliding onto the sharp edge.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan Golok Betawi tanduk kerbau & data bersumber'
+    - 'Pemerintah Provinsi DKI Jakarta - Golok Betawi: Sejarah, Filosofi, dan Tradisi
+      Jawara (jakarta.go.id)'
+    - 'Perpustakaan Digital Budaya Indonesia - Golok Betawi: Jenis Sorenan, Gablong,
+      dan Bendo (budaya-indonesia.org)'
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (25-11-2026); menunggu validasi
+      kurator.
+  - hotspotId: kepala_sarung
+    partName: KepalaSarung
+    localPosition: {x: -0.006, y: -0.006000012, z: -0.013946176}
+    visibleFrom: 0
+    title:
+      id: Kepala Sarung (Kuping)
+      en: Sheath Throat (Kepala Sarung)
+    regionalTerm: 'Betawi: kepala sarung, godong'
+    material:
+      id: Tanduk kerbau hitam mengkilap (pada model)
+      en: Glossy black water-buffalo horn (on the model)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Tudung mulut sarung dari tanduk kerbau hitam yang melebar asimetris membentuk
+        kuping di sisi mata bilah. Bagian ini membimbing bilah masuk dengan mulus
+        dan melindungi bibir atas sarung dari sayatan.
+      en: A black buffalo-horn throat cap flaring asymmetrically into a wing on the
+        edge side. It guides the blade smoothly into the scabbard and protects the
+        sheath mouth from being nicked.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Tudung mulut sarung dari tanduk kerbau hitam yang melebar asimetris membentuk
+        kuping di sisi mata bilah. Bagian ini membimbing bilah masuk dengan mulus
+        dan melindungi bibir atas sarung dari sayatan.
+      en: A black buffalo-horn throat cap flaring asymmetrically into a wing on the
+        edge side. It guides the blade smoothly into the scabbard and protects the
+        sheath mouth from being nicked.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan Golok Betawi tanduk kerbau & data bersumber'
+    - Perkampungan Budaya Betawi Setu Babakan / Museum Betawi, Jagakarsa, Jakarta
+      Selatan - Koleksi Golok & Tradisi Palang Pintu
+    - 'Perpustakaan Digital Budaya Indonesia - Golok Betawi: Jenis Sorenan, Gablong,
+      dan Bendo (budaya-indonesia.org)'
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (25-11-2026); menunggu validasi
+      kurator.
+  - hotspotId: sangkep
+    partName: Sangkep
+    localPosition: {x: 0.0005000001, y: -0.05399999, z: -0.019811988}
+    visibleFrom: 0
+    title:
+      id: Sangkep (Cantelan Pinggang)
+      en: Belt Hook (Sangkep)
+    regionalTerm: 'Betawi: sangkep, cantelan (tradisi nyoren)'
+    material:
+      id: Kuningan poles melengkung (pada model)
+      en: Curved polished brass (on the model)
+    philosophy:
+      id: Menyandang golok di pinggang melambangkan kesiapsiagaan menjaga keselamatan
+        keluarga dan kampung, serta kehormatan seorang pendekar dalam tradisi Betawi.
+      en: Wearing the golok at the waist symbolizes readiness to safeguard family
+        and neighborhood, as well as a martial artist's honor in Betawi tradition.
+    craft:
+      id: Pengait logam melengkung di muka atas sarung untuk menyisipkan golok pada
+        sabuk atau ikat pinggang. Cara membawa golok di pinggang ini dikenal masyarakat
+        Betawi sebagai nyoren, sehingga golok jenis ini disebut golok sorenan.
+      en: A curved metal hook mounted on the upper front of the sheath for clipping
+        onto a belt or sash. Carrying a golok at the waist is known as nyoren in
+        Betawi, giving the golok sorenan its name.
+    history:
+      id: Dalam upacara pernikahan adat Betawi, golok sorenan yang disisipkan di
+        pinggang menjadi perlengkapan ikonik para pendekar saat memperagakan atraksi
+        pencak silat dan berbalas pantun Palang Pintu.
+      en: In traditional Betawi weddings, the waist-worn golok sorenan is an iconic
+        part of the martial artists' attire during the Palang Pintu silat and rhyming-verse
+        duel.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Pengait logam melengkung di muka atas sarung untuk menyisipkan golok pada
+        sabuk atau ikat pinggang. Cara membawa golok di pinggang ini dikenal masyarakat
+        Betawi sebagai nyoren, sehingga golok jenis ini disebut golok sorenan.
+      en: A curved metal hook mounted on the upper front of the sheath for clipping
+        onto a belt or sash. Carrying a golok at the waist is known as nyoren in
+        Betawi, giving the golok sorenan its name.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan Golok Betawi tanduk kerbau & data bersumber'
+    - Perkampungan Budaya Betawi Setu Babakan / Museum Betawi, Jagakarsa, Jakarta
+      Selatan - Koleksi Golok & Tradisi Palang Pintu
+    - Abdul Chaer - Betawi Tempo Doeloe & Kamus Dialek Jakarta (rujukan tradisi golok
+      sorenan, gablong, dan budaya Betawi)
+    - 'Pemerintah Provinsi DKI Jakarta - Golok Betawi: Sejarah, Filosofi, dan Tradisi
+      Jawara (jakarta.go.id)'
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (25-11-2026); menunggu validasi
+      kurator.
+  - hotspotId: simpay
+    partName: Simpay
+    localPosition: {x: 0, y: -0.088, z: -0.012680888}
+    visibleFrom: 0
+    title:
+      id: Simpay Kuningan
+      en: Brass Bands (Simpay)
+    regionalTerm: 'Betawi/Sunda: simpay, sumpai'
+    material:
+      id: Kuningan muda berukir motif tumpal/chevron & pita polos (pada model)
+      en: Pale brass with engraved chevron motifs and smooth straps (on the model)
+    philosophy:
+      id: Secara filosofis, lilitan simpay yang saling mengunci melambangkan ikatan
+        kekeluargaan, persatuan, dan keselarasan hidup bermasyarakat.
+      en: Philosophically, the interlocking simpay rings represent family ties, unity,
+        and harmony within the community.
+    craft:
+      id: "Empat belas lilitan pita kuningan \u2014 terdiri dari dua pita lebar berukir
+        di bagian atas, sepuluh pita tipis sepanjang batang, dan sepasang pita di
+        ujung bawah. Simpay mengikat belahan sarung agar tetap rapat dan tidak pecah
+        terkena benturan."
+      en: "Fourteen brass wraps \u2014 two wide engraved bands near the throat, ten
+        slender straps along the shaft, and a twin pair near the tip. Simpay bands
+        bind the sheath halves tightly so they resist cracking under impact."
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: "Empat belas lilitan pita kuningan \u2014 terdiri dari dua pita lebar berukir
+        di bagian atas, sepuluh pita tipis sepanjang batang, dan sepasang pita di
+        ujung bawah. Simpay mengikat belahan sarung agar tetap rapat dan tidak pecah
+        terkena benturan."
+      en: "Fourteen brass wraps \u2014 two wide engraved bands near the throat, ten
+        slender straps along the shaft, and a twin pair near the tip. Simpay bands
+        bind the sheath halves tightly so they resist cracking under impact."
+    sources:
+    - 'Model: rekaan Blender dari foto acuan Golok Betawi tanduk kerbau & data bersumber'
+    - 'Pemerintah Provinsi DKI Jakarta - Golok Betawi: Sejarah, Filosofi, dan Tradisi
+      Jawara (jakarta.go.id)'
+    - Kemendikbudristek (2021) - Penetapan Golok Betawi sebagai Warisan Budaya Takbenda
+      (WBTb) Indonesia, Provinsi DKI Jakarta
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (25-11-2026); menunggu validasi
+      kurator.
+  - hotspotId: sarung
+    partName: Sarung
+    localPosition: {x: 0, y: -0.19, z: -0.010933757}
+    visibleFrom: 0
+    title:
+      id: Sarung Tanduk Belang
+      en: Striated Horn Sheath (Sarung)
+    regionalTerm: 'Betawi: sarung, kerosok'
+    material:
+      id: Tanduk kerbau belang dipoles mengkilap (pada model)
+      en: Polished striated water-buffalo horn (on the model)
+    philosophy:
+      id: 'Sarung yang menutup rapat sisi tajam mencerminkan pengendalian diri: kekuatan
+        dan keberanian harus tersimpan tenang dan hanya dikeluarkan pada saat yang
+        benar.'
+      en: 'A sheath enclosing the sharp edge reflects self-restraint: strength and
+        courage should remain calm and be drawn only when truly justified.'
+    craft:
+      id: Badan sarung pelindung bilah yang meruncing halus ke buntut bawah. Selain
+        dari kayu keras seperti kayu jambu, rambutan, atau sonokeling, golok pusaka
+        dan sorenan pilihan sering memakai tanduk kerbau belang yang bercorak alami
+        gelap dan abu-abu asap.
+      en: The tapering sheath body enclosing the blade. Beyond hardwoods such as
+        guava, rambutan, or rosewood, prized sorenan goloks often use striated buffalo
+        horn with natural dark and smoky-grey bands.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Badan sarung pelindung bilah yang meruncing halus ke buntut bawah. Selain
+        dari kayu keras seperti kayu jambu, rambutan, atau sonokeling, golok pusaka
+        dan sorenan pilihan sering memakai tanduk kerbau belang yang bercorak alami
+        gelap dan abu-abu asap.
+      en: The tapering sheath body enclosing the blade. Beyond hardwoods such as
+        guava, rambutan, or rosewood, prized sorenan goloks often use striated buffalo
+        horn with natural dark and smoky-grey bands.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan Golok Betawi tanduk kerbau & data bersumber'
+    - 'Pemerintah Provinsi DKI Jakarta - Golok Betawi: Sejarah, Filosofi, dan Tradisi
+      Jawara (jakarta.go.id)'
+    - Perkampungan Budaya Betawi Setu Babakan / Museum Betawi, Jagakarsa, Jakarta
+      Selatan - Koleksi Golok & Tradisi Palang Pintu
+    - 'Perpustakaan Digital Budaya Indonesia - Golok Betawi: Jenis Sorenan, Gablong,
+      dan Bendo (budaya-indonesia.org)'
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (25-11-2026); menunggu validasi
+      kurator.
+  - hotspotId: bilah
+    partName: Bilah
+    localPosition: {x: -0.003999993, y: -0.145, z: -0.004031062}
+    visibleFrom: 1
+    title:
+      id: Bilah Golok Sorenan
+      en: Sorenan Blade (Bilah)
+    regionalTerm: 'Betawi: bilah golok sorenan'
+    material:
+      id: Baja tempa poles satin (pada model)
+      en: Satin-polished forged steel (on the model)
+    philosophy:
+      id: Bilah yang kokoh melambangkan ketegasan menegakkan kebenaran. Dalam falsafah
+        Betawi, pendekar tidak bangga melukai orang lain, tetapi bangga menjaga martabat
+        dan membela yang lemah.
+      en: The sturdy blade stands for firmness in upholding truth. Betawi martial
+        wisdom holds that a warrior takes no pride in harming others, only in defending
+        dignity and the vulnerable.
+    craft:
+      id: Bilah bermata satu sepanjang 30 cm dengan punggung lurus (tebal 4,4 mm
+        menipis ke ujung) dan mata melengkung halus ke ujung runcing. Berbeda dari
+        golok kerja (gablong/bendo) yang berat untuk menebas kayu, golok sorenan
+        dibuat lebih ramping, seimbang, dan lincah untuk bela diri.
+      en: A 30 cm single-edged blade with a straight spine (4.4 mm tapering distally)
+        and a smooth convex belly sweeping to a sharp point. Unlike heavy utility
+        goloks (gablong/bendo) for chopping wood, a sorenan blade is sleeker, balanced,
+        and agile for self-defense.
+    history:
+      id: 'Dalam sejarah masyarakat Betawi di Batavia, golok melekat erat dengan
+        keseharian warga dan para jawara. Fungsinya terbagi dua: golok gablong (bendo)
+        untuk kerja tani dan dapur, serta golok sorenan yang diselipkan di pinggang
+        untuk menjaga diri dan melengkapi pakaian adat, termasuk dalam tradisi Palang
+        Pintu. Pada tahun 2021, Kemendikbudristek menetapkan Golok Betawi sebagai
+        Warisan Budaya Takbenda (WBTb) Indonesia dari DKI Jakarta.'
+      en: 'In the history of Jakarta''s Betawi community, the golok was closely tied
+        to daily life and local martial artists (jawara). It serves two roles: the
+        gablong (bendo) for farming and household work, and the sorenan worn at the
+        waist for self-defense and traditional dress, notably in the Palang Pintu
+        wedding ritual. In 2021, Indonesia''s Ministry of Education and Culture designated
+        the Golok Betawi as an Intangible Cultural Heritage of DKI Jakarta.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Bilah bermata satu sepanjang 30 cm dengan punggung lurus (tebal 4,4 mm
+        menipis ke ujung) dan mata melengkung halus ke ujung runcing. Berbeda dari
+        golok kerja (gablong/bendo) yang berat untuk menebas kayu, golok sorenan
+        dibuat lebih ramping, seimbang, dan lincah untuk bela diri.
+      en: A 30 cm single-edged blade with a straight spine (4.4 mm tapering distally)
+        and a smooth convex belly sweeping to a sharp point. Unlike heavy utility
+        goloks (gablong/bendo) for chopping wood, a sorenan blade is sleeker, balanced,
+        and agile for self-defense.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan Golok Betawi tanduk kerbau & data bersumber'
+    - Kemendikbudristek (2021) - Penetapan Golok Betawi sebagai Warisan Budaya Takbenda
+      (WBTb) Indonesia, Provinsi DKI Jakarta
+    - 'Pemerintah Provinsi DKI Jakarta - Golok Betawi: Sejarah, Filosofi, dan Tradisi
+      Jawara (jakarta.go.id)'
+    - Wikipedia Indonesia - Golok Betawi (id.wikipedia.org/wiki/Golok)
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (25-11-2026); menunggu validasi
+      kurator.
+  - hotspotId: cap_pande
+    partName: Bilah
+    localPosition: {x: 0.004999995, y: -0.030000001, z: -0.004624605}
+    visibleFrom: 1
+    title:
+      id: Cap Pande
+      en: Blacksmith's Mark (Cap Pande)
+    regionalTerm: 'Betawi: cap pande / tanda tempa'
+    material:
+      id: Cap tempa pada baja (prosedural pada model)
+      en: Forged stamp on steel (procedural on the model)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Tanda khusus yang dipukulkan pandai besi tradisional saat bilah masih membara.
+        Cap pande menjadi penanda asal bengkel tempa sekaligus jaminan mutu pengerjaan
+        baja.
+      en: A distinctive mark struck by a traditional blacksmith while the steel is
+        still glowing hot. It identifies the forge and serves as a hallmark of the
+        blade's craftsmanship.
+    history:
+      id: Keberlanjutan pandai besi tradisional Betawi dan sekitarnya menjadi salah
+        satu pilar pelestarian Golok Betawi sebagai Warisan Budaya Takbenda Indonesia.
+      en: The continuity of traditional Betawi blacksmithing is a key pillar in preserving
+        the Golok Betawi as Indonesian Intangible Cultural Heritage.
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Tanda khusus yang dipukulkan pandai besi tradisional saat bilah masih membara.
+        Cap pande menjadi penanda asal bengkel tempa sekaligus jaminan mutu pengerjaan
+        baja.
+      en: A distinctive mark struck by a traditional blacksmith while the steel is
+        still glowing hot. It identifies the forge and serves as a hallmark of the
+        blade's craftsmanship.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan Golok Betawi tanduk kerbau & data bersumber'
+    - Kemendikbudristek (2021) - Penetapan Golok Betawi sebagai Warisan Budaya Takbenda
+      (WBTb) Indonesia, Provinsi DKI Jakarta
+    - 'Pemerintah Provinsi DKI Jakarta - Golok Betawi: Sejarah, Filosofi, dan Tradisi
+      Jawara (jakarta.go.id)'
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (25-11-2026); menunggu validasi
+      kurator.
+  - hotspotId: puting
+    partName: Bilah
+    localPosition: {x: 0.002000004, y: 0.030000001, z: -0.0045962334}
+    visibleFrom: 1
+    title:
+      id: Puting (Tangkai Bilah)
+      en: Tang (Puting)
+    regionalTerm: 'Betawi/Melayu: puting'
+    material:
+      id: Baja tempa menyatu dengan bilah (pada model)
+      en: Forged steel integral with the blade (on the model)
+    philosophy:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    craft:
+      id: Tangkai baja di pangkal bilah yang tertanam ke dalam gagang tanduk dan
+        dikunci paku kuningan. Pada model ini puting sepanjang 5,4 cm dan baru tampak
+        jelas ketika hulu dilepas pada tahap 2.
+      en: The steel tang extending from the blade base into the horn hilt and locked
+        by the brass pin. On this model the tang measures 5.4 cm and becomes visible
+        when the hilt separates in step 2.
+    history:
+      id: '[Draf] Diisi kurator setelah spesimen asli ditetapkan.'
+      en: '[Draft] To be written by the curator once the real specimen is chosen.'
+    narrationID: {fileID: 0}
+    narrationEN: {fileID: 0}
+    pronunciation: {fileID: 0}
+    transcript:
+      id: Tangkai baja di pangkal bilah yang tertanam ke dalam gagang tanduk dan
+        dikunci paku kuningan. Pada model ini puting sepanjang 5,4 cm dan baru tampak
+        jelas ketika hulu dilepas pada tahap 2.
+      en: The steel tang extending from the blade base into the horn hilt and locked
+        by the brass pin. On this model the tang measures 5.4 cm and becomes visible
+        when the hilt separates in step 2.
+    sources:
+    - 'Model: rekaan Blender dari foto acuan Golok Betawi tanduk kerbau & data bersumber'
+    - 'Pemerintah Provinsi DKI Jakarta - Golok Betawi: Sejarah, Filosofi, dan Tradisi
+      Jawara (jakarta.go.id)'
+    - 'Perpustakaan Digital Budaya Indonesia - Golok Betawi: Jenis Sorenan, Gablong,
+      dan Bendo (budaya-indonesia.org)'
+    curatorValidated: 0
+    curatorNote: Diperiksa terhadap sumber daring (25-11-2026); menunggu validasi
+      kurator.
+  story: {fileID: 11400000, guid: b0cd26390c92f3d47b255e05c116eaff, type: 2}
+  backgroundMusic: {fileID: 8300000, guid: d10eb00ee5469744c93b863d9ab5cecb, type: 3}
+  musicCredit: '"Nusantara - Epic traditional music" - Pocketbeats (Pixabay, Pixabay
+    Content License)'

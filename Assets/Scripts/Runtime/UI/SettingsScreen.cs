@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +6,7 @@ using UnityEngine.UI;
 namespace NusantaraAR.UI
 {
     /// <summary>
-    /// Layar 6: bahasa, volume, persetujuan analitik, ulangi tutorial, tentang (PRD §5.2). Kartu kaca di atas latar
+    /// Layar 6: bahasa, volume, ulangi tutorial. Kartu kaca di atas latar
     /// kamera (<see cref="Backdrop"/>); tab Pengaturan di <see cref="BottomNav"/> tetap tampil di bawahnya.
     /// </summary>
     public class SettingsScreen : MonoBehaviour
@@ -15,9 +14,7 @@ namespace NusantaraAR.UI
         Action onReplayTutorial;
         RectTransform content;
         Segmented language;
-        SwitchToggle analytics;
         Slider narrationSlider, musicSlider, sfxSlider;
-        TextMeshProUGUI musicCredits;
 
         public event Action VisibilityChanged;
 
@@ -54,18 +51,6 @@ namespace NusantaraAR.UI
             musicSlider = VolumeRow(sound, "settings.musicVol", AppSettings.MusicVolume, v => AppSettings.MusicVolume = v);
             sfxSlider = VolumeRow(sound, "settings.sfxVol", AppSettings.SfxVolume, v => AppSettings.SfxVolume = v);
 
-            var privacy = Card("settings.privacy");
-            var row = UIKit.Rect("Analytics", privacy);
-            var h = UIKit.HRow(row, 20f, null, false);
-            h.childForceExpandHeight = false;
-            UIKit.Layout(row, 84f);
-            var label = UIKit.Text(row, "Label", Locale.T("settings.analytics"), 28f, Theme.Ink, TextAlignmentOptions.MidlineLeft);
-            LocalizedLabel.Attach(label, "settings.analytics");
-            UIKit.Layout(label, 84f, -1, 1f);
-            analytics = SwitchToggle.Create(row, "Switch", AppSettings.AnalyticsConsent, on => AppSettings.AnalyticsConsent = on);
-            var note = UIKit.Text(privacy, "AnalyticsNote", Locale.T("settings.analyticsNote"), 26f, Theme.InkMuted);
-            LocalizedLabel.Attach(note, "settings.analyticsNote");
-
             var tutorial = UIKit.IconTextButton(content, "Tutorial", Icon.Book, Locale.T("settings.tutorial"), ButtonStyle.Secondary, () =>
             {
                 Hide();
@@ -73,18 +58,6 @@ namespace NusantaraAR.UI
             }, out var tl, 32f);
             LocalizedLabel.Attach(tl, "settings.tutorial");
             UIKit.Layout(tutorial, 100);
-
-            var about = Card("settings.about");
-            var aboutText = UIKit.Text(about, "About", Locale.T("settings.aboutBody"), 28f, Theme.Ink);
-            aboutText.lineSpacing = 6f;
-            LocalizedLabel.Attach(aboutText, "settings.aboutBody");
-
-            // Kredit musik latar dari data artefak (satu baris per artefak yang punya musik).
-            if (MusicArtifacts().Count > 0)
-            {
-                var credits = Card("settings.musicCredits");
-                musicCredits = UIKit.Text(credits, "MusicCredits", "", 26f, Theme.Ink);
-            }
 
             var version = UIKit.Text(content, "Version", "v" + Application.version, 26f, Theme.InkMuted, TextAlignmentOptions.Center);
             UIKit.Layout(version, 50);
@@ -114,27 +87,12 @@ namespace NusantaraAR.UI
             return slider;
         }
 
-        static List<ArtifactData> MusicArtifacts()
-        {
-            var list = new List<ArtifactData>();
-            var catalog = AppSession.Catalog;
-            if (catalog == null) return list;
-            foreach (var a in catalog.artifacts)
-                if (a != null && a.backgroundMusic != null && !string.IsNullOrEmpty(a.musicCredit)) list.Add(a);
-            return list;
-        }
-
         void RefreshLocalized()
         {
             language.SetSelected(Locale.Current == Language.ID ? 0 : 1);
-            analytics.IsOn = AppSettings.AnalyticsConsent;
             if (narrationSlider != null) narrationSlider.SetValueWithoutNotify(AppSettings.NarrationVolume);
             if (musicSlider != null) musicSlider.SetValueWithoutNotify(AppSettings.MusicVolume);
             if (sfxSlider != null) sfxSlider.SetValueWithoutNotify(AppSettings.SfxVolume);
-            if (musicCredits == null) return;
-            var lines = new List<string>();
-            foreach (var a in MusicArtifacts()) lines.Add(a.displayName.Get() + ": " + a.musicCredit);
-            musicCredits.text = string.Join("\n", lines);
         }
 
         void OnEnable()

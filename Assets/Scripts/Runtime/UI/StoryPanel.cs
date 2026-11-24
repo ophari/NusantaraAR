@@ -116,7 +116,6 @@ namespace NusantaraAR.UI
             suspended = resumeOnShow = false;
             UIKit.SetVisible(rt, true);
             StartChapter(0);
-            Analytics.Log("story_start", ("artifact", artifact.Data != null ? artifact.Data.artifactId : ""));
             if (!wasActive) ActiveChanged?.Invoke(true);
         }
 

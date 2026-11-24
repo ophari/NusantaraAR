@@ -110,20 +110,10 @@ namespace NusantaraAR
 
             ["settings.language"] = ("Bahasa", "Language"),
             ["settings.sound"] = ("Suara", "Sound"),
-            ["settings.privacy"] = ("Privasi", "Privacy"),
             ["settings.narrationVol"] = ("Volume narasi", "Narration volume"),
             ["settings.musicVol"] = ("Volume musik latar", "Background music volume"),
             ["settings.sfxVol"] = ("Volume efek suara", "Sound effects volume"),
-            ["settings.analytics"] = ("Bagikan data penggunaan anonim", "Share anonymous usage data"),
-            ["settings.analyticsNote"] = (
-                "Hanya statistik pemakaian fitur, tanpa data pribadi dan tanpa gambar kamera.",
-                "Feature usage statistics only - no personal data and no camera images."),
             ["settings.tutorial"] = ("Ulangi tutorial", "Replay tutorial"),
-            ["settings.about"] = ("Tentang", "About"),
-            ["settings.aboutBody"] = (
-                "Nusantara AR - aplikasi edukasi benda budaya dan satwa khas Indonesia.\nModel 3D saat ini adalah model Blender sementara: keris dibuat dari lembar acuan, karambit dari foto acuan museum dan data bersumber, Candi Borobudur dari data ukuran bersumber ditambah perkiraan (skala 1:200), komodo dari foto acuan dan data bersumber (skala 1:10). Model akan diganti atau divalidasi kurator.\nSeluruh teks kuratorial masih draf.\nSuara narator mode Kisah adalah suara sintetis (Microsoft neural TTS).\nMusik latar dari Pixabay; tanda [AI] = dibuat dengan AI oleh pengunggahnya.",
-                "Nusantara AR - a learning app for Indonesian cultural objects and native wildlife.\nThe current 3D models are temporary Blender models: the keris were made from reference sheets, the karambit from museum reference photos and sourced data, Borobudur temple from sourced dimensions plus estimates (1:200 scale), the Komodo dragon from reference photos and sourced data (1:10 scale). They will be replaced or validated by a curator.\nAll curatorial text is still a draft.\nThe Story narrator is a synthetic voice (Microsoft neural TTS).\nBackground music from Pixabay; [AI] = made with AI by its uploader."),
-            ["settings.musicCredits"] = ("Musik latar", "Background music"),
             ["settings.on"] = ("Aktif", "On"),
             ["settings.off"] = ("Nonaktif", "Off"),
 

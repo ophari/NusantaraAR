@@ -128,7 +128,6 @@ namespace NusantaraAR
             var bounds = current.GetWorldBounds();
             orbit.Frame(bounds);
             PlaceGlow(bounds);
-            Analytics.Log("detail_open", ("artifact", data.artifactId));
         }
 
         void ShowCatalog()

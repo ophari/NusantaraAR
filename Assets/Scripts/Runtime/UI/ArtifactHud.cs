@@ -339,8 +339,6 @@ namespace NusantaraAR.UI
             if (artifact == null || artifact.exploded == null) return;
             if (storyPanel.IsActive) storyPanel.Stop();
             artifact.exploded.Toggle();
-            Analytics.Log("explode_toggle", ("artifact", artifact.Data != null ? artifact.Data.artifactId : ""),
-                ("exploded", artifact.exploded.IsExplodedOrExploding));
             RefreshLabels();
         }
 
@@ -350,8 +348,6 @@ namespace NusantaraAR.UI
             if (artifact == null || artifact.exploded == null) return;
             if (storyPanel.IsActive) storyPanel.Stop();
             artifact.exploded.ToggleDraw();
-            Analytics.Log("draw_toggle", ("artifact", artifact.Data != null ? artifact.Data.artifactId : ""),
-                ("drawn", artifact.exploded.TargetStage == 1));
             RefreshLabels();
         }
 

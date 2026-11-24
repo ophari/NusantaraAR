@@ -17,6 +17,7 @@ namespace NusantaraAR.Tests
         const string Borobudur = "NUSANTARA:BOROBUDUR_01";
         const string Karambit = "NUSANTARA:KARAMBIT_01";
         const string Komodo = "NUSANTARA:KOMODO_01";
+        const string Golok = "NUSANTARA:GOLOK_BETAWI_01";
 
         static readonly Vector2[] BaseCorners = { new Vector2(80, 200), new Vector2(270, 188), new Vector2(292, 395), new Vector2(66, 380) };
 
@@ -298,6 +299,7 @@ namespace NusantaraAR.Tests
         [TestCase("Markers/KartuQR_CandiBorobudur_A5.png", Borobudur)]
         [TestCase("Markers/KartuQR_Karambit_A5.png", Karambit)]
         [TestCase("Markers/KartuQR_Komodo_A5.png", Komodo)]
+        [TestCase("Markers/KartuQR_GolokBetawi_A5.png", Golok)]
         public void Detects_PrintableQrCard_AndIsFastEnough(string path, string text)
         {
             if (!System.IO.File.Exists(path)) Assert.Ignore("Kartu QR tidak ditemukan di folder Markers/");

@@ -40,6 +40,12 @@ namespace NusantaraAR.Marker
         /// </summary>
         public const int KomodoCode = 0xDC4E;
 
+        /// <summary>
+        /// Kode marker untuk Golok Betawi (pola ..## / #..# / ###. / #.#.); keempat rotasinya berjarak >= 10,
+        /// jarak ke semua rotasi lima kode aktif di atas >= 6, dan >= 3 dari kartu yang sudah ditarik (0xEEC1, 0xDA26).
+        /// </summary>
+        public const int GolokBetawiCode = 0x39EA;
+
         /// <summary>True bila sel (kolom u, baris v; 0..5, dari kiri-atas) berwarna hitam.</summary>
         public static bool IsBlack(int code, int u, int v)
         {

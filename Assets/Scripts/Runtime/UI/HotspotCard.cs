@@ -111,7 +111,6 @@ namespace NusantaraAR.UI
                 tabIndex = 0;
                 if (AudioManager.Instance.CurrentNarration != h.Narration) AudioManager.Instance.StopNarration();
                 pop = 0f;
-                Analytics.Log("hotspot_open", ("artifact", data != null ? data.artifactId : ""), ("hotspot", h.hotspotId));
             }
             counter.text = index >= 0 && count > 0 ? (index + 1) + " / " + count : string.Empty;
             prevButton.interactable = nextButton.interactable = count > 1;

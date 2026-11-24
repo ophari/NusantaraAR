@@ -71,10 +71,11 @@ Kartu kode QR (cetak A5 tanpa diperkecil, sisi QR 8 cm) — satu kartu per artef
 | Candi Borobudur (model Blender) | `Markers/KartuQR_CandiBorobudur_A5.pdf` | `NUSANTARA:BOROBUDUR_01` |
 | Karambit (model Blender) | `Markers/KartuQR_Karambit_A5.pdf` | `NUSANTARA:KARAMBIT_01` |
 | Komodo (model Blender) | `Markers/KartuQR_Komodo_A5.pdf` | `NUSANTARA:KOMODO_01` |
+| Golok Betawi (model Blender) | `Markers/KartuQR_GolokBetawi_A5.pdf` | `NUSANTARA:GOLOK_BETAWI_01` |
 
 Isi QR diturunkan dari `artifactId` (`ArtifactData.QrText`), jadi artefak baru otomatis punya QR. Atau tekan tombol **Tampilkan QR** di halaman detail untuk menampilkannya di layar HP/laptop lain.
 
-Kartu penanda 6x6 lama (`Markers/KartuPenanda_*_A5.pdf`, kode `B532` / `F0E4` / `E3B1` / `C616` / `DC4E`) kodenya tetap disimpan dan masih dikenali di mode Scan QR sebagai cadangan (`MarkerController.detectLegacyCards`), tetapi tidak lagi ditampilkan di UI. Kartu `EEC1` (keris sementara) dan `DA26` (Keris Jawa) sudah ditarik dan tidak dikenali lagi.
+Kartu penanda 6x6 lama (`Markers/KartuPenanda_*_A5.pdf`, kode `B532` / `F0E4` / `E3B1` / `C616` / `DC4E` / `39EA`) kodenya tetap disimpan dan masih dikenali di mode Scan QR sebagai cadangan (`MarkerController.detectLegacyCards`), tetapi tidak lagi ditampilkan di UI. Kartu `EEC1` (keris sementara) dan `DA26` (Keris Jawa) sudah ditarik dan tidak dikenali lagi.
 
 Keterbatasan Scan QR: FOV kamera diperkirakan (64° sisi panjang), jadi objek tetap menempel di QR tapi
 perspektifnya bisa sedikit berbeda; pelacakan hilang bila QR tertutup sebagian, buram, atau terlalu jauh/gelap
@@ -86,7 +87,7 @@ Opsi peningkatan: Vuforia Engine (image target, gratis paket Basic, butuh akun +
 ```
 Assets/
   Scripts/Runtime/
-    Core/        Locale & UIStrings (ID/EN), AppSession, AppSettings, Analytics (opt-in), MainController, DevCapture (QA)
+    Core/        Locale & UIStrings (ID/EN), AppSession, AppSettings, MainController, DevCapture (QA)
     Content/     ArtifactData, HotspotData, ArtifactStory (mode Kisah), ContentCatalog (model data PRD §6.2)
     Artifact/    ArtifactInstance, ArtifactPart, ExplodedViewController, AutoRotate, GroundGlow
     Interaction/ TouchGestures (aturan gestur PRD §4.3), OrbitCameraController (3D Viewer)
@@ -99,23 +100,25 @@ Assets/
     Marker/      MarkerController, QrDetector/QrCode, DarkRegions, CameraFeed, MarkerPose (+ kartu 6x6 lama)
   Scripts/Editor/ ProjectSetup, PreviewRenderer, BuildScript, BuildGuard (pengaman platform build),
                   GlbArtifact (GLB -> prefab artefak), KerisBaliBuilder, KerisSumatraBuilder, CandiBorobudurBuilder,
-                  KarambitBuilder, KomodoBuilder (bagian, tahap, hotspot, konten),
-                  KerisRefs/CandiRefs/KarambitRefs/KomodoRefs (sumber rujukan), StoryBuilder (Kisah), MusicBuilder (musik latar)
+                  KarambitBuilder, KomodoBuilder, GolokBetawiBuilder (bagian, tahap, hotspot, konten),
+                  KerisRefs/CandiRefs/KarambitRefs/KomodoRefs/GolokBetawiRefs (sumber rujukan), StoryBuilder (Kisah), MusicBuilder (musik latar)
   Content/KERIS_BALI_01/          prefab, ArtifactData, thumbnail (dibangkitkan KerisBaliBuilder), Story/ (Kisah), Music/
   Content/KERIS_SUMATRA_01/       prefab, ArtifactData, thumbnail (dibangkitkan KerisSumatraBuilder), Story/, Music/
   Content/BOROBUDUR_01/           prefab, ArtifactData, thumbnail (dibangkitkan CandiBorobudurBuilder), Story/, Music/
   Content/KARAMBIT_01/            prefab, ArtifactData, thumbnail (dibangkitkan KarambitBuilder), Story/, Music/
   Content/KOMODO_01/              prefab, ArtifactData, thumbnail (dibangkitkan KomodoBuilder), Story/, Music/
+  Content/GOLOK_BETAWI_01/        prefab, ArtifactData, thumbnail (dibangkitkan GolokBetawiBuilder), Story/, Music/
   Art/KerisBali/                  keris_bali.glb (ekspor Blender) + Materials/ + Textures/ (ASTC)
   Art/KerisSumatra/               keris_sumatra.glb (ekspor Blender) + Materials/ + Textures/
   Art/CandiBorobudur/             candi_borobudur.glb (ekspor Blender) + Materials/ + Textures/
   Art/Karambit/                   karambit.glb (ekspor Blender) + Materials/ + Textures/
   Art/Komodo/                     komodo.glb (ekspor Blender) + Materials/ + Textures/
+  Art/Golok/                      golok.glb (ekspor Blender) + Materials/ + Textures/
   Resources/                      ContentCatalog.asset, UIGlass.mat, GroundGlow.mat
   Prefabs/                        ARPlane.prefab
   Scenes/                         Main.unity, AR.unity, Marker.unity (Scan QR)
   Shaders/                        GlassBlur.shader, UIGlass.shader
-  Tests/                          EditMode tests (176 kasus uji)
+  Tests/                          EditMode tests (202 kasus uji)
   Settings/, TextMesh Pro/, XR/   Konfigurasi URP, TMP, dan ARCore/ARKit
 Markers/                          kartu QR & kartu penanda cetak A5 (KartuQR_*_A5, KartuPenanda_*_A5)
 Previews/                         render pratinjau model Blender (*_Blender_*.png)
@@ -135,6 +138,7 @@ Semua model 3D dibuat di **Blender 5.2**, diekspor sebagai **GLB**, lalu diimpor
 | **Candi Borobudur** `BOROBUDUR_01` (kategori Candi) | `Assets/Art/CandiBorobudur/candi_borobudur.glb` | 123 × 123 × 35 m, **prefab 1:200** (61,5 × 17,5 cm): kaki, 5 teras persegi berelief, 5 langkan dengan 432 relung-arca, tangga & gapura, 3 teras melingkar dengan 72 stupa terawang + arca, stupa induk. ±308 ribu segitiga. 10 hotspot | 4 tahap, tingkat dipisah ke atas: stupa induk → teras melingkar (Arupadhatu) → teras 3-5 → teras 1-2 dari kaki (Kamadhatu) |
 | **Karambit** `KARAMBIT_01` | `Assets/Art/Karambit/karambit.glb` | Kurambiak Minangkabau jantan, tinggi 15,9 cm: bilah cakar 7 gerigi (punggung = busur R 5,2 cm, 120°) bermotif kaluak paku, cincin kuningan, hulu kayu kemuning berukir dengan lubang telunjuk, sarung kayu berukir tinta emas, dudukan kayu. 9 hotspot | 4 tahap: sarung diputar pada pusat busur (meluncur lepas menyusuri lengkung) → pisau diangkat → hulu → cincin |
 | **Komodo** `KOMODO_01` (kategori Satwa Endemik) | `Assets/Art/Komodo/komodo.glb` | Diorama **1:10**: komodo betina ±2,3 m (23 cm di aplikasi) melangkah di savana Pulau Rinca, di depan gundukan sarang burung gosong yang dipotong sehingga 7 telurnya terlihat. Kulit bersisik prosedural, 48 gigi bergerigi berujung jingga (lapisan besi), lidah kuning bercabang tersimpan di mulut. ±80 ribu segitiga. 10 hotspot | 4 tahap: rahang dibuka 24° di engsel + lidah dijulurkan → telur dikeluarkan dari sarang → komodo diangkat → rahang bawah dipisah |
+| **Golok Betawi** `GOLOK_BETAWI_01` | `Assets/Art/Golok/golok.glb` | Golok sorenan Betawi: bilah baja 30 cm punggung lurus & perut melengkung halus bertanda cap pande, salut pelindung jari kuningan, hulu jengkolan tanduk kerbau hitam berpaku kuningan, sarung tanduk kerbau belang berlilit 14 simpay kuningan (2 ukir, 12 polos) & sangkep cantelan pinggang. ±48 ribu segitiga. 10 hotspot | 4 tahap: hunus → lepas hulu & paku → lepas salut → pisah kepala sarung, sangkep & simpay |
 
 Catatan builder (`GlbArtifact`):
 - Setiap objek Blender dipetakan ke satu bagian (`ArtifactPart`); objek tanpa bagian menghentikan build.
@@ -175,13 +179,12 @@ Catatan builder (`GlbArtifact`):
 | FR-09/10 kartu info menempel di samping bagian (menggantikan bottom sheet), 3 tab, audio + pelafalan, sumber, navigasi antar bagian | isi diperiksa terhadap sumber daring (`KerisRefs`); audio per bagian belum ada; transkrip terpisah ditiadakan (teks tab = isi narasi) |
 | FR-11/12/13 katalog → detail (3D Viewer) → AR, onboarding | |
 | Mode Kisah: narator (suara TTS perempuan, ID/EN) bercerita 9 bab per artefak, subtitle per kalimat, model ikut dihunus/dibongkar, label bagian disorot | `StoryPanel` |
-| Musik latar per artefak, fade & diredam saat narasi, slider volume + kredit di Pengaturan | trek Pixabay, ditandai AI oleh pengunggah |
+| Musik latar per artefak, fade & diredam saat narasi, slider volume di Pengaturan | trek Pixabay, ditandai AI oleh pengunggah |
 | FR-14 ID/EN | implementasi ringan (`Locale`), bukan Unity Localization package |
 
 **Belum / perlu keputusan:**
 - Model keris dibuat di Blender dari cetak biru/lembar acuan (bukan spesimen museum; figur hulu Bali sangat disederhanakan). Teks kuratorial dan naskah Kisah sudah diperiksa terhadap sumber daring, tetapi masih **draf** sampai divalidasi kurator; tab yang belum punya isi diberi penanda "diisi kurator".
 - Narasi mode Kisah memakai TTS, bukan rekaman narator. Narasi per bagian dan rekaman pelafalan belum ada. Font Playfair/Inter juga belum ada (saat ini LiberationSans bawaan TMP).
 - Musik latar (Pixabay, ditandai AI) perlu ditinjau lisensi dan kesesuaian budayanya sebelum rilis publik.
-- Analitik baru menulis ke log (penyedia belum dipilih, PRD §14 #5).
 - iOS belum diuji (PRD merekomendasikan Android dulu).
 - Uji lapangan (tracking, drift, termal, FPS) wajib di perangkat nyata — belum dilakukan.

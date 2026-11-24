@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -42,7 +41,6 @@ namespace NusantaraAR
         public static void OpenAR(ArtifactData artifact)
         {
             SelectedArtifactId = artifact != null ? artifact.artifactId : null;
-            Analytics.Log("ar_open", ("artifact", SelectedArtifactId));
             SceneManager.LoadScene(ARScene);
         }
 
@@ -73,7 +71,6 @@ namespace NusantaraAR
         const string NarrationKey = "nusantaraar.vol.narration";
         const string SfxKey = "nusantaraar.vol.sfx";
         const string MusicKey = "nusantaraar.vol.music";
-        const string AnalyticsKey = "nusantaraar.analytics";
         const string OnboardingKey = "nusantaraar.onboarding.done";
 
         static float? narrationVolume;
@@ -106,39 +103,10 @@ namespace NusantaraAR
             set { musicVolume = ClampSafe01(value, 0.5f); PlayerPrefs.SetFloat(MusicKey, musicVolume.Value); }
         }
 
-        /// <summary>Analitik hanya aktif dengan persetujuan eksplisit (default: nonaktif).</summary>
-        public static bool AnalyticsConsent
-        {
-            get => PlayerPrefs.GetInt(AnalyticsKey, 0) == 1;
-            set { PlayerPrefs.SetInt(AnalyticsKey, value ? 1 : 0); PlayerPrefs.Save(); }
-        }
-
         public static bool OnboardingDone
         {
             get => PlayerPrefs.GetInt(OnboardingKey, 0) == 1;
             set { PlayerPrefs.SetInt(OnboardingKey, value ? 1 : 0); PlayerPrefs.Save(); }
-        }
-    }
-
-    /// <summary>
-    /// Pencatat event metrik sukses (PRD §1.4). Belum terhubung ke penyedia analitik (keputusan terbuka §14);
-    /// saat ini hanya menulis ke log, dan hanya bila pengguna menyetujui.
-    /// </summary>
-    public static class Analytics
-    {
-        static string CleanLogToken(string s) =>
-            string.IsNullOrEmpty(s) ? string.Empty : s.Replace("\r", " ").Replace("\n", " ");
-
-        public static void Log(string eventName, params (string key, object value)[] data)
-        {
-            if (!AppSettings.AnalyticsConsent) return;
-            var parts = new List<string>(data != null ? data.Length : 0);
-            if (data != null)
-            {
-                foreach (var (key, value) in data)
-                    parts.Add(CleanLogToken(key) + "=" + CleanLogToken(value?.ToString()));
-            }
-            Debug.Log("[Analytics] " + CleanLogToken(eventName) + (parts.Count > 0 ? " " + string.Join(" ", parts) : string.Empty));
         }
     }
 }

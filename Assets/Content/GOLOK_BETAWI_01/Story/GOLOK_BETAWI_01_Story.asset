@@ -1,0 +1,270 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25fd6c8569d03541b047df14ede99d2, type: 3}
+  m_Name: GOLOK_BETAWI_01_Story
+  m_EditorClassIdentifier: NusantaraAR.Runtime::NusantaraAR.ArtifactStory
+  chapters:
+  - key: pembuka
+    title:
+      id: Pusaka dari Tanah Betawi
+      en: Heritage of the Betawi People
+    text:
+      id: Inilah Golok Betawi, senjata tradisional sekaligus lambang jati diri masyarakat
+        Jakarta. Pada tahun 2021, Kementerian Pendidikan dan Kebudayaan menetapkannya
+        sebagai Warisan Budaya Takbenda Indonesia. Bagi warga Betawi, golok bukan
+        sekadar benda tajam, melainkan simbol keberanian, kehormatan, dan tanggung
+        jawab menjaga keluarga.
+      en: This is the Golok Betawi, a traditional blade and proud emblem of Jakarta's
+        Betawi community. In 2021, Indonesia's Ministry of Education and Culture
+        recognized it as an Intangible Cultural Heritage. To the Betawi people, a
+        golok is never just a cutting tool, but a symbol of courage, honor, and the
+        duty to protect one's family.
+    stage: 0
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: c2d334e8942d80e45b2a4c0f496c0f9c, type: 3}
+    voiceEN: {fileID: 8300000, guid: 4d859ba4b9c3e5b4a863359fe6692622, type: 3}
+    cuesID:
+    - time: 0
+      text: Inilah Golok Betawi, senjata tradisional sekaligus lambang jati diri
+        masyarakat Jakarta.
+    - time: 7.936
+      text: Pada tahun 2021, Kementerian Pendidikan dan Kebudayaan menetapkannya
+        sebagai Warisan Budaya Takbenda Indonesia.
+    - time: 18.176
+      text: Bagi warga Betawi, golok bukan sekadar benda tajam, melainkan simbol
+        keberanian, kehormatan, dan tanggung jawab menjaga keluarga.
+    cuesEN:
+    - time: 0
+      text: This is the Golok Betawi, a traditional blade and proud emblem of Jakarta's
+        Betawi community.
+    - time: 7.408
+      text: In 2021, Indonesia's Ministry of Education and Culture recognized it
+        as an Intangible Cultural Heritage.
+    - time: 16.304
+      text: To the Betawi people, a golok is never just a cutting tool, but a symbol
+        of courage, honor, and the duty to protect one's family.
+  - key: sarung_simpay
+    title:
+      id: Sarung Tanduk dan Simpay Kuningan
+      en: Horn Sheath and Brass Bands
+    text:
+      id: Saat tersarung, keindahan golok tampak dari sarung tanduk kerbau belang
+        yang dipoles mengkilap. Empat belas lilitan simpay kuningan memeluk rapat
+        seluruh batang sarung. Secara teknis, simpay mencegah sarung retak akibat
+        benturan, sementara secara filosofis melambangkan ikatan persaudaraan yang
+        kokoh.
+      en: While sheathed, the golok displays its polished striated water-buffalo
+        horn scabbard. Fourteen brass simpay bands wrap tightly along its entire
+        body. Practically, these rings reinforce the sheath against splitting, while
+        philosophically they symbolize the tight bonds of kinship and unity.
+    stage: 0
+    focusHotspot: simpay
+    voiceID: {fileID: 8300000, guid: 88edd44220231fc4fb32af39158eeb78, type: 3}
+    voiceEN: {fileID: 8300000, guid: 4dbe353463000be45909dbb152ebafaf, type: 3}
+    cuesID:
+    - time: 0
+      text: Saat tersarung, keindahan golok tampak dari sarung tanduk kerbau belang
+        yang dipoles mengkilap.
+    - time: 7.888
+      text: Empat belas lilitan simpay kuningan memeluk rapat seluruh batang sarung.
+    - time: 13.496
+      text: Secara teknis, simpay mencegah sarung retak akibat benturan, sementara
+        secara filosofis melambangkan ikatan persaudaraan yang kokoh.
+    cuesEN:
+    - time: 0
+      text: While sheathed, the golok displays its polished striated water-buffalo
+        horn scabbard.
+    - time: 6.664
+      text: Fourteen brass simpay bands wrap tightly along its entire body.
+    - time: 11.768
+      text: Practically, these rings reinforce the sheath against splitting, while
+        philosophically they symbolize the tight bonds of kinship and unity.
+  - key: sangkep
+    title:
+      id: Tradisi Nyoren dan Palang Pintu
+      en: Waist Carry and Palang Pintu
+    text:
+      id: Di bagian muka sarung terpasang sangkep kuningan yang melengkung sebagai
+        cantelan sabuk. Inilah ciri khas golok sorenan yang disisipkan di pinggang,
+        atau disebut nyoren. Dalam upacara pernikahan adat Betawi, golok sorenan
+        menjadi perlengkapan utama para pendekar saat memperagakan silat Palang Pintu.
+      en: On the front of the sheath sits the curved brass sangkep belt hook. This
+        marks the golok sorenan, traditionally tucked at the waist in a practice
+        called nyoren. During Betawi wedding ceremonies, martial artists carry the
+        sorenan while performing the lively Palang Pintu silat ritual.
+    stage: 0
+    focusHotspot: sangkep
+    voiceID: {fileID: 8300000, guid: dc61637301f23784f9d2a41a9d607f32, type: 3}
+    voiceEN: {fileID: 8300000, guid: 59b1616eb18a9dc43a1ed78ec2be573e, type: 3}
+    cuesID:
+    - time: 0
+      text: Di bagian muka sarung terpasang sangkep kuningan yang melengkung sebagai
+        cantelan sabuk.
+    - time: 7
+      text: Inilah ciri khas golok sorenan yang disisipkan di pinggang, atau disebut
+        nyoren.
+    - time: 13.904
+      text: Dalam upacara pernikahan adat Betawi, golok sorenan menjadi perlengkapan
+        utama para pendekar saat memperagakan silat Palang Pintu.
+    cuesEN:
+    - time: 0
+      text: On the front of the sheath sits the curved brass sangkep belt hook.
+    - time: 5.032
+      text: This marks the golok sorenan, traditionally tucked at the waist in a
+        practice called nyoren.
+    - time: 11.888
+      text: During Betawi wedding ceremonies, martial artists carry the sorenan while
+        performing the lively Palang Pintu silat ritual.
+  - key: hunus_bilah
+    title:
+      id: Bilah Baja dan Etika Jawara
+      en: Forged Blade and Warrior Ethics
+    text:
+      id: 'Mari kita hunus bilahnya dari sarung. Golok Betawi terbagi dua: golok
+        gablong atau bendo untuk berkebun, dan golok sorenan seperti ini untuk menjaga
+        diri. Dalam falsafah jawara Betawi, orang Betawi tidak bangga melukai, melainkan
+        bangga menjaga kehormatan. Bilah tiga puluh sentimeter ini berpunggung lurus
+        dan berperut melengkung halus ke ujung runcing.'
+      en: 'Let us draw the blade from its sheath. Betawi goloks fall into two types:
+        the gablong or bendo for daily farm work, and the sorenan like this one for
+        self-defense. Betawi martial ethics teach that honor lies in protecting dignity,
+        never in seeking harm. This thirty-centimeter blade pairs a straight spine
+        with a smooth sweeping belly to a crisp point.'
+    stage: 1
+    focusHotspot: bilah
+    voiceID: {fileID: 8300000, guid: 34aab7428003c8f4d99af729b2a4d17e, type: 3}
+    voiceEN: {fileID: 8300000, guid: fcd63d4f01c2e584284942eea98616ad, type: 3}
+    cuesID:
+    - time: 0
+      text: Mari kita hunus bilahnya dari sarung.
+    - time: 3.544
+      text: 'Golok Betawi terbagi dua: golok gablong atau bendo untuk berkebun, dan
+        golok sorenan seperti ini untuk menjaga diri.'
+    - time: 13.928
+      text: Dalam falsafah jawara Betawi, orang Betawi tidak bangga melukai, melainkan
+        bangga menjaga kehormatan.
+    - time: 23.064
+      text: Bilah tiga puluh sentimeter ini berpunggung lurus dan berperut melengkung
+        halus ke ujung runcing.
+    cuesEN:
+    - time: 0
+      text: Let us draw the blade from its sheath.
+    - time: 2.896
+      text: 'Betawi goloks fall into two types: the gablong or bendo for daily farm
+        work, and the sorenan like this one for self-defense.'
+    - time: 12.8
+      text: Betawi martial ethics teach that honor lies in protecting dignity, never
+        in seeking harm.
+    - time: 19.992
+      text: This thirty-centimeter blade pairs a straight spine with a smooth sweeping
+        belly to a crisp point.
+  - key: hulu_salut
+    title:
+      id: Hulu Jengkolan dan Pengunci Puting
+      en: Curved Horn Hilt and Tang Lock
+    text:
+      id: Sekarang hulu tanduk kerbau hitam dan paku kuningan dilepas dari tangkai
+        putingnya. Gagang melengkung gaya jengkolan dirancang pas dalam genggaman
+        agar tidak mudah terlepas. Di bawahnya terdapat salut kuningan melengkung
+        yang melindungi jari tangan agar tidak tergelincir ke sisi tajam bilah.
+      en: Now the black buffalo horn hilt and its brass pin separate from the tang.
+        This curved jengkolan grip is shaped to lock comfortably in the hand during
+        motion. Beneath it sits the flared brass salut guard, shielding the fingers
+        from sliding forward onto the sharp edge.
+    stage: 2
+    focusHotspot: hulu
+    voiceID: {fileID: 8300000, guid: ace7ffe1a964c484489ed263cf7577e2, type: 3}
+    voiceEN: {fileID: 8300000, guid: df58d6c259b60dc4a945a5d49c93497a, type: 3}
+    cuesID:
+    - time: 0
+      text: Sekarang hulu tanduk kerbau hitam dan paku kuningan dilepas dari tangkai
+        putingnya.
+    - time: 6.808
+      text: Gagang melengkung gaya jengkolan dirancang pas dalam genggaman agar tidak
+        mudah terlepas.
+    - time: 14.192
+      text: Di bawahnya terdapat salut kuningan melengkung yang melindungi jari tangan
+        agar tidak tergelincir ke sisi tajam bilah.
+    cuesEN:
+    - time: 0
+      text: Now the black buffalo horn hilt and its brass pin separate from the tang.
+    - time: 5.608
+      text: This curved jengkolan grip is shaped to lock comfortably in the hand
+        during motion.
+    - time: 11.696
+      text: Beneath it sits the flared brass salut guard, shielding the fingers from
+        sliding forward onto the sharp edge.
+  - key: bongkar_sarung
+    title:
+      id: Anatomi Lengkap Golok Betawi
+      en: Complete Anatomy of the Golok
+    text:
+      id: Pada tahap bongkar penuh, seluruh bagian utama golok terlihat terpisah
+        dengan jelas. Mulai dari bilah bertanda cap pande, salut kuningan, hulu tanduk
+        hitam, hingga kepala sarung berkuping, sangkep, dan jajaran simpay. Setiap
+        elemen memadukan ketangguhan fungsi dengan ketelitian kriya tradisional.
+      en: In the fully exploded view, every major component stands clearly separated.
+        From the smith-stamped blade, brass guard, and black horn grip to the winged
+        sheath throat, belt hook, and brass bands. Each piece unites practical resilience
+        with meticulous traditional craftsmanship.
+    stage: 4
+    focusHotspot: kepala_sarung
+    voiceID: {fileID: 8300000, guid: 4dcde13462236a44ab7352c2077e44e0, type: 3}
+    voiceEN: {fileID: 8300000, guid: 866b58b78ca636143b5de907a89183b4, type: 3}
+    cuesID:
+    - time: 0
+      text: Pada tahap bongkar penuh, seluruh bagian utama golok terlihat terpisah
+        dengan jelas.
+    - time: 7.36
+      text: Mulai dari bilah bertanda cap pande, salut kuningan, hulu tanduk hitam,
+        hingga kepala sarung berkuping, sangkep, dan jajaran simpay.
+    - time: 18.92
+      text: Setiap elemen memadukan ketangguhan fungsi dengan ketelitian kriya tradisional.
+    cuesEN:
+    - time: 0
+      text: In the fully exploded view, every major component stands clearly separated.
+    - time: 6.256
+      text: From the smith-stamped blade, brass guard, and black horn grip to the
+        winged sheath throat, belt hook, and brass bands.
+    - time: 15.224
+      text: Each piece unites practical resilience with meticulous traditional craftsmanship.
+  - key: penutup
+    title:
+      id: Warisan yang Terus Lestari
+      en: A Living Cultural Legacy
+    text:
+      id: Kini Golok Betawi kembali disarungkan dengan rapi. Melalui sanggar pencak
+        silat, Museum Betawi di Setu Babakan, dan para pandai besi penerusnya, warisan
+        leluhur Jakarta ini terus dijaga agar tetap hidup lintas generasi.
+      en: Now the Golok Betawi returns neatly to its sheath. Through silat schools,
+        the Betawi Museum at Setu Babakan, and dedicated local smiths, this ancestral
+        craft of Jakarta continues to thrive across generations.
+    stage: 0
+    focusHotspot: 
+    voiceID: {fileID: 8300000, guid: e63893a204944d14f8e25943a76b923d, type: 3}
+    voiceEN: {fileID: 8300000, guid: 849f592547db40649b076cf1cce893ea, type: 3}
+    cuesID:
+    - time: 0
+      text: Kini Golok Betawi kembali disarungkan dengan rapi.
+    - time: 4.312
+      text: Melalui sanggar pencak silat, Museum Betawi di Setu Babakan, dan para
+        pandai besi penerusnya, warisan leluhur Jakarta ini terus dijaga agar tetap
+        hidup lintas generasi.
+    cuesEN:
+    - time: 0
+      text: Now the Golok Betawi returns neatly to its sheath.
+    - time: 4.168
+      text: Through silat schools, the Betawi Museum at Setu Babakan, and dedicated
+        local smiths, this ancestral craft of Jakarta continues to thrive across
+        generations.
+  voiceCredit: 'Microsoft Edge TTS: Google TTS (id) / Google TTS (en)'
+  curatorValidated: 0

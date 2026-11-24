@@ -179,7 +179,6 @@ namespace NusantaraAR.Marker
 
             lastFrame = Time.time;
             SetState(preserveLocked ? State.Locked : State.Searching);
-            Analytics.Log("marker_session_start");
         }
 
         void RetryCamera()
@@ -291,7 +290,6 @@ namespace NusantaraAR.Marker
             target.rotation = Quaternion.AngleAxis(viewerYaw, up) * target.rotation;
             markerPose = smoother.Filter(target, Time.deltaTime);
             hasPose = true;
-            if (lastSeen < 0f) Analytics.Log("marker_detected", ("artifact", currentData.artifactId));
             lastSeen = Time.time;
         }
 

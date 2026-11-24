@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -43,6 +43,7 @@ namespace NusantaraAR.Tests
     [TestFixture("BOROBUDUR_01")]
     [TestFixture("KARAMBIT_01")]
     [TestFixture("KOMODO_01")]
+    [TestFixture("GOLOK_BETAWI_01")]
     public class ArtifactTests : ArtifactFixture
     {
         public ArtifactTests(string id) : base(id) { }
@@ -51,7 +52,7 @@ namespace NusantaraAR.Tests
         public void Catalog_HoldsTheBlenderArtifacts()
         {
             var ids = catalog.artifacts.Where(a => a != null).Select(a => a.artifactId).ToList();
-            CollectionAssert.AreEquivalent(new[] { "KERIS_BALI_01", "KERIS_SUMATRA_01", "BOROBUDUR_01", "KARAMBIT_01", "KOMODO_01" }, ids);
+            CollectionAssert.AreEquivalent(new[] { "KERIS_BALI_01", "KERIS_SUMATRA_01", "BOROBUDUR_01", "KARAMBIT_01", "KOMODO_01", "GOLOK_BETAWI_01" }, ids);
             var cats = catalog.NonEmptyCategories();
             Assert.IsTrue(cats.Contains(ArtifactCategory.KerisSenjata));
             Assert.IsTrue(cats.Contains(ArtifactCategory.Candi));

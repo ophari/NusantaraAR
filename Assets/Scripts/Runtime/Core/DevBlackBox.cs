@@ -135,9 +135,7 @@ namespace NusantaraAR
                 SetSlider("settings.sfxVol", 0.9f);
                 Log($"BB-23 slider diubah -> AppSettings narasi={AppSettings.NarrationVolume:0.00} musik={AppSettings.MusicVolume:0.00} efek={AppSettings.SfxVolume:0.00}");
                 yield return Shot("BB23_1_slider_diubah");
-                SetScroll("Content", 0.45f, "SettingsScreen"); yield return Wait(0.4f); yield return Shot("BB24_1_pengaturan_tengah");
-                SetScroll("Content", 0f, "SettingsScreen"); yield return Wait(0.4f); yield return Shot("BB24_2_tentang_kredit_musik");
-                Log("BB-24 teks kredit musik: " + Oneline(TextOf("MusicCredits")));
+                SetScroll("Content", 0f, "SettingsScreen"); yield return Wait(0.4f); yield return Shot("BB24_1_pengaturan_bawah");
 
                 // BB-03 ulangi tutorial
                 Press("Tutorial", "SettingsScreen"); yield return Wait(0.8f);
