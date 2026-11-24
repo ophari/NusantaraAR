@@ -6,13 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/NusantaraAR/Scenes/Main.unity
+    path: Assets/Scenes/Main.unity
     guid: 26592056124cefb4db69c2eb15856338
   - enabled: 1
-    path: Assets/NusantaraAR/Scenes/AR.unity
+    path: Assets/Scenes/AR.unity
     guid: 2a7288da898684d4aa2d848f26796bcb
   - enabled: 1
-    path: Assets/NusantaraAR/Scenes/Marker.unity
+    path: Assets/Scenes/Marker.unity
     guid: 2fde77a3a7c038141bf198a50b78b1f7
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 076ebb54290f48746b26ec8601178e74, type: 2}
