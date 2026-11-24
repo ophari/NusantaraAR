@@ -293,11 +293,11 @@ namespace NusantaraAR.Tests
             Assert.Greater(Vector3.Dot(pose.up, -center.normalized), 0.3f, "normal QR harus menghadap kamera");
         }
 
-        [TestCase("Docs/KartuQR_KerisBali_A5.png", Bali)]
-        [TestCase("Docs/KartuQR_KerisSumatra_A5.png", Sumatra)]
-        [TestCase("Docs/KartuQR_CandiBorobudur_A5.png", Borobudur)]
-        [TestCase("Docs/KartuQR_Karambit_A5.png", Karambit)]
-        [TestCase("Docs/KartuQR_Komodo_A5.png", Komodo)]
+        [TestCase("Assets/NusantaraAR/Markers/KartuQR_KerisBali_A5.png", Bali)]
+        [TestCase("Assets/NusantaraAR/Markers/KartuQR_KerisSumatra_A5.png", Sumatra)]
+        [TestCase("Assets/NusantaraAR/Markers/KartuQR_CandiBorobudur_A5.png", Borobudur)]
+        [TestCase("Assets/NusantaraAR/Markers/KartuQR_Karambit_A5.png", Karambit)]
+        [TestCase("Assets/NusantaraAR/Markers/KartuQR_Komodo_A5.png", Komodo)]
         public void Detects_PrintableQrCard_AndIsFastEnough(string path, string text)
         {
             if (!System.IO.File.Exists(path)) Assert.Ignore("Kartu QR belum dibuat (python Tools/kartu_qr.py)");

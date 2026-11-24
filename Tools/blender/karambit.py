@@ -9,7 +9,7 @@
 #   Assets/NusantaraAR/Art/Karambit/karambit.glb      (model PBR, tekstur tertanam)
 #   Tools/blender/karambit_textures/*.png             (sumber tekstur: warna, ORM, normal map)
 #   Tools/blender/karambit.blend                      (file kerja; di luar Assets agar tidak diimpor Unity)
-#   Docs/Karambit_Blender_*.png                       (render pratinjau)
+#   Assets/NusantaraAR/Previews/Karambit_Blender_*.png (render pratinjau)
 #
 # Ukuran direka dari sumber (lihat Docs/Karambit_Data.md), bukan diukur dari spesimen: gagang ±4 buku jari (pedoman
 # perajin Sungai Pua), lengkung bilah ±90-120 derajat dan tebal ½ cm menipis ke mata (Wiraseptya & Afdhal 2019),
@@ -37,7 +37,7 @@ ART = os.path.join(ROOT, 'Assets', 'NusantaraAR', 'Art', 'Karambit')
 GLB = os.path.join(ART, 'karambit.glb')
 TEX = os.path.join(HERE, 'karambit_textures')
 BLEND = os.path.join(HERE, 'karambit.blend')
-DOCS = os.path.join(ROOT, 'Docs')
+PREVIEWS = os.path.join(ROOT, 'Assets', 'NusantaraAR', 'Previews')
 ARGS = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 RENDER = '--no-render' not in ARGS
 
@@ -444,19 +444,20 @@ def render_previews(tex, pisau, sarung, dudukan, objs):
         for p in props:
             p.hide_render = not v
 
+    os.makedirs(PREVIEWS, exist_ok=True)
     show_props(False)
-    shot(os.path.join(DOCS, 'Karambit_Blender_tersarung.png'), (1100, 1100), ortho=(0.030, 0.012, 0.215))
+    shot(os.path.join(PREVIEWS, 'Karambit_Blender_tersarung.png'), (1100, 1100), ortho=(0.030, 0.012, 0.215))
     sarung.rotation_euler = (0, -math.radians(130), 0)
-    shot(os.path.join(DOCS, 'Karambit_Blender_dihunus.png'), (1100, 1100), ortho=(0.030, 0.012, 0.215))
+    shot(os.path.join(PREVIEWS, 'Karambit_Blender_dihunus.png'), (1100, 1100), ortho=(0.030, 0.012, 0.215))
     sarung.rotation_euler = (0, 0, 0)
-    shot(os.path.join(DOCS, 'Karambit_Blender_hulu.png'), (1200, 1000),
+    shot(os.path.join(PREVIEWS, 'Karambit_Blender_hulu.png'), (1200, 1000),
          persp=((-0.010, 0.0, 0.055), (-0.10, -0.17, 0.10), 60))
 
     # Hero: karambit terhunus di dudukan, sarung tergeletak di atas kain.
     show_props(True)
     sarung.rotation_euler = (math.radians(90), 0, math.radians(-12))
     sarung.location = (0.075, -0.075, BASE_BOT + 0.0105)
-    shot(os.path.join(DOCS, 'Karambit_Blender_hero.png'), (1600, 900),
+    shot(os.path.join(PREVIEWS, 'Karambit_Blender_hero.png'), (1600, 900),
          persp=((0.040, -0.03, -0.012), (-0.13, -0.53, 0.15), 42))
     sarung.rotation_euler = (0, 0, 0); sarung.location = (CX, 0, 0)
     show_props(False)
@@ -522,7 +523,7 @@ def main():
     if RENDER:
         render_previews(tex, pisau, objs['Sarung'], objs['Dudukan'], objs)
         bpy.ops.wm.save_as_mainfile(filepath=BLEND)
-        print('Render pratinjau: Docs/Karambit_Blender_*.png')
+        print('Render pratinjau: Assets/NusantaraAR/Previews/Karambit_Blender_*.png')
 
 
 if __name__ == '__main__':

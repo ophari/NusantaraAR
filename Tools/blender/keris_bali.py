@@ -9,7 +9,7 @@
 #   Assets/NusantaraAR/Art/KerisBali/keris_bali.glb      (model PBR, tekstur tertanam, animasi "Cabut_Keris")
 #   Tools/blender/keris_bali_textures/*.png             (sumber tekstur: warna, ORM, normal map)
 #   Tools/blender/keris_bali.blend                      (file kerja; di luar Assets agar tidak diimpor Unity)
-#   Docs/KerisBali_Blender_*.png                        (render pratinjau)
+#   Assets/NusantaraAR/Previews/KerisBali_Blender_*.png (render pratinjau)
 #
 # Utilitas mesh/tekstur/material/ekspor dipakai bersama dari keris_sumatra.py.
 # Ruang lokal keris sama dengan Keris Sumatra: bilah menghadap -Z, pivot di pangkal bilah, lebar di X, tebal di Y.
@@ -32,7 +32,7 @@ ART = os.path.join(ROOT, 'Assets', 'NusantaraAR', 'Art', 'KerisBali')
 GLB = os.path.join(ART, 'keris_bali.glb')
 TEX = os.path.join(HERE, 'keris_bali_textures')
 BLEND = os.path.join(HERE, 'keris_bali.blend')
-DOCS = os.path.join(ROOT, 'Docs')
+PREVIEWS = os.path.join(ROOT, 'Assets', 'NusantaraAR', 'Previews')
 ARGS = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 RENDER = '--no-render' not in ARGS
 
@@ -865,7 +865,8 @@ def render_previews(tex, root, keris, bilah, sarung, jagrak):
         else:
             target, eye, lens = persp
             cam.data.type = 'PERSP'; cam.data.lens = lens; cam.location = eye; look(cam, target)
-        sc.render.filepath = os.path.join(DOCS, f'KerisBali_Blender_{name}.png')
+        os.makedirs(PREVIEWS, exist_ok=True)
+        sc.render.filepath = os.path.join(PREVIEWS, f'KerisBali_Blender_{name}.png')
         bpy.ops.render.render(write_still=True)
         print('Render:', sc.render.filepath)
 
@@ -995,7 +996,7 @@ def main():
         bilah.animation_data.action = act
         sc.frame_set(1)
         bpy.ops.wm.save_as_mainfile(filepath=BLEND)
-        print('Render pratinjau: Docs/KerisBali_Blender_*.png')
+        print('Render pratinjau: Assets/NusantaraAR/Previews/KerisBali_Blender_*.png')
 
 
 if __name__ == '__main__':

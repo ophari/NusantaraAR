@@ -4,7 +4,7 @@
 #   "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" --background --factory-startup --python Tools/blender/candi_borobudur.py
 # Bawaan HANYA membangun scene + menyimpan .blend (ringan: tanpa render, tanpa ekspor). Tambahkan setelah "--":
 #   --export   tulis GLB ke Assets/NusantaraAR/Art/CandiBorobudur/candi_borobudur.glb
-#   --render   render Cycles dari 4 kamera ke Docs/CandiBorobudur_Blender_{hero,depan,stupa,lorong}.png
+#   --render   render Cycles dari 4 kamera ke Assets/NusantaraAR/Previews/CandiBorobudur_Blender_{hero,depan,stupa,lorong}.png
 # Contoh di laptop lain:  blender.exe --background --factory-startup --python Tools/blender/candi_borobudur.py -- --export --render
 #
 # Hasil:
@@ -38,7 +38,7 @@ ART = os.path.join(ROOT, 'Assets', 'NusantaraAR', 'Art', 'CandiBorobudur')
 GLB = os.path.join(ART, 'candi_borobudur.glb')
 TEX = os.path.join(HERE, 'candi_borobudur_textures')
 BLEND = os.path.join(HERE, 'candi_borobudur.blend')
-DOCS = os.path.join(ROOT, 'Docs')
+PREVIEWS = os.path.join(ROOT, 'Assets', 'NusantaraAR', 'Previews')
 ARGS = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 EXPORT = '--export' in ARGS
 RENDER = '--render' in ARGS
@@ -755,10 +755,11 @@ def viewport():
 
 
 def render_previews(cams):
+    os.makedirs(PREVIEWS, exist_ok=True)
     sc = bpy.context.scene
     for c, suffix in zip(cams, ('hero', 'depan', 'stupa', 'lorong')):
         sc.camera = c
-        sc.render.filepath = os.path.join(DOCS, f'CandiBorobudur_Blender_{suffix}.png')
+        sc.render.filepath = os.path.join(PREVIEWS, f'CandiBorobudur_Blender_{suffix}.png')
         bpy.ops.render.render(write_still=True); print('Render:', sc.render.filepath)
     sc.camera = cams[0]
 

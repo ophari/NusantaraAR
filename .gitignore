@@ -109,6 +109,7 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ss]ceneDependencyCache*
 
 # Nusantara AR
+/Docs/
 /Previews/
 /Builds/
 

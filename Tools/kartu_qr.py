@@ -15,6 +15,7 @@ F = lambda n, s: ImageFont.truetype('C:/Windows/Fonts/' + n, s)
 title, sub, body, small = F('georgiab.ttf', 110), F('georgia.ttf', 60), F('arial.ttf', 44), F('arial.ttf', 36)
 
 QR_PREFIX = 'NUSANTARA:'
+OUT_DIR = 'Assets/NusantaraAR/Markers'
 KARTU = [('Keris Bali', 'KerisBali', 'KERIS_BALI_01'), ('Keris Sumatra', 'KerisSumatra', 'KERIS_SUMATRA_01'),
          ('Candi Borobudur', 'CandiBorobudur', 'BOROBUDUR_01'), ('Karambit', 'Karambit', 'KARAMBIT_01'),
          ('Komodo', 'Komodo', 'KOMODO_01')]
@@ -59,9 +60,12 @@ def kartu(nama, berkas, artifact_id):
         if font is small and line.startswith('Cetak'):
             y += mm(3)
         d.text((mm(16), y), line, font=font, fill=fill); y += int(font.size * 1.4)
-    card.save('Docs/KartuQR_%s_A5.png' % berkas, dpi=(DPI, DPI))
-    card.save('Docs/KartuQR_%s_A5.pdf' % berkas, 'PDF', resolution=DPI)
-    print('Selesai: Docs/KartuQR_%s_A5.pdf (QR versi %d, %d modul)' % (berkas, qr.version, n))
+    os.makedirs(OUT_DIR, exist_ok=True)
+    png_path = f'{OUT_DIR}/KartuQR_{berkas}_A5.png'
+    pdf_path = f'{OUT_DIR}/KartuQR_{berkas}_A5.pdf'
+    card.save(png_path, dpi=(DPI, DPI))
+    card.save(pdf_path, 'PDF', resolution=DPI)
+    print('Selesai: %s (QR versi %d, %d modul)' % (pdf_path, qr.version, n))
 
 
 for k in KARTU:

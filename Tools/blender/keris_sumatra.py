@@ -8,7 +8,7 @@
 #   Assets/NusantaraAR/Art/KerisSumatra/keris_sumatra.glb   (model PBR, tekstur tertanam, animasi "Cabut_Keris")
 #   Tools/blender/keris_sumatra_textures/*.png              (sumber tekstur: warna, ORM, normal map)
 #   Tools/blender/keris_sumatra.blend                       (file kerja; di luar Assets agar tidak diimpor Unity)
-#   Docs/KerisSumatra_Blender_*.png                         (render pratinjau)
+#   Assets/NusantaraAR/Previews/KerisSumatra_Blender_*.png  (render pratinjau)
 #
 # Ruang Blender: Z ke atas, muka depan -Y, 1 unit = 1 m. Bilah menghadap -Z, lebar bilah di sumbu X, tebal di Y.
 # Pivot = pangkal bilah (pertemuan wilah dan ganja) di titik asal; sisi gandik/kembang kacang di -X,
@@ -27,7 +27,7 @@ ART = os.path.join(ROOT, 'Assets', 'NusantaraAR', 'Art', 'KerisSumatra')
 GLB = os.path.join(ART, 'keris_sumatra.glb')
 TEX = os.path.join(HERE, 'keris_sumatra_textures')
 BLEND = os.path.join(HERE, 'keris_sumatra.blend')
-DOCS = os.path.join(ROOT, 'Docs')
+PREVIEWS = os.path.join(ROOT, 'Assets', 'NusantaraAR', 'Previews')
 ARGS = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 RENDER = '--no-render' not in ARGS
 
@@ -925,12 +925,13 @@ def render_previews(tex, bilah, sarung, dudukan):
             p.hide_render = not v
 
     # Studio berdiri (tanpa meja)
+    os.makedirs(PREVIEWS, exist_ok=True)
     show_props(False)
-    shot(os.path.join(DOCS, 'KerisSumatra_Blender_tersarung.png'), (900, 1200), ortho=(0.022, -0.136, 0.60))
+    shot(os.path.join(PREVIEWS, 'KerisSumatra_Blender_tersarung.png'), (900, 1200), ortho=(0.022, -0.136, 0.60))
     bilah.location = (0.19, 0.0, 0.0)
-    shot(os.path.join(DOCS, 'KerisSumatra_Blender_dihunus.png'), (1200, 1150), ortho=(0.075, -0.136, 0.62))
+    shot(os.path.join(PREVIEWS, 'KerisSumatra_Blender_dihunus.png'), (1200, 1150), ortho=(0.075, -0.136, 0.62))
     bilah.location = (0.0, 0.0, 0.0)
-    shot(os.path.join(DOCS, 'KerisSumatra_Blender_hulu.png'), (1200, 1000),
+    shot(os.path.join(PREVIEWS, 'KerisSumatra_Blender_hulu.png'), (1200, 1000),
          persp=((0.018, 0.0, 0.035), (-0.13, -0.24, 0.12), 60))
 
     # Hero: keris tergeletak di atas kain; bilah terhunus bersilang di atas sarung.
@@ -941,7 +942,7 @@ def render_previews(tex, bilah, sarung, dudukan):
     alpha = math.radians(3.6)
     bilah.rotation_euler = (-math.pi / 2 - alpha, 0, math.radians(-115))
     bilah.location = (0.095, -0.090, 0.0152)
-    shot(os.path.join(DOCS, 'KerisSumatra_Blender_hero.png'), (1600, 900),
+    shot(os.path.join(PREVIEWS, 'KerisSumatra_Blender_hero.png'), (1600, 900),
          persp=((-0.005, -0.03, 0.0), (0.12, -0.70, 0.50), 50))
 
     for o in (bilah, sarung):
@@ -1029,7 +1030,7 @@ def main():
         bilah.animation_data.action = act
         sc.frame_set(1)
         bpy.ops.wm.save_as_mainfile(filepath=BLEND)  # simpan lagi beserta kamera, lampu, meja
-        print('Render pratinjau: Docs/KerisSumatra_Blender_*.png')
+        print('Render pratinjau: Assets/NusantaraAR/Previews/KerisSumatra_Blender_*.png')
 
 
 if __name__ == '__main__':      # keris_bali.py mengimpor file ini sebagai modul utilitas

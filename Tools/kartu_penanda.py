@@ -11,6 +11,7 @@ gold, teak, stone = (212, 175, 55), (30, 27, 24), (110, 100, 90)
 F = lambda n, s: ImageFont.truetype('C:/Windows/Fonts/' + n, s)
 title, sub, body, small = F('georgiab.ttf', 110), F('georgia.ttf', 60), F('arial.ttf', 44), F('arial.ttf', 36)
 
+OUT_DIR = 'Assets/NusantaraAR/Markers'
 KARTU = [('Keris Bali', 'KerisBali', 0xB532), ('Keris Sumatra', 'KerisSumatra', 0xF0E4),
          ('Candi Borobudur', 'CandiBorobudur', 0xE3B1), ('Karambit', 'Karambit', 0xC616),
          ('Komodo', 'Komodo', 0xDC4E)]
@@ -51,9 +52,12 @@ def kartu(nama, berkas, code):
         if font is small and line.startswith('Cetak'):
             y += mm(3)
         d.text((mm(16), y), line, font=font, fill=fill); y += int(font.size * 1.4)
-    card.save('Docs/KartuPenanda_%s_A5.png' % berkas, dpi=(DPI, DPI))
-    card.save('Docs/KartuPenanda_%s_A5.pdf' % berkas, 'PDF', resolution=DPI)
-    print('Selesai: Docs/KartuPenanda_%s_A5.pdf' % berkas)
+    os.makedirs(OUT_DIR, exist_ok=True)
+    png_path = f'{OUT_DIR}/KartuPenanda_{berkas}_A5.png'
+    pdf_path = f'{OUT_DIR}/KartuPenanda_{berkas}_A5.pdf'
+    card.save(png_path, dpi=(DPI, DPI))
+    card.save(pdf_path, 'PDF', resolution=DPI)
+    print('Selesai: ' + pdf_path)
 
 
 for k in KARTU:

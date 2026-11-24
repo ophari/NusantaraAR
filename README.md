@@ -8,7 +8,7 @@ Aplikasi mobile AR untuk edukasi benda budaya dan satwa khas Indonesia, sesuai *
 - **Input:** Input System (EnhancedTouch)
 - **Model 3D:** Blender 5.2 → GLB, diimpor dengan glTFast 6.20 (`com.unity.cloud.gltfast`)
 
-> Dokumentasi kode lengkap (arsitektur, alur data, referensi tiap file, algoritma Scan QR, pipeline editor, pengujian): **[Docs/DOKUMENTASI_KODE.md](Docs/DOKUMENTASI_KODE.md)**
+> Dokumentasi kode lengkap (arsitektur, alur data, referensi tiap file, algoritma Scan QR, pipeline editor, pengujian) tersedia secara lokal di `Docs/DOKUMENTASI_KODE.md` *(folder `Docs/` hanya lokal dan tidak di-push ke GitHub)*.
 
 ## Menjalankan
 
@@ -71,17 +71,17 @@ Kartu kode QR (cetak A5 tanpa diperkecil, sisi QR 8 cm) — satu kartu per artef
 
 | Artefak | Kartu QR | Isi QR |
 | --- | --- | --- |
-| Keris Bali (model Blender) | `Docs/KartuQR_KerisBali_A5.pdf` | `NUSANTARA:KERIS_BALI_01` |
-| Keris Sumatra (model Blender) | `Docs/KartuQR_KerisSumatra_A5.pdf` | `NUSANTARA:KERIS_SUMATRA_01` |
-| Candi Borobudur (model Blender) | `Docs/KartuQR_CandiBorobudur_A5.pdf` | `NUSANTARA:BOROBUDUR_01` |
-| Karambit (model Blender) | `Docs/KartuQR_Karambit_A5.pdf` | `NUSANTARA:KARAMBIT_01` |
-| Komodo (model Blender) | `Docs/KartuQR_Komodo_A5.pdf` | `NUSANTARA:KOMODO_01` |
+| Keris Bali (model Blender) | `Assets/NusantaraAR/Markers/KartuQR_KerisBali_A5.pdf` | `NUSANTARA:KERIS_BALI_01` |
+| Keris Sumatra (model Blender) | `Assets/NusantaraAR/Markers/KartuQR_KerisSumatra_A5.pdf` | `NUSANTARA:KERIS_SUMATRA_01` |
+| Candi Borobudur (model Blender) | `Assets/NusantaraAR/Markers/KartuQR_CandiBorobudur_A5.pdf` | `NUSANTARA:BOROBUDUR_01` |
+| Karambit (model Blender) | `Assets/NusantaraAR/Markers/KartuQR_Karambit_A5.pdf` | `NUSANTARA:KARAMBIT_01` |
+| Komodo (model Blender) | `Assets/NusantaraAR/Markers/KartuQR_Komodo_A5.pdf` | `NUSANTARA:KOMODO_01` |
 
 Kartu QR dibuat ulang dengan `python Tools/kartu_qr.py` (butuh `pip install pillow qrcode`). Isi QR diturunkan dari
 `artifactId` (`ArtifactData.QrText`), jadi artefak baru otomatis punya QR. Atau tekan tombol **Tampilkan QR** di halaman
 detail untuk menampilkannya di layar HP/laptop lain.
 
-Kartu penanda 6x6 lama (`Docs/KartuPenanda_*_A5.pdf`, kode `B532` / `F0E4` / `E3B1` / `C616` / `DC4E`, `python Tools/kartu_penanda.py`) kodenya
+Kartu penanda 6x6 lama (`Assets/NusantaraAR/Markers/KartuPenanda_*_A5.pdf`, kode `B532` / `F0E4` / `E3B1` / `C616` / `DC4E`, `python Tools/kartu_penanda.py`) kodenya
 tetap disimpan dan masih dikenali di mode Scan QR sebagai cadangan (`MarkerController.detectLegacyCards`), tetapi tidak
 lagi ditampilkan di UI. Kartu `EEC1` (keris sementara) dan `DA26` (Keris Jawa) sudah ditarik dan tidak dikenali lagi.
 
@@ -121,6 +121,8 @@ Assets/NusantaraAR/
   Art/Karambit/                   karambit.glb (ekspor Blender) + Materials/ + Textures/
   Art/Komodo/                     komodo.glb (ekspor Blender) + Materials/ + Textures/
   Resources/ContentCatalog.asset, UIGlass.mat, GroundGlow.mat
+  Markers/                        kartu QR & kartu penanda cetak A5 (KartuQR_*_A5, KartuPenanda_*_A5)
+  Previews/                       render pratinjau model Blender (*_Blender_*.png)
   Scenes/Main.unity, AR.unity, Marker.unity (Scan QR)
 Tools/blender/keris_bali.py, keris_sumatra.py, candi_borobudur.py, karambit.py, komodo.py   skrip Blender pemodel artefak (+ .blend, *_textures/ hasilnya)
 Tools/kartu_qr.py                 kartu kode QR cetak A5
@@ -148,7 +150,7 @@ dihapus dari proyek (masih ada di riwayat git).
 
 Mengubah model:
 
-1. Ubah skripnya, lalu ekspor ulang GLB (+ tekstur, `.blend`, render `Docs/Keris*_Blender_*.png`):
+1. Ubah skripnya, lalu ekspor ulang GLB (+ tekstur, `.blend`, render `Assets/NusantaraAR/Previews/*_Blender_*.png`):
 
    ```bash
    "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" --background --factory-startup --python Tools/blender/keris_bali.py

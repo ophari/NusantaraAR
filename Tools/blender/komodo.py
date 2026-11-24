@@ -9,7 +9,7 @@
 #   Assets/NusantaraAR/Art/Komodo/komodo.glb      (model PBR, tekstur tertanam)
 #   Tools/blender/komodo_textures/*.png           (sumber tekstur: warna, ORM, normal map)
 #   Tools/blender/komodo.blend                    (file kerja; di luar Assets agar tidak diimpor Unity)
-#   Docs/Komodo_Blender_*.png                     (render pratinjau)
+#   Assets/NusantaraAR/Previews/Komodo_Blender_*.png (render pratinjau)
 #
 # Model berskala 1:1 (1 unit = 1 m); aplikasi memperkecilnya 1:10. Proporsi direka dari foto acuan dan data bersumber
 # (lihat Docs/Komodo_Data.md), bukan dipindai atau diukur dari spesimen: betina dewasa ±2,3 m, panjang moncong-kloaka
@@ -36,7 +36,7 @@ ART = os.path.join(ROOT, 'Assets', 'NusantaraAR', 'Art', 'Komodo')
 GLB = os.path.join(ART, 'komodo.glb')
 TEX = os.path.join(HERE, 'komodo_textures')
 BLEND = os.path.join(HERE, 'komodo.blend')
-DOCS = os.path.join(ROOT, 'Docs')
+PREVIEWS = os.path.join(ROOT, 'Assets', 'NusantaraAR', 'Previews')
 ARGS = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 RENDER = '--no-render' not in ARGS
 UP = np.array([0.0, 0.0, 1.0])
@@ -886,16 +886,17 @@ def render_previews(tex, objs):
         bpy.ops.render.render(write_still=True)
         print('Render:', path)
 
+    os.makedirs(PREVIEWS, exist_ok=True)
     rahang, lidah, telur = objs['Rahang'], objs['Lidah'], objs['Telur']
-    shot(os.path.join(DOCS, 'Komodo_Blender_hero.png'), (1600, 900), (0.05, 0.10, 0.20), (-1.6, -4.4, 1.9), 46)
-    shot(os.path.join(DOCS, 'Komodo_Blender_kepala.png'), (1200, 900), (-1.05, -0.05, 0.21), (-1.75, -0.95, 0.42), 55)
+    shot(os.path.join(PREVIEWS, 'Komodo_Blender_hero.png'), (1600, 900), (0.05, 0.10, 0.20), (-1.6, -4.4, 1.9), 46)
+    shot(os.path.join(PREVIEWS, 'Komodo_Blender_kepala.png'), (1200, 900), (-1.05, -0.05, 0.21), (-1.75, -0.95, 0.42), 55)
     # Pose tahap 1: rahang terbuka, lidah terjulur.
     rahang.rotation_euler = (0, -math.radians(JAW_OPEN), 0)
     lidah.location = Vector(lidah.location) + Vector(HEAD_DIR * JULUR)
-    shot(os.path.join(DOCS, 'Komodo_Blender_mulut.png'), (1200, 900), (-1.25, -0.05, 0.19), (-1.85, -1.05, 0.40), 50)
+    shot(os.path.join(PREVIEWS, 'Komodo_Blender_mulut.png'), (1200, 900), (-1.25, -0.05, 0.19), (-1.85, -1.05, 0.40), 50)
     rahang.rotation_euler = (0, 0, 0)
     lidah.location = Vector(lidah.location) - Vector(HEAD_DIR * JULUR)
-    shot(os.path.join(DOCS, 'Komodo_Blender_sarang.png'), (1200, 900), (1.05, -0.10, 0.12), (0.75, -1.55, 0.55), 50)
+    shot(os.path.join(PREVIEWS, 'Komodo_Blender_sarang.png'), (1200, 900), (1.05, -0.10, 0.12), (0.75, -1.55, 0.55), 50)
     return lights + [lantai, cam]
 
 
@@ -972,7 +973,7 @@ def main():
     if RENDER:
         render_previews(tex, objs)
         bpy.ops.wm.save_as_mainfile(filepath=BLEND)
-        print('Render pratinjau: Docs/Komodo_Blender_*.png')
+        print('Render pratinjau: Assets/NusantaraAR/Previews/Komodo_Blender_*.png')
 
 
 if __name__ == '__main__':
