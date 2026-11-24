@@ -54,10 +54,13 @@ namespace NusantaraAR.Marker
         /// </summary>
         public static Pose ArtifactPose(Vector3[] c)
         {
+            if (c == null || c.Length < 4) return Pose.identity;
             var center = (c[0] + c[1] + c[2] + c[3]) * 0.25f;
             var right = ((c[1] - c[0]) + (c[2] - c[3])).normalized;
             var top = ((c[0] - c[3]) + (c[1] - c[2])).normalized;
+            if (top.sqrMagnitude < 1e-6f) top = Vector3.forward;
             var normal = Vector3.Cross(top, right).normalized;
+            if (normal.sqrMagnitude < 1e-6f) normal = Vector3.up;
             if (Vector3.Dot(normal, -center) < 0f) normal = -normal;
             return new Pose(center, Quaternion.LookRotation(top, normal));
         }
@@ -74,6 +77,8 @@ namespace NusantaraAR.Marker
         /// menghadap pengguna walau QR di meja diletakkan miring/terbalik; 0 bila QR tegak.</param>
         public static Pose UprightPose(Vector3[] c, Vector3 up, out float wallWeight, out float yawToViewer)
         {
+            if (up.sqrMagnitude < 1e-6f) up = Vector3.up;
+            else up.Normalize();
             var qr = ArtifactPose(c);
             var normal = qr.up;
             var top = qr.forward;
@@ -85,6 +90,7 @@ namespace NusantaraAR.Marker
             var forward = Vector3.ProjectOnPlane(top, up) + Vector3.ProjectOnPlane(-normal, up);
             if (forward.sqrMagnitude < 1e-4f) forward = Vector3.ProjectOnPlane(Vector3.forward, up);
             if (forward.sqrMagnitude < 1e-6f) forward = Vector3.ProjectOnPlane(Vector3.down, up); // kamera tepat tegak lurus ke bawah
+            if (forward.sqrMagnitude < 1e-6f) forward = Vector3.forward;
 
             yawToViewer = 0f;
             var view = Vector3.ProjectOnPlane(qr.position, up); // kamera -> QR, mendatar

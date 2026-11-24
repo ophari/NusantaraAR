@@ -333,6 +333,7 @@ namespace NusantaraAR.UI
             var t = rt.gameObject.AddComponent<TextMeshProUGUI>();
             // Set font eksplisit: TMP di bawah induk nonaktif belum menjalankan Awake (font null).
             if (t.font == null) t.font = TMP_Settings.defaultFontAsset;
+            t.richText = false; // cegah injeksi markup TMP; komponen yang butuh richText mengaktifkannya eksplisit
             t.text = text;
             t.fontSize = size;
             t.color = color;
@@ -341,6 +342,14 @@ namespace NusantaraAR.UI
             t.textWrappingMode = TextWrappingModes.Normal;
             t.raycastTarget = false;
             return t;
+        }
+
+        /// <summary>Menetralkan tag Rich Text TMP (&lt;color&gt;, &lt;sprite&gt;, &lt;link&gt;, dsb.) pada teks dinamis.</summary>
+        public static string EscapeRichText(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return string.Empty;
+            if (text.IndexOf('<') < 0) return text;
+            return "<noparse>" + text.Replace("</noparse>", "</ noparse>") + "</noparse>";
         }
 
         public static Image IconImage(Transform parent, Icon icon, float size, Color color, string name = "Icon")

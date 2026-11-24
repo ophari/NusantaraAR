@@ -53,6 +53,12 @@ namespace NusantaraAR
         public ArtifactInstance Place(ArtifactData data)
         {
             if (!HasTargetPose || data == null || data.prefab == null) return null;
+            if (Placed != null && Placed.Data != data)
+            {
+                Detach();
+                Destroy(Placed.gameObject);
+                Placed = null;
+            }
             if (Placed == null)
             {
                 var go = Instantiate(data.prefab);
@@ -60,10 +66,11 @@ namespace NusantaraAR
                 Placed = go.GetComponent<ArtifactInstance>();
                 Placed.Init(data);
             }
+            dragging = false;
             Placed.gameObject.SetActive(true);
             Detach();
             Placed.transform.position = TargetPose.position;
-            Placed.FaceTowards(arCamera.transform.position);
+            if (arCamera != null) Placed.FaceTowards(arCamera.transform.position);
             AttachAnchor();
             if (reticle != null) reticle.Hide();
             return Placed;
@@ -111,6 +118,14 @@ namespace NusantaraAR
         {
             if (Placed != null) Placed.transform.SetParent(null, true);
             if (anchor != null) Destroy(anchor.gameObject);
+            anchor = null;
+        }
+
+        void OnDestroy()
+        {
+            if (Placed != null) Destroy(Placed.gameObject);
+            if (anchor != null) Destroy(anchor.gameObject);
+            Placed = null;
             anchor = null;
         }
 

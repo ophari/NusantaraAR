@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -139,15 +139,23 @@ namespace NusantaraAR.EditorTools
             PlayerSettings.iOS.cameraUsageDescription =
                 "Kamera dipakai untuk menampilkan artefak di ruangan secara langsung (AR). Tidak ada gambar yang direkam atau diunggah.";
 
-            // Input System saja (EnhancedTouch)
+            // Input System saja (EnhancedTouch) + blokir sentuhan saat jendela tertutup overlay (anti-tapjacking Android CWE-1021)
             var playerSettings = Unsupported.GetSerializedAssetInterfaceSingleton("PlayerSettings");
             var so = new SerializedObject(playerSettings);
+            bool modified = false;
             var handler = so.FindProperty("activeInputHandler");
             if (handler != null && handler.intValue != 1)
             {
                 handler.intValue = 1;
-                so.ApplyModifiedPropertiesWithoutUndo();
+                modified = true;
             }
+            var filterObscured = so.FindProperty("AndroidFilterTouchesWhenObscured");
+            if (filterObscured != null && !filterObscured.boolValue)
+            {
+                filterObscured.boolValue = true;
+                modified = true;
+            }
+            if (modified) so.ApplyModifiedPropertiesWithoutUndo();
         }
 
         // ------------------------------------------------------------------ XR

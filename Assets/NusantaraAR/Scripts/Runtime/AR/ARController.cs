@@ -42,6 +42,7 @@ namespace NusantaraAR
         GroundGlow glow;
         float glowRadius;
         bool refreshed;
+        bool permissionRequesting;
 
         public State CurrentState => state;
 
@@ -52,15 +53,21 @@ namespace NusantaraAR
             AudioManager.Instance.PlayMusic(data != null ? data.backgroundMusic : null); // sama dengan di detail: tidak mulai ulang
             BuildUI();
             hud.SetControlsVisible(false);
-            session.enabled = false;
-            session.matchFrameRateRequested = true;
+            if (session != null)
+            {
+                session.enabled = false;
+                session.matchFrameRateRequested = true;
+            }
 
-            gestures.Tapped += OnTap;
-            gestures.Dragged += OnDrag;
-            gestures.Pinched += OnPinch;
-            gestures.TwoFingerPanned += OnPan;
-            gestures.TwoFingerPanEnded += OnPanEnded;
-            gestures.InteractionStarted += StopAutoRotate;
+            if (gestures != null)
+            {
+                gestures.Tapped += OnTap;
+                gestures.Dragged += OnDrag;
+                gestures.Pinched += OnPinch;
+                gestures.TwoFingerPanned += OnPan;
+                gestures.TwoFingerPanEnded += OnPanEnded;
+                gestures.InteractionStarted += StopAutoRotate;
+            }
 
             SetState(State.CheckingAvailability);
             if (ARSession.state == ARSessionState.None || ARSession.state == ARSessionState.CheckingAvailability)
@@ -94,6 +101,7 @@ namespace NusantaraAR
         void OnDestroy()
         {
             Locale.Changed -= RefreshTexts;
+            if (glow != null) Destroy(glow.gameObject);
             if (gestures == null) return;
             gestures.Tapped -= OnTap;
             gestures.Dragged -= OnDrag;
@@ -105,7 +113,7 @@ namespace NusantaraAR
 
         void StartAR()
         {
-            if (session.enabled) return;
+            if (session == null || session.enabled) return;
             session.enabled = true;
             placement.SetPlanesVisible(true);
             sessionStart = scanStart = Time.time;
@@ -115,8 +123,11 @@ namespace NusantaraAR
 
         void RequestPermission()
         {
+            if (permissionRequesting) return;
+            permissionRequesting = true;
             CameraPermission.Request(granted =>
             {
+                permissionRequesting = false;
                 if (this == null) return;
                 if (granted) StartAR();
                 else SetState(State.PermissionDenied);
@@ -142,6 +153,7 @@ namespace NusantaraAR
                 case State.Placed:
                     if (ARSession.state != ARSessionState.SessionTracking)
                     {
+                        placement.EndDrag();
                         hud.SetControlsVisible(false);
                         SetState(State.TrackingLost);
                     }

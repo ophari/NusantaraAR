@@ -28,6 +28,16 @@ namespace NusantaraAR.EditorTools
                     $"[NusantaraAR] Build {target} dijalankan saat platform aktif {active}. " +
                     $"Pindah dulu ke {target} (File > Build Profiles > Switch Platform, atau batch -buildTarget).");
 
+            // Cegah define QA (DevCapture menghapus PlayerPrefs & keluar otomatis) ikut ke build perangkat mobile.
+            if (target == BuildTarget.Android || target == BuildTarget.iOS)
+            {
+                var namedTarget = NamedBuildTarget.FromBuildTargetGroup(report.summary.platformGroup);
+                PlayerSettings.GetScriptingDefineSymbols(namedTarget, out var defines);
+                if (defines != null && defines.Contains("NUSANTARA_CAPTURE"))
+                    throw new BuildFailedException(
+                        $"[NusantaraAR] Simbol QA 'NUSANTARA_CAPTURE' aktif pada target rilis {target}. Hapus dari Scripting Define Symbols.");
+            }
+
             if (!HasActiveXRLoader(report.summary.platformGroup)) return;
             // Hanya aset URP dari level kualitas yang dipakai platform ini (PC_RPAsset memang membuang XR, dan itu benar).
             var platformName = NamedBuildTarget.FromBuildTargetGroup(report.summary.platformGroup).TargetName;

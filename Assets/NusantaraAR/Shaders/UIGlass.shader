@@ -107,7 +107,7 @@ Shader "NusantaraAR/UI/Glass"
             fixed4 frag(v2f IN) : SV_Target
             {
                 half mask = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd).a;
-                half3 blur = tex2D(_GlassBlurTex, saturate(IN.screen.xy / IN.screen.w)).rgb;
+                half3 blur = tex2D(_GlassBlurTex, saturate(IN.screen.xy / max(1e-5, IN.screen.w))).rgb;
                 half4 color;
                 color.rgb = lerp(blur, IN.color.rgb, IN.strength);
                 color.a = mask * IN.color.a;

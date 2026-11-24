@@ -64,6 +64,10 @@ namespace NusantaraAR.Rendering
         static void ResetStatics()
         {
             active = 0;
+            if (uiMaterial != null && (uiMaterial.hideFlags & HideFlags.DontSave) != 0)
+                CoreUtils.Destroy(uiMaterial);
+            if (fallback != null)
+                CoreUtils.Destroy(fallback);
             uiMaterialLoaded = false;
             uiMaterial = null;
             fallback = null;
@@ -147,6 +151,7 @@ namespace NusantaraAR.Rendering
                 if (resources.isActiveTargetBackBuffer || material == null) return;
                 var camera = frameData.Get<UniversalCameraData>();
                 var src = resources.activeColorTexture;
+                if (!src.IsValid()) return;
                 int width = camera.cameraTargetDescriptor.width, height = camera.cameraTargetDescriptor.height;
                 if (width < 16 || height < 16) return;
 

@@ -244,7 +244,7 @@ namespace NusantaraAR.Marker
                 bit++;
             }
 
-            if (mask < 0)
+            if (mask < 0 || mask > 7)
             {
                 int best = int.MaxValue;
                 for (int m = 0; m < 8; m++)
@@ -343,6 +343,7 @@ namespace NusantaraAR.Marker
         public static bool TryDecode(bool[,] modules, out string text)
         {
             text = null;
+            if (modules == null) return false;
             int size = modules.GetLength(0);
             if (size != modules.GetLength(1) || (size - 17) % 4 != 0) return false;
             int v = (size - 17) / 4;
@@ -436,6 +437,7 @@ namespace NusantaraAR.Marker
                     int first = reader.Read(8);
                     if ((first & 0x80) != 0)
                     {
+                        if ((first & 0xE0) == 0xE0) return false; // 111xxxxx tidak valid di ISO/IEC 18004
                         int extra = (first & 0x40) == 0 ? 8 : 16;
                         if (reader.Remaining < extra) return false;
                         reader.Read(extra);
@@ -452,14 +454,12 @@ namespace NusantaraAR.Marker
                     case 0b0001:
                         for (; count >= 3; count -= 3)
                         {
-                            if (reader.Remaining < 10) return false;
-                            AppendDigits(bytes, reader.Read(10), 3);
+                            if (reader.Remaining < 10 || !TryAppendDigits(bytes, reader.Read(10), 3)) return false;
                         }
                         if (count > 0)
                         {
                             int n = count == 2 ? 7 : 4;
-                            if (reader.Remaining < n) return false;
-                            AppendDigits(bytes, reader.Read(n), count);
+                            if (reader.Remaining < n || !TryAppendDigits(bytes, reader.Read(n), count)) return false;
                         }
                         break;
                     case 0b0010:
@@ -499,11 +499,12 @@ namespace NusantaraAR.Marker
             return true;
         }
 
-        static void AppendDigits(List<byte> bytes, int value, int digits)
+        static bool TryAppendDigits(List<byte> bytes, int value, int digits)
         {
-            if (value >= (digits == 3 ? 1000 : digits == 2 ? 100 : 10)) return;
+            if (value < 0 || value >= (digits == 3 ? 1000 : digits == 2 ? 100 : 10)) return false;
             var s = value.ToString().PadLeft(digits, '0');
             foreach (var c in s) bytes.Add((byte)c);
+            return true;
         }
 
         // ------------------------------------------------------------------ Reed-Solomon GF(256), polinom 0x11D
@@ -526,7 +527,7 @@ namespace NusantaraAR.Marker
 
         static byte Mul(byte a, byte b) => a == 0 || b == 0 ? (byte)0 : Exp[Log[a] + Log[b]];
 
-        static byte Div(byte a, byte b) => a == 0 ? (byte)0 : Exp[Log[a] + 255 - Log[b]];
+        static byte Div(byte a, byte b) => a == 0 || b == 0 ? (byte)0 : Exp[Log[a] + 255 - Log[b]];
 
         /// <summary>Koefisien generator (x - a^0)...(x - a^(n-1)), tanpa koefisien utama 1, dari derajat tertinggi.</summary>
         static byte[] RsDivisor(int degree)
@@ -565,6 +566,7 @@ namespace NusantaraAR.Marker
         /// </summary>
         public static bool RsCorrect(byte[] block, int eccLen)
         {
+            if (block == null || eccLen <= 0 || eccLen >= block.Length) return false;
             int n = block.Length;
             var syn = new byte[eccLen];
             bool clean = true;
@@ -655,6 +657,9 @@ namespace NusantaraAR.Marker
         /// <summary>Tekstur QR (hitam di atas putih) dengan zona sunyi <paramref name="quietModules"/> modul.</summary>
         public static Texture2D CreateTexture(bool[,] modules, int modulePixels = 24, int quietModules = 4)
         {
+            if (modules == null) return null;
+            modulePixels = Mathf.Max(1, modulePixels);
+            quietModules = Mathf.Max(0, quietModules);
             int n = modules.GetLength(0), size = (n + quietModules * 2) * modulePixels;
             var tex = new Texture2D(size, size, TextureFormat.RGB24, false) { filterMode = FilterMode.Point, name = "QR" };
             var px = new Color32[size * size];

@@ -66,11 +66,16 @@ namespace NusantaraAR
 
         public void SetRelativeScale(float factor)
         {
+            if (float.IsNaN(factor) || float.IsInfinity(factor)) return;
             factor = Mathf.Clamp(factor, MinScale, MaxScale);
             transform.localScale = initialScale * factor;
         }
 
-        public void MultiplyScale(float ratio) => SetRelativeScale(RelativeScale * ratio);
+        public void MultiplyScale(float ratio)
+        {
+            if (float.IsNaN(ratio) || float.IsInfinity(ratio) || ratio <= 0f) return;
+            SetRelativeScale(RelativeScale * ratio);
+        }
 
         /// <summary>"Reset Tampilan": rotasi awal + skala 1:1 (PRD FR-06).</summary>
         public void ResetView()
@@ -83,6 +88,7 @@ namespace NusantaraAR
         /// <summary>Apakah hotspot boleh tampil pada keadaan saat ini (PRD FR-08, §6.3).</summary>
         public bool IsHotspotAvailable(HotspotData h)
         {
+            if (h == null) return false;
             var part = GetPart(h.partName);
             if (part == null || !part.IsVisible) return false;
             if (h.visibleFrom == HotspotStage.Bilah)
@@ -92,6 +98,11 @@ namespace NusantaraAR
 
         public bool TryGetHotspotWorldPosition(HotspotData h, out Vector3 position)
         {
+            if (h == null)
+            {
+                position = default;
+                return false;
+            }
             var part = GetPart(h.partName);
             if (part == null)
             {

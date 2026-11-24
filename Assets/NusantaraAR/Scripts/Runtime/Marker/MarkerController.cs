@@ -63,6 +63,7 @@ namespace NusantaraAR.Marker
         Vector3 boundsCenter, boundsExtents; // ruang lokal prefab, tanpa skala
         bool controlsShown;
         bool cameraStarting;
+        bool permissionRequesting;
         float lastFrame;
         int feedRestarts;
 
@@ -76,8 +77,11 @@ namespace NusantaraAR.Marker
         void Start()
         {
             Application.targetFrameRate = 30;
-            foreach (var a in AppSession.Catalog.artifacts)
-                if (a != null && a.markerCode != 0 && !codes.Contains(a.markerCode)) codes.Add(a.markerCode);
+            if (AppSession.Catalog != null && AppSession.Catalog.artifacts != null)
+            {
+                foreach (var a in AppSession.Catalog.artifacts)
+                    if (a != null && a.markerCode != 0 && !codes.Contains(a.markerCode)) codes.Add(a.markerCode);
+            }
 
             // RawImage tanpa tekstur tampil sebagai kotak putih; baru ditampilkan CameraFeed.ConfigureDisplay saat frame pertama.
             background.enabled = false;
@@ -110,15 +114,20 @@ namespace NusantaraAR.Marker
                 gestures.Dragged -= OnDrag;
                 gestures.Pinched -= OnPinch;
                 gestures.InteractionStarted -= StopAutoRotate;
-                gestures.Tapped -= hud.HandleTap;
+                if (hud != null) gestures.Tapped -= hud.HandleTap;
             }
             if (feed != null) feed.StopFeed();
+            if (current != null) Destroy(current.gameObject);
+            if (glow != null) Destroy(glow.gameObject);
         }
 
         void RequestPermission()
         {
+            if (permissionRequesting) return;
+            permissionRequesting = true;
             CameraPermission.Request(granted =>
             {
+                permissionRequesting = false;
                 if (this == null) return;
                 if (granted)
                 {
@@ -290,21 +299,31 @@ namespace NusantaraAR.Marker
         bool FindTarget(out ArtifactData data, out Vector2[] cornersPx, out float size)
         {
             size = qrSizeMeters;
+            var catalog = AppSession.Catalog;
+            if (catalog == null)
+            {
+                data = null;
+                cornersPx = null;
+                return false;
+            }
+            bool sawForeignQr = false;
             foreach (var d in qrDetector.Detect(regions))
             {
-                data = d.Decoded ? AppSession.Catalog.FindByQr(d.text) : null;
+                data = d.Decoded ? catalog.FindByQr(d.text) : null;
                 if (data != null) lastQrRead = Time.time;
+                else if (d.Decoded) sawForeignQr = true;
                 // Frame buram: pola QR terlihat tapi isinya tak terbaca -> tetap pakai artefak dari QR yang baru saja terbaca.
-                else if (!d.Decoded && currentData != null && Time.time - lastQrRead < KeepQrWithoutDecodeSeconds) data = currentData;
+                else if (!sawForeignQr && currentData != null && Time.time - lastQrRead < KeepQrWithoutDecodeSeconds) data = currentData;
                 if (data == null || data.prefab == null) continue;
                 cornersPx = d.corners;
                 return true;
             }
+            if (sawForeignQr) lastQrRead = -10f;
             if (detectLegacyCards && codes.Count > 0)
             {
                 foreach (var d in detector.Detect(regions, codes))
                 {
-                    data = AppSession.Catalog.FindByMarker(d.code);
+                    data = catalog.FindByMarker(d.code);
                     if (data == null || data.prefab == null) continue;
                     cornersPx = d.corners;
                     size = markerSizeMeters;
@@ -319,6 +338,7 @@ namespace NusantaraAR.Marker
         void EnsureArtifact(ArtifactData data, float size)
         {
             if (currentData == data) return;
+            if (hud != null) hud.CloseInfo();
             if (current != null) Destroy(current.gameObject);
             currentData = data;
             lastSeen = -10f;
@@ -393,7 +413,7 @@ namespace NusantaraAR.Marker
 
         void OnPinch(float ratio)
         {
-            if (current == null || !current.gameObject.activeSelf) return;
+            if (current == null || !current.gameObject.activeSelf || float.IsNaN(ratio) || float.IsInfinity(ratio) || ratio <= 0f) return;
             userScale = Mathf.Clamp(userScale * ratio, ArtifactInstance.MinScale, ArtifactInstance.MaxScale);
         }
 

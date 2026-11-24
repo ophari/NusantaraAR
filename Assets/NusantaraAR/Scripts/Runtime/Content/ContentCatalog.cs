@@ -16,26 +16,27 @@ namespace NusantaraAR
 
         public static ContentCatalog Load() => Resources.Load<ContentCatalog>(ResourcePath);
 
-        public ArtifactData First => artifacts.Count > 0 ? artifacts[0] : null;
+        public ArtifactData First => artifacts != null ? artifacts.Find(a => a != null) : null;
 
         public ArtifactData Find(string id)
         {
-            if (string.IsNullOrEmpty(id)) return null;
+            if (string.IsNullOrEmpty(id) || artifacts == null) return null;
             return artifacts.Find(a => a != null && a.artifactId == id);
         }
 
         public ArtifactData FindByMarker(int code)
         {
-            if (code == 0) return null;
+            if (code == 0 || artifacts == null) return null;
             return artifacts.Find(a => a != null && a.markerCode == code);
         }
 
         /// <summary>Artefak dari isi kode QR hasil pindai ("NUSANTARA:&lt;artifactId&gt;", atau artifactId saja).</summary>
         public ArtifactData FindByQr(string text)
         {
-            if (string.IsNullOrEmpty(text)) return null;
+            if (string.IsNullOrWhiteSpace(text) || text.Length > 128) return null;
             text = text.Trim();
-            if (text.StartsWith(QrPrefix, System.StringComparison.OrdinalIgnoreCase)) text = text.Substring(QrPrefix.Length);
+            if (text.StartsWith(QrPrefix, System.StringComparison.OrdinalIgnoreCase))
+                text = text.Substring(QrPrefix.Length).Trim();
             return Find(text);
         }
 

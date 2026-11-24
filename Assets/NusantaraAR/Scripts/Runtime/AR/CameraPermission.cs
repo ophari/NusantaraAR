@@ -31,10 +31,20 @@ namespace NusantaraAR
                 return;
             }
 
+            bool settled = false;
+            void Finish(bool granted)
+            {
+                if (settled) return;
+                settled = true;
+                onResult?.Invoke(granted);
+            }
+
             var callbacks = new PermissionCallbacks();
-            callbacks.PermissionGranted += _ => onResult?.Invoke(true);
-            callbacks.PermissionDenied += _ => onResult?.Invoke(false);
-            callbacks.PermissionDeniedAndDontAskAgain += _ => onResult?.Invoke(false);
+            callbacks.PermissionGranted += _ => Finish(true);
+            callbacks.PermissionDenied += _ => Finish(false);
+#pragma warning disable CS0618 // tetap didaftarkan bersama guard idempoten agar kompatibel di Android API 26-36
+            callbacks.PermissionDeniedAndDontAskAgain += _ => Finish(false);
+#pragma warning restore CS0618
             Permission.RequestUserPermission(Permission.Camera, callbacks);
 #else
             onResult?.Invoke(true);

@@ -23,6 +23,7 @@ namespace NusantaraAR
         // Ganti/henti musik: yang lama fade-out dulu, baru klip tertunda (null = berhenti) dimulai.
         AudioClip pendingMusic;
         bool musicChanging;
+        bool narrationPaused;
         float musicGain, musicDuck = 1f;
 
         public static AudioManager Instance
@@ -44,6 +45,7 @@ namespace NusantaraAR
 
         public AudioClip CurrentNarration => narration.clip;
         public bool IsNarrationPlaying => narration.isPlaying;
+        public bool IsNarrationPaused => narrationPaused && narration.clip != null && !narration.isPlaying;
         /// <summary>Posisi narasi (detik).</summary>
         public float NarrationTime => narration.time;
         public float NarrationProgress =>
@@ -106,35 +108,46 @@ namespace NusantaraAR
             return Mathf.Clamp01(Mathf.Min(time / fade, (length - time) / fade));
         }
 
+        void OnDestroy()
+        {
+            if (click != null) Destroy(click);
+            if (instance == this) instance = null;
+        }
+
         void OnApplicationPause(bool paused)
         {
-            if (paused) PauseNarration();
+            if (!paused) return;
+            PauseNarration();
+            PlayerPrefs.Save();
         }
 
         public void PlayNarration(AudioClip clip)
         {
             if (clip == null) return;
-            if (narration.clip != clip)
-            {
-                narration.clip = clip;
-                narration.time = 0f;
-            }
+            narration.clip = clip;
+            narration.time = 0f;
+            narrationPaused = false;
             narration.Play();
         }
 
         public void PauseNarration()
         {
-            if (narration.isPlaying) narration.Pause();
+            if (!narration.isPlaying) return;
+            narration.Pause();
+            narrationPaused = true;
         }
 
         /// <summary>Melanjutkan narasi yang dijeda dari posisi terakhir.</summary>
         public void ResumeNarration()
         {
-            if (narration.clip != null && !narration.isPlaying) narration.UnPause();
+            if (narration.clip == null || narration.isPlaying) return;
+            narrationPaused = false;
+            narration.UnPause();
         }
 
         public void StopNarration()
         {
+            narrationPaused = false;
             narration.Stop();
             narration.clip = null;
         }
@@ -142,7 +155,7 @@ namespace NusantaraAR
         /// <summary>Lompat ke posisi narasi (0-1).</summary>
         public void Seek(float normalized)
         {
-            if (narration.clip == null) return;
+            if (narration.clip == null || float.IsNaN(normalized) || float.IsInfinity(normalized)) return;
             narration.time = Mathf.Clamp01(normalized) * Mathf.Max(0f, narration.clip.length - 0.01f);
         }
 

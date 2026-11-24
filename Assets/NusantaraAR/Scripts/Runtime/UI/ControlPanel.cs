@@ -39,11 +39,13 @@ namespace NusantaraAR.UI
 
         /// <summary>Posisi slider 0..1 → skala (logaritmik agar 1× berada di tengah-kiri, bukan di ujung).</summary>
         public static float ScaleFromSlider(float v) =>
-            ArtifactInstance.MinScale * Mathf.Pow(ArtifactInstance.MaxScale / ArtifactInstance.MinScale, Mathf.Clamp01(v));
+            float.IsNaN(v) || float.IsInfinity(v) ? 1f
+                : ArtifactInstance.MinScale * Mathf.Pow(ArtifactInstance.MaxScale / ArtifactInstance.MinScale, Mathf.Clamp01(v));
 
         public static float SliderFromScale(float scale) =>
-            Mathf.Clamp01(Mathf.Log(Mathf.Max(1e-4f, scale) / ArtifactInstance.MinScale)
-                          / Mathf.Log(ArtifactInstance.MaxScale / ArtifactInstance.MinScale));
+            float.IsNaN(scale) || float.IsInfinity(scale) ? 0f
+                : Mathf.Clamp01(Mathf.Log(Mathf.Max(1e-4f, scale) / ArtifactInstance.MinScale)
+                                / Mathf.Log(ArtifactInstance.MaxScale / ArtifactInstance.MinScale));
 
         public static ControlPanel Create(RectTransform safeRoot, ControlPanelConfig config)
         {

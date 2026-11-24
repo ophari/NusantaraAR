@@ -15,20 +15,28 @@ import asyncio
 import hashlib
 import json
 import os
+import re
 import sys
 
 import edge_tts
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-PROJECT = os.path.dirname(os.path.dirname(HERE))
+PROJECT = os.path.abspath(os.path.dirname(os.path.dirname(HERE)))
 SCRIPT = os.path.join(HERE, "kisah.json")
 CUES = os.path.join(HERE, "kisah_cues.json")
 TICKS_PER_SECOND = 10_000_000  # offset edge-tts dalam satuan 100 ns
+SAFE_ID = re.compile(r"^[A-Za-z0-9_-]+$")
 
 
 def clip_path(artifact_id, index, key, lang):
+    for label, val in (("artifactId", artifact_id), ("key", key), ("lang", lang)):
+        if not isinstance(val, str) or not SAFE_ID.match(val):
+            raise ValueError(f"{label} tidak aman di kisah.json: {val!r}")
     rel = f"Assets/NusantaraAR/Content/{artifact_id}/Story/{artifact_id}_{index:02d}_{key}_{lang}.mp3"
-    return rel, os.path.join(PROJECT, rel.replace("/", os.sep))
+    resolved = os.path.abspath(os.path.join(PROJECT, rel.replace("/", os.sep)))
+    if os.path.commonpath([PROJECT, resolved]) != PROJECT:
+        raise ValueError(f"Path keluar dari direktori proyek: {rel!r}")
+    return rel, resolved
 
 
 async def synthesize(text, voice, rate, out_path):

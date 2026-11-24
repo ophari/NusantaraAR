@@ -148,9 +148,18 @@ namespace NusantaraAR.EditorTools
             AssetDatabase.SaveAssets();
         }
 
+        static string SafeAssetName(string rawName, string context)
+        {
+            if (string.IsNullOrWhiteSpace(rawName) || rawName.Contains("..") || rawName.IndexOfAny(new[] { '/', '\\', ':' }) >= 0
+                || Path.GetFileName(rawName) != rawName)
+                throw new InvalidOperationException($"Nama {context} tidak aman di GLB: '{rawName}'");
+            return rawName;
+        }
+
         static Material CompressedCopy(Material src, string blenderTexDir, string texDir, string matDir)
         {
-            string path = matDir + "/" + src.name + ".mat";
+            string matName = SafeAssetName(src.name, "material");
+            string path = matDir + "/" + matName + ".mat";
             var m = AssetDatabase.LoadAssetAtPath<Material>(path);
             if (m == null)
             {
@@ -162,11 +171,16 @@ namespace NusantaraAR.EditorTools
                 m.shader = src.shader;
                 m.CopyPropertiesFromMaterial(src);
             }
+            string fullTexRoot = Path.GetFullPath(blenderTexDir).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                                 + Path.DirectorySeparatorChar;
             foreach (var prop in src.GetTexturePropertyNames())
             {
                 var tex = src.GetTexture(prop);
                 if (tex == null) continue;
-                string png = Path.Combine(blenderTexDir, tex.name + ".png");
+                string texName = SafeAssetName(tex.name, "tekstur");
+                string png = Path.GetFullPath(Path.Combine(blenderTexDir, texName + ".png"));
+                if (!png.StartsWith(fullTexRoot, StringComparison.OrdinalIgnoreCase))
+                    throw new InvalidOperationException("Path tekstur keluar dari direktori sumber: " + png);
                 if (!File.Exists(png))
                     throw new FileNotFoundException("Tekstur sumber Blender tidak ditemukan (jalankan skrip Blender).", png);
                 m.SetTexture(prop, ImportCompressed(png, texDir));

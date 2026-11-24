@@ -16,7 +16,7 @@ namespace NusantaraAR
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Boot()
         {
-            if (Object.FindAnyObjectByType<MainController>() == null || DevBlackBox.Requested(out _)) return;
+            if (Application.isMobilePlatform || Object.FindAnyObjectByType<MainController>() == null || DevBlackBox.Requested(out _)) return;
             // QA memakai profil kualitas yang sama dengan Android (Mobile_RPAsset), bukan "PC".
             int mobile = System.Array.IndexOf(QualitySettings.names, "Mobile");
             if (mobile >= 0) QualitySettings.SetQualityLevel(mobile, true);
@@ -34,6 +34,7 @@ namespace NusantaraAR
                 dir = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Captures");
                 Directory.CreateDirectory(dir);
                 PlayerPrefs.DeleteAll();
+                AppSettings.Reload();
                 yield return new WaitForSeconds(1.5f);
                 yield return Shot("01_onboarding");
                 Click("Onboarding/Card/Next"); yield return Shot("02_onboarding_gestures");

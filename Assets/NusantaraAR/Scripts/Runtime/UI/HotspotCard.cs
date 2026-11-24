@@ -148,11 +148,11 @@ namespace NusantaraAR.UI
             UIKit.SetVisible(draft, !h.curatorValidated);
             tabs.SetSelected(tabIndex);
 
-            var text = new StringBuilder(Tab(h, tabIndex).Get());
+            var text = new StringBuilder(UIKit.EscapeRichText(Tab(h, tabIndex).Get()));
             if (h.sources != null && h.sources.Count > 0)
             {
-                text.Append("\n\n<size=24><color=").Append(Theme.HexOf(Theme.InkMuted)).Append("><b>").Append(Locale.T("sheet.sources")).Append("</b>");
-                foreach (var s in h.sources) text.Append("\n- ").Append(s);
+                text.Append("\n\n<size=24><color=").Append(Theme.HexOf(Theme.InkMuted)).Append("><b>").Append(UIKit.EscapeRichText(Locale.T("sheet.sources"))).Append("</b>");
+                foreach (var s in h.sources) text.Append("\n- ").Append(UIKit.EscapeRichText(s));
                 text.Append("</color></size>");
             }
             body.text = text.ToString();
@@ -186,7 +186,8 @@ namespace NusantaraAR.UI
             var clip = hotspot?.Narration;
             if (clip == null) return;
             var am = AudioManager.Instance;
-            if (am.IsNarrationPlaying && am.CurrentNarration == clip) am.PauseNarration();
+            if (am.CurrentNarration == clip && am.IsNarrationPlaying) am.PauseNarration();
+            else if (am.CurrentNarration == clip && am.IsNarrationPaused) am.ResumeNarration();
             else am.PlayNarration(clip);
         }
 

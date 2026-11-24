@@ -48,6 +48,12 @@ namespace NusantaraAR.EditorTools
             }
         }
 
+        static void ValidateId(string value, string kind)
+        {
+            if (string.IsNullOrWhiteSpace(value) || value.Any(ch => !(char.IsLetterOrDigit(ch) || ch == '_' || ch == '-')))
+                throw new InvalidOperationException($"Identifier {kind} tidak valid di kisah.json: '{value}'");
+        }
+
         public static void Build()
         {
             string scriptPath = Path.Combine(ToolsDir, "kisah.json");
@@ -57,14 +63,19 @@ namespace NusantaraAR.EditorTools
                 return;
             }
             var script = JsonUtility.FromJson<ScriptFile>(File.ReadAllText(scriptPath));
+            if (script == null || script.artifacts == null)
+                throw new InvalidOperationException("Isi kisah.json tidak valid atau daftar artifacts kosong.");
             string cuesPath = Path.Combine(ToolsDir, "kisah_cues.json");
-            var cues = File.Exists(cuesPath)
-                ? JsonUtility.FromJson<CueFile>(File.ReadAllText(cuesPath)).clips.ToDictionary(c => c.file, c => c.cues)
+            var cueData = File.Exists(cuesPath) ? JsonUtility.FromJson<CueFile>(File.ReadAllText(cuesPath)) : null;
+            var cues = cueData?.clips != null
+                ? cueData.clips.Where(c => c != null && !string.IsNullOrEmpty(c.file)).ToDictionary(c => c.file, c => c.cues ?? Array.Empty<StoryCue>())
                 : new Dictionary<string, StoryCue[]>();
 
             AssetDatabase.Refresh();
             foreach (var art in script.artifacts)
             {
+                if (art == null || art.chapters == null) continue;
+                ValidateId(art.artifactId, "artifactId");
                 string dir = ContentRoot + "/" + art.artifactId;
                 var data = AssetDatabase.LoadAssetAtPath<ArtifactData>(dir + "/" + art.artifactId + ".asset");
                 if (data == null) throw new InvalidOperationException("Kisah untuk artefak yang belum ada: " + art.artifactId);
@@ -87,6 +98,8 @@ namespace NusantaraAR.EditorTools
                 for (int i = 0; i < art.chapters.Length; i++)
                 {
                     var c = art.chapters[i];
+                    if (c == null) continue;
+                    ValidateId(c.key, "chapter.key");
                     if (c.stage >= stageCount)
                         throw new InvalidOperationException($"{art.artifactId} bab '{c.key}': tahap {c.stage} tidak ada (jumlah tahap {stageCount}).");
                     if (!string.IsNullOrEmpty(c.focus) && data.FindHotspot(c.focus) == null)

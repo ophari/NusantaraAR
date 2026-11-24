@@ -58,6 +58,8 @@ namespace NusantaraAR.Marker
         /// <summary>Gambar marker (dengan zona putih di sekeliling = <paramref name="quietCells"/> sel).</summary>
         public static Texture2D CreateTexture(int code, int cellPixels = 64, int quietCells = 1)
         {
+            cellPixels = Mathf.Max(1, cellPixels);
+            quietCells = Mathf.Max(0, quietCells);
             int size = (Grid + quietCells * 2) * cellPixels;
             var tex = new Texture2D(size, size, TextureFormat.RGB24, false) { filterMode = FilterMode.Point, name = "Marker_" + code.ToString("X4") };
             var px = new Color32[size * size];

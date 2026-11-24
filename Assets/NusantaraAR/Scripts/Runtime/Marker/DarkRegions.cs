@@ -13,7 +13,7 @@ namespace NusantaraAR.Marker
         public int Height => maxY - minY + 1;
 
         /// <summary>Titik berat dalam koordinat piksel kontinu (pusat piksel = +0,5).</summary>
-        public Vector2 Centroid => new Vector2(sumX / (float)pixels + 0.5f, sumY / (float)pixels + 0.5f);
+        public Vector2 Centroid => pixels > 0 ? new Vector2(sumX / (float)pixels + 0.5f, sumY / (float)pixels + 0.5f) : Vector2.zero;
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ namespace NusantaraAR.Marker
         public readonly List<DarkRegion> Regions = new List<DarkRegion>();
 
         int w, h;
-        int[] integral = new int[0];
+        long[] integral = new long[0];
         int[] labels = new int[0];
         int[] stack = new int[0];
         readonly List<Vector2> boundary = new List<Vector2>();
@@ -42,11 +42,14 @@ namespace NusantaraAR.Marker
         public void Analyze(byte[] gray, int width, int height)
         {
             Regions.Clear();
+            Gray = null;
+            Width = w = 0;
+            Height = h = 0;
+            if (gray == null || width < 32 || height < 32 || width > 16384 || height > 16384 || gray.Length < (long)width * height) return;
             Gray = gray;
             Width = w = width;
             Height = h = height;
-            if (gray == null || width < 32 || height < 32) return;
-            if (integral.Length != (w + 1) * (h + 1)) integral = new int[(w + 1) * (h + 1)];
+            if (integral.Length != (w + 1) * (h + 1)) integral = new long[(w + 1) * (h + 1)];
             if (labels.Length != w * h)
             {
                 labels = new int[w * h];
@@ -66,7 +69,7 @@ namespace NusantaraAR.Marker
             for (int x = 0; x <= w; x++) integral[x] = 0;
             for (int y = 0; y < h; y++)
             {
-                int rowSum = 0;
+                long rowSum = 0;
                 integral[(y + 1) * stride] = 0;
                 for (int x = 0; x < w; x++)
                 {
@@ -81,8 +84,8 @@ namespace NusantaraAR.Marker
             int r = adaptiveRadius, stride = w + 1;
             int x0 = Mathf.Max(0, x - r), y0 = Mathf.Max(0, y - r);
             int x1 = Mathf.Min(w, x + r + 1), y1 = Mathf.Min(h, y + r + 1);
-            int area = (x1 - x0) * (y1 - y0);
-            int sum = integral[y1 * stride + x1] - integral[y0 * stride + x1] - integral[y1 * stride + x0] + integral[y0 * stride + x0];
+            long area = (long)(x1 - x0) * (y1 - y0);
+            long sum = integral[y1 * stride + x1] - integral[y0 * stride + x1] - integral[y1 * stride + x0] + integral[y0 * stride + x0];
             return g[y * w + x] * area < sum - thresholdOffset * area;
         }
 
@@ -275,6 +278,8 @@ namespace NusantaraAR.Marker
         public float Sample(float x, float y)
         {
             var g = Gray;
+            if (g == null || w <= 0 || h <= 0 || float.IsNaN(x) || float.IsNaN(y) || float.IsInfinity(x) || float.IsInfinity(y))
+                return 0f;
             x -= 0.5f;
             y -= 0.5f;
             int x0 = Mathf.Clamp((int)Mathf.Floor(x), 0, w - 1), y0 = Mathf.Clamp((int)Mathf.Floor(y), 0, h - 1);

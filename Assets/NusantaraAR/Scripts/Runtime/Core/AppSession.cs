@@ -80,24 +80,30 @@ namespace NusantaraAR
         static float? sfxVolume;
         static float? musicVolume;
 
+        static float ClampSafe01(float v, float fallback) =>
+            float.IsNaN(v) || float.IsInfinity(v) ? fallback : Mathf.Clamp01(v);
+
+        /// <summary>Segarkan cache volume dari PlayerPrefs (mis. setelah PlayerPrefs.DeleteAll).</summary>
+        public static void Reload() => narrationVolume = sfxVolume = musicVolume = null;
+
         // Di-cache: dibaca setiap frame oleh AudioManager (PlayerPrefs di Android lewat JNI).
         public static float NarrationVolume
         {
-            get => narrationVolume ??= PlayerPrefs.GetFloat(NarrationKey, 1f);
-            set { narrationVolume = Mathf.Clamp01(value); PlayerPrefs.SetFloat(NarrationKey, narrationVolume.Value); }
+            get => narrationVolume ??= ClampSafe01(PlayerPrefs.GetFloat(NarrationKey, 1f), 1f);
+            set { narrationVolume = ClampSafe01(value, 1f); PlayerPrefs.SetFloat(NarrationKey, narrationVolume.Value); }
         }
 
         public static float SfxVolume
         {
-            get => sfxVolume ??= PlayerPrefs.GetFloat(SfxKey, 0.7f);
-            set { sfxVolume = Mathf.Clamp01(value); PlayerPrefs.SetFloat(SfxKey, sfxVolume.Value); }
+            get => sfxVolume ??= ClampSafe01(PlayerPrefs.GetFloat(SfxKey, 0.7f), 0.7f);
+            set { sfxVolume = ClampSafe01(value, 0.7f); PlayerPrefs.SetFloat(SfxKey, sfxVolume.Value); }
         }
 
         /// <summary>Musik latar artefak; 0 = mati.</summary>
         public static float MusicVolume
         {
-            get => musicVolume ??= PlayerPrefs.GetFloat(MusicKey, 0.5f);
-            set { musicVolume = Mathf.Clamp01(value); PlayerPrefs.SetFloat(MusicKey, musicVolume.Value); }
+            get => musicVolume ??= ClampSafe01(PlayerPrefs.GetFloat(MusicKey, 0.5f), 0.5f);
+            set { musicVolume = ClampSafe01(value, 0.5f); PlayerPrefs.SetFloat(MusicKey, musicVolume.Value); }
         }
 
         /// <summary>Analitik hanya aktif dengan persetujuan eksplisit (default: nonaktif).</summary>
@@ -120,12 +126,19 @@ namespace NusantaraAR
     /// </summary>
     public static class Analytics
     {
+        static string CleanLogToken(string s) =>
+            string.IsNullOrEmpty(s) ? string.Empty : s.Replace("\r", " ").Replace("\n", " ");
+
         public static void Log(string eventName, params (string key, object value)[] data)
         {
             if (!AppSettings.AnalyticsConsent) return;
-            var parts = new List<string>(data.Length);
-            foreach (var (key, value) in data) parts.Add(key + "=" + value);
-            Debug.Log("[Analytics] " + eventName + (parts.Count > 0 ? " " + string.Join(" ", parts) : string.Empty));
+            var parts = new List<string>(data != null ? data.Length : 0);
+            if (data != null)
+            {
+                foreach (var (key, value) in data)
+                    parts.Add(CleanLogToken(key) + "=" + CleanLogToken(value?.ToString()));
+            }
+            Debug.Log("[Analytics] " + CleanLogToken(eventName) + (parts.Count > 0 ? " " + string.Join(" ", parts) : string.Empty));
         }
     }
 }

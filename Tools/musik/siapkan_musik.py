@@ -21,11 +21,16 @@ FADE_OUT = 3.0
 
 
 def abs_path(rel):
-    return os.path.join(PROJECT, rel.replace("/", os.sep))
+    if not isinstance(rel, str) or not rel or os.path.isabs(rel) or ".." in rel.replace("\\", "/").split("/"):
+        raise ValueError(f"Path tidak aman di musik.json: {rel!r}")
+    resolved = os.path.abspath(os.path.join(PROJECT, rel.replace("/", os.sep)))
+    if os.path.commonpath([PROJECT, resolved]) != PROJECT:
+        raise ValueError(f"Path keluar dari direktori proyek: {rel!r}")
+    return resolved
 
 
 def duration(path):
-    out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path],
+    out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", "--", path],
                          check=True, capture_output=True, text=True).stdout
     return float(out.strip())
 
@@ -48,7 +53,8 @@ def main():
         if length > t["maxSeconds"]:
             cut = float(t["maxSeconds"])
             out_args = ["-t", f"{cut:.2f}"]
-            filters.insert(0, f"afade=t=out:st={cut - FADE_OUT:.2f}:d={FADE_OUT:.2f}")
+            fade_dur = min(FADE_OUT, max(0.1, cut))
+            filters.insert(0, f"afade=t=out:st={max(0.0, cut - fade_dur):.2f}:d={fade_dur:.2f}")
         os.makedirs(os.path.dirname(out), exist_ok=True)
         subprocess.run(["ffmpeg", "-v", "error", "-y", *in_args, "-i", raw, *out_args, "-af", ",".join(filters),
                         "-ar", "44100", "-c:a", "libmp3lame", "-q:a", "3", out], check=True)

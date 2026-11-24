@@ -34,7 +34,7 @@ namespace NusantaraAR.UI
         bool paused, loading, suspended, resumeOnShow;
 
         public bool IsActive => chapter >= 0;
-        public bool HasStory => story != null && story.chapters.Count > 0;
+        public bool HasStory => story != null && story.chapters != null && story.chapters.Count > 0;
         public event Action<bool> ActiveChanged;
 
         public static StoryPanel Create(RectTransform safeRoot, HotspotOverlay overlay)
@@ -116,16 +116,21 @@ namespace NusantaraAR.UI
             suspended = resumeOnShow = false;
             UIKit.SetVisible(rt, true);
             StartChapter(0);
-            Analytics.Log("story_start", ("artifact", artifact.Data.artifactId));
+            Analytics.Log("story_start", ("artifact", artifact.Data != null ? artifact.Data.artifactId : ""));
             if (!wasActive) ActiveChanged?.Invoke(true);
         }
 
         public void Stop()
         {
             if (!IsActive) return;
-            if (AudioManager.Instance.CurrentNarration == clip) AudioManager.Instance.StopNarration();
+            if (AudioManager.Exists && AudioManager.Instance.CurrentNarration == clip) AudioManager.Instance.StopNarration();
             chapter = -1;
             clip = null;
+            loading = false;
+            paused = false;
+            suspended = false;
+            resumeOnShow = false;
+            gap = 0f;
             overlay.FocusId = null;
             UIKit.SetVisible(rt, false);
             ActiveChanged?.Invoke(false);
@@ -276,8 +281,8 @@ namespace NusantaraAR.UI
         {
             if (!IsActive) return;
             var ch = story.chapters[chapter];
-            string draft = story.curatorValidated ? "" : "  <color=" + Theme.HexOf(Theme.InkMuted) + "><size=22>" + Locale.T("story.draft") + "</size></color>";
-            chapterLabel.text = Locale.T("story.title") + " " + (chapter + 1) + "/" + story.chapters.Count + "  -  " + ch.title.Get() + draft;
+            string draft = story.curatorValidated ? "" : "  <color=" + Theme.HexOf(Theme.InkMuted) + "><size=22>" + UIKit.EscapeRichText(Locale.T("story.draft")) + "</size></color>";
+            chapterLabel.text = UIKit.EscapeRichText(Locale.T("story.title")) + " " + (chapter + 1) + "/" + story.chapters.Count + "  -  " + UIKit.EscapeRichText(ch.title.Get()) + draft;
             pauseIcon.sprite = IconFactory.Get(paused ? Icon.Play : Icon.Pause);
             UpdateCaption();
         }

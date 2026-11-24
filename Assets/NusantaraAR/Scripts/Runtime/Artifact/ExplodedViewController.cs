@@ -63,7 +63,7 @@ namespace NusantaraAR
             get
             {
                 int i = IsAnimating ? heading : current;
-                return i < stages.Count ? stages[i].label.Get() : string.Empty;
+                return i >= 0 && i < stages.Count ? stages[i].label.Get() : string.Empty;
             }
         }
 
@@ -209,6 +209,7 @@ namespace NusantaraAR
                 float s = Mathf.SmoothStep(0f, 1f, t);
                 foreach (var m in moves)
                 {
+                    if (m.t == null) continue;
                     if (drawPath && m.p0 != m.p1)
                     {
                         // Jalur didefinisikan dari arah "tersarung -> tercabut"; dibalik untuk menyarungkan.

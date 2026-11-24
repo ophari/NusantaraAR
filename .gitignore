@@ -117,3 +117,18 @@ InitTestScene*.unity*
 
 # Unduhan mentah musik latar (Pixabay); hasil olahan ada di Assets/NusantaraAR/Content/*/Music
 /Tools/musik/asli/
+
+# Kunci penandatanganan rilis & kredensial lokal (jangan pernah di-commit)
+*.keystore
+*.jks
+*.p12
+*.pfx
+*.mobileprovision
+keystore.properties
+.env
+.env.*
+!.env.example
+
+# Cache Python skrip Tools/
+__pycache__/
+*.py[cod]

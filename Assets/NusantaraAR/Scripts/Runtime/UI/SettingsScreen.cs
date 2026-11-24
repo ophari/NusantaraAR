@@ -16,6 +16,7 @@ namespace NusantaraAR.UI
         RectTransform content;
         Segmented language;
         SwitchToggle analytics;
+        Slider narrationSlider, musicSlider, sfxSlider;
         TextMeshProUGUI musicCredits;
 
         public event Action VisibilityChanged;
@@ -49,9 +50,9 @@ namespace NusantaraAR.UI
             UIKit.Layout(language, 84f);
 
             var sound = Card("settings.sound");
-            VolumeRow(sound, "settings.narrationVol", AppSettings.NarrationVolume, v => AppSettings.NarrationVolume = v);
-            VolumeRow(sound, "settings.musicVol", AppSettings.MusicVolume, v => AppSettings.MusicVolume = v);
-            VolumeRow(sound, "settings.sfxVol", AppSettings.SfxVolume, v => AppSettings.SfxVolume = v);
+            narrationSlider = VolumeRow(sound, "settings.narrationVol", AppSettings.NarrationVolume, v => AppSettings.NarrationVolume = v);
+            musicSlider = VolumeRow(sound, "settings.musicVol", AppSettings.MusicVolume, v => AppSettings.MusicVolume = v);
+            sfxSlider = VolumeRow(sound, "settings.sfxVol", AppSettings.SfxVolume, v => AppSettings.SfxVolume = v);
 
             var privacy = Card("settings.privacy");
             var row = UIKit.Rect("Analytics", privacy);
@@ -103,12 +104,14 @@ namespace NusantaraAR.UI
             return card.rectTransform;
         }
 
-        static void VolumeRow(RectTransform card, string key, float value, UnityEngine.Events.UnityAction<float> onChanged)
+        static Slider VolumeRow(RectTransform card, string key, float value, UnityEngine.Events.UnityAction<float> onChanged)
         {
             var label = UIKit.Text(card, "Label", Locale.T(key), 28f, Theme.InkMuted, TextAlignmentOptions.BottomLeft);
             LocalizedLabel.Attach(label, key);
             UIKit.Layout(label, 40);
-            UIKit.Layout(UIKit.Slider(card, key, value, onChanged), 64);
+            var slider = UIKit.Slider(card, key, value, onChanged);
+            UIKit.Layout(slider, 64);
+            return slider;
         }
 
         static List<ArtifactData> MusicArtifacts()
@@ -125,6 +128,9 @@ namespace NusantaraAR.UI
         {
             language.SetSelected(Locale.Current == Language.ID ? 0 : 1);
             analytics.IsOn = AppSettings.AnalyticsConsent;
+            if (narrationSlider != null) narrationSlider.SetValueWithoutNotify(AppSettings.NarrationVolume);
+            if (musicSlider != null) musicSlider.SetValueWithoutNotify(AppSettings.MusicVolume);
+            if (sfxSlider != null) sfxSlider.SetValueWithoutNotify(AppSettings.SfxVolume);
             if (musicCredits == null) return;
             var lines = new List<string>();
             foreach (var a in MusicArtifacts()) lines.Add(a.displayName.Get() + ": " + a.musicCredit);

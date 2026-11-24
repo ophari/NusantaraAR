@@ -61,11 +61,12 @@ namespace NusantaraAR
         void OnDestroy()
         {
             Locale.Changed -= RefreshDetailTexts;
+            if (settings != null) settings.VisibilityChanged -= OnSettingsVisibilityChanged;
             if (sheet != null) sheet.HeightChanged -= UpdateDetailLayout;
             if (hud != null && hud.Story != null) hud.Story.ActiveChanged -= OnStoryActiveChanged;
             if (gestures == null) return;
             gestures.InteractionStarted -= OnInteractionStarted;
-            gestures.Tapped -= hud.HandleTap;
+            if (hud != null) gestures.Tapped -= hud.HandleTap;
         }
 
         void BuildUI()

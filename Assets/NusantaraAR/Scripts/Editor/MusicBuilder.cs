@@ -43,6 +43,13 @@ namespace NusantaraAR.EditorTools
             }
         }
 
+        static void ValidateSafeAssetPath(string relPath, string prefix)
+        {
+            if (string.IsNullOrWhiteSpace(relPath) || relPath.Contains("..") || relPath.Contains("\\") || relPath.Contains(":")
+                || !relPath.StartsWith(prefix, StringComparison.Ordinal))
+                throw new InvalidOperationException($"Path musik tidak aman di musik.json: '{relPath}'");
+        }
+
         public static void Build()
         {
             if (!File.Exists(ManifestPath))
@@ -51,9 +58,14 @@ namespace NusantaraAR.EditorTools
                 return;
             }
             var manifest = JsonUtility.FromJson<Manifest>(File.ReadAllText(ManifestPath));
+            if (manifest == null || manifest.tracks == null)
+                throw new InvalidOperationException("Isi musik.json tidak valid atau daftar tracks kosong.");
             AssetDatabase.Refresh();
             foreach (var t in manifest.tracks)
             {
+                if (t == null || string.IsNullOrWhiteSpace(t.artifactId) || t.artifactId.Contains("..") || t.artifactId.IndexOfAny(new[] { '/', '\\', ':' }) >= 0)
+                    throw new InvalidOperationException($"artifactId tidak valid di musik.json: '{t?.artifactId}'");
+                ValidateSafeAssetPath(t.file, ContentRoot + "/" + t.artifactId + "/");
                 var data = AssetDatabase.LoadAssetAtPath<ArtifactData>($"{ContentRoot}/{t.artifactId}/{t.artifactId}.asset");
                 if (data == null) throw new InvalidOperationException("Musik untuk artefak yang belum ada: " + t.artifactId);
                 var clip = LoadMusic(t.file);

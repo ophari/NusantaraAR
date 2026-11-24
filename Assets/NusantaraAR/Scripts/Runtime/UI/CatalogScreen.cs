@@ -35,6 +35,7 @@ namespace NusantaraAR.UI
         void Build(RectTransform area)
         {
             var title = UIKit.Text(area, "Title", Locale.T("app.title"), Theme.Title, Theme.Ink, TextAlignmentOptions.TopLeft, FontStyles.Bold);
+            LocalizedLabel.Attach(title, "app.title");
             UIKit.Place(title.rectTransform, new Vector2(0f, 1f), new Vector2(48f, -52f), new Vector2(900f, 80f));
             var accent = UIKit.Panel(area, "Accent", Theme.Accent, true, false, 3);
             UIKit.Place(accent.rectTransform, new Vector2(0f, 1f), new Vector2(50f, -138f), new Vector2(72f, 6f));

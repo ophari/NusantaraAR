@@ -30,6 +30,7 @@ namespace NusantaraAR.UI
         void Build(RectTransform area)
         {
             title = UIKit.Text(area, "Title", "", Theme.Title, Theme.Ink, TextAlignmentOptions.Top, FontStyles.Bold);
+            title.richText = true;
             UIKit.Place(title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -60f), new Vector2(1000f, 160f));
 
             image = UIKit.Rect("Marker", area).gameObject.AddComponent<RawImage>();
@@ -80,7 +81,8 @@ namespace NusantaraAR.UI
         void RefreshTitle()
         {
             if (currentData == null || title == null) return;
-            title.text = Locale.T("marker.cardTitle") + "\n<size=40><color=" + Theme.HexOf(Theme.AccentText) + ">" + currentData.displayName.Get() + "</color></size>";
+            title.text = UIKit.EscapeRichText(Locale.T("marker.cardTitle")) + "\n<size=40><color=" + Theme.HexOf(Theme.AccentText) + ">"
+                         + UIKit.EscapeRichText(currentData.displayName.Get()) + "</color></size>";
         }
 
         public void Hide()

@@ -42,7 +42,7 @@ def kartu(nama, berkas, code):
                 d.rectangle([mx + u * cell, my + v * cell, mx + (u + 1) * cell - 1, my + (v + 1) * cell - 1], fill=(0, 0, 0))
     y = my + side + quiet + mm(6)
     for line, font, fill in [('Cara pakai:', body, teak),
-                             ('1. Buka Nusantara AR, pilih "Scan Kartu (AR)".', body, teak),
+                             ('1. Buka Nusantara AR, pilih "Scan QR (AR)".', body, teak),
                              ('2. Arahkan kamera ke kotak hitam dari jarak 20\u201340 cm.', body, teak),
                              ('3. ' + nama + ' 3D muncul di atas kartu. Tekan "Kunci Posisi"', body, teak),
                              ('    untuk menjelajah tanpa terus mengarahkan kamera.', body, teak),

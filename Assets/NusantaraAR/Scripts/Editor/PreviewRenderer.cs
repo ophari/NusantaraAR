@@ -49,38 +49,47 @@ namespace NusantaraAR.EditorTools
             const int w = 900, h = 900;
             var rt = new RenderTexture(w, h, 24, RenderTextureFormat.ARGB32) { antiAliasing = 4 };
             var tex = new Texture2D(w, h, TextureFormat.RGB24, false);
-            Directory.CreateDirectory("Previews");
-
-            inst.exploded.SnapTo(inst.exploded.StageCount - 1);
-            var b = inst.GetWorldBounds();
-            inst.exploded.SnapTo(0);
-            b.Encapsulate(inst.GetWorldBounds());
-            float dist = b.extents.magnitude / Mathf.Sin(Mathf.Deg2Rad * cam.fieldOfView * 0.5f);
-            cam.transform.position = b.center + Vector3.back * dist;
-            cam.transform.LookAt(b.center);
-
-            cam.targetTexture = rt;
-            cam.Render(); // pemanasan: tekstur/shader pertama kali dimuat
-            for (int s = 0; s < inst.exploded.StageCount; s++)
+            try
             {
-                inst.exploded.SnapTo(s);
+                Directory.CreateDirectory("Previews");
+
+                inst.exploded.SnapTo(inst.exploded.StageCount - 1);
+                var b = inst.GetWorldBounds();
+                inst.exploded.SnapTo(0);
+                b.Encapsulate(inst.GetWorldBounds());
+                float dist = b.extents.magnitude / Mathf.Sin(Mathf.Deg2Rad * cam.fieldOfView * 0.5f);
+                cam.transform.position = b.center + Vector3.back * dist;
+                cam.transform.LookAt(b.center);
+
                 cam.targetTexture = rt;
-                cam.Render();
-                RenderTexture.active = rt;
-                tex.ReadPixels(new Rect(0, 0, w, h), 0, 0);
-                foreach (var hs in data.hotspots)
+                cam.Render(); // pemanasan: tekstur/shader pertama kali dimuat
+                for (int s = 0; s < inst.exploded.StageCount; s++)
                 {
-                    if (!inst.IsHotspotAvailable(hs) || !inst.TryGetHotspotWorldPosition(hs, out var p)) continue;
-                    var sp = cam.WorldToScreenPoint(p);
-                    DrawDot(tex, (int)sp.x, (int)sp.y, hs.visibleFrom == HotspotStage.Utuh ? new Color(0.83f, 0.69f, 0.22f) : new Color(0.3f, 0.8f, 1f));
+                    inst.exploded.SnapTo(s);
+                    cam.targetTexture = rt;
+                    cam.Render();
+                    RenderTexture.active = rt;
+                    tex.ReadPixels(new Rect(0, 0, w, h), 0, 0);
+                    foreach (var hs in data.hotspots)
+                    {
+                        if (!inst.IsHotspotAvailable(hs) || !inst.TryGetHotspotWorldPosition(hs, out var p)) continue;
+                        var sp = cam.WorldToScreenPoint(p);
+                        DrawDot(tex, (int)sp.x, (int)sp.y, hs.visibleFrom == HotspotStage.Utuh ? new Color(0.83f, 0.69f, 0.22f) : new Color(0.3f, 0.8f, 1f));
+                    }
+                    tex.Apply();
+                    RenderTexture.active = null;
+                    File.WriteAllBytes($"Previews/{data.artifactId}_stage_{s}.png", tex.EncodeToPNG());
                 }
-                tex.Apply();
-                RenderTexture.active = null;
-                File.WriteAllBytes($"Previews/{data.artifactId}_stage_{s}.png", tex.EncodeToPNG());
             }
-            cam.targetTexture = null;
-            rt.Release();
-            EditorSceneManager.CloseScene(scene, true);
+            finally
+            {
+                RenderTexture.active = null;
+                cam.targetTexture = null;
+                rt.Release();
+                UnityEngine.Object.DestroyImmediate(rt);
+                UnityEngine.Object.DestroyImmediate(tex);
+                EditorSceneManager.CloseScene(scene, true);
+            }
         }
 
         static void DrawDot(Texture2D t, int cx, int cy, Color c)

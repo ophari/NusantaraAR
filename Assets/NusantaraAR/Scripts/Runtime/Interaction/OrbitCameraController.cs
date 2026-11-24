@@ -122,7 +122,7 @@ namespace NusantaraAR
 
         void OnPinch(float ratio)
         {
-            if (ratio <= 0f) return;
+            if (float.IsNaN(ratio) || float.IsInfinity(ratio) || ratio <= 0f) return;
             easing = false;
             distance = Mathf.Clamp(distance / ratio, minDistance, maxDistance);
             Apply();
